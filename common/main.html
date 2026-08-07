@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="IKEA 공식 메인 페이지 – 가구, 인테리어 아이디어, 신제품 및 베스트셀러를 온라인에서 만나보세요.">
+  <title>IKEA 공식 메인 페이지 | IKEA</title>
+
+  <!-- 접근성: 감선 운동 모드 감지 -->
+  <script>
+    var rootEl = document.documentElement;
+    rootEl.classList.add('js');
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        rootEl.classList.add('no-motion');
+      }
+    } catch (e) {}
+  </script>
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- GSAP Animation Platform CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
+
+  <!-- Swiper v12 Slider CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+  <!-- Custom Theme Tokens & Base Styling -->
+  <style type="text/tailwindcss">
+    @theme {
+      --color-brand: #0051BA;
+      --color-brand-dark: #003D8F;
+      --color-accent: #FFC900;
+      
+      --color-ink: #111418;
+      --color-ink-sub: #3D4450;
+      --color-ink-muted: #6B7280;
+      --color-muted: #666666;
+      --color-price: #1A1A1A;
+
+      --color-line: #C5CCD6;
+      --color-line-light: #E6E6E6;
+      --color-hairline: #F0F0F0;
+      --color-bg-light: #F8F9FA;
+
+      --radius-pill: 20px;
+      --radius-card: 12px;
+    }
+
+    @layer base {
+      body {
+        font-family: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+                     "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-size-adjust: 100%;
+        color: var(--color-ink);
+        background-color: #FFFFFF;
+      }
+      :focus-visible {
+        outline: 3px solid var(--color-brand);
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    /* Screen Reader Only / Hide utility */
+    .sr-only-hide {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Scroll reveal default state */
+    .js:not(.no-motion) .rv {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    /* Skip navigation link */
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -80px;
+      z-index: 100;
+      background-color: #FFFFFF;
+      color: var(--color-brand);
+      border: 2px solid var(--color-brand);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-weight: 700;
+      transition: top 0.15s ease-out;
+    }
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    /* Swiper customization */
+    .cat-swiper .swiper-slide {
+      width: 80px;
+    }
+    .prod-swiper {
+      padding: 12px 4px 28px 4px;
+    }
+    .swiper-button-prev-custom,
+    .swiper-button-next-custom {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #111418;
+    }
+    .swiper-button-prev-custom:hover,
+    .swiper-button-next-custom:hover {
+      background: var(--color-brand);
+      color: #FFFFFF;
+    }
+    .swiper-button-disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen bg-white">
+
+  <!-- 접근성: 건너뛰기 링크 -->
+  <a class="skip-link" href="#main-content">본문 바로가기</a>
+
+  <!-- 페이지 전체 래퍼 -->
+  <div id="wrapper" class="flex-1 flex flex-col">
+
+    <!-- Header Section -->
+    <header class="w-full bg-white border-b border-line-light">
+
+      <!-- 1. Utility Navigation -->
+      <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
+        <div class="mx-auto flex max-w-[1280px] items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
+          <ul class="flex items-center gap-6">
+            <li><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
+            <li><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
+            <li><a class="hover:text-brand hover:underline transition-colors" href="#">고객지원</a></li>
+          </ul>
+          <ul class="flex items-center gap-6">
+            <li><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
+            <li><a class="hover:text-brand hover:underline transition-colors" href="#">주문 배송 조회</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- 2. Main Navigation Bar -->
+      <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+
+        <!-- Logo -->
+        <a href="main.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">
+          <img src="../assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-[98px] object-contain">
+        </a>
+
+        <!-- Desktop Navigation Menu -->
+        <nav aria-label="주 메뉴" class="hidden lg:block">
+          <ul class="flex items-center gap-6 text-sm font-bold text-ink">
+            <li><a class="py-2 hover:text-brand transition-colors" href="#">모든 제품</a></li>
+            <li><a class="py-2 hover:text-brand transition-colors" href="../index.html">공간별 쇼핑하기</a></li>
+            <li><a class="py-2 hover:text-brand transition-colors" href="styling.html">플래닝 &amp; 아이디어</a></li>
+            <li><a class="py-2 hover:text-brand transition-colors" href="#">서비스</a></li>
+            <li><a class="py-2 hover:text-brand transition-colors text-red-600" href="#">세일</a></li>
+          </ul>
+        </nav>
+
+        <!-- Search Bar -->
+        <form class="ml-auto hidden max-w-[320px] flex-1 lg:block" role="search" action="#">
+          <label for="search-input" class="sr-only-hide">제품 검색</label>
+          <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+            <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input id="search-input" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+                   class="min-w-0 flex-1 bg-transparent text-xs text-ink placeholder:text-ink-muted focus:outline-none">
+            <button type="button" class="shrink-0 p-1 hover:text-brand" aria-label="이미지로 검색">
+              <svg class="h-5 w-5 text-ink-muted hover:text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <circle cx="12" cy="13" r="3" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- User Action Icons -->
+        <ul class="ml-auto hidden items-center gap-4 lg:flex lg:ml-0">
+          <li>
+            <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="마이페이지">
+              <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              <span>사용자</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="위시리스트">
+              <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+              <span>위시리스트</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="장바구니">
+              <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span>장바구니</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Controls -->
+        <div class="ml-auto flex items-center gap-2 lg:hidden">
+          <a href="#" class="p-2 text-ink hover:text-brand" aria-label="장바구니">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+          </a>
+          <button id="mobile-menu-btn" type="button" class="p-2 text-ink hover:text-brand" aria-expanded="false" aria-controls="mobile-nav" aria-label="모바일 메뉴 열기">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Navigation -->
+      <nav id="mobile-nav" aria-label="모바일 메뉴" hidden class="border-t border-line-light bg-white lg:hidden px-5 py-4 shadow-lg">
+        <form role="search" action="#" class="mb-4">
+          <label for="mobile-search" class="sr-only-hide">제품 검색</label>
+          <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4">
+            <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input id="mobile-search" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+                   class="min-w-0 flex-1 bg-transparent text-sm placeholder:text-ink-muted focus:outline-none">
+          </div>
+        </form>
+        <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
+          <li><a class="block py-3 text-ink hover:text-brand" href="#">모든 제품</a></li>
+          <li><a class="block py-3 text-ink hover:text-brand" href="../index.html">공간별 쇼핑하기</a></li>
+          <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
+          <li><a class="block py-3 text-ink hover:text-brand" href="#">서비스</a></li>
+          <li><a class="block py-3 text-red-600" href="#">세일</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main Content Body -->
+    <main id="main-content" class="flex-1">
+
+      <!-- SECTION: Category Icon Row (Swiper Carousel) -->
+      <section class="py-8 bg-white border-b border-line-light/50 overflow-hidden" aria-label="카테고리 탐색">
+        <div class="mx-auto max-w-[1280px] px-5 lg:px-10">
+          <div class="swiper cat-swiper">
+            <div class="swiper-wrapper flex items-center">
+              
+              <!-- Cat 1: 전체 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-brand/30 bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/cat-all.png" alt="모든제품" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">모든제품</span>
+              </div>
+
+              <!-- Cat 2: 침대 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/cat-bed.png" alt="침대" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">침대</span>
+              </div>
+
+              <!-- Cat 3: 책상 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/cat-desk.png" alt="책상" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">책상</span>
+              </div>
+
+              <!-- Cat 4: 의자 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/cat-chair.png" alt="의자" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">의자</span>
+              </div>
+
+              <!-- Cat 5: 수납장 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/cat-storage.png" alt="수납장" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">수납장</span>
+              </div>
+
+              <!-- Cat 6: 식탁 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/cat-table.png" alt="식탁" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">식탁</span>
+              </div>
+
+              <!-- Cat 7: 서랍장 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/images/products/nordli.png" alt="서랍장" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">서랍장</span>
+              </div>
+
+              <!-- Cat 8: 선반 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/p-billy.png" alt="선반" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">선반</span>
+              </div>
+
+              <!-- Cat 9: TV장 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/images/products/stockholm.png" alt="TV장" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">TV장</span>
+              </div>
+
+              <!-- Cat 10: 소파 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/images/products/kivik.png" alt="소파" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">소파</span>
+              </div>
+
+              <!-- Cat 11: 조명 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/images/products/ostano.png" alt="조명" width="56" height="56" class="h-14 w-14 object-contain">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">조명</span>
+              </div>
+
+              <!-- Cat 12: 러그 -->
+              <div class="swiper-slide text-center group cursor-pointer">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                  <img src="../assets/p-showcase-2.png" alt="러그" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
+                </div>
+                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">러그</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: Hero Ad Banner -->
+      <section class="py-6 mx-auto max-w-[1280px] px-5 lg:px-10" aria-label="메인 혜택 슬라이더">
+        <div class="relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl group">
+          <img src="../assets/hero-ad-banner.png" alt="새로운 IKEA 컬렉션 배너" class="h-[360px] md:h-[420px] w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex flex-col justify-center px-8 md:px-16 text-white">
+            <span class="inline-block px-3.5 py-1 rounded-full bg-brand text-xs font-bold w-fit mb-4 text-white uppercase tracking-wider">NEW COLLECTION</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight max-w-xl text-white">
+              지금 만나보세요,<br>새로운 IKEA 컬렉션
+            </h1>
+            <p class="mt-4 text-sm md:text-base text-gray-200 max-w-md font-normal leading-relaxed">
+              당신의 공간에 특별한 감성을 더하는 신제품과 스마트한 공간 연출 솔루션을 소개합니다.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-4">
+              <a href="#" class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 text-sm font-bold text-ink hover:bg-yellow-400 hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+                컬렉션 둘러보기
+              </a>
+              <a href="styling.html" class="inline-flex items-center justify-center rounded-full border border-white/60 bg-white/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white hover:bg-white hover:text-ink transition-all">
+                인테리어 컨설팅
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 1: 추천 제품 Carousel -->
+      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-recommend">
+        
+        <!-- Header -->
+        <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
+          <div>
+            <h2 id="heading-recommend" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">
+              지금 주목해야 할 추천 제품
+            </h2>
+            <p class="mt-1 text-sm text-ink-sub">
+              인기 베스트셀러 추천 영역입니다.
+            </p>
+          </div>
+          <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <span>전체 보기</span>
+            <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Carousel Wrapper -->
+        <div class="relative">
+          <div class="swiper prod-swiper-1 prod-swiper">
+            <div class="swiper-wrapper">
+              
+              <!-- Card 1 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <img src="../assets/p-kallax.png" alt="KALLAX 칼락스 선반유닛" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </button>
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">KALLAX 칼락스 선반유닛</h3>
+                      <p class="mt-1 text-xs text-ink-muted">화이트, 77x147 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩89,900</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark hover:shadow transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <img src="../assets/images/products/malm.png" alt="MALM 말름 침대 프레임" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </button>
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">MALM 말름 침대 프레임</h3>
+                      <p class="mt-1 text-xs text-ink-muted">화이트 오크무늬, 150x200 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩299,000</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark hover:shadow transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <img src="../assets/p-poang.png" alt="POÄNG 포엥 암체어" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </button>
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">POÄNG 포엥 암체어</h3>
+                      <p class="mt-1 text-xs text-ink-muted">자작나무무늬/크니사 라이트베이지</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩129,000</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark hover:shadow transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <img src="../assets/images/products/nordli.png" alt="HEMNES 헴네스 서랍장" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </button>
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">HEMNES 헴네스 서랍장</h3>
+                      <p class="mt-1 text-xs text-ink-muted">화이트 스테인, 108x96 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩249,000</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark hover:shadow transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 5 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <img src="../assets/images/products/markus.png" alt="MARKUS 마르쿠스 의자" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </button>
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">MARKUS 마르쿠스 의자</h3>
+                      <p class="mt-1 text-xs text-ink-muted">블랙 글로세, 사무용 인체공학</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩199,000</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark hover:shadow transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+            </div>
+          </div>
+          <!-- Custom Nav Controls -->
+          <button type="button" class="swiper-button-prev-custom prev-1 -left-5" aria-label="이전 추천 상품 보기">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button type="button" class="swiper-button-next-custom next-1 -right-5" aria-label="다음 추천 상품 보기">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- SECTION 2: 신제품 Carousel -->
+      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-new">
+        
+        <!-- Header -->
+        <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
+          <div>
+            <h2 id="heading-new" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">
+              신제품
+            </h2>
+            <p class="mt-1 text-sm text-ink-sub">
+              이번 달 출시된 신제품 추천 영역입니다.
+            </p>
+          </div>
+          <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <span>전체 보기</span>
+            <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Carousel Wrapper -->
+        <div class="relative">
+          <div class="swiper prod-swiper-2 prod-swiper">
+            <div class="swiper-wrapper">
+
+              <!-- Card 1 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                    <img src="../assets/p-billy.png" alt="BILLY 빌리 책장" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">BILLY 빌리 책장</h3>
+                      <p class="mt-1 text-xs text-ink-muted">화이트, 80x28x202 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩59,900</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                    <img src="../assets/p-lack.png" alt="LACK 라크 사이드테이블" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">LACK 라크 사이드테이블</h3>
+                      <p class="mt-1 text-xs text-ink-muted">블랙브라운, 55x55 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩9,900</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                    <img src="../assets/images/products/bekant.png" alt="ALEX 알렉스 서랍유닛" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">ALEX 알렉스 서랍유닛</h3>
+                      <p class="mt-1 text-xs text-ink-muted">화이트, 36x70 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩89,900</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                    <img src="../assets/images/products/nordli.png" alt="NORDLI 노르들리 수납콤비네이션" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">NORDLI 노르들리 수납콤비네이션</h3>
+                      <p class="mt-1 text-xs text-ink-muted">화이트, 160x99 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩399,000</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Card 5 -->
+              <div class="swiper-slide">
+                <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                    <img src="../assets/images/products/ekedalen.png" alt="EKEDALEN 에케달렌 식탁" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                  </div>
+                  <div class="mt-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">EKEDALEN 에케달렌 확장식탁</h3>
+                      <p class="mt-1 text-xs text-ink-muted">화이트, 120/180x80 cm</p>
+                      <p class="mt-3 text-lg font-extrabold text-price">₩279,000</p>
+                    </div>
+                    <button type="button" class="mt-4 w-full rounded-lg bg-brand py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                      구매하기
+                    </button>
+                  </div>
+                </article>
+              </div>
+
+            </div>
+          </div>
+          <!-- Custom Nav Controls -->
+          <button type="button" class="swiper-button-prev-custom prev-2 -left-5" aria-label="이전 신제품 보기">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button type="button" class="swiper-button-next-custom next-2 -right-5" aria-label="다음 신제품 보기">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- SECTION 3: 인테리어 아이디어 (Shoppable Showcase) -->
+      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-ideas">
+        
+        <!-- Header -->
+        <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
+          <div>
+            <h2 id="heading-ideas" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">
+              도움이 될 만한 인테리어 아이디어
+            </h2>
+            <p class="mt-1 text-sm text-ink-sub">
+              콘텐츠 기반 쇼핑경험 페이지입니다.
+            </p>
+          </div>
+          <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <span>전체 보기</span>
+            <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- 2 Column Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Card 1 -->
+          <a href="styling.html" class="group relative overflow-hidden rounded-2xl bg-slate-100 shadow-md hover:shadow-2xl transition-all duration-500">
+            <div class="h-[360px] md:h-[400px] w-full overflow-hidden">
+              <img src="../assets/p-showcase-1.png" alt="화이트 모던 스타일 수납 제안" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8 text-white">
+              <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2">INTERIOR STYLING</span>
+              <h3 class="text-xl md:text-2xl font-bold leading-snug text-white group-hover:text-yellow-300 transition-colors">
+                화이트 모던 스타일 수납 제안
+              </h3>
+              <p class="mt-2 text-xs md:text-sm text-gray-200 line-clamp-2">
+                깔끔한 선과 화이트 톤으로 구성된 서재 및 다이닝 수납 아이디어로 더 넓은 공간감을 완성하세요.
+              </p>
+            </div>
+          </a>
+
+          <!-- Card 2 -->
+          <a href="styling.html" class="group relative overflow-hidden rounded-2xl bg-slate-100 shadow-md hover:shadow-2xl transition-all duration-500">
+            <div class="h-[360px] md:h-[400px] w-full overflow-hidden">
+              <img src="../assets/p-showcase-2.png" alt="원목과 스틸의 내추럴 인테리어 스타일링" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8 text-white">
+              <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2">NATURAL LIVING</span>
+              <h3 class="text-xl md:text-2xl font-bold leading-snug text-white group-hover:text-yellow-300 transition-colors">
+                원목과 스틸의 내추럴 인테리어 스타일링
+              </h3>
+              <p class="mt-2 text-xs md:text-sm text-gray-200 line-clamp-2">
+                자연 친화적 소재와 모던한 스틸 구조의 조화로 아늑하면서도 세련된 분위기를 선보입니다.
+              </p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- SECTION 4: 이케아 쇼룸 둘러보기 (Showroom Sets) -->
+      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-showroom">
+        
+        <!-- Header -->
+        <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
+          <div>
+            <h2 id="heading-showroom" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">
+              이케아 쇼룸 둘러보기
+            </h2>
+            <p class="mt-1 text-sm text-ink-sub">
+              실제 매장에서 만나볼 수 있는 쇼룸을 온라인으로 미리 체험해보세요.
+            </p>
+          </div>
+          <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <span>전체 보기</span>
+            <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- 3 Column Room Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- Room Set 1 -->
+          <article class="flex flex-col overflow-hidden rounded-2xl border border-line-light bg-white shadow-sm hover:shadow-xl transition-all duration-300 group">
+            <div class="h-[220px] w-full overflow-hidden bg-bg-light">
+              <img src="../assets/p-after-room.png" alt="오늘의 세트 - 1인 거실 꾸미기" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+            </div>
+            <div class="flex flex-col flex-1 justify-between p-5">
+              <div>
+                <h3 class="text-lg font-bold text-ink group-hover:text-brand transition-colors">오늘의 세트 - 1인 거실 꾸미기</h3>
+                <p class="mt-1 text-xs text-ink-muted leading-relaxed">소프트 토너, 플로어 램프 &amp; 쿠션 세트</p>
+              </div>
+              <a href="#" class="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-brand py-3 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                이 공간 한번 보기 ₩189,000
+              </a>
+            </div>
+          </article>
+
+          <!-- Room Set 2 -->
+          <article class="flex flex-col overflow-hidden rounded-2xl border border-line-light bg-white shadow-sm hover:shadow-xl transition-all duration-300 group">
+            <div class="h-[220px] w-full overflow-hidden bg-bg-light">
+              <img src="../assets/seungwoon/images/gallery-mini-kitchen.png" alt="미니멀 홈 오피스 세트" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+            </div>
+            <div class="flex flex-col flex-1 justify-between p-5">
+              <div>
+                <h3 class="text-lg font-bold text-ink group-hover:text-brand transition-colors">미니멀 홈 오피스 세트</h3>
+                <p class="mt-1 text-xs text-ink-muted leading-relaxed">데스크, 체어, 수납장 &amp; 조명 세트</p>
+              </div>
+              <a href="#" class="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-brand py-3 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                이 공간 한번 보기 ₩389,000
+              </a>
+            </div>
+          </article>
+
+          <!-- Room Set 3 -->
+          <article class="flex flex-col overflow-hidden rounded-2xl border border-line-light bg-white shadow-sm hover:shadow-xl transition-all duration-300 group">
+            <div class="h-[220px] w-full overflow-hidden bg-bg-light">
+              <img src="../assets/seungwoon/images/gallery-closet-storage.png" alt="아늑한 침실 세트" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+            </div>
+            <div class="flex flex-col flex-1 justify-between p-5">
+              <div>
+                <h3 class="text-lg font-bold text-ink group-hover:text-brand transition-colors">아늑한 침실 세트</h3>
+                <p class="mt-1 text-xs text-ink-muted leading-relaxed">침대 프레임, 매트리스 &amp; 사이드 테이블</p>
+              </div>
+              <a href="#" class="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-brand py-3 text-xs font-bold text-white shadow-sm hover:bg-brand-dark transition-all">
+                이 공간 한번 보기 ₩549,000
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- SECTION 5: 이케아 코리아 인스타그램 (Instagram Feed) -->
+      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-insta">
+        
+        <!-- Header -->
+        <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
+          <div>
+            <h2 id="heading-insta" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">
+              이케아 코리아 인스타그램
+            </h2>
+            <p class="mt-1 text-sm text-ink-sub font-medium">
+              <span class="text-brand font-bold">@ikeakr</span>의 최신 인스타그램 게시물
+            </p>
+          </div>
+          <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <span>전체 보기</span>
+            <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- 4 Column Instagram Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          
+          <!-- Post 1 -->
+          <a href="#" class="group relative block h-56 md:h-64 overflow-hidden rounded-xl bg-slate-100 shadow-sm">
+            <img src="../assets/seungwoon/images/featured-campaign.png" alt="인스타그램 게시물 1" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-brand/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+              <div class="text-center">
+                <svg class="h-8 w-8 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span class="mt-2 block text-xs font-bold">@ikeakr에서 보기</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Post 2 -->
+          <a href="#" class="group relative block h-56 md:h-64 overflow-hidden rounded-xl bg-slate-100 shadow-sm">
+            <img src="../assets/seungwoon/images/gallery-home-garden.png" alt="인스타그램 게시물 2" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-brand/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+              <div class="text-center">
+                <svg class="h-8 w-8 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span class="mt-2 block text-xs font-bold">@ikeakr에서 보기</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Post 3 -->
+          <a href="#" class="group relative block h-56 md:h-64 overflow-hidden rounded-xl bg-slate-100 shadow-sm">
+            <img src="../assets/seungwoon/images/featured-article-sustainable.png" alt="인스타그램 게시물 3" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-brand/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+              <div class="text-center">
+                <svg class="h-8 w-8 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span class="mt-2 block text-xs font-bold">@ikeakr에서 보기</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Post 4 -->
+          <a href="#" class="group relative block h-56 md:h-64 overflow-hidden rounded-xl bg-slate-100 shadow-sm">
+            <img src="../assets/seungwoon/images/gallery-kids-room.png" alt="인스타그램 게시물 4" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-brand/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+              <div class="text-center">
+                <svg class="h-8 w-8 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span class="mt-2 block text-xs font-bold">@ikeakr에서 보기</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- SECTION 6: 실제 고객들의 후기 (Customer Reviews) -->
+      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-reviews">
+        
+        <!-- Header -->
+        <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
+          <div>
+            <h2 id="heading-reviews" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">
+              실제 고객들의 후기
+            </h2>
+            <p class="mt-1 text-sm text-ink-sub">
+              이케아 제품을 사용하는 고객님들의 생생한 후기를 확인하세요.
+            </p>
+          </div>
+          <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <span>전체 보기</span>
+            <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- 3 Column Review Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- Review 1 -->
+          <article class="flex flex-col justify-between rounded-2xl border border-line-light bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div>
+              <!-- Stars -->
+              <div class="flex items-center gap-1 text-accent" aria-label="5점 만점에 5점">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <p class="mt-4 text-sm text-ink font-medium leading-relaxed">
+                "KALLAX 칼락스 수납함 조립도 쉽고 거실 인테리어 모듈과 딱 맞아요! 깔끔하게 정돈되어 매우 만족합니다."
+              </p>
+            </div>
+            <div class="mt-6 flex items-center gap-3 border-t border-line-light/60 pt-4">
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand/10 text-brand font-bold text-sm">
+                김
+              </div>
+              <div>
+                <p class="text-xs font-bold text-ink">김*수 님</p>
+                <p class="text-[11px] text-ink-muted">조립 서비스 이용 구매자</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 2 -->
+          <article class="flex flex-col justify-between rounded-2xl border border-line-light bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div>
+              <!-- Stars -->
+              <div class="flex items-center gap-1 text-accent" aria-label="5점 만점에 5점">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <p class="mt-4 text-sm text-ink font-medium leading-relaxed">
+                "MALM 침대 프레임 하단 서랍 수납 공간이 넓어서 안 쓰는 이불 보관하기에 너무 유용합니다. 배송도 빨랐어요!"
+              </p>
+            </div>
+            <div class="mt-6 flex items-center gap-3 border-t border-line-light/60 pt-4">
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand/10 text-brand font-bold text-sm">
+                이
+              </div>
+              <div>
+                <p class="text-xs font-bold text-ink">이*진 님</p>
+                <p class="text-[11px] text-ink-muted">택배 배송 서비스 구매자</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 3 -->
+          <article class="flex flex-col justify-between rounded-2xl border border-line-light bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div>
+              <!-- Stars -->
+              <div class="flex items-center gap-1 text-accent" aria-label="5점 만점에 5점">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <p class="mt-4 text-sm text-ink font-medium leading-relaxed">
+                "POÄNG 포엥 암체어 쿠션과 목 받침 착좌감이 뛰어나 서재용 휴식 의자로 매일 이용하고 있습니다."
+              </p>
+            </div>
+            <div class="mt-6 flex items-center gap-3 border-t border-line-light/60 pt-4">
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand/10 text-brand font-bold text-sm">
+                박
+              </div>
+              <div>
+                <p class="text-xs font-bold text-ink">박*우 님</p>
+                <p class="text-[11px] text-ink-muted">매장 픽업 구매자</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
+      <div class="mx-auto max-w-[1280px] px-5 py-12 lg:px-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+          <!-- Col 1 -->
+          <div>
+            <img src="../assets/logo-ikea.svg" alt="IKEA" width="80" height="32" class="h-8 w-auto mb-4">
+            <p class="text-xs leading-relaxed text-ink-muted">
+              IKEA 코리아는 더 많은 사람들을 위해 더 나은 일상을 만듭니다. 고품질의 지속 가능한 가구와 홈퍼니싱 솔루션을 합리적인 가격에 만나보세요.
+            </p>
+          </div>
+
+          <!-- Col 2 -->
+          <div>
+            <h3 class="text-sm font-bold text-ink mb-3">고객 지원</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="#" class="hover:text-brand hover:underline">고객지원센터</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문(FAQ)</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">반품 및 환불 규정</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">제품 회수 및 리콜 정보</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3 -->
+          <div>
+            <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
+              <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 4 -->
+          <div>
+            <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
+            <p class="text-lg font-extrabold text-brand">1670-4532</p>
+            <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
+            <div class="mt-4 flex items-center gap-3">
+              <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
+          <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+          <div class="flex gap-4">
+            <a href="#" class="hover:underline">개인정보처리방침</a>
+            <a href="#" class="hover:underline">이용약관</a>
+            <a href="#" class="hover:underline">웹 접근성 고지</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript Interaction Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Swiper Carousel Initializations
+      // Category Swiper
+      const catSwiper = new Swiper('.cat-swiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        freeMode: true,
+        grabCursor: true
+      });
+
+      // Recommended Products Swiper
+      const prodSwiper1 = new Swiper('.prod-swiper-1', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        navigation: {
+          nextEl: '.next-1',
+          prevEl: '.prev-1',
+        },
+        breakpoints: {
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 4, spaceBetween: 24 }
+        }
+      });
+
+      // New Arrivals Swiper
+      const prodSwiper2 = new Swiper('.prod-swiper-2', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        navigation: {
+          nextEl: '.next-2',
+          prevEl: '.prev-2',
+        },
+        breakpoints: {
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 4, spaceBetween: 24 }
+        }
+      });
+
+      // 2. Mobile Menu Toggle
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileNav = document.getElementById('mobile-nav');
+
+      if (mobileBtn && mobileNav) {
+        mobileBtn.addEventListener('click', function() {
+          const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+          mobileBtn.setAttribute('aria-expanded', !isExpanded);
+          mobileNav.hidden = isExpanded;
+        });
+      }
+
+      // 3. GSAP ScrollReveal Animations
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const revealElements = document.querySelectorAll('.rv');
+        revealElements.forEach(function(el) {
+          gsap.fromTo(el, 
+            { opacity: 0, y: 36 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+              }
+            }
+          );
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
