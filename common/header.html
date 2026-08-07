@@ -1,0 +1,111 @@
+<header class="w-full bg-white">
+
+  <!-- 유틸리티 내비게이션 -->
+  <nav aria-label="유틸리티" class="hidden border-b border-line/50 lg:block">
+    <div class="mx-auto flex max-w-[1280px] items-center justify-between px-[140px] py-3 text-xs text-ink-2">
+      <ul class="flex gap-6">
+        <li><a class="hover:text-brand hover:underline" href="#">KR | 한국어</a></li>
+        <li><a class="hover:text-brand hover:underline" href="#">매장 찾기</a></li>
+        <li><a class="hover:text-brand hover:underline" href="#">고객지원</a></li>
+      </ul>
+      <ul class="flex gap-6">
+        <li><a class="hover:text-brand hover:underline" href="#">IKEA Family 멤버십</a></li>
+        <li><a class="hover:text-brand hover:underline" href="#">주문 배송 조회</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 주 내비게이션 -->
+  <div class="border-b border-line">
+    <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10 xl:gap-12">
+
+      <a href="#" class="relative block h-10 w-[98.36px] shrink-0" aria-label="IKEA 홈">
+        <img src="assets/logos/logo-a.svg" alt="" class="absolute inset-0 h-full w-full" aria-hidden="true">
+        <img src="assets/logos/logo-b.svg" alt="" class="absolute top-[5.82%] right-[1.95%] bottom-[5.83%] left-[1.95%] h-auto w-auto" aria-hidden="true">
+        <img src="assets/logos/logo-c.svg" alt="" class="absolute top-[28.88%] right-[7.82%] bottom-[32.7%] left-[10.73%] h-auto w-auto" aria-hidden="true">
+      </a>
+
+      <nav aria-label="주 메뉴" class="hidden lg:block">
+        <ul class="flex gap-6 text-sm font-bold whitespace-nowrap text-ink">
+          <li><a class="inline-block py-1 hover:text-brand" href="#">모든 제품</a></li>
+          <li><a class="inline-block border-b-2 border-brand py-1 text-brand" href="#" aria-current="page">공간별 쇼핑하기</a></li>
+          <li><a class="inline-block py-1 hover:text-brand" href="#">플래닝 &amp; 아이디어</a></li>
+          <li><a class="inline-block py-1 hover:text-brand" href="#">서비스</a></li>
+          <li><a class="inline-block py-1 hover:text-brand" href="#">세일</a></li>
+        </ul>
+      </nav>
+
+      <form class="ml-auto hidden max-w-[278px] flex-1 lg:block" role="search" action="#">
+        <label for="q" class="hide">제품 검색</label>
+        <div class="flex h-10 items-center gap-3 rounded-[20px] border border-line bg-white px-4 focus-within:border-brand">
+          <img src="assets/icons/search.svg" alt="" width="14" height="14" class="h-[14px] w-[14px] shrink-0" aria-hidden="true">
+          <input id="q" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+                 class="min-w-0 flex-1 bg-transparent text-xs text-ink placeholder:text-ink-3 focus:outline-none">
+          <button type="button" class="shrink-0" aria-label="이미지로 검색">
+            <img src="assets/icons/cam.svg" alt="" width="24" height="24" class="h-6 w-6" aria-hidden="true">
+          </button>
+        </div>
+      </form>
+
+      <ul class="ml-auto hidden items-center gap-2.5 lg:flex lg:ml-0">
+        <li>
+          <a href="#" class="flex items-center gap-2 whitespace-nowrap hover:text-brand">
+            <img src="assets/icons/user.svg" alt="" width="24" height="24" class="h-6 w-6" aria-hidden="true">
+            <span class="text-xs">사용자</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center gap-2 whitespace-nowrap hover:text-brand">
+            <img src="assets/icons/heart.svg" alt="" width="24" height="24" class="h-6 w-6" aria-hidden="true">
+            <span class="text-xs">위시리스트</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center gap-2 whitespace-nowrap hover:text-brand">
+            <img src="assets/icons/bag.svg" alt="" width="24" height="24" class="h-6 w-6" aria-hidden="true">
+            <span class="text-xs">장바구니</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- 모바일 액션 -->
+      <div class="ml-auto flex items-center gap-1 lg:hidden">
+        <a href="#" class="p-2" aria-label="장바구니">
+          <img src="assets/icons/bag.svg" alt="" width="24" height="24" class="h-6 w-6" aria-hidden="true">
+        </a>
+        <button id="mbtn" type="button" class="p-2" aria-expanded="false" aria-controls="mnav" aria-label="메뉴 열기">
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="mt-1.5 block h-0.5 w-6 bg-ink"></span>
+          <span class="mt-1.5 block h-0.5 w-6 bg-ink"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 모바일 메뉴 -->
+  <nav id="mnav" aria-label="모바일 메뉴" hidden class="overflow-hidden border-b border-line bg-white lg:hidden">
+    <div class="px-5 py-4">
+      <form role="search" action="#" class="mb-4">
+        <label for="qm" class="hide">제품 검색</label>
+        <div class="flex h-11 items-center gap-3 rounded-[20px] border border-line px-4 focus-within:border-brand">
+          <img src="assets/icons/search.svg" alt="" width="14" height="14" class="h-[14px] w-[14px]" aria-hidden="true">
+          <input id="qm" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+                 class="min-w-0 flex-1 bg-transparent text-sm placeholder:text-ink-3 focus:outline-none">
+        </div>
+      </form>
+      <ul class="flex flex-col text-base font-bold">
+        <li><a class="block border-b border-line/50 py-3" href="#">모든 제품</a></li>
+        <li><a class="block border-b border-line/50 py-3 text-brand" href="#" aria-current="page">공간별 쇼핑하기</a></li>
+        <li><a class="block border-b border-line/50 py-3" href="#">플래닝 &amp; 아이디어</a></li>
+        <li><a class="block border-b border-line/50 py-3" href="#">서비스</a></li>
+        <li><a class="block border-b border-line/50 py-3" href="#">세일</a></li>
+      </ul>
+      <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-ink-2">
+        <li><a href="#">매장 찾기</a></li>
+        <li><a href="#">고객지원</a></li>
+        <li><a href="#">IKEA Family 멤버십</a></li>
+        <li><a href="#">주문 배송 조회</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
