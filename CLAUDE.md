@@ -2,6 +2,8 @@
 
 @GO.md를 준수해
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 ## 이 폴더의 성격
 
 F:\harness는 단일 프로젝트가 아니다.
