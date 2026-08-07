@@ -277,109 +277,123 @@
     <!-- Main Content Body -->
     <main id="main-content" class="flex-1">
 
-      <!-- SECTION: Category Icon Row (Swiper Carousel) -->
+      <!-- SECTION: Category Icon Row (2 Rows of 7 Items matching Figma HIFI Frame) -->
       <section class="py-8 bg-white border-b border-line-light/50 overflow-hidden" aria-label="카테고리 탐색">
         <div class="mx-auto max-w-[1280px] px-5 lg:px-10">
-          <div class="swiper cat-swiper">
-            <div class="swiper-wrapper flex items-center">
-              
-              <!-- Cat 1: 전체 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-brand/30 bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/cat-all.png" alt="모든제품" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">모든제품</span>
+          <div class="grid grid-cols-4 sm:grid-cols-7 gap-y-6 gap-x-4 items-center justify-items-center">
+            
+            <!-- Row 1: Item 1 - 모든제품 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-brand/30 bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/cat-all.png" alt="모든제품" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">모든제품</span>
+            </a>
 
-              <!-- Cat 2: 침대 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/cat-bed.png" alt="침대" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">침대</span>
+            <!-- Row 1: Item 2 - 침대 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/cat-bed.png" alt="침대" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">침대</span>
+            </a>
 
-              <!-- Cat 3: 책상 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/cat-desk.png" alt="책상" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">책상</span>
+            <!-- Row 1: Item 3 - 책상 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/cat-desk.png" alt="책상" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">책상</span>
+            </a>
 
-              <!-- Cat 4: 의자 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/cat-chair.png" alt="의자" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">의자</span>
+            <!-- Row 1: Item 4 - 의자 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/cat-chair.png" alt="의자" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">의자</span>
+            </a>
 
-              <!-- Cat 5: 수납장 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/cat-storage.png" alt="수납장" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">수납장</span>
+            <!-- Row 1: Item 5 - 수납장 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/cat-storage.png" alt="수납장" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">수납장</span>
+            </a>
 
-              <!-- Cat 6: 식탁 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/cat-table.png" alt="식탁" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">식탁</span>
+            <!-- Row 1: Item 6 - 식탁 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/cat-table.png" alt="식탁" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">식탁</span>
+            </a>
 
-              <!-- Cat 7: 서랍장 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/images/products/nordli.png" alt="서랍장" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">서랍장</span>
+            <!-- Row 1: Item 7 - 서랍장 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/images/products/nordli.png" alt="서랍장" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">서랍장</span>
+            </a>
 
-              <!-- Cat 8: 선반 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/p-billy.png" alt="선반" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">선반</span>
+            <!-- Row 2: Item 8 - 선반 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/p-billy.png" alt="선반" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">선반</span>
+            </a>
 
-              <!-- Cat 9: TV장 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/images/products/stockholm.png" alt="TV장" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">TV장</span>
+            <!-- Row 2: Item 9 - TV장 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/images/products/stockholm.png" alt="TV장" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">TV장</span>
+            </a>
 
-              <!-- Cat 10: 소파 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/images/products/kivik.png" alt="소파" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">소파</span>
+            <!-- Row 2: Item 10 - 소파 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/images/products/kivik.png" alt="소파" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">소파</span>
+            </a>
 
-              <!-- Cat 11: 조명 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/images/products/ostano.png" alt="조명" width="56" height="56" class="h-14 w-14 object-contain">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">조명</span>
+            <!-- Row 2: Item 11 - 화분 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/seungwoon/images/gallery-home-garden.png" alt="화분" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">화분</span>
+            </a>
 
-              <!-- Cat 12: 러그 -->
-              <div class="swiper-slide text-center group cursor-pointer">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="../assets/p-showcase-2.png" alt="러그" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">러그</span>
+            <!-- Row 2: Item 12 - 조명 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/images/products/ostano.png" alt="조명" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">조명</span>
+            </a>
 
-            </div>
+            <!-- Row 2: Item 13 - 러그 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/p-showcase-2.png" alt="러그" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
+              </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">러그</span>
+            </a>
+
+            <!-- Row 2: Item 14 - 커튼 -->
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+              <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
+                <img src="../assets/seungwoon/images/gallery-kids-room.png" alt="커튼" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
+              </div>
+              <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">커튼</span>
+            </a>
+
           </div>
         </div>
       </section>
