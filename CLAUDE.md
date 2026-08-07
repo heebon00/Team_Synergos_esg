@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+@GO.md를 준수해
 
 ## 이 폴더의 성격
 
