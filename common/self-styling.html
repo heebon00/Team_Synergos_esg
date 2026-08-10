@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="IKEA 서비스 – 픽업, 배송, 조립&amp;설치, 주문&amp;결제 및 고객 서비스까지 이케아가 준비한 다양한 서비스를 만나보세요.">
-<title>이케아 서비스 | IKEA</title>
+<meta name="description" content="IKEA 셀프 스타일링 – 무료 온라인 3D 플래닝 툴로 나만의 공간을 직접 설계해보세요.">
+<title>셀프 스타일링 | IKEA</title>
 
 <script>
   var d = document.documentElement;
@@ -15,11 +15,10 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+<link rel="stylesheet" href="../assets/fonts/pretendard.css">
 
 <style type="text/tailwindcss">
   @theme {
-    --color-white: #FFFFFF;
     --color-brand: #0051BA;
     --color-brand-dark: #003D8F;
     --color-accent: #FFC900;
@@ -88,20 +87,10 @@
     border: 0;
   }
 
-  /* 스크롤 등장 요소: JS가 살아있고 모션 허용일 때만 감춘다 */
-  .js:not(.no-motion) .rv { opacity: 0; }
-
-  /* Swiper 커스텀 */
-  .swiper-slide { height: auto; }
-  .cat-sw .swiper-slide { width: 80px; }
-  /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
-  .prod-sw { padding: 10px 2px 26px; }
-  .nav-btn[aria-disabled="true"] { opacity: .3; }
-
   /* 건너뛰기 링크 */
   .skip {
     position: absolute; left: 16px; top: -80px; z-index: 100;
-    background: var(--color-white); color: var(--color-brand);
+    background: white; color: var(--color-brand);
     border: 2px solid var(--color-brand); border-radius: 8px;
     padding: 12px 20px; font-weight: 700;
     transition: top .15s ease-out;
@@ -110,13 +99,13 @@
 </style>
 </head>
 
-<body class="bg-white text-ink flex flex-col min-h-screen">
+<body class="bg-white text-ink">
 
 <a class="skip" href="#main">본문 바로가기</a>
 
-<div id="wrap" class="flex-1 flex flex-col">
+<div id="wrap">
 
-<!-- SEGMENT: Header -->
+<!-- ================= 헤더 ================= -->
 <header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
 
   <!-- 1. Utility Navigation -->
@@ -146,7 +135,7 @@
     <nav aria-label="주 메뉴" class="hidden lg:block">
       <ul class="flex items-center gap-6 text-sm font-bold text-ink" id="desktop-nav-menu">
         <li class="relative">
-          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group" data-tab="all" href="category.html">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group" data-tab="all" href="#">
             <span>모든 제품</span>
           </a>
         </li>
@@ -161,12 +150,12 @@
           </a>
         </li>
         <li class="relative">
-          <a class="nav-link py-2 px-1 hover:text-brand text-brand font-extrabold border-b-2 border-brand transition-colors flex items-center gap-1 group" data-tab="service" href="service.html" aria-current="page">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group" data-tab="service" href="#">
             <span>서비스</span>
           </a>
         </li>
         <li class="relative">
-          <a class="nav-link py-2 px-1 hover:text-brand text-red-600 transition-colors flex items-center gap-1 group" data-tab="sale" href="sale.html">
+          <a class="nav-link py-2 px-1 hover:text-brand text-red-600 transition-colors flex items-center gap-1 group" data-tab="sale" href="#">
             <span>세일</span>
           </a>
         </li>
@@ -243,31 +232,31 @@
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">수납가구</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">침구/러그</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9V6a2 2 0 00-2-2H7a2 2 0 00-2 2v3M3 11v5a2 2 0 002 2h14a2 2 0 002-2v-5a2 2 0 00-2-2H5a2 2 0 00-2 2zm3 7v2m12-2v2"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">소파/의자</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v3m-4-3v3m8-3v3M4 9h16v8a3 3 0 01-3 3H7a3 3 0 01-3-3V9zm-2 3h2m16 0h2"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">주방가구</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
             </div>
@@ -280,31 +269,31 @@
 
         <!-- Column 2 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm4 4h.01M12 15a3 3 0 100-6 3 3 0 000 6z"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">세탁/청소가구</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4L12 9L17 4M21 9V19a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">가전제품</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2h-4a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zm10 0a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4z"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">타일/벽지</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">식품</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
             </div>
@@ -317,19 +306,19 @@
 
         <!-- Column 3 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">아웃도어</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20A7 7 0 014 13V6a2 2 0 012-2h7a7 7 0 017 7v7a2 2 0 01-2 2h-7zM2 21l9-9"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">가드닝/조경</span>
           </a>
-          <a href="category.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
             </div>
@@ -452,11 +441,11 @@
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">추천 스타일링</span>
           </a>
-          <a href="ideas.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
             </div>
-            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">홈퍼니싱 아이디어</span>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">구매상담</span>
           </a>
         </div>
       </div>
@@ -467,19 +456,19 @@
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="service.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8h4l3 3v5a1 1 0 01-1 1h-1m-6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">배송 서비스</span>
           </a>
-          <a href="service.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">조립/설치 서비스</span>
           </a>
-          <a href="service.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             </div>
@@ -532,122 +521,133 @@
       </div>
     </form>
     <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
-      <li><a class="block py-3 text-ink hover:text-brand" href="category.html">모든 제품</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="#">모든 제품</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="category.html">공간별 쇼핑하기</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
-      <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
-      <li><a class="block py-3 text-red-600 font-extrabold" href="sale.html">세일</a></li>
-    </ul>
-  </nav>
-</header>
-      <li><a class="block py-3 text-ink hover:text-brand" href="category.html">공간별 쇼핑하기</a></li>
-      <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
-      <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="#">서비스</a></li>
       <li><a class="block py-3 text-red-600" href="#">세일</a></li>
     </ul>
   </nav>
 </header>
-<!-- /SEGMENT: Header -->
+<!-- /헤더 -->
 
-<!-- MAIN CONTENT -->
-<main id="main" class="flex-1">
+<!-- ================= 본문 ================= -->
+<main id="main" tabindex="-1">
 
-  <!-- SEGMENT: Breadcrumbs -->
-  <nav aria-label="브레드크럼" class="w-full border-b border-line/40 bg-white">
-    <div class="mx-auto flex max-w-container items-center gap-2 px-5 py-3 text-xs text-muted lg:px-10">
-      <a href="../index.html" class="hover:text-brand hover:underline">홈</a>
-      <span class="text-gray-400" aria-hidden="true">&gt;</span>
-      <span class="font-medium text-ink" aria-current="page">서비스</span>
-    </div>
+  <!-- 이동 경로 -->
+  <nav aria-label="이동 경로" class="mx-auto max-w-container px-5 py-3 lg:px-10">
+    <ol class="flex flex-wrap items-center gap-2 text-xs text-muted">
+      <li><a class="hover:text-brand hover:underline" href="../index.html">홈</a></li>
+      <li aria-hidden="true">&gt;</li>
+      <li><a class="hover:text-brand hover:underline" href="styling.html">플래닝 &amp; 아이디어</a></li>
+      <li aria-hidden="true">&gt;</li>
+      <li><span aria-current="page" class="text-ink">셀프 스타일링</span></li>
+    </ol>
   </nav>
-  <!-- /SEGMENT: Breadcrumbs -->
 
-  <!-- SEGMENT: HeroService -->
-  <section class="w-full bg-white border-b border-line">
-    <div class="mx-auto flex max-w-container flex-col items-start gap-10 px-5 py-12 lg:flex-row lg:items-center lg:gap-16 lg:px-20 lg:py-20">
-      <!-- Hero Text -->
-      <div class="flex flex-1 flex-col items-start gap-6 text-left">
-        <span class="inline-flex items-center rounded-full border border-ink px-3 py-2 text-sm font-bold tracking-wide text-ink">
-          REDESIGN PROPOSAL
-        </span>
-        <h1 class="text-4xl font-extrabold tracking-tight text-ink lg:text-6xl">
-          이케아 서비스
-        </h1>
-        <p class="max-w-md text-base leading-relaxed text-ink-2 lg:text-lg">
-          픽업부터 배송, 조립 및 매장 상담까지, 이케아가 준비한 다양한 서비스를 통해 편리하게 홈퍼니싱을 완성해보세요. 고객님의 라이프스타일에 맞춘 다양한 솔루션과 합리적인 정찰제 요금 시스템을 새롭게 제안합니다.
-        </p>
+  <!-- 어떻게 진행되나요 -->
+  <section aria-labelledby="h-steps" class="mx-auto max-w-container px-5 py-10 lg:px-20">
+    <h2 id="h-steps" class="text-center text-2xl font-extrabold text-ink lg:text-3xl">어떻게 진행되나요?</h2>
+
+    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div class="flex flex-col gap-3 rounded-xl border border-line-light p-8">
+        <div class="grid size-10 place-items-center rounded-full bg-brand text-base font-bold text-white">1</div>
+        <div class="flex flex-col gap-1">
+          <h3 class="text-base font-semibold text-ink">공간 선택 &amp; 측정</h3>
+          <p class="text-sm leading-relaxed text-muted">주방, 옷장 등 플래닝하려는 공간을 지정하고 크기를 입력합니다.</p>
+        </div>
       </div>
-      <!-- Hero Image Grid -->
-      <div class="grid w-full max-w-xl flex-1 grid-cols-2 gap-2">
-        <div class="overflow-hidden rounded border border-line">
-          <img src="../assets/images/services/hero.png" alt="이케아 배송 기사가 고객 자택 앞에서 상품을 전달하는 모습" class="h-40 w-full object-cover lg:h-56">
+      <div class="flex flex-col gap-3 rounded-xl border border-line-light p-8">
+        <div class="grid size-10 place-items-center rounded-full bg-brand text-base font-bold text-white">2</div>
+        <div class="flex flex-col gap-1">
+          <h3 class="text-base font-semibold text-ink">가구 배치</h3>
+          <p class="text-sm leading-relaxed text-muted">IKEA 카탈로그의 수많은 가구와 소품을 마우스 드래그로 원하는 위치에 놓습니다.</p>
         </div>
-        <div class="overflow-hidden rounded border border-line">
-          <img src="../assets/images/services/hero.png" alt="" class="h-40 w-full object-cover lg:h-56">
-        </div>
-        <div class="overflow-hidden rounded border border-line">
-          <img src="../assets/images/services/hero.png" alt="" class="h-40 w-full object-cover lg:h-56">
-        </div>
-        <div class="overflow-hidden rounded border border-line">
-          <img src="../assets/images/services/hero.png" alt="" class="h-40 w-full object-cover lg:h-56">
+      </div>
+      <div class="flex flex-col gap-3 rounded-xl border border-line-light p-8">
+        <div class="grid size-10 place-items-center rounded-full bg-brand text-base font-bold text-white">3</div>
+        <div class="flex flex-col gap-1">
+          <h3 class="text-base font-bold text-ink">견적 확인 &amp; 저장</h3>
+          <p class="text-sm leading-relaxed text-ink-2">완성된 설계 디자인의 상세 제품 목록과 가격표를 한눈에 검토합니다.</p>
         </div>
       </div>
     </div>
   </section>
-  <!-- /SEGMENT: HeroService -->
 
-  <!-- SEGMENT: PopularServices -->
-  <section class="w-full bg-white py-16 lg:py-20">
-    <div class="mx-auto flex max-w-container flex-col items-start gap-8 px-5 lg:gap-12 lg:px-20">
-      <div class="flex flex-col gap-1">
-        <h2 class="text-2xl font-bold text-ink lg:text-3xl">자주 찾는 서비스</h2>
-        <p class="text-sm text-muted lg:text-base">고객님이 가장 많이 이용하시는 이케아 대표 서비스를 빠르게 찾아보세요.</p>
+  <!-- 셀프 스타일링 히어로 -->
+  <section aria-labelledby="h-hero" class="mx-auto max-w-container px-5 py-10 lg:px-20">
+    <div class="flex flex-col items-center gap-8 rounded-xl border border-line bg-shell p-8 lg:flex-row lg:gap-12 lg:p-16">
+      <div class="flex flex-1 flex-col items-start gap-5">
+        <p class="text-sm font-bold uppercase tracking-wide text-link">Online 3D Planning Tool</p>
+        <h1 id="h-hero" class="text-3xl font-extrabold leading-tight text-ink lg:text-4xl">나만의 공간, 직접 설계하세요</h1>
+        <p class="text-base leading-relaxed text-ink-2">컴퓨터나 태블릿으로 간편하게 IKEA 가구를 가상 배치해보세요. 실시간으로 공간 치수를 맞추고 어울리는 조합의 예상 견적까지 바로 확인할 수 있습니다.</p>
       </div>
-
-      <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
-        <!-- Service Card 1: 배송 서비스 -->
-        <div class="flex flex-col overflow-hidden rounded border border-line">
-          <div class="h-card-img w-full overflow-hidden border-b border-line">
-            <img src="../assets/images/services/delivery.png" alt="이케아 배송 기사가 실내에서 고객에게 상자를 전달하는 모습" class="h-full w-full object-cover">
-          </div>
-          <div class="flex flex-col items-start gap-3 px-5 pb-6 pt-5">
-            <h3 class="text-base font-bold text-ink">배송 서비스</h3>
-            <p class="text-base leading-relaxed text-ink-2">소형 소품부터 대형 가구까지 원하는 날짜에 정확하게 배송해 드립니다.</p>
-            <a href="#" class="text-base font-bold text-brand underline underline-offset-2 hover:text-brand-dark transition-colors">자세히 보기</a>
-          </div>
-        </div>
-
-        <!-- Service Card 2: 조립&설치 서비스 -->
-        <div class="flex flex-col overflow-hidden rounded border border-line">
-          <div class="h-card-img w-full overflow-hidden border-b border-line">
-            <img src="../assets/images/services/install.png" alt="이케아 설치 기사가 가정에서 가구를 조립하는 모습" class="h-full w-full object-cover">
-          </div>
-          <div class="flex flex-col items-start gap-3 px-5 pb-6 pt-5">
-            <h3 class="text-base font-bold text-ink">조립&amp;설치 서비스</h3>
-            <p class="text-base leading-relaxed text-ink-2">전문 설치팀이 구매하신 가구를 안전하고 완벽하게 조립해 드립니다.</p>
-            <a href="#" class="text-base font-bold text-brand underline underline-offset-2 hover:text-brand-dark transition-colors">자세히 보기</a>
-          </div>
-        </div>
-
-        <!-- Service Card 3: 주문&결제 및 고객 서비스 -->
-        <div class="flex flex-col overflow-hidden rounded border border-line">
-          <div class="h-card-img w-full overflow-hidden border-b border-line">
-            <img src="../assets/images/services/order.png" alt="이케아 매장 직원이 고객과 상담하는 모습" class="h-full w-full object-cover">
-          </div>
-          <div class="flex flex-col items-start gap-3 px-5 pb-6 pt-5">
-            <h3 class="text-base font-bold text-ink">주문&amp;결제 및 고객 서비스</h3>
-            <p class="text-base leading-relaxed text-ink-2">간편한 주문과 결제, 교환 및 반품 등 고객 서비스를 받아보세요.</p>
-            <a href="#" class="text-base font-bold text-brand underline underline-offset-2 hover:text-brand-dark transition-colors">자세히 보기</a>
-          </div>
-        </div>
+      <div class="w-full flex-1 shrink-0 overflow-hidden rounded-lg">
+        <img src="../assets/images/self-styling/hero.png" alt="태블릿으로 3D 공간을 설계하는 모습이 담긴 밝은 톤의 거실" width="560" height="320" loading="lazy" class="h-hero-img w-full object-cover">
       </div>
     </div>
   </section>
-  <!-- /SEGMENT: PopularServices -->
+
+  <!-- 카테고리별 플래너 도구 -->
+  <section aria-labelledby="h-tools" class="mx-auto max-w-container px-5 py-10 lg:px-20">
+    <h2 id="h-tools" class="text-center text-2xl font-extrabold text-ink lg:text-3xl">카테고리별 플래너 도구</h2>
+
+    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+      <article class="overflow-hidden rounded-lg border border-line bg-white">
+        <div class="h-card-img w-full overflow-hidden">
+          <img src="../assets/images/self-styling/tool.png" alt="주방 플래너 미리보기" width="357" height="200" loading="lazy" class="h-full w-full object-cover">
+        </div>
+        <div class="flex flex-col gap-3 p-6">
+          <h3 class="text-lg font-bold text-ink">주방 플래너</h3>
+          <p class="text-sm leading-relaxed text-ink-2">꿈꾸던 싱크대 레이아웃부터 빌트인 오븐, 아일랜드 수납장까지 공간 맞춤 주방 동선 설계.</p>
+        </div>
+      </article>
+      <article class="overflow-hidden rounded-lg border border-line bg-white">
+        <div class="h-card-img w-full overflow-hidden">
+          <img src="../assets/images/self-styling/tool.png" alt="홈오피스 플래너 미리보기" width="357" height="200" loading="lazy" class="h-full w-full object-cover">
+        </div>
+        <div class="flex flex-col gap-3 p-6">
+          <h3 class="text-lg font-bold text-ink">홈오피스 플래너</h3>
+          <p class="text-sm leading-relaxed text-ink-2">스탠딩 워크스페이스, 모듈형 서랍장, 조명 장치를 결합하여 몰입감을 높여주는 서재 스타일 가이드.</p>
+        </div>
+      </article>
+      <article class="overflow-hidden rounded-lg border border-line bg-white">
+        <div class="h-card-img w-full overflow-hidden">
+          <img src="../assets/images/self-styling/tool.png" alt="옷장 및 옷방 플래너 미리보기" width="357" height="200" loading="lazy" class="h-full w-full object-cover">
+        </div>
+        <div class="flex flex-col gap-3 p-6">
+          <h3 class="text-lg font-bold text-ink">옷장 &amp; 옷방 플래너</h3>
+          <p class="text-sm leading-relaxed text-ink-2">팍스(PAX) 등 옷장 모듈의 너비, 높이, 도어 디자인 및 내부 선반 액세서리 자유 배치 시뮬레이션.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 다크 CTA 배너 -->
+  <section class="mx-auto max-w-container px-5 py-6 lg:px-20">
+    <div class="flex flex-col items-center gap-4 rounded-lg bg-brand px-6 py-12 text-center">
+      <h2 class="text-xl font-bold text-white">지금 온라인 플래너를 통해 홈 퍼니싱을 직접 설계해보세요.</h2>
+      <p class="max-w-prose text-sm text-white/70">로그인 시 설계 도면을 계정에 저장하여 매장 및 예약상담 중 손쉽게 불러올 수 있습니다.</p>
+      <button type="button" class="rounded-lg bg-brand-dark px-8 py-3.5 text-base font-bold text-white hover:bg-navy transition-colors">3D 플래너 시작하기</button>
+    </div>
+  </section>
+
+  <!-- 셀프 3D 플래닝 무료 혜택 -->
+  <section aria-labelledby="h-free" class="mx-auto max-w-container px-5 py-10 pb-16 lg:px-20">
+    <div class="flex flex-col items-center gap-12 lg:flex-row">
+      <div class="w-full flex-1 shrink-0 overflow-hidden rounded-lg">
+        <img src="../assets/images/self-styling/info.png" alt="손으로 평면도를 그리며 공간을 계획하는 모습" width="440" height="260" loading="lazy" class="h-hero-img w-full object-cover">
+      </div>
+      <div class="flex flex-1 flex-col gap-4">
+        <h2 id="h-free" class="text-2xl font-extrabold text-ink">셀프 3D 플래닝 수수료 무료 혜택</h2>
+        <p class="text-base leading-relaxed text-ink-2">설계 단계에서 부과되는 플래너 도구 및 디자인북 사용 수수료는 365일 언제나 완전히 무료입니다. IKEA 가상 배치 시스템을 활용해 전문가 매칭 없이도 부담없이 셀프 견적과 인테리어 설계를 완성해보세요.</p>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<!-- SEGMENT: Footer -->
+<!-- ================= 푸터 ================= -->
 <footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
   <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -711,11 +711,18 @@
     </div>
   </div>
 </footer>
-<!-- /SEGMENT: Footer -->
 
-</div>
+</div><!-- /#wrap -->
 
 <script>
+function toggleMobileNav() {
+  var mnav = document.getElementById('mobile-nav');
+  var mbtn = document.getElementById('mobile-menu-btn');
+  var isExpanded = mbtn.getAttribute('aria-expanded') === 'true';
+  mnav.hidden = isExpanded;
+  mbtn.setAttribute('aria-expanded', !isExpanded);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');
@@ -737,7 +744,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (link.getAttribute('data-tab') === tabName) {
         link.classList.add('text-brand');
         link.classList.remove('text-ink');
-      } else if (link.getAttribute('data-tab') !== 'service') {
+      } else if (link.getAttribute('data-tab') !== 'sale') {
         link.classList.remove('text-brand');
         link.classList.add('text-ink');
       }
@@ -757,7 +764,7 @@ document.addEventListener('DOMContentLoaded', function() {
         megaPanel.classList.add('opacity-0', 'invisible', 'translate-y-2', 'pointer-events-none');
       }
       navLinks.forEach(link => {
-        if (link.getAttribute('data-tab') !== 'service') {
+        if (link.getAttribute('data-tab') !== 'sale') {
           link.classList.remove('text-brand');
           link.classList.add('text-ink');
         }
@@ -782,14 +789,6 @@ document.addEventListener('DOMContentLoaded', function() {
     megaPanel.addEventListener('mouseleave', closeMegaMenu);
   }
 });
-
-function toggleMobileNav() {
-  var mnav = document.getElementById('mobile-nav');
-  var mbtn = document.getElementById('mobile-menu-btn');
-  var isExpanded = mbtn.getAttribute('aria-expanded') === 'true';
-  mnav.hidden = isExpanded;
-  mbtn.setAttribute('aria-expanded', !isExpanded);
-}
 </script>
 
 </body>

@@ -82,4 +82,8 @@ Figma 디자인 시스템을 코드로 변환하는 규칙 모음이다.
 이 파일을 하위 프로젝트 루트에 그대로 복사한다.
 예: `design-system-harness.md` → `kiwik/design-system-harness.md`
 
+#
+
 각 프로젝트의 CLAUDE.md에서 이 파일을 참고하도록 한 줄만 추가한다.
+
+## 메인페이지 외의 html은 common 폴더에 작성하고 파일 이름은 페이지에 맞게 작성한다
