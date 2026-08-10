@@ -8,3 +8,4 @@
 마지막 번호끝
 
 https://www.figma.com/design/MRXglfrNf0JxhfhqBmAIdF/%EB%94%94%EC%9E%90%EC%9D%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=1221-14113&t=IehnKxEfXFFJyPVH-4
+https://www.figma.com/design/MRXglfrNf0JxhfhqBmAIdF/%EB%94%94%EC%9E%90%EC%9D%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=1247-15478&t=Esu603bf1NFIJjnB-4

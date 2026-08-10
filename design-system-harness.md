@@ -1,5 +1,5 @@
 # 디자인 시스템 하네스
-
+https://www.figma.com/design/MRXglfrNf0JxhfhqBmAIdF/%EB%94%94%EC%9E%90%EC%9D%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=632-6164&t=oU9szzEDVKCPTY9q-4
 Figma 디자인 시스템을 코드로 변환하는 규칙 모음이다.
 
 ## 목적 (측정 가능한 완료 기준)
@@ -66,20 +66,24 @@ Figma 디자인 시스템을 코드로 변환하는 규칙 모음이다.
 
 ## 에이전트 라우팅 & 스킬 가이드
 
-에이전트 = 역할, 스킬 = 절차. 아래 4개는 다음 청크에서 만든다.
+에이전트 = 역할, 스킬 = 절차. 
 
 | 워크플로 단계 | 담당 에이전트 | 스킬 |
 |---|---|---|
-| Clarify | (다음 청크) | (다음 청크) |
-| Reuse | (다음 청크) | (다음 청크) |
-| Implement | (다음 청크) | (다음 청크) |
-| Evaluate | (다음 청크) | (다음 청크) |
+| Clarify | `clarify-agent` | [.agents/skills/clarify/SKILL.md](file:///C:/Users/PC/Desktop/team00/.agents/skills/clarify/SKILL.md) |
+| Reuse | `reuse-agent` | [.agents/skills/reuse/SKILL.md](file:///C:/Users/PC/Desktop/team00/.agents/skills/reuse/SKILL.md) |
+| Implement | `implement-agent` | [.agents/skills/implement/SKILL.md](file:///C:/Users/PC/Desktop/team00/.agents/skills/implement/SKILL.md) |
+| Evaluate | `evaluate-agent` | [.agents/skills/evaluate/SKILL.md](file:///C:/Users/PC/Desktop/team00/.agents/skills/evaluate/SKILL.md) |
 
-> 에이전트 구현 / hook 구현 / `tokens.css` 실제 파일은 다음 청크에서 만든다.
+> 에이전트 구현, hook 구현 및 `tokens.css` 실제 파일이 완성되었습니다.
+
 
 ## 배포 방법
 
 이 파일을 하위 프로젝트 루트에 그대로 복사한다.
 예: `design-system-harness.md` → `kiwik/design-system-harness.md`
 
+#
+
 각 프로젝트의 CLAUDE.md에서 이 파일을 참고하도록 한 줄만 추가한다.
+## 메인페이지 외의 html은 common 폴더에 작성하고 파일 이름은 페이지에 맞게 작성한다
