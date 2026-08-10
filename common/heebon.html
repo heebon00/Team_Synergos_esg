@@ -87,20 +87,19 @@
     border: 0;
   }
 
-  /* 스크롤 등장 요소: JS가 살아있고 모션 허용일 때만 감춘다 */
+  /* 스크롤 등장 요소 */
   .js:not(.no-motion) .rv { opacity: 0; }
 
   /* Swiper 커스텀 */
   .swiper-slide { height: auto; }
   .cat-sw .swiper-slide { width: 80px; }
-  /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
   .prod-sw { padding: 10px 2px 26px; }
   .nav-btn[aria-disabled="true"] { opacity: .3; }
 
   /* 건너뛰기 링크 */
   .skip {
     position: absolute; left: 16px; top: -80px; z-index: 100;
-    background: #fff; color: var(--color-brand);
+    background: var(--color-white); color: var(--color-brand);
     border: 2px solid var(--color-brand); border-radius: 8px;
     padding: 12px 20px; font-weight: 700;
     transition: top .15s ease-out;
@@ -125,11 +124,11 @@
       <ul class="flex items-center gap-6">
         <li><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
         <li><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
-        <li><a class="hover:text-brand hover:underline transition-colors" href="#">고객지원</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="service.html">고객지원</a></li>
       </ul>
       <ul class="flex items-center gap-6">
         <li><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
-        <li><a class="hover:text-brand hover:underline transition-colors" href="#">주문 배송 조회</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="delivery.html">주문 배송 조회</a></li>
       </ul>
     </div>
   </nav>
@@ -145,15 +144,7 @@
     <!-- Desktop Navigation Menu -->
     <nav aria-label="주 메뉴" class="hidden lg:block">
       <ul class="flex items-center gap-6 text-sm font-bold text-ink">
-        <li><a class="py-2 hover:text-brand transition-colors" href="#">모든 제품</a></li>
-        <li><a class="py-2 hover:text-brand transition-colors" href="heebon.html">공간별 쇼핑하기</a></li>
-        <li><a class="py-2 hover:text-brand transition-colors" href="styling.html">플래닝 &amp; 아이디어</a></li>
-        <li><a class="py-2 hover:text-brand transition-colors" href="#">서비스</a></li>
-        <li><a class="py-2 hover:text-brand transition-colors text-red-600" href="#">세일</a></li>
-      </ul>
-    </nav>
-
-    <!-- Search Bar -->
+        <li><a class="py-2 hover:text-brand transition-colors" href="products.html">모든 제품</a></li>
     <form class="ml-auto hidden max-w-search flex-1 lg:block" role="search" action="#">
       <label for="search-input" class="sr-only-hide">제품 검색</label>
       <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
@@ -227,10 +218,10 @@
       </div>
     </form>
     <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
-      <li><a class="block py-3 text-ink hover:text-brand" href="#">모든 제품</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="products.html">모든 제품</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="heebon.html">공간별 쇼핑하기</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
-      <li><a class="block py-3 text-ink hover:text-brand" href="#">서비스</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
       <li><a class="block py-3 text-red-600" href="#">세일</a></li>
     </ul>
   </nav>
