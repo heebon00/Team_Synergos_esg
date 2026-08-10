@@ -38,3 +38,6 @@ F:\harness는 단일 프로젝트가 아니다.
 
 이 루트 파일은 워크스페이스 안내용이다.
 프로젝트별 상세 규칙은 각 폴더 CLAUDE.md가 우선한다.
+
+##font 설정
+1.@./assets/fonts/pretendard.css 임포트한다.

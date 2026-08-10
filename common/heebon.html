@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="IKEA 공간별 쇼핑 – 거실, 침실, 다이닝, 어린이 IKEA, 홈오피스까지 공간에 맞춘 가구와 매칭 추천 제품을 만나보세요.">
+<title>공간별 쇼핑 | IKEA</title>
+
+<script>
+  var d = document.documentElement;
+  d.classList.add('js');
+  try {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
+  } catch (e) {}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-brand: #0051BA;
+    --color-brand-dark: #003D8F;
+    --color-accent: #FFC900;
+    --color-link: #0058A3;
+
+    --color-ink: #111418;
+    --color-ink-2: #3D4450;
+    --color-ink-3: #6B7280;
+    --color-ink-sub: #3D4450;
+    --color-ink-muted: #6B7280;
+    --color-muted: #666666;
+    --color-price: #1A1A1A;
+
+    --color-line: #C5CCD6;
+    --color-line-2: #D1D5DB;
+    --color-line-light: #E6E6E6;
+    --color-hairline: #F1F3F5;
+    --color-hair: #F0F0F0;
+    --color-divider: #D9D9D9;
+    --color-nav-line: #E5E7EB;
+
+    --color-bg-light: #F8F9FA;
+    --color-shell: #F8F9FA;
+    --color-crust: #F5F5F5;
+    --color-slate-ink: #111827;
+    --color-navy: #1E3A8A;
+    --color-search-bg: #F3F4F6;
+    --color-footer-bg: #F9FAFB;
+
+    --radius-pill: 20px;
+    --radius-card: 12px;
+
+    --spacing-container: 1280px;
+    --spacing-card-img: 200px;
+    --spacing-card-min: 340px;
+    --spacing-hero-img: 260px;
+    --spacing-max-mobile: 440px;
+    --container-mobile: 640px;
+    --spacing-logo: 98px;
+    --spacing-search: 320px;
+  }
+
+  @layer base {
+    body {
+      font-family: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+                   "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-size-adjust: 100%;
+    }
+    :focus-visible {
+      outline: 3px solid var(--color-brand);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    img { max-width: 100%; }
+  }
+
+  /* 화면에서만 감추고 스크린리더에는 남기는 텍스트 */
+  .hide, .sr-only-hide {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* 스크롤 등장 요소: JS가 살아있고 모션 허용일 때만 감춘다 */
+  .js:not(.no-motion) .rv { opacity: 0; }
+
+  /* Swiper 커스텀 */
+  .swiper-slide { height: auto; }
+  .cat-sw .swiper-slide { width: 80px; }
+  /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
+  .prod-sw { padding: 10px 2px 26px; }
+  .nav-btn[aria-disabled="true"] { opacity: .3; }
+
+  /* 건너뛰기 링크 */
+  .skip {
+    position: absolute; left: 16px; top: -80px; z-index: 100;
+    background: #fff; color: var(--color-brand);
+    border: 2px solid var(--color-brand); border-radius: 8px;
+    padding: 12px 20px; font-weight: 700;
+    transition: top .15s ease-out;
+  }
+  .skip:focus { top: 16px; }
+</style>
+</head>
+
+<body class="bg-white text-ink">
+
+<a class="skip" href="#main">본문 바로가기</a>
+
+<div id="wrap">
+<div id="cont">
+
+<!-- ================= 헤더 ================= -->
+<header class="w-full bg-white border-b border-line-light">
+
+  <!-- 1. Utility Navigation -->
+  <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
+    <div class="mx-auto flex max-w-container items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
+      <ul class="flex items-center gap-6">
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">고객지원</a></li>
+      </ul>
+      <ul class="flex items-center gap-6">
+        <li><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">주문 배송 조회</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 2. Main Navigation Bar -->
+  <div class="mx-auto flex max-w-container items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+
+    <!-- Logo -->
+    <a href="../index.html" class="block h-10 w-logo shrink-0" aria-label="IKEA 홈으로 이동">
+      <img src="../assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-logo object-contain">
+    </a>
+
+    <!-- Desktop Navigation Menu -->
+    <nav aria-label="주 메뉴" class="hidden lg:block">
+      <ul class="flex items-center gap-6 text-sm font-bold text-ink">
+        <li><a class="py-2 hover:text-brand transition-colors" href="#">모든 제품</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors" href="heebon.html">공간별 쇼핑하기</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors" href="styling.html">플래닝 &amp; 아이디어</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors" href="#">서비스</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors text-red-600" href="#">세일</a></li>
+      </ul>
+    </nav>
+
+    <!-- Search Bar -->
+    <form class="ml-auto hidden max-w-search flex-1 lg:block" role="search" action="#">
+      <label for="search-input" class="sr-only-hide">제품 검색</label>
+      <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+        <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="search-input" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+               class="min-w-0 flex-1 bg-transparent text-xs text-ink placeholder:text-ink-muted focus:outline-none">
+        <button type="button" class="shrink-0 p-1 hover:text-brand" aria-label="이미지로 검색">
+          <svg class="h-5 w-5 text-ink-muted hover:text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+            <circle cx="12" cy="13" r="3" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- User Action Icons -->
+    <ul class="ml-auto hidden items-center gap-4 lg:flex lg:ml-0">
+      <li>
+        <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="마이페이지">
+          <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <span>사용자</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="위시리스트">
+          <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+          <span>위시리스트</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="장바구니">
+          <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span>장바구니</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile Menu Controls -->
+    <div class="ml-auto flex items-center gap-2 lg:hidden">
+      <a href="#" class="p-2 text-ink hover:text-brand" aria-label="장바구니">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+      </a>
+      <button id="mobile-menu-btn" type="button" class="p-2 text-ink hover:text-brand" aria-expanded="false" aria-controls="mobile-nav" aria-label="모바일 메뉴 열기">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Navigation -->
+  <nav id="mobile-nav" aria-label="모바일 메뉴" hidden class="border-t border-line-light bg-white lg:hidden px-5 py-4 shadow-lg">
+    <form role="search" action="#" class="mb-4">
+      <label for="mobile-search" class="sr-only-hide">제품 검색</label>
+      <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4">
+        <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="mobile-search" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+               class="min-w-0 flex-1 bg-transparent text-sm placeholder:text-ink-muted focus:outline-none">
+      </div>
+    </form>
+    <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
+      <li><a class="block py-3 text-ink hover:text-brand" href="#">모든 제품</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="heebon.html">공간별 쇼핑하기</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="#">서비스</a></li>
+      <li><a class="block py-3 text-red-600" href="#">세일</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ================= 본문 ================= -->
+<main id="main" tabindex="-1">
+
+  <!-- 이동 경로 -->
+  <nav aria-label="이동 경로" class="mx-auto max-w-[1280px] px-5 py-3 lg:px-10">
+    <ol class="flex flex-wrap items-center gap-2 text-xs text-muted">
+      <li><a class="hover:text-brand hover:underline" href="../index.html">홈</a></li>
+      <li aria-hidden="true">&gt;</li>
+      <li><span aria-current="page" class="text-ink">공간별 쇼핑</span></li>
+    </ol>
+  </nav>
+
+  <!-- 페이지 제목 -->
+  <div class="mx-auto max-w-[1280px] px-5 py-6 lg:px-20">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <h1 class="text-2xl font-extrabold text-ink lg:text-3xl">공간별 쇼핑</h1>
+      <p class="text-sm font-medium text-ink-3">1123개의 상품</p>
+    </div>
+  </div>
+
+  <!-- 공간 카테고리 -->
+  <section aria-labelledby="cat-h" class="mx-auto max-w-[1280px] px-5 py-6 lg:px-20">
+    <h2 id="cat-h" class="hide">공간 카테고리</h2>
+
+    <div class="cat-sw swiper">
+      <ul id="w0" class="swiper-wrapper items-start">
+        <li class="swiper-slide">
+          <a href="#s-living" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/living.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">거실</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#s-dining" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/dining.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">다이닝</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/kitchen.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">주방</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#s-bedroom" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/bedroom.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">침실</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/bath.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">욕실</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#s-kids" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/kids.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">아이방</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#s-office" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/office.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">홈오피스</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/entry.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">현관</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/balcony.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">베란다</span>
+          </a>
+        </li>
+        <li class="swiper-slide">
+          <a href="#" class="cat flex flex-col items-center gap-2">
+            <span class="block size-20 overflow-hidden rounded-[20px] border border-line-2">
+              <img src="../assets/images/categories/laundry.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">세탁실</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 공간별 섹션 -->
+  <div class="mx-auto max-w-[1280px] px-5 pt-8 pb-16 lg:px-20">
+
+    <!-- SECTION: living (owner: 미배정) -->
+    <!-- 거실 -->
+    <section id="s-living" aria-labelledby="h-living" class="scroll-mt-6 pt-10">
+      <header class="rv">
+        <h2 id="h-living" class="text-2xl font-bold text-ink lg:text-3xl">거실 (LIVING ROOM)</h2>
+        <p class="mt-1 text-base text-muted">가족들과 함께 편안한 여유와 감각적인 인테리어를 만끽하는 거실</p>
+      </header>
+
+      <div class="mt-6 grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-20">
+        <div class="rv self-start overflow-hidden rounded-xl border border-line bg-shell">
+          <img src="../assets/images/hero/living.png" alt="원목 가구와 패브릭 소파로 연출한 밝은 톤의 거실 쇼룸"
+               width="420" height="260" loading="lazy" class="h-[260px] w-full object-cover">
+          <div class="bg-white p-4">
+            <h3 class="text-sm font-bold text-ink">거실 스타일 연출 제안</h3>
+            <p class="mt-2 text-sm/[1.4] text-ink-2">실제 이케아풍 오가닉 가구 배치를 그대로 온라인에 재현한 세련된 거실 쇼룸 패키지 구성안입니다.</p>
+          </div>
+        </div>
+
+        <div class="rv min-w-0">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ink">매칭 추천 제품</h3>
+            <div class="flex gap-2">
+              <button type="button" class="nav-btn prev grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="이전 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-45 border-b-2 border-l-2 border-ink"></span>
+              </button>
+              <button type="button" class="nav-btn next grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="다음 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-[-135deg] border-b-2 border-l-2 border-ink"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prod-sw swiper">
+            <div id="w1" class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/kivik.png" alt="KIVIK 시비크 3인용 소파" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">KIVIK 시비크 3인용소파</h4>
+                    <p class="text-xs text-muted">부드러운 패브릭 커버, 깊은 시트의 편안한 소파</p>
+                    <p class="text-lg font-bold text-price">₩799,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – KIVIK 시비크 3인용소파</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/stockholm.png" alt="STOCKHOLM 스톡홀름 원형 커피테이블" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">STOCKHOLM 스톡홀름 커피테이블</h4>
+                    <p class="text-xs text-muted">호두나무 무늬목, 원형 테이블</p>
+                    <p class="text-lg font-bold text-price">₩349,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – STOCKHOLM 스톡홀름 커피테이블</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /SECTION: living -->
+
+    <!-- SECTION: bedroom (owner: 미배정) -->
+    <!-- 침실 -->
+    <section id="s-bedroom" aria-labelledby="h-bedroom" class="scroll-mt-6 pt-16">
+      <header class="rv">
+        <h2 id="h-bedroom" class="text-2xl font-bold text-ink lg:text-3xl">침실 (BEDROOM)</h2>
+        <p class="mt-1 text-base text-muted">숙면과 충전을 보장하는 아늑하고 정갈한 개인 휴식 공간</p>
+      </header>
+
+      <div class="mt-6 grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-20">
+        <div class="rv self-start overflow-hidden rounded-xl border border-line bg-shell">
+          <img src="../assets/images/hero/bedroom.png" alt="따뜻한 조명과 화이트 침구로 연출한 아늑한 침실"
+               width="420" height="260" loading="lazy" class="h-[260px] w-full object-cover">
+          <div class="bg-white p-4">
+            <h3 class="text-sm font-bold text-ink">침실 아늑한 휴식 스타일</h3>
+            <p class="mt-2 text-sm/[1.4] text-ink-2">정적인 힐링을 위해 절제된 컬러 배색과 아늑한 조명 톤으로 구성한 프리미엄 침실 패키지입니다.</p>
+          </div>
+        </div>
+
+        <div class="rv min-w-0">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ink">매칭 추천 제품</h3>
+            <div class="flex gap-2">
+              <button type="button" class="nav-btn prev grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="이전 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-45 border-b-2 border-l-2 border-ink"></span>
+              </button>
+              <button type="button" class="nav-btn next grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="다음 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-[-135deg] border-b-2 border-l-2 border-ink"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prod-sw swiper">
+            <div id="w2" class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/malm.png" alt="MALM 말름 퀸사이즈 침대프레임" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">MALM 말름 침대프레임</h4>
+                    <p class="text-xs text-muted">높은 헤드보드, 퀸사이즈, 화이트</p>
+                    <p class="text-lg font-bold text-price">₩299,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – MALM 말름 침대프레임</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/nordli.png" alt="NORDLI 노르들리 화이트 6칸 서랍장" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">NORDLI 노르들리 6칸서랍장</h4>
+                    <p class="text-xs text-muted">화이트, 넉넉한 수납공간 제공</p>
+                    <p class="text-lg font-bold text-price">₩449,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – NORDLI 노르들리 6칸서랍장</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /SECTION: bedroom -->
+
+    <!-- SECTION: dining (owner: 미배정) -->
+    <!-- 다이닝 -->
+    <section id="s-dining" aria-labelledby="h-dining" class="scroll-mt-6 pt-16">
+      <header class="rv">
+        <h2 id="h-dining" class="text-2xl font-bold text-ink lg:text-3xl">다이닝 (DINING)</h2>
+        <p class="mt-1 text-base text-muted">체계적인 수납과 감각적인 주방 가전 매칭으로 머물고 싶은 요리 공간</p>
+      </header>
+
+      <div class="mt-6 grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-20">
+        <div class="rv self-start overflow-hidden rounded-xl border border-line bg-shell">
+          <img src="../assets/images/hero/dining.png" alt="원목 식탁과 의자를 배치한 밝은 다이닝 공간"
+               width="420" height="260" loading="lazy" class="h-[260px] w-full object-cover">
+          <div class="bg-white p-4">
+            <h3 class="text-sm font-bold text-ink">다이닝룸 연출 제안</h3>
+            <p class="mt-2 text-sm/[1.4] text-ink-2">체계적인 가구와 깔끔한 수납 조합으로 머물고 싶은 주방과 완벽한 다이닝 레이아웃을 제공합니다.</p>
+          </div>
+        </div>
+
+        <div class="rv min-w-0">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ink">매칭 추천 제품</h3>
+            <div class="flex gap-2">
+              <button type="button" class="nav-btn prev grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="이전 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-45 border-b-2 border-l-2 border-ink"></span>
+              </button>
+              <button type="button" class="nav-btn next grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="다음 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-[-135deg] border-b-2 border-l-2 border-ink"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prod-sw swiper">
+            <div id="w3" class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/ekedalen.png" alt="EKEDALEN 에게달렌 확장형 식탁" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">EKEDALEN 에게달렌 확장형식탁</h4>
+                    <p class="text-xs text-muted">4-6인용 오크무늬 다이닝 테이블</p>
+                    <p class="text-lg font-bold text-price">₩399,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – EKEDALEN 에게달렌 확장형식탁</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/ostano.png" alt="ÖSTANÖ 외스타뇌 패브릭 다이닝체어" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">ÖSTANÖ 외스타뇌 다이닝체어</h4>
+                    <p class="text-xs text-muted">패브릭 시트, 편안한 등받이 의자</p>
+                    <p class="text-lg font-bold text-price">₩89,900</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – ÖSTANÖ 외스타뇌 다이닝체어</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /SECTION: dining -->
+
+    <!-- SECTION: kids (owner: 미배정) -->
+    <!-- 어린이 IKEA -->
+    <section id="s-kids" aria-labelledby="h-kids" class="scroll-mt-6 pt-16">
+      <header class="rv">
+        <h2 id="h-kids" class="text-2xl font-bold text-ink lg:text-3xl">어린이 IKEA (KIDZ IKEA)</h2>
+        <p class="mt-1 text-base text-muted">창의력과 호기심을 무한히 자극하는 친환경 키즈 가구 라인업</p>
+      </header>
+
+      <div class="mt-6 grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-20">
+        <div class="rv self-start overflow-hidden rounded-xl border border-line bg-shell">
+          <img src="../assets/images/hero/kids.png" alt="놀이 공간과 수납장을 함께 배치한 어린이방"
+               width="420" height="260" loading="lazy" class="h-[260px] w-full object-cover">
+          <div class="bg-white p-4">
+            <h3 class="text-sm font-bold text-ink">아이방 놀이와 학습 테마</h3>
+            <p class="mt-2 text-sm/[1.4] text-ink-2">E0 등급 친환경 소재와 부드러운 라운드 마감으로 다치지 않는 완벽한 실내 놀이 공간을 구현했습니다.</p>
+          </div>
+        </div>
+
+        <div class="rv min-w-0">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ink">매칭 추천 제품</h3>
+            <div class="flex gap-2">
+              <button type="button" class="nav-btn prev grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="이전 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-45 border-b-2 border-l-2 border-ink"></span>
+              </button>
+              <button type="button" class="nav-btn next grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="다음 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-[-135deg] border-b-2 border-l-2 border-ink"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prod-sw swiper">
+            <div id="w4" class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/sundvik.png" alt="SUNDVIK 순드비크 자작나무 유아용 침대" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">SUNDVIK 순드비크 유아용침대</h4>
+                    <p class="text-xs text-muted">자작나무 원목, 안전 가드레일 포함</p>
+                    <p class="text-lg font-bold text-price">₩179,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – SUNDVIK 순드비크 유아용침대</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/trofast.png" alt="TROFAST 트로파스트 장난감 수납 콤비네이션" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">TROFAST 트로파스트 수납콤비</h4>
+                    <p class="text-xs text-muted">소나무/화이트, 장난감 정리 수납함</p>
+                    <p class="text-lg font-bold text-price">₩129,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – TROFAST 트로파스트 수납콤비</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /SECTION: kids -->
+
+    <!-- SECTION: office (owner: 미배정) -->
+    <!-- 홈오피스 -->
+    <section id="s-office" aria-labelledby="h-office" class="scroll-mt-6 pt-16">
+      <header class="rv">
+        <h2 id="h-office" class="text-2xl font-bold text-ink lg:text-3xl">홈오피스 (HOME OFFICE)</h2>
+        <p class="mt-1 text-base text-muted">집중력을 극대화할 수 있는 깔끔한 데스크와 완벽한 책장 레이아웃</p>
+      </header>
+
+      <div class="mt-6 grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-20">
+        <div class="rv self-start overflow-hidden rounded-xl border border-line bg-shell">
+          <img src="../assets/images/hero/office.png" alt="책상과 책장을 정돈해 배치한 홈오피스 공간"
+               width="420" height="260" loading="lazy" class="h-[260px] w-full object-cover">
+          <div class="bg-white p-4">
+            <h3 class="text-sm font-bold text-ink">홈오피스 연출 제안</h3>
+            <p class="mt-2 text-sm/[1.4] text-ink-2">업무와 창작에 온전히 몰입할 수 있도록 인체공학 가구와 빌트인 수납장을 매칭한 서재입니다.</p>
+          </div>
+        </div>
+
+        <div class="rv min-w-0">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ink">매칭 추천 제품</h3>
+            <div class="flex gap-2">
+              <button type="button" class="nav-btn prev grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="이전 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-45 border-b-2 border-l-2 border-ink"></span>
+              </button>
+              <button type="button" class="nav-btn next grid size-9 place-items-center rounded-full border border-line bg-white" aria-label="다음 제품 보기">
+                <span aria-hidden="true" class="block h-2.5 w-2.5 rotate-[-135deg] border-b-2 border-l-2 border-ink"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prod-sw swiper">
+            <div id="w5" class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/bekant.png" alt="BEKANT 베칸트 높이조절 스탠딩 책상" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">BEKANT 베칸트 책상</h4>
+                    <p class="text-xs text-muted">높이조절 가능, 160x80cm 스탠딩 데스크</p>
+                    <p class="text-lg font-bold text-price">₩599,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – BEKANT 베칸트 책상</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="card flex h-full min-h-[340px] flex-col overflow-hidden rounded-xl border border-hair bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+                  <div class="h-[200px] w-full shrink-0 overflow-hidden">
+                    <img src="../assets/images/products/markus.png" alt="MARKUS 마르쿠스 메쉬 사무용 의자" width="300" height="200" loading="lazy" class="pic h-full w-full object-cover">
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-2 p-4">
+                    <h4 class="text-[13px] text-muted">MARKUS 마르쿠스 사무용의자</h4>
+                    <p class="text-xs text-muted">메쉬 등받이, 인체공학 설계 의자</p>
+                    <p class="text-lg font-bold text-price">₩349,000</p>
+                    <button type="button" class="buy w-full rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">
+                      구매하기<span class="hide"> – MARKUS 마르쿠스 사무용의자</span>
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /SECTION: office -->
+
+    <!-- 프로모션 배너 -->
+    <section aria-labelledby="h-promo" class="pt-16">
+      <div class="rv flex flex-col items-start justify-between gap-6 rounded-xl border border-line bg-shell p-8 lg:flex-row lg:items-center">
+        <div class="flex max-w-[760px] flex-col items-start gap-3">
+          <p class="rounded-[4px] bg-navy px-2 py-1 text-sm font-bold text-white">공간별 가구 &amp; 인테리어 시뮬레이션</p>
+          <h2 id="h-promo" class="text-xl font-extrabold text-ink">이케아 가상 스마트 3D 홈퍼니싱 컨설팅 제안</h2>
+          <p class="text-sm/[1.4] text-ink-2">전문 공간 디자이너와 1:1 라이브 화상상담을 통해 나만의 최적의 아파트 공간을 기획해 보세요. 컨설팅 후 가구 패키지 구매 시 추가 5% 스페셜 멤버 기프트 카드가 제공됩니다.</p>
+        </div>
+        <div class="flex w-full flex-col items-center gap-2 lg:w-auto lg:shrink-0">
+          <button type="button" class="cta w-full rounded-lg border-2 border-brand px-8 py-3.5 text-base font-bold text-brand lg:w-auto">디자인 시뮬레이션 예약</button>
+          <p class="text-sm text-ink-3">상담 완료 시 기프트 카드 자동 증정</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ================= 푸터 ================= -->
+<footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
+  <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Col 1 -->
+      <div>
+        <img src="../assets/logo-ikea.svg" alt="IKEA" width="80" height="32" class="h-8 w-auto mb-4">
+        <p class="text-xs leading-relaxed text-ink-muted">
+          IKEA 코리아는 더 많은 사람들을 위해 더 나은 일상을 만듭니다. 고품질의 지속 가능한 가구와 홈퍼니싱 솔루션을 합리적인 가격에 만나보세요.
+        </p>
+      </div>
+
+      <!-- Col 2 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객 지원</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">고객지원센터</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문(FAQ)</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">반품 및 환불 규정</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">제품 회수 및 리콜 정보</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
+          <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
+        <p class="text-lg font-extrabold text-brand">1670-4532</p>
+        <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
+        <div class="mt-4 flex items-center gap-3">
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
+      <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+      <div class="flex gap-4">
+        <a href="#" class="hover:underline">개인정보처리방침</a>
+        <a href="#" class="hover:underline">이용약관</a>
+        <a href="#" class="hover:underline">웹 접근성 고지</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /#cont -->
+</div><!-- /#wrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var root  = document.documentElement;
+  var calm  = root.classList.contains('no-motion');
+  var $     = function (s, c) { return (c || document).querySelector(s); };
+  var $$    = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ---------- 1. 캐로셀 (Swiper) ---------- */
+
+  var a11y = {
+    enabled: true,
+    prevSlideMessage: '이전 슬라이드',
+    nextSlideMessage: '다음 슬라이드',
+    firstSlideMessage: '첫 번째 슬라이드입니다',
+    lastSlideMessage: '마지막 슬라이드입니다',
+    paginationBulletMessage: '{{index}}번 슬라이드로 이동',
+    slideRole: 'group'
+  };
+
+  var swipers = [];
+
+  swipers.push(new Swiper('.cat-sw', {
+    a11y: a11y,
+    speed: calm ? 0 : 420,
+    slidesPerView: 'auto',
+    spaceBetween: 16,
+    slidesPerGroupAuto: true,
+    watchOverflow: true,
+    observer: true,
+    observeParents: true,
+    resizeObserver: true,
+    keyboard: { enabled: true, onlyInViewport: true },
+    breakpoints: {
+      640:  { slidesPerView: 6,  spaceBetween: 20 },
+      1024: { slidesPerView: 10, spaceBetween: 35.5 }
+    }
+  }));
+
+  $$('.prod-sw').forEach(function (el) {
+    var box = el.closest('.rv') || el.parentNode;
+    swipers.push(new Swiper(el, {
+      a11y: a11y,
+      speed: calm ? 0 : 420,
+      spaceBetween: 20,
+      watchOverflow: true,
+      observer: true,
+      observeParents: true,
+      resizeObserver: true,
+      keyboard: { enabled: true, onlyInViewport: true },
+      navigation: {
+        prevEl: $('.prev', box),
+        nextEl: $('.next', box),
+        disabledClass: 'is-off',
+        lockClass: 'is-locked'
+      },
+      breakpoints: {
+        0:    { slidesPerView: 1.15 },
+        480:  { slidesPerView: 1.6 },
+        768:  { slidesPerView: 2 },
+        1024: { slidesPerView: 2 }
+      },
+      on: {
+        init: mark, slideChange: mark, resize: mark, breakpoint: mark, update: mark
+      }
+    }));
+
+    function mark(sw) {
+      var p = $('.prev', box), n = $('.next', box);
+      var one = sw.isBeginning && sw.isEnd;
+      [p, n].forEach(function (b) { if (b) b.hidden = one; });
+      if (p) p.setAttribute('aria-disabled', String(sw.isBeginning));
+      if (n) n.setAttribute('aria-disabled', String(sw.isEnd));
+    }
+  });
+
+  function resync() {
+    swipers.forEach(function (s) { if (s && !s.destroyed) s.update(); });
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+  window.addEventListener('load', resync);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(resync);
+  [120, 400, 1000].forEach(function (t) { setTimeout(resync, t); });
+
+  /* ---------- 2. 모바일 메뉴 ---------- */
+
+  var mbtn = $('#mobile-menu-btn'), mnav = $('#mobile-nav'), open = false;
+
+  function menu(next) {
+    open = next;
+    mbtn.setAttribute('aria-expanded', String(open));
+    mbtn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    if (open) {
+      mnav.hidden = false;
+      if (!calm) gsap.fromTo(mnav, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: .3, ease: 'power2.out' });
+      var first = mnav.querySelector('a, input');
+      if (first) first.focus();
+    } else if (calm) {
+      mnav.hidden = true;
+    } else {
+      gsap.to(mnav, { height: 0, opacity: 0, duration: .22, ease: 'power2.in',
+        onComplete: function () { mnav.hidden = true; gsap.set(mnav, { clearProps: 'height,opacity' }); } });
+    }
+  }
+
+  mbtn.addEventListener('click', function () { menu(!open); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && open) { menu(false); mbtn.focus(); }
+  });
+
+  /* ---------- 3. GSAP 스크롤 인터랙션 ---------- */
+
+  if (typeof gsap === 'undefined') root.classList.add('no-motion');
+  if (calm || typeof gsap === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.ScrollToPlugin)  gsap.registerPlugin(ScrollToPlugin);
+  if (window.ScrollSmoother)  gsap.registerPlugin(ScrollSmoother);
+
+  var smoother = null;
+  if (window.ScrollSmoother && ScrollSmoother.create) {
+    smoother = ScrollSmoother.create({
+      wrapper: '#wrap',
+      content: '#cont',
+      smooth: 1,
+      effects: false,
+      normalizeScroll: false
+    });
+  }
+
+  function goto(target) {
+    if (smoother) smoother.scrollTo(target, true, 'top 80px');
+    else gsap.to(window, { duration: .6, ease: 'power2.out', scrollTo: { y: target, offsetY: 80 } });
+  }
+
+  $$('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href');
+      if (id === '#') return;
+      var t = document.querySelector(id);
+      if (!t) return;
+      e.preventDefault();
+      goto(t);
+      t.setAttribute('tabindex', '-1');
+      t.focus({ preventScroll: true });
+    });
+  });
+
+  if (smoother) {
+    document.addEventListener('focusin', function (e) {
+      var el = e.target;
+      if (!el.closest || !el.closest('#cont')) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < 80 || r.bottom > window.innerHeight - 20) smoother.scrollTo(el, false, 'center center');
+    });
+  }
+
+  $$('.rv').forEach(function (el) {
+    gsap.fromTo(el,
+      { opacity: 0, y: 28 },
+      {
+        opacity: 1, y: 0, duration: .7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+  });
+
+  gsap.fromTo('.cat', { opacity: 0, y: 16 }, {
+    opacity: 1, y: 0, duration: .45, ease: 'power2.out', stagger: .05,
+    scrollTrigger: { trigger: '.cat-sw', start: 'top 90%', once: true }
+  });
+
+  /* ---------- 4. GSAP 호버 / 포커스 마이크로 인터랙션 ---------- */
+
+  function lift(host, build) {
+    var tl = build().pause();
+    var on  = function () { tl.play(); };
+    var off = function () { tl.reverse(); };
+    host.addEventListener('mouseenter', on);
+    host.addEventListener('mouseleave', off);
+    host.addEventListener('focusin', on);
+    host.addEventListener('focusout', off);
+  }
+
+  $$('.card').forEach(function (card) {
+    lift(card, function () {
+      var tl = gsap.timeline({ defaults: { duration: .3, ease: 'power2.out' } });
+      tl.to(card, { y: -6, boxShadow: '0 14px 30px rgba(0,0,0,0.14)' }, 0)
+        .to($('.pic', card), { scale: 1.06 }, 0);
+      return tl;
+    });
+  });
+
+  $$('.buy').forEach(function (b) {
+    lift(b, function () {
+      return gsap.timeline().to(b, { backgroundColor: '#003d8f', scale: 1.02, duration: .22, ease: 'power2.out' });
+    });
+  });
+
+  $$('.cta').forEach(function (b) {
+    lift(b, function () {
+      return gsap.timeline().to(b, { backgroundColor: '#0051ba', color: '#ffffff', duration: .24, ease: 'power2.out' });
+    });
+  });
+
+  $$('.cat').forEach(function (c) {
+    lift(c, function () {
+      return gsap.timeline().to(c.querySelector('span'), { y: -4, scale: 1.05, duration: .25, ease: 'power2.out' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

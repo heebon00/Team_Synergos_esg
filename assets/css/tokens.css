@@ -1,0 +1,46 @@
+@theme {
+  /* Brand Colors */
+  --color-brand: #0051BA;
+  --color-brand-dark: #003D8F;
+  --color-accent: #FFC900;
+  --color-link: #0058A3;
+
+  /* Ink Colors */
+  --color-ink: #111418;
+  --color-ink-2: #3D4450;
+  --color-ink-3: #6B7280;
+  --color-ink-sub: #3D4450;
+  --color-ink-muted: #6B7280;
+  --color-muted: #666666;
+  --color-price: #1A1A1A;
+
+  /* Line / Border Colors */
+  --color-line: #C5CCD6;
+  --color-line-2: #D1D5DB;
+  --color-line-light: #E6E6E6;
+  --color-hairline: #F1F3F5;
+  --color-hair: #F0F0F0;
+  --color-divider: #D9D9D9;
+  --color-nav-line: #E5E7EB;
+
+  /* Background Colors */
+  --color-bg-light: #F8F9FA;
+  --color-shell: #F8F9FA;
+  --color-crust: #F5F5F5;
+  --color-slate-ink: #111827;
+  --color-navy: #1E3A8A;
+  --color-search-bg: #F3F4F6;
+  --color-footer-bg: #F9FAFB;
+
+  /* Radius Tokens */
+  --radius-pill: 20px;
+  --radius-card: 12px;
+
+  /* Spacing & Container Tokens */
+  --spacing-container: 1280px;
+  --spacing-card-img: 200px;
+  --spacing-card-min: 340px;
+  --spacing-hero-img: 260px;
+  --spacing-max-mobile: 440px;
+  --container-mobile: 640px;
+}

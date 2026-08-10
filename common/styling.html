@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="IKEA 홈스타일링 서비스 – 프로 스타일리스트가 제안하는 맞춤 공간 스타일링, 3D 가구 배치 및 컨설팅을 만나보세요.">
+<title>이케아 스타일링 | IKEA</title>
+
+<script>
+  var d = document.documentElement;
+  d.classList.add('js');
+  try {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
+  } catch (e) {}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-brand: #0051BA;
+    --color-brand-dark: #003D8F;
+    --color-accent: #FFC900;
+    --color-link: #0058A3;
+
+    --color-ink: #111418;
+    --color-ink-2: #3D4450;
+    --color-ink-3: #6B7280;
+    --color-ink-sub: #3D4450;
+    --color-ink-muted: #6B7280;
+    --color-muted: #666666;
+    --color-price: #1A1A1A;
+
+    --color-line: #C5CCD6;
+    --color-line-2: #D1D5DB;
+    --color-line-light: #E6E6E6;
+    --color-hairline: #F1F3F5;
+    --color-hair: #F0F0F0;
+    --color-divider: #D9D9D9;
+    --color-nav-line: #E5E7EB;
+
+    --color-bg-light: #F8F9FA;
+    --color-shell: #F8F9FA;
+    --color-crust: #F5F5F5;
+    --color-slate-ink: #111827;
+    --color-navy: #1E3A8A;
+    --color-search-bg: #F3F4F6;
+    --color-footer-bg: #F9FAFB;
+
+    --radius-pill: 20px;
+    --radius-card: 12px;
+
+    --spacing-container: 1280px;
+    --spacing-card-img: 200px;
+    --spacing-card-min: 340px;
+    --spacing-hero-img: 260px;
+    --spacing-max-mobile: 440px;
+    --container-mobile: 640px;
+    --spacing-logo: 98px;
+    --spacing-search: 320px;
+  }
+
+  @layer base {
+    body {
+      font-family: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+                   "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-size-adjust: 100%;
+    }
+    :focus-visible {
+      outline: 3px solid var(--color-brand);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    img { max-width: 100%; }
+  }
+
+  /* 화면에서만 감추고 스크린리더에는 남기는 텍스트 */
+  .hide, .sr-only-hide {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* 스크롤 등장 요소: JS가 살아있고 모션 허용일 때만 감춘다 */
+  .js:not(.no-motion) .rv { opacity: 0; }
+
+  /* Swiper 커스텀 */
+  .swiper-slide { height: auto; }
+  .cat-sw .swiper-slide { width: 80px; }
+  /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
+  .prod-sw { padding: 10px 2px 26px; }
+  .nav-btn[aria-disabled="true"] { opacity: .3; }
+
+  /* 건너뛰기 링크 */
+  .skip {
+    position: absolute; left: 16px; top: -80px; z-index: 100;
+    background: #fff; color: var(--color-brand);
+    border: 2px solid var(--color-brand); border-radius: 8px;
+    padding: 12px 20px; font-weight: 700;
+    transition: top .15s ease-out;
+  }
+  .skip:focus { top: 16px; }
+</style>
+</head>
+
+<body class="bg-white text-ink flex flex-col min-h-screen">
+
+<a class="skip" href="#main">본문 바로가기</a>
+
+<div id="wrap" class="flex-1 flex flex-col">
+
+<!-- SEGMENT: Header -->
+<header class="w-full bg-white border-b border-line-light">
+
+  <!-- 1. Utility Navigation -->
+  <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
+    <div class="mx-auto flex max-w-container items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
+      <ul class="flex items-center gap-6">
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">고객지원</a></li>
+      </ul>
+      <ul class="flex items-center gap-6">
+        <li><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
+        <li><a class="hover:text-brand hover:underline transition-colors" href="#">주문 배송 조회</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 2. Main Navigation Bar -->
+  <div class="mx-auto flex max-w-container items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+
+    <!-- Logo -->
+    <a href="../index.html" class="block h-10 w-logo shrink-0" aria-label="IKEA 홈으로 이동">
+      <img src="../assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-logo object-contain">
+    </a>
+
+    <!-- Desktop Navigation Menu -->
+    <nav aria-label="주 메뉴" class="hidden lg:block">
+      <ul class="flex items-center gap-6 text-sm font-bold text-ink">
+        <li><a class="py-2 hover:text-brand transition-colors" href="#">모든 제품</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors" href="heebon.html">공간별 쇼핑하기</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors" href="styling.html">플래닝 &amp; 아이디어</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors" href="#">서비스</a></li>
+        <li><a class="py-2 hover:text-brand transition-colors text-red-600" href="#">세일</a></li>
+      </ul>
+    </nav>
+
+    <!-- Search Bar -->
+    <form class="ml-auto hidden max-w-search flex-1 lg:block" role="search" action="#">
+      <label for="search-input" class="sr-only-hide">제품 검색</label>
+      <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+        <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="search-input" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+               class="min-w-0 flex-1 bg-transparent text-xs text-ink placeholder:text-ink-muted focus:outline-none">
+        <button type="button" class="shrink-0 p-1 hover:text-brand" aria-label="이미지로 검색">
+          <svg class="h-5 w-5 text-ink-muted hover:text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+            <circle cx="12" cy="13" r="3" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- User Action Icons -->
+    <ul class="ml-auto hidden items-center gap-4 lg:flex lg:ml-0">
+      <li>
+        <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="마이페이지">
+          <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <span>사용자</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="위시리스트">
+          <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+          <span>위시리스트</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="장바구니">
+          <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span>장바구니</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile Menu Controls -->
+    <div class="ml-auto flex items-center gap-2 lg:hidden">
+      <a href="#" class="p-2 text-ink hover:text-brand" aria-label="장바구니">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+      </a>
+      <button id="mobile-menu-btn" type="button" class="p-2 text-ink hover:text-brand" aria-expanded="false" aria-controls="mobile-nav" aria-label="모바일 메뉴 열기" onclick="toggleMobileNav()">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Navigation -->
+  <nav id="mobile-nav" aria-label="모바일 메뉴" hidden class="border-t border-line-light bg-white lg:hidden px-5 py-4 shadow-lg">
+    <form role="search" action="#" class="mb-4">
+      <label for="mobile-search" class="sr-only-hide">제품 검색</label>
+      <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4">
+        <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="mobile-search" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+               class="min-w-0 flex-1 bg-transparent text-sm placeholder:text-ink-muted focus:outline-none">
+      </div>
+    </form>
+    <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
+      <li><a class="block py-3 text-ink hover:text-brand" href="#">모든 제품</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="heebon.html">공간별 쇼핑하기</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="#">서비스</a></li>
+      <li><a class="block py-3 text-red-600" href="#">세일</a></li>
+    </ul>
+  </nav>
+</header>
+<!-- /SEGMENT: Header -->
+
+<!-- MAIN CONTENT -->
+<main id="main" class="flex-1">
+
+  <!-- SEGMENT: Breadcrumbs -->
+  <nav aria-label="브레드크럼" class="w-full border-b border-line/40 bg-white">
+    <div class="mx-auto flex max-w-[1280px] items-center gap-2 px-5 py-3 text-xs text-muted lg:px-10">
+      <a href="../index.html" class="hover:text-brand hover:underline">홈</a>
+      <span class="text-gray-400" aria-hidden="true">&gt;</span>
+      <a href="#" class="hover:text-brand hover:underline">플래닝 &amp; 아이디어</a>
+      <span class="text-gray-400" aria-hidden="true">&gt;</span>
+      <span class="font-medium text-[#212121]" aria-current="page">이케아 스타일링</span>
+    </div>
+  </nav>
+  <!-- /SEGMENT: Breadcrumbs -->
+
+  <!-- SEGMENT: HeroStyling -->
+  <section class="w-full bg-white border-b border-line">
+    <div class="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-8 px-5 py-12 lg:flex-row lg:gap-12 lg:px-20 lg:py-16">
+      <!-- Hero Text -->
+      <div class="flex-1 flex flex-col gap-4 text-left">
+        <h1 class="text-3xl font-extrabold tracking-tight text-ink lg:text-4xl leading-tight">
+          프로 스타일리스트의 홈스타일링
+        </h1>
+        <p class="text-base leading-relaxed text-ink-2 max-w-xl">
+          가구 단품 배치를 넘어 조명, 패브릭, 그리고 작은 홈 데코레이션 액세서리까지! 이케아 고유의 실용주의 미학을 담아 전담 플래너가 당신만을 위한 완벽한 맞춤 공간을 꾸며드립니다.
+        </p>
+        <div class="pt-2">
+          <a href="#tiers" class="inline-flex items-center gap-2 rounded-lg bg-brand px-6 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-brand-dark transition-all transform hover:-translate-y-0.5">
+            <span>스타일링 상담 신청하기</span>
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+        </div>
+      </div>
+      <!-- Hero Image -->
+      <div class="w-full max-w-[520px] lg:w-[520px] shrink-0">
+        <div class="overflow-hidden rounded-xl border border-line shadow-md aspect-[520/300]">
+          <img src="../assets/hero-styling.png" alt="프로 스타일리스트의 이케아 홈스타일링 연출 공간" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: HeroStyling -->
+
+  <!-- SEGMENT: TiersSection -->
+  <section id="tiers" class="w-full bg-white py-16">
+    <div class="mx-auto flex max-w-[1280px] flex-col items-center gap-8 px-5 lg:px-20">
+      <h2 class="text-2xl font-bold text-ink text-center lg:text-3xl">
+        서비스 프라이스
+      </h2>
+
+      <!-- Tier Card Container -->
+      <div class="w-full rounded-xl border border-line bg-white p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-stretch">
+          
+          <!-- Left: Plan Details -->
+          <div class="lg:col-span-7 flex flex-col justify-between gap-6">
+            <div class="flex flex-col gap-6">
+              <!-- Plan Header -->
+              <div>
+                <h3 class="text-xl font-extrabold text-ink lg:text-2xl">베이직 플래닝</h3>
+                <p class="text-sm font-medium text-ink-3 mt-1">온라인 비대면 1회</p>
+              </div>
+
+              <!-- Price -->
+              <div>
+                <span class="text-4xl font-black text-ink tracking-tight">무료</span>
+              </div>
+
+              <hr class="border-line/70">
+
+              <!-- Feature List -->
+              <div class="flex flex-col gap-3">
+                <div class="flex items-center gap-3 rounded-lg border border-line bg-shell px-4 py-3.5">
+                  <svg class="h-5 w-5 shrink-0 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                  <span class="text-sm font-medium text-ink-2">3D 가구 배치 제공</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-lg border border-line bg-shell px-4 py-3.5">
+                  <svg class="h-5 w-5 shrink-0 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                  <span class="text-sm font-medium text-ink-2">이케아 쇼핑리스트 자동 링크</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-lg border border-line bg-shell px-4 py-3.5">
+                  <svg class="h-5 w-5 shrink-0 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                  <span class="text-sm font-medium text-ink-2">전문 디자이너 1회 피드백 제공</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="pt-4">
+              <button type="button" onclick="openBookingModal()" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-brand px-8 py-3.5 text-base font-bold text-white hover:bg-brand-dark transition-all transform active:scale-95 shadow">
+                신청하기
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Image Preview & Nav Arrow -->
+          <div class="lg:col-span-5 relative min-h-[300px] lg:min-h-[400px]">
+            <div class="h-full w-full overflow-hidden rounded-xl border border-line bg-shell">
+              <img src="../assets/cat-styling-tier.png" alt="베이직 플래닝 공간 연출 미리보기" class="h-full w-full object-cover">
+            </div>
+            <button type="button" class="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-white text-ink shadow-md hover:bg-shell hover:scale-105 transition-all" aria-label="다음 플랜 보기" onclick="alert('더 많은 플랜 옵션 준비 중입니다!')">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: TiersSection -->
+
+  <!-- SEGMENT: BeforeAfterSection -->
+  <section class="w-full bg-white pb-16 pt-8">
+    <div class="mx-auto flex max-w-[1280px] flex-col items-center gap-8 px-5 lg:px-20">
+      <h2 class="text-2xl font-extrabold text-ink text-center lg:text-3xl">
+        비포 &amp; 애프터 체인지
+      </h2>
+
+      <!-- Comparison Cards Grid -->
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Before Card -->
+        <div class="flex flex-col gap-3">
+          <div class="overflow-hidden rounded-lg border border-line shadow-sm aspect-[16/9]">
+            <img src="../assets/p-before-room.png" alt="Before 기존 공간" class="h-full w-full object-cover">
+          </div>
+          <p class="text-center text-sm font-bold text-ink-2">
+            Before (기존 공간)
+          </p>
+        </div>
+
+        <!-- After Card -->
+        <div class="flex flex-col gap-3">
+          <div class="overflow-hidden rounded-lg border border-line shadow-sm aspect-[16/9]">
+            <img src="../assets/p-after-room.png" alt="After IKEA 디자인 제안 적용" class="h-full w-full object-cover">
+          </div>
+          <p class="text-center text-sm font-bold text-brand">
+            After (IKEA 디자인 제안 적용)
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: BeforeAfterSection -->
+
+  <!-- SEGMENT: ProcessSection -->
+  <section class="w-full border-t border-b border-line bg-white py-16">
+    <div class="mx-auto flex max-w-[1280px] flex-col items-center gap-10 px-5 lg:px-20">
+      <h2 class="text-2xl font-extrabold text-ink text-center lg:text-3xl">
+        서비스 진행 안내
+      </h2>
+
+      <!-- Vertical Timeline Container -->
+      <div class="w-full max-w-[640px] flex flex-col gap-6">
+
+        <!-- Step 1 -->
+        <div class="flex gap-6 items-start">
+          <div class="flex flex-col items-center">
+            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
+              1
+            </div>
+            <div class="h-16 w-0.5 bg-line-2 my-1"></div>
+          </div>
+          <div class="flex flex-col gap-1 pt-1">
+            <h3 class="text-base font-bold text-ink">
+              신청 및 접수 (1차 무료 상담)
+            </h3>
+            <p class="text-sm text-muted leading-relaxed">
+              간단한 자택 내부 사진과 원하는 컨셉 정보를 웹에 남겨 스타일링 예약을 접수합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex gap-6 items-start">
+          <div class="flex flex-col items-center">
+            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
+              2
+            </div>
+            <div class="h-16 w-0.5 bg-line-2 my-1"></div>
+          </div>
+          <div class="flex flex-col gap-1 pt-1">
+            <h3 class="text-base font-bold text-ink">
+              전담 매치 및 대면 예약상담
+            </h3>
+            <p class="text-sm text-muted leading-relaxed">
+              매칭된 디자이너와 원격 또는 오프라인 매장을 통해 심층적인 예산 및 가구 플랜 인터뷰를 나눕니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex gap-6 items-start">
+          <div class="flex flex-col items-center">
+            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
+              3
+            </div>
+            <div class="h-16 w-0.5 bg-line-2 my-1"></div>
+          </div>
+          <div class="flex flex-col gap-1 pt-1">
+            <h3 class="text-base font-bold text-ink">
+              디자인 제안서 및 견적 수령
+            </h3>
+            <p class="text-sm text-muted leading-relaxed">
+              3D 모델링 설계 화면 및 이케아 가구 소품의 제품 조립 상세 견적 리포트를 검토합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flex gap-6 items-start">
+          <div class="flex flex-col items-center">
+            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
+              4
+            </div>
+          </div>
+          <div class="flex flex-col gap-1 pt-1">
+            <h3 class="text-base font-bold text-ink">
+              배송 및 설치 완성
+            </h3>
+            <p class="text-sm text-muted leading-relaxed">
+              이케아 가구 조립 조립팀과 전문 코디네이션 요원이 자택을 직접 방문하여 안전하고 완벽하게 스타일링을 최종 완료해 드립니다.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: ProcessSection -->
+
+</main>
+
+<!-- SEGMENT: Footer -->
+<footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
+  <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Col 1 -->
+      <div>
+        <img src="../assets/logo-ikea.svg" alt="IKEA" width="80" height="32" class="h-8 w-auto mb-4">
+        <p class="text-xs leading-relaxed text-ink-muted">
+          IKEA 코리아는 더 많은 사람들을 위해 더 나은 일상을 만듭니다. 고품질의 지속 가능한 가구와 홈퍼니싱 솔루션을 합리적인 가격에 만나보세요.
+        </p>
+      </div>
+
+      <!-- Col 2 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객 지원</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">고객지원센터</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문(FAQ)</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">반품 및 환불 규정</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">제품 회수 및 리콜 정보</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
+          <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
+        <p class="text-lg font-extrabold text-brand">1670-4532</p>
+        <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
+        <div class="mt-4 flex items-center gap-3">
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
+      <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+      <div class="flex gap-4">
+        <a href="#" class="hover:underline">개인정보처리방침</a>
+        <a href="#" class="hover:underline">이용약관</a>
+        <a href="#" class="hover:underline">웹 접근성 고지</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- /SEGMENT: Footer -->
+
+</div>
+
+<!-- Booking Modal -->
+<div id="bookingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl transform scale-95 transition-transform duration-300" id="bookingModalBox">
+    <div class="flex items-center justify-between border-b border-line pb-4">
+      <h3 class="text-lg font-bold text-ink">이케아 홈스타일링 무료 상담 신청</h3>
+      <button type="button" onclick="closeBookingModal()" class="text-muted hover:text-ink p-1">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form class="mt-4 flex flex-col gap-4" onsubmit="handleBookingSubmit(event)">
+      <div>
+        <label class="block text-xs font-bold text-ink mb-1">성함</label>
+        <input type="text" required placeholder="홍길동" class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-ink mb-1">연락처</label>
+        <input type="tel" required placeholder="010-0000-0000" class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-ink mb-1">스타일링 희망 공간</label>
+        <select class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none bg-white">
+          <option>거실 (Living Room)</option>
+          <option>침실 (Bedroom)</option>
+          <option>홈오피스 (Home Office)</option>
+          <option>다이닝 (Dining Room)</option>
+          <option>어린이방 (Kids Room)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-ink mb-1">요청 사항</label>
+        <textarea rows="3" placeholder="원하시는 컨셉이나 예산 범위를 자유롭게 입력해 주세요." class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"></textarea>
+      </div>
+      <button type="submit" class="w-full rounded-lg bg-brand py-3 text-sm font-bold text-white hover:bg-brand-dark transition-colors shadow mt-2">
+        상담 예약 접수하기
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+function toggleMobileNav() {
+  var mnav = document.getElementById('mobile-nav');
+  var mbtn = document.getElementById('mobile-menu-btn');
+  var isExpanded = mbtn.getAttribute('aria-expanded') === 'true';
+  mnav.hidden = isExpanded;
+  mbtn.setAttribute('aria-expanded', !isExpanded);
+}
+
+function openBookingModal() {
+  var modal = document.getElementById('bookingModal');
+  var box = document.getElementById('bookingModalBox');
+  modal.classList.remove('opacity-0', 'pointer-events-none');
+  box.classList.remove('scale-95');
+  box.classList.add('scale-100');
+}
+
+function closeBookingModal() {
+  var modal = document.getElementById('bookingModal');
+  var box = document.getElementById('bookingModalBox');
+  modal.classList.add('opacity-0', 'pointer-events-none');
+  box.classList.remove('scale-100');
+  box.classList.add('scale-95');
+}
+
+function handleBookingSubmit(e) {
+  e.preventDefault();
+  alert('스타일링 상담 신청이 완료되었습니다! 담당 디자이너가 빠른 시일 내에 연락드리겠습니다.');
+  closeBookingModal();
+}
+</script>
+
+</body>
+</html>
