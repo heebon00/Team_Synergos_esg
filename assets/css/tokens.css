@@ -4,6 +4,8 @@
   --color-brand-dark: #003D8F;
   --color-accent: #FFC900;
   --color-link: #0058A3;
+  --color-sale: #E00751;
+  --color-sale-dark: #B8003F;
 
   /* Ink Colors */
   --color-ink: #111418;
@@ -33,14 +35,24 @@
   --color-footer-bg: #F9FAFB;
 
   /* Radius Tokens */
-  --radius-pill: 20px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
   --radius-card: 12px;
+  --radius-pill: 20px;
 
   /* Spacing & Container Tokens */
   --spacing-container: 1280px;
+  --spacing-promo-max: 760px;
   --spacing-card-img: 200px;
   --spacing-card-min: 340px;
   --spacing-hero-img: 260px;
+  --spacing-hero-col: 420px;
   --spacing-max-mobile: 440px;
+  --spacing-logo: 98px;
+  --spacing-search: 320px;
   --container-mobile: 640px;
+
+  /* Shadow Tokens */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 14px 30px rgba(0, 0, 0, 0.14);
 }
