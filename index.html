@@ -71,6 +71,8 @@
       --spacing-hero-img: 260px;
       --spacing-max-mobile: 440px;
       --container-mobile: 640px;
+      --spacing-logo: 98px;
+      --spacing-search: 320px;
     }
 
     @layer base {
@@ -180,7 +182,7 @@
 
       <!-- 1. Utility Navigation -->
       <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
-        <div class="mx-auto flex max-w-[1280px] items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
+        <div class="mx-auto flex max-w-container items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
           <ul class="flex items-center gap-6">
             <li><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
             <li><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
@@ -194,11 +196,11 @@
       </nav>
 
       <!-- 2. Main Navigation Bar -->
-      <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+      <div class="mx-auto flex max-w-container items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
 
         <!-- Logo -->
-        <a href="index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">
-          <img src="assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-[98px] object-contain">
+        <a href="index.html" class="block h-10 w-logo shrink-0" aria-label="IKEA 홈으로 이동">
+          <img src="assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-logo object-contain">
         </a>
 
         <!-- Desktop Navigation Menu -->
@@ -213,7 +215,7 @@
         </nav>
 
         <!-- Search Bar -->
-        <form class="ml-auto hidden max-w-[320px] flex-1 lg:block" role="search" action="#">
+        <form class="ml-auto hidden max-w-search flex-1 lg:block" role="search" action="#">
           <label for="search-input" class="sr-only-hide">제품 검색</label>
           <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
             <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -1043,7 +1045,7 @@
 
     <!-- Footer Section -->
     <footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
-      <div class="mx-auto max-w-[1280px] px-5 py-12 lg:px-10">
+      <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           
           <!-- Col 1 -->
