@@ -50,6 +50,20 @@
 
       --radius-pill: 20px;
       --radius-card: 12px;
+      --color-white: #FFFFFF;
+
+      /* Spacing & Layout Tokens */
+      --spacing-mega-menu: 900px;
+      --spacing-hero-banner-mobile: 360px;
+      --spacing-hero-banner-desktop: 420px;
+      --spacing-idea-card-mobile: 360px;
+      --spacing-idea-card-desktop: 400px;
+      --spacing-showroom-card: 220px;
+
+      /* Typography Tokens */
+      --font-size-tag: 10px;
+      --font-size-caption: 11px;
+      --width-mega-menu-max: calc(100vw - 2rem);
     }
 
     @layer base {
@@ -59,7 +73,7 @@
         -webkit-font-smoothing: antialiased;
         text-size-adjust: 100%;
         color: var(--color-ink);
-        background-color: #FFFFFF;
+        background-color: var(--color-white);
       }
       :focus-visible {
         outline: 3px solid var(--color-brand);
@@ -97,7 +111,7 @@
       left: 16px;
       top: -80px;
       z-index: 100;
-      background-color: #FFFFFF;
+      background-color: var(--color-white);
       color: var(--color-brand);
       border: 2px solid var(--color-brand);
       border-radius: 8px;
@@ -125,19 +139,19 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: #FFFFFF;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      background: var(--color-white);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12); /* token-exempt */
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s ease;
-      color: #111418;
+      color: var(--color-ink);
     }
     .swiper-button-prev-custom:hover,
     .swiper-button-next-custom:hover {
       background: var(--color-brand);
-      color: #FFFFFF;
+      color: var(--color-white);
     }
     .swiper-button-disabled {
       opacity: 0.35;
@@ -159,7 +173,7 @@
 
       <!-- 1. Utility Navigation -->
       <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
-        <div class="mx-auto flex max-w-[1280px] items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
+        <div class="mx-auto flex max-w-container items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
           <ul class="flex items-center gap-6">
             <li><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
             <li><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
@@ -173,11 +187,11 @@
       </nav>
 
       <!-- 2. Main Navigation Bar -->
-      <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+      <div class="mx-auto flex max-w-container items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
 
         <!-- Logo -->
-        <a href="index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">
-          <img src="assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-[98px] object-contain">
+        <a href="index.html" class="block h-10 w-logo shrink-0" aria-label="IKEA 홈으로 이동">
+          <img src="assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-logo object-contain">
         </a>
 
         <!-- Desktop Navigation Menu -->
@@ -212,7 +226,7 @@
         </nav>
 
         <!-- Search Bar -->
-        <form class="ml-auto hidden max-w-[320px] flex-1 lg:block" role="search" action="#">
+        <form class="ml-auto hidden max-w-search flex-1 lg:block" role="search" action="#">
           <label for="search-input" class="sr-only-hide">제품 검색</label>
           <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
             <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -232,7 +246,7 @@
         <!-- User Action Icons -->
         <ul class="ml-auto hidden items-center gap-4 lg:flex lg:ml-0">
           <li>
-            <a href="#" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="마이페이지">
+            <a href="common/account.html" class="flex items-center gap-1.5 text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="마이페이지">
               <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
               </svg>
@@ -274,7 +288,7 @@
 
       <!-- 3. Figma Mega Navigation Dropdown Panel -->
       <div id="mega-menu-panel" 
-           class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[900px] max-w-[calc(100vw-2rem)] bg-white border border-[#E6E6E6] rounded-xl shadow-2xl p-6 opacity-0 invisible translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
+           class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-mega-menu max-w-mega-menu-max bg-white border border-line-light rounded-xl shadow-2xl p-6 opacity-0 invisible translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
         
         <!-- Tab 1: 모든 제품 -->
         <div data-mega-tab="all" class="mega-tab-content hidden">
@@ -314,7 +328,7 @@
             </div>
 
             <!-- Divider -->
-            <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+            <div class="w-px bg-line-light self-stretch"></div>
 
             <!-- Column 2 -->
             <div class="flex-1 flex flex-col gap-1">
@@ -351,7 +365,7 @@
             </div>
 
             <!-- Divider -->
-            <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+            <div class="w-px bg-line-light self-stretch"></div>
 
             <!-- Column 3 -->
             <div class="flex-1 flex flex-col gap-1">
@@ -409,7 +423,7 @@
             </div>
 
             <!-- Divider -->
-            <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+            <div class="w-px bg-line-light self-stretch"></div>
 
             <!-- Column 2 -->
             <div class="flex-1 flex flex-col gap-1">
@@ -434,7 +448,7 @@
             </div>
 
             <!-- Divider -->
-            <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+            <div class="w-px bg-line-light self-stretch"></div>
 
             <!-- Column 3 -->
             <div class="flex-1 flex flex-col gap-1">
@@ -480,7 +494,7 @@
             </div>
 
             <!-- Divider -->
-            <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+            <div class="w-px bg-line-light self-stretch"></div>
 
             <!-- Column 2 -->
             <div class="flex-1 flex flex-col gap-1">
@@ -541,7 +555,7 @@
             </div>
 
             <!-- Divider -->
-            <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+            <div class="w-px bg-line-light self-stretch"></div>
 
             <!-- Column 2 -->
             <div class="flex-1 flex flex-col gap-1">
@@ -584,11 +598,11 @@
 
       <!-- SECTION: Category Icon Row (2 Rows of 7 Items matching Figma HIFI Frame) -->
       <section class="py-8 bg-white border-b border-line-light/50 overflow-hidden" aria-label="카테고리 탐색">
-        <div class="mx-auto max-w-[1280px] px-5 lg:px-10">
+        <div class="mx-auto max-w-container px-5 lg:px-10">
           <div class="grid grid-cols-4 sm:grid-cols-7 gap-y-6 gap-x-4 items-center justify-items-center">
             
             <!-- Row 1: Item 1 - 모든제품 -->
-            <a href="common/category.html" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="common/category.html" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/cat-all.png" alt="모든제품" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -596,7 +610,7 @@
             </a>
 
             <!-- Row 1: Item 2 - 침대 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/cat-bed.png" alt="침대" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -604,7 +618,7 @@
             </a>
 
             <!-- Row 1: Item 3 - 책상 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/cat-desk.png" alt="책상" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -612,7 +626,7 @@
             </a>
 
             <!-- Row 1: Item 4 - 의자 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/cat-chair.png" alt="의자" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -620,7 +634,7 @@
             </a>
 
             <!-- Row 1: Item 5 - 수납장 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/cat-storage.png" alt="수납장" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -628,7 +642,7 @@
             </a>
 
             <!-- Row 1: Item 6 - 식탁 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/cat-table.png" alt="식탁" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -636,7 +650,7 @@
             </a>
 
             <!-- Row 1: Item 7 - 서랍장 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/images/products/nordli.png" alt="서랍장" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -644,7 +658,7 @@
             </a>
 
             <!-- Row 2: Item 8 - 선반 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/p-billy.png" alt="선반" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -652,7 +666,7 @@
             </a>
 
             <!-- Row 2: Item 9 - TV장 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/images/products/stockholm.png" alt="TV장" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -660,7 +674,7 @@
             </a>
 
             <!-- Row 2: Item 10 - 소파 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/images/products/kivik.png" alt="소파" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -668,7 +682,7 @@
             </a>
 
             <!-- Row 2: Item 11 - 화분 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/seungwoon/images/gallery-home-garden.png" alt="화분" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
               </div>
@@ -676,7 +690,7 @@
             </a>
 
             <!-- Row 2: Item 12 - 조명 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/images/products/ostano.png" alt="조명" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -684,7 +698,7 @@
             </a>
 
             <!-- Row 2: Item 13 - 러그 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/p-showcase-2.png" alt="러그" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
               </div>
@@ -692,7 +706,7 @@
             </a>
 
             <!-- Row 2: Item 14 - 커튼 -->
-            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-20">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/seungwoon/images/gallery-kids-room.png" alt="커튼" width="56" height="56" class="h-14 w-14 object-cover rounded-xl">
               </div>
@@ -704,9 +718,9 @@
       </section>
 
       <!-- SECTION: Hero Ad Banner -->
-      <section class="py-6 mx-auto max-w-[1280px] px-5 lg:px-10" aria-label="메인 혜택 슬라이더">
+      <section class="py-6 mx-auto max-w-container px-5 lg:px-10" aria-label="메인 혜택 슬라이더">
         <div class="relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl group">
-          <img src="assets/hero-ad-banner.png" alt="새로운 IKEA 컬렉션 배너" class="h-[360px] md:h-[420px] w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105">
+          <img src="assets/hero-ad-banner.png" alt="새로운 IKEA 컬렉션 배너" class="h-hero-banner-mobile md:h-hero-banner-desktop w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105">
           <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex flex-col justify-center px-8 md:px-16 text-white">
             <span class="inline-block px-3.5 py-1 rounded-full bg-brand text-xs font-bold w-fit mb-4 text-white uppercase tracking-wider">NEW COLLECTION</span>
             <h1 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight max-w-xl text-white">
@@ -728,7 +742,7 @@
       </section>
 
       <!-- SECTION 1: 추천 제품 Carousel -->
-      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-recommend">
+      <section class="py-12 mx-auto max-w-container px-5 lg:px-10 rv" aria-labelledby="heading-recommend">
         
         <!-- Header -->
         <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
@@ -756,7 +770,7 @@
               <!-- Card 1 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
                     <img src="assets/p-kallax.png" alt="KALLAX 칼락스 선반유닛" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                     <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
                       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -778,7 +792,7 @@
               <!-- Card 2 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
                     <img src="assets/images/products/malm.png" alt="MALM 말름 침대 프레임" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                     <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
                       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -800,7 +814,7 @@
               <!-- Card 3 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
                     <img src="assets/p-poang.png" alt="POÄNG 포엥 암체어" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                     <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
                       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -822,7 +836,7 @@
               <!-- Card 4 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
                     <img src="assets/images/products/nordli.png" alt="HEMNES 헴네스 서랍장" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                     <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
                       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -844,7 +858,7 @@
               <!-- Card 5 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
                     <img src="assets/images/products/markus.png" alt="MARKUS 마르쿠스 의자" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                     <button type="button" class="absolute top-3 right-3 rounded-full bg-white/80 p-2 text-ink-muted hover:text-red-500 hover:bg-white transition-all shadow-sm" aria-label="위시리스트에 추가">
                       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -876,7 +890,7 @@
       </section>
 
       <!-- SECTION 2: 신제품 Carousel -->
-      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-new">
+      <section class="py-12 mx-auto max-w-container px-5 lg:px-10 rv" aria-labelledby="heading-new">
         
         <!-- Header -->
         <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
@@ -904,8 +918,8 @@
               <!-- Card 1 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
-                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-tag font-bold px-2 py-0.5 rounded">NEW</span>
                     <img src="assets/p-billy.png" alt="BILLY 빌리 책장" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                   </div>
                   <div class="mt-4 flex flex-col flex-1 justify-between">
@@ -924,8 +938,8 @@
               <!-- Card 2 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
-                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-tag font-bold px-2 py-0.5 rounded">NEW</span>
                     <img src="assets/p-lack.png" alt="LACK 라크 사이드테이블" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                   </div>
                   <div class="mt-4 flex flex-col flex-1 justify-between">
@@ -944,8 +958,8 @@
               <!-- Card 3 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
-                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-tag font-bold px-2 py-0.5 rounded">NEW</span>
                     <img src="assets/images/products/bekant.png" alt="ALEX 알렉스 서랍유닛" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                   </div>
                   <div class="mt-4 flex flex-col flex-1 justify-between">
@@ -964,8 +978,8 @@
               <!-- Card 4 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
-                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-tag font-bold px-2 py-0.5 rounded">NEW</span>
                     <img src="assets/images/products/nordli.png" alt="NORDLI 노르들리 수납콤비네이션" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                   </div>
                   <div class="mt-4 flex flex-col flex-1 justify-between">
@@ -984,8 +998,8 @@
               <!-- Card 5 -->
               <div class="swiper-slide">
                 <article class="flex flex-col h-full rounded-2xl border border-line-light bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                  <div class="relative h-[200px] w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
-                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+                  <div class="relative h-card-img w-full overflow-hidden rounded-xl bg-bg-light flex items-center justify-center p-4">
+                    <span class="absolute top-3 left-3 bg-red-600 text-white text-tag font-bold px-2 py-0.5 rounded">NEW</span>
                     <img src="assets/images/products/ekedalen.png" alt="EKEDALEN 에케달렌 식탁" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                   </div>
                   <div class="mt-4 flex flex-col flex-1 justify-between">
@@ -1014,7 +1028,7 @@
       </section>
 
       <!-- SECTION 3: 인테리어 아이디어 (Shoppable Showcase) -->
-      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-ideas">
+      <section class="py-12 mx-auto max-w-container px-5 lg:px-10 rv" aria-labelledby="heading-ideas">
         
         <!-- Header -->
         <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
@@ -1039,7 +1053,7 @@
           
           <!-- Card 1 -->
           <a href="common/styling.html" class="group relative overflow-hidden rounded-2xl bg-slate-100 shadow-md hover:shadow-2xl transition-all duration-500">
-            <div class="h-[360px] md:h-[400px] w-full overflow-hidden">
+            <div class="h-idea-card-mobile md:h-idea-card-desktop w-full overflow-hidden">
               <img src="assets/p-showcase-1.png" alt="화이트 모던 스타일 수납 제안" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
             </div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8 text-white">
@@ -1055,7 +1069,7 @@
 
           <!-- Card 2 -->
           <a href="common/styling.html" class="group relative overflow-hidden rounded-2xl bg-slate-100 shadow-md hover:shadow-2xl transition-all duration-500">
-            <div class="h-[360px] md:h-[400px] w-full overflow-hidden">
+            <div class="h-idea-card-mobile md:h-idea-card-desktop w-full overflow-hidden">
               <img src="assets/p-showcase-2.png" alt="원목과 스틸의 내추럴 인테리어 스타일링" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
             </div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8 text-white">
@@ -1073,7 +1087,7 @@
       </section>
 
       <!-- SECTION 4: 이케아 쇼룸 둘러보기 (Showroom Sets) -->
-      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-showroom">
+      <section class="py-12 mx-auto max-w-container px-5 lg:px-10 rv" aria-labelledby="heading-showroom">
         
         <!-- Header -->
         <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
@@ -1098,7 +1112,7 @@
 
           <!-- Room Set 1 -->
           <article class="flex flex-col overflow-hidden rounded-2xl border border-line-light bg-white shadow-sm hover:shadow-xl transition-all duration-300 group">
-            <div class="h-[220px] w-full overflow-hidden bg-bg-light">
+            <div class="h-showroom-card w-full overflow-hidden bg-bg-light">
               <img src="assets/p-after-room.png" alt="오늘의 세트 - 1인 거실 꾸미기" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
             </div>
             <div class="flex flex-col flex-1 justify-between p-5">
@@ -1114,7 +1128,7 @@
 
           <!-- Room Set 2 -->
           <article class="flex flex-col overflow-hidden rounded-2xl border border-line-light bg-white shadow-sm hover:shadow-xl transition-all duration-300 group">
-            <div class="h-[220px] w-full overflow-hidden bg-bg-light">
+            <div class="h-showroom-card w-full overflow-hidden bg-bg-light">
               <img src="assets/seungwoon/images/gallery-mini-kitchen.png" alt="미니멀 홈 오피스 세트" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
             </div>
             <div class="flex flex-col flex-1 justify-between p-5">
@@ -1130,7 +1144,7 @@
 
           <!-- Room Set 3 -->
           <article class="flex flex-col overflow-hidden rounded-2xl border border-line-light bg-white shadow-sm hover:shadow-xl transition-all duration-300 group">
-            <div class="h-[220px] w-full overflow-hidden bg-bg-light">
+            <div class="h-showroom-card w-full overflow-hidden bg-bg-light">
               <img src="assets/seungwoon/images/gallery-closet-storage.png" alt="아늑한 침실 세트" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
             </div>
             <div class="flex flex-col flex-1 justify-between p-5">
@@ -1148,7 +1162,7 @@
       </section>
 
       <!-- SECTION 5: 이케아 코리아 인스타그램 (Instagram Feed) -->
-      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-insta">
+      <section class="py-12 mx-auto max-w-container px-5 lg:px-10 rv" aria-labelledby="heading-insta">
         
         <!-- Header -->
         <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
@@ -1219,7 +1233,7 @@
       </section>
 
       <!-- SECTION 6: 실제 고객들의 후기 (Customer Reviews) -->
-      <section class="py-12 mx-auto max-w-[1280px] px-5 lg:px-10 rv" aria-labelledby="heading-reviews">
+      <section class="py-12 mx-auto max-w-container px-5 lg:px-10 rv" aria-labelledby="heading-reviews">
         
         <!-- Header -->
         <div class="flex items-end justify-between border-b border-line-light pb-4 mb-6">
@@ -1263,7 +1277,7 @@
               </div>
               <div>
                 <p class="text-xs font-bold text-ink">김*수 님</p>
-                <p class="text-[11px] text-ink-muted">조립 서비스 이용 구매자</p>
+                <p class="text-caption text-ink-muted">조립 서비스 이용 구매자</p>
               </div>
             </div>
           </article>
@@ -1289,7 +1303,7 @@
               </div>
               <div>
                 <p class="text-xs font-bold text-ink">이*진 님</p>
-                <p class="text-[11px] text-ink-muted">택배 배송 서비스 구매자</p>
+                <p class="text-caption text-ink-muted">택배 배송 서비스 구매자</p>
               </div>
             </div>
           </article>
@@ -1315,7 +1329,7 @@
               </div>
               <div>
                 <p class="text-xs font-bold text-ink">박*우 님</p>
-                <p class="text-[11px] text-ink-muted">매장 픽업 구매자</p>
+                <p class="text-caption text-ink-muted">매장 픽업 구매자</p>
               </div>
             </div>
           </article>
@@ -1327,7 +1341,7 @@
 
     <!-- Footer Section -->
     <footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
-      <div class="mx-auto max-w-[1280px] px-5 py-12 lg:px-10">
+      <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           
           <!-- Col 1 -->

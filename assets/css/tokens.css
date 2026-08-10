@@ -1,5 +1,5 @@
 @theme {
-  /* Brand Colors */
+  /* Brand colors */
   --color-brand: #0051BA;
   --color-brand-dark: #003D8F;
   --color-accent: #FFC900;
@@ -7,16 +7,19 @@
   --color-sale: #E00751;
   --color-sale-dark: #B8003F;
 
-  /* Ink Colors */
+  /* Neutrals / Ink */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
   --color-ink: #111418;
   --color-ink-2: #3D4450;
   --color-ink-3: #6B7280;
   --color-ink-sub: #3D4450;
   --color-ink-muted: #6B7280;
   --color-muted: #666666;
+  --color-gray-dark: #212121;
   --color-price: #1A1A1A;
 
-  /* Line / Border Colors */
+  /* Lines & Dividers */
   --color-line: #C5CCD6;
   --color-line-2: #D1D5DB;
   --color-line-light: #E6E6E6;
@@ -25,7 +28,7 @@
   --color-divider: #D9D9D9;
   --color-nav-line: #E5E7EB;
 
-  /* Background Colors */
+  /* Backgrounds */
   --color-bg-light: #F8F9FA;
   --color-shell: #F8F9FA;
   --color-crust: #F5F5F5;
@@ -34,13 +37,14 @@
   --color-search-bg: #F3F4F6;
   --color-footer-bg: #F9FAFB;
 
-  /* Radius Tokens */
+  /* Radius & Border Tokens */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-card: 12px;
   --radius-pill: 20px;
+  --radius-btn: 8px;
 
-  /* Spacing & Container Tokens */
+  /* Spacings */
   --spacing-container: 1280px;
   --spacing-promo-max: 760px;
   --spacing-card-img: 200px;
@@ -52,7 +56,29 @@
   --spacing-search: 320px;
   --container-mobile: 640px;
 
+  /* Figma Specific Layout Spacings */
+  --spacing-sidebar: 252px;
+  --spacing-card-col: 200px;
+  --spacing-footer-col: 150px;
+  --spacing-menu-item: 228px;
+  --spacing-search-bar: 278px;
+  --spacing-nav-px: 140px;
+  --spacing-nav-py: 12px;
+  --spacing-body-px: 80px;
+  --spacing-body-py: 40px;
+  --spacing-footer-pt: 48px;
+  --spacing-footer-px: 80px;
+  --spacing-footer-pb: 32px;
+
   /* Shadow Tokens */
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-card-hover: 0 14px 30px rgba(0, 0, 0, 0.14);
+
+  /* Custom Font Sizes */
+  --font-size-title: 30px;
+  --font-size-footer-link: 13px;
+
+  /* Custom Border Widths */
+  --border-width-tab: 3px;
 }
+

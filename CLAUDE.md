@@ -41,3 +41,5 @@ F:\harness는 단일 프로젝트가 아니다.
 
 ##font 설정
 1.@./assets/fonts/pretendard.css 임포트한다.
+
+## 메인페이지 외의 html은 common 폴더에 작성하고 파일 이름은 페이지에 맞게 작성한다
