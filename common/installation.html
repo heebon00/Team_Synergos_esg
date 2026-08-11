@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="IKEA 홈스타일링 서비스 – 프로 스타일리스트가 제안하는 맞춤 공간 스타일링, 3D 가구 배치 및 컨설팅을 만나보세요.">
-<title>이케아 스타일링 | IKEA</title>
+<meta name="description" content="IKEA 조립&설치 서비스 – 가구 조립부터 주방·욕실 설치까지, 전문 설치 마스터가 방문하여 완벽하게 마감해 드리는 정찰제 서비스를 만나보세요.">
+<title>조립&amp;설치 서비스 | IKEA</title>
 
 <script>
   var d = document.documentElement;
@@ -20,6 +20,7 @@
 
 <style type="text/tailwindcss">
   @theme {
+    --color-white: #FFFFFF;
     --color-brand: #0051BA;
     --color-brand-dark: #003D8F;
     --color-accent: #FFC900;
@@ -93,15 +94,16 @@
 
   /* Swiper 커스텀 */
   .swiper-slide { height: auto; }
-  .cat-sw .swiper-slide { width: 80px; }
-  /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
-  .prod-sw { padding: 10px 2px 26px; }
-  .nav-btn[aria-disabled="true"] { opacity: .3; }
+
+  /* 아코디언 화살표 회전 */
+  .faq-item[open] .faq-chevron { transform: rotate(180deg); }
+  .faq-chevron { transition: transform .2s ease-out; }
+  summary::-webkit-details-marker { display: none; }
 
   /* 건너뛰기 링크 */
   .skip {
     position: absolute; left: 16px; top: -80px; z-index: 100;
-    background: #fff; color: var(--color-brand);
+    background: var(--color-white); color: var(--color-brand);
     border: 2px solid var(--color-brand); border-radius: 8px;
     padding: 12px 20px; font-weight: 700;
     transition: top .15s ease-out;
@@ -156,12 +158,12 @@
           </a>
         </li>
         <li class="relative">
-          <a class="nav-link py-2 px-1 text-brand font-extrabold border-b-2 border-brand transition-colors flex items-center gap-1 group" data-tab="styling" href="styling.html" aria-current="page">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group" data-tab="styling" href="styling.html">
             <span>플래닝 &amp; 아이디어</span>
           </a>
         </li>
         <li class="relative">
-          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group" data-tab="service" href="service.html">
+          <a class="nav-link py-2 px-1 text-brand font-extrabold border-b-2 border-brand transition-colors flex items-center gap-1 group" data-tab="service" href="service.html" aria-current="page">
             <span>서비스</span>
           </a>
         </li>
@@ -232,7 +234,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
         </svg>
       </a>
-      <button id="mobile-menu-btn" type="button" class="p-2 text-ink hover:text-brand" aria-expanded="false" aria-controls="mobile-nav" aria-label="모바일 메뉴 열기">
+      <button id="mobile-menu-btn" type="button" class="p-2 text-ink hover:text-brand" aria-expanded="false" aria-controls="mobile-nav" aria-label="모바일 메뉴 열기" onclick="toggleMobileNav()">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
@@ -552,233 +554,647 @@
 <main id="main" class="flex-1">
 
   <!-- SEGMENT: Breadcrumbs -->
-  <nav aria-label="브레드크럼" class="w-full bg-white">
-    <div class="mx-auto flex max-w-[1280px] items-center gap-2 px-5 py-3 text-xs text-muted lg:px-10">
+  <nav aria-label="브레드크럼" class="w-full border-b border-line/40 bg-white">
+    <div class="mx-auto flex max-w-container items-center gap-2 px-5 py-3 text-xs text-muted lg:px-10">
       <a href="../index.html" class="hover:text-brand hover:underline">홈</a>
       <span class="text-gray-400" aria-hidden="true">&gt;</span>
-      <a href="#" class="hover:text-brand hover:underline">플래닝 &amp; 아이디어</a>
+      <a href="service.html" class="hover:text-brand hover:underline">서비스</a>
       <span class="text-gray-400" aria-hidden="true">&gt;</span>
-      <span class="font-medium text-[#212121]" aria-current="page">이케아 스타일링</span>
+      <span class="font-medium text-ink" aria-current="page">조립&amp;설치 서비스</span>
     </div>
   </nav>
   <!-- /SEGMENT: Breadcrumbs -->
 
-  <!-- SEGMENT: HeroStyling -->
-  <section class="w-full bg-white border-b border-line">
-    <div class="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-8 px-5 py-12 lg:flex-row lg:gap-12 lg:px-20 lg:py-16">
-      <!-- Hero Text -->
-      <div class="flex-1 flex flex-col gap-4 text-left">
-        <h1 class="text-3xl font-extrabold tracking-tight text-ink lg:text-4xl leading-tight">
-          프로 스타일리스트의 홈스타일링
+  <!-- SEGMENT: HeroInstallation -->
+  <section class="w-full bg-white">
+    <div class="mx-auto flex max-w-container flex-col items-center gap-10 px-5 py-12 lg:flex-row lg:gap-20 lg:px-20 lg:py-20">
+      <div class="flex flex-1 flex-col items-start gap-6">
+        <span class="inline-flex items-center rounded-full border border-ink px-3 py-2 text-base font-bold text-ink">
+          IKEA ASSEMBLY &amp; INSTALLATION
+        </span>
+        <h1 class="text-4xl font-extrabold tracking-tight text-ink lg:text-5xl">
+          조립&amp;설치 서비스
         </h1>
-        <p class="text-base leading-relaxed text-ink-2 max-w-xl">
-          가구 단품 배치를 넘어 조명, 패브릭, 그리고 작은 홈 데코레이션 액세서리까지! 이케아 고유의 실용주의 미학을 담아 전담 플래너가 당신만을 위한 완벽한 맞춤 공간을 꾸며드립니다.
+        <p class="max-w-lg text-base leading-relaxed text-ink-2">
+          복잡하고 무거운 가구 조립부터 전문적인 주방, 욕실 시공까지 IKEA 전문가가 완벽하게 도와드립니다. 규격에 맞춘 올바른 설치를 통해 제품의 수명을 지키고 가치를 높여보세요.
         </p>
-        <div class="pt-2">
-          <a href="#tiers" class="inline-flex items-center gap-2 rounded-lg bg-brand px-6 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-brand-dark transition-all transform hover:-translate-y-0.5">
-            <span>스타일링 상담 신청하기</span>
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
-          </a>
+        <div class="flex flex-wrap items-center gap-6 pt-3">
+          <a href="#install-price" class="inline-flex items-center justify-center rounded-lg bg-brand px-8 py-3.5 text-base font-bold text-white hover:bg-brand-dark transition-colors">설치 요금 계산하기</a>
+          <a href="#reviews" class="text-base font-bold text-brand underline underline-offset-2 hover:text-brand-dark transition-colors">자세히 보기</a>
         </div>
       </div>
-      <!-- Hero Image -->
-      <div class="w-full max-w-[520px] lg:w-[520px] shrink-0">
-        <div class="overflow-hidden rounded-xl border border-line shadow-md aspect-[520/300]">
-          <img src="../assets/hero-styling.png" alt="프로 스타일리스트의 이케아 홈스타일링 연출 공간" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105">
+      <div class="flex h-64 w-full flex-1 items-center justify-center overflow-hidden rounded border border-line bg-hairline lg:h-100">
+        <span class="text-sm font-semibold text-ink-muted">IMG</span>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: HeroInstallation -->
+
+  <!-- SEGMENT: InstallationTypes -->
+  <section class="w-full bg-white py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-8 px-5 lg:gap-10 lg:px-20">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-bold text-ink lg:text-3xl">조립&amp;설치 서비스 모아보기</h2>
+        <p class="text-sm text-muted lg:text-base">다양한 조립 및 설치 서비스의 규격화된 정찰제 리스트를 한눈에 살펴보세요.</p>
+      </div>
+
+      <div class="w-full overflow-x-auto rounded-lg border border-line">
+        <table class="w-full min-w-180 border-collapse text-left">
+          <thead>
+            <tr class="bg-bg-light">
+              <th scope="col" class="px-6 py-4 text-base font-bold text-ink">서비스 종류</th>
+              <th scope="col" class="px-5 py-4 text-base font-bold text-ink">설명</th>
+              <th scope="col" class="w-60 px-5 py-4 text-base font-bold text-ink">평균 소요 시간</th>
+              <th scope="col" class="w-60 px-6 py-4 text-right text-base font-bold text-ink">기본 가격</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            <tr class="bg-hairline">
+              <td colspan="4" class="px-6 py-3 text-2xl font-extrabold text-ink">조립</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">소형 가구 조립 (의자, 협탁 등)</td>
+              <td class="px-5 py-5 text-base text-ink-2">조립 부품 구성 및 안전 점검 포함</td>
+              <td class="px-5 py-5 text-base text-ink-2">1~2시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 25,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">중형 가구 조립 (책장, 서랍장 등)</td>
+              <td class="px-5 py-5 text-base text-ink-2">조립 부품 구성 및 안전 점검 포함</td>
+              <td class="px-5 py-5 text-base text-ink-2">2~3시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 45,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">대형 가구 조립 (옷장, 침대 등)</td>
+              <td class="px-5 py-5 text-base text-ink-2">조립 부품 구성 및 안전 점검 포함</td>
+              <td class="px-5 py-5 text-base text-ink-2">3~4시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 65,000</td>
+            </tr>
+            <tr class="bg-hairline">
+              <td colspan="4" class="px-6 py-3 text-2xl font-extrabold text-ink">설치</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">주방 설치 서비스</td>
+              <td class="px-5 py-5 text-base text-ink-2">싱크대 상하부장, 상판 타공 및 배관 기기 연계 인프라 포함 시공</td>
+              <td class="px-5 py-5 text-base text-ink-2">반나절~1일 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 150,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">욕실 설치 서비스</td>
+              <td class="px-5 py-5 text-base text-ink-2">세면대 하부장 고정, 벽부 거울 수납장 시공 및 실리콘 마감 공정</td>
+              <td class="px-5 py-5 text-base text-ink-2">4~6시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 120,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">붙박이장 설치 서비스</td>
+              <td class="px-5 py-5 text-base text-ink-2">팍스(PAX) 시스템 빌트인 프레임 조합, 레벨 조정 및 도어 부착</td>
+              <td class="px-5 py-5 text-base text-ink-2">3~5시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 89,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">커튼 및 블라인드 설치</td>
+              <td class="px-5 py-5 text-base text-ink-2">천장 마감재 컨디션 타공 브래킷 고정 및 밸런스 조정 테스트</td>
+              <td class="px-5 py-5 text-base text-ink-2">1~2시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 35,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">벽걸이 TV 마운트 설치</td>
+              <td class="px-5 py-5 text-base text-ink-2">콘크리트/석고 보강 벽 타공 매립 브래킷 시공 및 안심 거치</td>
+              <td class="px-5 py-5 text-base text-ink-2">1~2시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 49,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">조명 기구 설치</td>
+              <td class="px-5 py-5 text-base text-ink-2">팬던트/직부 메인 조명 안전 절연 장치 연결 및 전선 마감 테이핑</td>
+              <td class="px-5 py-5 text-base text-ink-2">1시간 소요</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-link">₩ 25,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex w-full items-center justify-center pt-6">
+        <a href="#reviews" class="inline-flex items-center justify-center rounded-lg border-2 border-brand px-8 py-3.5 text-base font-bold text-brand hover:bg-brand hover:text-white transition-colors">셀프 조립 후기 보러가기</a>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: InstallationTypes -->
+
+  <!-- SEGMENT: ExpertGuidance -->
+  <section class="w-full bg-bg-light py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-center gap-10 px-5 lg:flex-row lg:items-center lg:gap-20 lg:px-20">
+      <div class="w-full shrink-0 overflow-hidden rounded border border-line lg:w-1/2">
+        <div class="flex h-64 w-full items-center justify-center bg-white lg:h-90">
+          <span class="text-sm font-semibold text-ink-muted">IMG</span>
+        </div>
+      </div>
+      <div class="flex flex-1 flex-col items-start gap-8">
+        <div class="flex flex-col gap-1">
+          <h2 class="text-2xl font-bold text-ink lg:text-3xl">전문 설치 서비스 안내</h2>
+          <p class="text-sm text-muted lg:text-base">설치 전문가가 방문하여 꼼꼼하고 완벽하게 마감 처리해 드리는 프리미엄 정찰제 서비스입니다.</p>
+        </div>
+        <div class="flex w-full flex-col items-start gap-5">
+          <div class="flex w-full items-start gap-3">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-xl bg-ink text-base font-bold text-white">✓</span>
+            <div class="flex flex-1 flex-col items-start gap-1">
+              <p class="text-base font-bold text-ink">전문 기사 방문 설치</p>
+              <p class="text-base leading-relaxed text-ink-2">IKEA의 전문적인 하드웨어 조립 및 빌트인 노하우를 갖춘 공인 설치 마스터가 책임 방문합니다.</p>
+            </div>
+          </div>
+          <div class="flex w-full items-start gap-3">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-xl bg-ink text-base font-bold text-white">✓</span>
+            <div class="flex flex-1 flex-col items-start gap-1">
+              <p class="text-base font-bold text-ink">설치 후 안전 점검</p>
+              <p class="text-base leading-relaxed text-ink-2">기본 조립 상태는 물론 벽 고정 연계 가구의 수평 유지, 뒤틀림 여부까지 꼼꼼한 세이프티 점검 마감.</p>
+            </div>
+          </div>
+          <div class="flex w-full items-start gap-3">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-xl bg-ink text-base font-bold text-white">✓</span>
+            <div class="flex flex-1 flex-col items-start gap-1">
+              <p class="text-base font-bold text-ink">1년 무상 A/S 보증</p>
+              <p class="text-base leading-relaxed text-ink-2">설치 결함 및 마감 이상 발생 시 수령일로부터 1년간 신속하고 무상으로 사후 관리 서비스를 약속합니다.</p>
+            </div>
+          </div>
+          <div class="flex w-full items-start gap-3">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-xl bg-ink text-base font-bold text-white">✓</span>
+            <div class="flex flex-1 flex-col items-start gap-1">
+              <p class="text-base font-bold text-ink">설치 후 폐자재 수거</p>
+              <p class="text-base leading-relaxed text-ink-2">시공 단계에서 대량 배출되는 조립 박스 및 잔여 완충재 등의 비닐 부자재를 일괄 무상 수거해 드립니다.</p>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="inline-flex items-center justify-center rounded-lg bg-brand px-8 py-3.5 text-base font-bold text-white hover:bg-brand-dark transition-colors">자세한 보증 정책 보러가기</a>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: ExpertGuidance -->
+
+  <!-- SEGMENT: AssemblyService -->
+  <section class="w-full bg-white py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-10 px-5 lg:gap-10 lg:px-20">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-bold text-ink lg:text-3xl">조립 서비스</h2>
+        <p class="text-sm text-muted lg:text-base">이케아 가구를 전문가가 안전하고 정확하게 조립해 드립니다.</p>
+      </div>
+
+      <div class="flex w-full flex-col items-start gap-10 lg:flex-row lg:gap-20">
+        <div class="w-full shrink-0 overflow-hidden rounded border border-line lg:w-1/2">
+          <div class="flex h-64 w-full items-center justify-center bg-hairline lg:h-90">
+            <span class="text-sm font-semibold text-ink-muted">IMG</span>
+          </div>
+        </div>
+
+        <div class="flex flex-1 flex-col items-start gap-6">
+          <div class="flex w-full items-start gap-2">
+            <span class="flex flex-1 items-center justify-center rounded bg-brand px-4 py-2.5 text-base font-bold text-white">전문가 조립 서비스</span>
+            <span class="flex flex-1 items-center justify-center rounded border border-line bg-hairline px-4 py-2.5 text-base font-bold text-ink-2">셀프 조립 가이드</span>
+          </div>
+
+          <div class="flex w-full flex-col items-start gap-4">
+            <p class="text-base font-bold text-ink">전문가 조립 서비스</p>
+            <div class="flex w-full flex-col items-start gap-4">
+              <div class="flex w-full items-start gap-3">
+                <span class="flex size-6 shrink-0 items-center justify-center rounded-xl bg-ink text-base font-bold text-white">✓</span>
+                <div class="flex flex-1 flex-col items-start gap-1">
+                  <p class="text-base font-bold text-ink">전문 조립 기사 방문</p>
+                  <p class="text-base text-ink-2">이케아 가구 조립 노하우를 갖춘 전문가가 방문하여 조립을 진행합니다.</p>
+                </div>
+              </div>
+              <div class="flex w-full items-start gap-3">
+                <span class="flex size-6 shrink-0 items-center justify-center rounded-xl bg-ink text-base font-bold text-white">✓</span>
+                <div class="flex flex-1 flex-col items-start gap-1">
+                  <p class="text-base font-bold text-ink">조립 후 안전성 검수</p>
+                  <p class="text-base text-ink-2">수평/벽고정/안전 점검을 포함한 완벽한 마감 검수를 진행합니다.</p>
+                </div>
+              </div>
+              <div class="flex w-full items-start gap-3">
+                <span class="flex size-6 shrink-0 items-center justify-center rounded-xl bg-ink text-base font-bold text-white">✓</span>
+                <div class="flex flex-1 flex-col items-start gap-1">
+                  <p class="text-base font-bold text-ink">포장재 수거 및 정리</p>
+                  <p class="text-base text-ink-2">조립 후 발생한 박스/비닐/완충재를 일괄 수거해 드립니다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col items-start gap-3 pt-2">
+              <p class="text-base font-bold text-ink">요금</p>
+              <p class="text-base leading-relaxed text-ink-2">소형 ₩25,000~<br>중형 ₩45,000~<br>대형 ₩65,000~</p>
+            </div>
+          </div>
+
+          <hr class="w-full border-hairline">
+
+          <div class="flex w-full flex-col items-start gap-4">
+            <p class="text-base font-bold text-ink">셀프 조립 가이드</p>
+            <p class="text-base leading-relaxed text-ink-2">조립 설명서와 영상 가이드를 제공합니다</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <p class="text-base font-bold text-ink">조립 난이도</p>
+              <span class="rounded border border-line bg-hairline px-3 py-2 text-base font-bold text-ink-2">쉬움</span>
+              <span class="rounded border border-line bg-hairline px-3 py-2 text-base font-bold text-ink-2">보통</span>
+              <span class="rounded border border-line bg-hairline px-3 py-2 text-base font-bold text-ink-2">어려움</span>
+            </div>
+          </div>
+
+          <hr class="w-full border-hairline">
+
+          <div class="flex w-full flex-col items-start gap-3">
+            <div class="flex w-full items-center justify-between">
+              <div class="flex items-center gap-1" aria-hidden="true">
+                <span class="size-3 rounded-sm bg-accent"></span>
+                <span class="size-3 rounded-sm bg-accent"></span>
+                <span class="size-3 rounded-sm bg-accent"></span>
+                <span class="size-3 rounded-sm bg-accent"></span>
+                <span class="size-3 rounded-sm bg-gray-200"></span>
+                <span class="ml-1 text-xs text-muted">(42)</span>
+              </div>
+              <a href="#reviews" class="text-base font-bold text-ink hover:text-brand transition-colors">고객님 후기 보러가기 &gt;</a>
+            </div>
+            <p class="text-base leading-relaxed text-ink-2">"설명서가 명확해서 혼자서도 금방 조립했습니다. 포장재도 깔끔하게 치워주셔서 만족해요."</p>
+            <p class="text-base leading-relaxed text-ink-2">"영상 가이드가 도움이 많이 됐어요. 특히 벽고정 부분 설명이 자세해서 안전하게 설치할 수 있었습니다."</p>
+          </div>
+
+          <a href="#" class="inline-flex items-center justify-center rounded-lg bg-brand px-8 py-3.5 text-base font-bold text-white hover:bg-brand-dark transition-colors">조립 서비스 신청하기</a>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 pt-12">
+        <h3 class="text-2xl font-bold text-ink">셀프 조립 난이도 가이드</h3>
+        <p class="text-base text-ink-2">직접 조립하실 경우 아래 난이도를 참고하세요.</p>
+      </div>
+
+      <div class="w-full overflow-x-auto rounded-lg border border-line">
+        <table class="w-full min-w-180 border-collapse text-left">
+          <thead>
+            <tr class="bg-hairline">
+              <th scope="col" class="px-6 py-4 text-base font-bold text-ink-2">가구 종류</th>
+              <th scope="col" class="px-4 py-4 text-base font-bold text-ink-2">셀프 조립 시 참고사항</th>
+              <th scope="col" class="w-55 px-4 py-4 text-base font-bold text-ink-2">난이도</th>
+              <th scope="col" class="w-50 px-6 py-4 text-base font-bold text-ink-2">예상 소요 시간</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">소형 가구 (의자, 협탁 등)</td>
+              <td class="px-4 py-5 text-base text-ink-2">설명서 포함, 기본 공구만 필요</td>
+              <td class="px-4 py-5 text-base font-bold text-green-700">쉬움 ★☆☆</td>
+              <td class="px-6 py-5 text-base text-ink-2">30분~1시간</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">중형 가구 (책장, 서랍장 등)</td>
+              <td class="px-4 py-5 text-base text-ink-2">2인 작업 권장, 전동 드릴 필요</td>
+              <td class="px-4 py-5 text-base font-bold text-amber-600">보통 ★★☆</td>
+              <td class="px-6 py-5 text-base text-ink-2">1~2시간</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">대형 가구 (옷장, 침대 등)</td>
+              <td class="px-4 py-5 text-base text-ink-2">2인 이상 필수, 벽 고정 작업 포함</td>
+              <td class="px-4 py-5 text-base font-bold text-red-600">어려움 ★★★</td>
+              <td class="px-6 py-5 text-base text-ink-2">2~4시간</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">주방/붙박이장</td>
+              <td class="px-4 py-5 text-base text-ink-2">전문가 설치 권장 (셀프 비추천)</td>
+              <td class="px-4 py-5 text-base font-bold text-red-800">매우 어려움</td>
+              <td class="px-6 py-5 text-base text-ink-2">반나절 이상</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="#reviews" class="flex w-full items-center justify-center rounded-lg border border-line bg-hairline py-5 text-base font-bold text-ink-2 hover:border-brand hover:text-brand transition-colors">후기 보러가기</a>
+    </div>
+  </section>
+  <!-- /SEGMENT: AssemblyService -->
+
+  <!-- SEGMENT: DetailedPrice -->
+  <section id="install-price" class="w-full scroll-mt-20 bg-bg-light py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-8 px-5 lg:gap-10 lg:px-20">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-bold text-ink lg:text-3xl">설치 요금표 안내</h2>
+        <p class="text-sm text-muted lg:text-base">설치 요금은 가구 종류 및 단품 무게 수량 기준으로 규격 정찰제 요금이 투명하게 적용됩니다.</p>
+      </div>
+
+      <div class="w-full overflow-x-auto rounded-lg border border-line bg-white">
+        <table class="w-full min-w-180 border-collapse text-left">
+          <thead>
+            <tr class="bg-hairline">
+              <th scope="col" class="px-6 py-4 text-base font-bold text-ink">가구 카테고리</th>
+              <th scope="col" class="px-5 py-4 text-base font-bold text-ink">기본 조립 조건</th>
+              <th scope="col" class="px-5 py-4 text-base font-bold text-ink">벽 타공/추가 옵션 비용</th>
+              <th scope="col" class="w-60 px-6 py-4 text-right text-base font-bold text-ink">최종 요금</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">수납장 및 책장 (빌리, 칼락스 등)</td>
+              <td class="px-5 py-5 text-base text-ink-2">기본 조립 및 내부 선반 배치 포함</td>
+              <td class="px-5 py-5 text-base text-ink-2">벽체 고정 작업 기본 제공</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-ink">₩ 39,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">프레임 침대 및 매트리스</td>
+              <td class="px-5 py-5 text-base text-ink-2">헤드보드 조립 및 갈빗살 지지대 시공</td>
+              <td class="px-5 py-5 text-base text-ink-2">하부 수납 서랍 추가 시 +₩15,000</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-ink">₩ 59,000</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-5 text-base font-bold text-ink">사무용 책상 및 게이밍 데스크</td>
+              <td class="px-5 py-5 text-base text-ink-2">상판 스틸 프레임 결합 및 높이 고정</td>
+              <td class="px-5 py-5 text-base text-ink-2">배선 정리 트레이 타공 부착 무료</td>
+              <td class="px-6 py-5 text-right text-base font-extrabold text-ink">₩ 29,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: DetailedPrice -->
+
+  <!-- SEGMENT: CasesReviews -->
+  <section id="reviews" class="w-full scroll-mt-20 bg-bg-light py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-8 px-5 lg:gap-10 lg:px-20">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-bold text-ink lg:text-3xl">설치 사례 및 후기</h2>
+        <p class="text-sm text-muted lg:text-base">실제 설치/조립 완료 사례와 고객님들의 생생한 후기를 확인해보세요.</p>
+      </div>
+
+      <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="flex flex-col items-start gap-4">
+          <div class="flex h-64 w-full items-center justify-center overflow-hidden rounded border border-line bg-white lg:h-70">
+            <span class="text-sm font-semibold text-ink-muted">IMG</span>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <p class="text-base font-bold text-ink">주방 설치 완료 후기 ★★★★★</p>
+            <p class="text-base text-ink-2">"혼자서는 엄두도 못 냈는데, 깔끔하게 완성됐어요!"</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-start gap-4">
+          <div class="flex h-64 w-full items-center justify-center overflow-hidden rounded border border-line bg-white lg:h-70">
+            <span class="text-sm font-semibold text-ink-muted">IMG</span>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <p class="text-base font-bold text-ink">대형 옷장 조립 ★★★★☆</p>
+            <p class="text-base text-ink-2">앤하트(ENHET) 조립식 하부장 및 원형 LED 거울 배치</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-start gap-4">
+          <div class="flex h-64 w-full items-center justify-center overflow-hidden rounded border border-line bg-white lg:h-70">
+            <span class="text-sm font-semibold text-ink-muted">IMG</span>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <p class="text-base font-bold text-ink">붙박이장 안심 마감</p>
+            <p class="text-base text-ink-2">팍스(PAX) 슬라이딩 슬림 도어 수평 고정 설치</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- /SEGMENT: HeroStyling -->
+  <!-- /SEGMENT: CasesReviews -->
 
-  <!-- SEGMENT: TiersSection -->
-  <section id="tiers" class="w-full bg-white py-16">
-    <div class="mx-auto flex max-w-[1280px] flex-col items-center gap-8 px-5 lg:px-20">
-      <h2 class="text-2xl font-bold text-ink text-center lg:text-3xl">
-        서비스 프라이스
-      </h2>
+  <!-- SEGMENT: OrderMethod -->
+  <section class="w-full bg-hairline py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-10 px-5 lg:gap-12 lg:px-20">
+      <div class="flex flex-col gap-3">
+        <h2 class="text-2xl font-extrabold text-ink lg:text-3xl">설치 서비스 신청 및 진행 과정</h2>
+        <p class="text-base text-ink-2">주문부터 설치 완료까지, 간편한 4단계 프로세스로 진행됩니다.</p>
+      </div>
 
-      <!-- Tier Card Container -->
-      <div class="w-full rounded-xl border border-line bg-white p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-stretch">
-          
-          <!-- Left: Plan Details -->
-          <div class="lg:col-span-7 flex flex-col justify-between gap-6">
-            <div class="flex flex-col gap-6">
-              <!-- Plan Header -->
-              <div>
-                <h3 class="text-xl font-extrabold text-ink lg:text-2xl">베이직 플래닝</h3>
-                <p class="text-sm font-medium text-ink-3 mt-1">온라인 비대면 1회</p>
-              </div>
+      <div class="grid w-full grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-4">
+        <div class="flex flex-col items-start gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand text-base font-bold text-white">01</span>
+          <p class="text-base font-semibold text-ink">온라인/매장 신청</p>
+          <p class="text-sm text-ink-2">구매하신 가구 목록을 확인 후 조립·설치 서비스를 함께 신청합니다.</p>
+        </div>
+        <div class="flex flex-col items-start gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand text-base font-bold text-white">02</span>
+          <p class="text-base font-semibold text-ink">견적 및 결제 확인</p>
+          <p class="text-sm text-ink-2">가구 종류와 옵션에 따른 정찰제 요금을 확인하고 결제를 진행합니다.</p>
+        </div>
+        <div class="flex flex-col items-start gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand text-base font-bold text-white">03</span>
+          <p class="text-base font-semibold text-ink">방문 일정 조율</p>
+          <p class="text-sm text-ink-2">전문 설치 기사와 편리한 방문 날짜와 시간을 조율합니다.</p>
+        </div>
+        <div class="flex flex-col items-start gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand text-base font-bold text-white">04</span>
+          <p class="text-base font-semibold text-ink">설치 완료 및 확인</p>
+          <p class="text-sm text-ink-2">안전 점검까지 마친 후 완성된 결과를 확인하고 마무리합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: OrderMethod -->
 
-              <!-- Price -->
-              <div>
-                <span class="text-4xl font-black text-ink tracking-tight">무료</span>
-              </div>
-
-              <hr class="border-line/70">
-
-              <!-- Feature List -->
-              <div class="flex flex-col gap-3">
-                <div class="flex items-center gap-3 rounded-lg border border-line bg-shell px-4 py-3.5">
-                  <svg class="h-5 w-5 shrink-0 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                  <span class="text-sm font-medium text-ink-2">3D 가구 배치 제공</span>
-                </div>
-                <div class="flex items-center gap-3 rounded-lg border border-line bg-shell px-4 py-3.5">
-                  <svg class="h-5 w-5 shrink-0 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                  <span class="text-sm font-medium text-ink-2">이케아 쇼핑리스트 자동 링크</span>
-                </div>
-                <div class="flex items-center gap-3 rounded-lg border border-line bg-shell px-4 py-3.5">
-                  <svg class="h-5 w-5 shrink-0 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                  <span class="text-sm font-medium text-ink-2">전문 디자이너 1회 피드백 제공</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Action Button -->
-            <div class="pt-4">
-              <button type="button" onclick="openBookingModal()" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-brand px-8 py-3.5 text-base font-bold text-white hover:bg-brand-dark transition-all transform active:scale-95 shadow">
-                신청하기
-              </button>
-            </div>
+  <!-- SEGMENT: InstallerInfo -->
+  <section class="w-full bg-white py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-center gap-10 px-5 lg:flex-row lg:items-center lg:gap-20 lg:px-20">
+      <div class="w-full shrink-0 overflow-hidden rounded border border-line lg:w-1/2">
+        <div class="flex h-64 w-full items-center justify-center bg-hairline lg:h-90">
+          <span class="text-sm font-semibold text-ink-muted">IMG</span>
+        </div>
+      </div>
+      <div class="flex flex-1 flex-col items-start gap-6">
+        <div class="flex flex-col gap-1">
+          <h2 class="text-2xl font-bold text-ink lg:text-3xl">신뢰할 수 있는 이케아 보증 인스톨러</h2>
+          <p class="text-sm text-muted lg:text-base">모든 전문가들은 IKEA가 엄선하여 직접 트레이닝한 수준 높은 설치 전문가 입니다.</p>
+        </div>
+        <p class="text-base leading-relaxed text-ink-2">
+          가정 내 가구 고정 등 중대 안전 법규를 엄격하게 이수하고, 분기별 조립 교육 과정을 통과한 실력있는 크루가 배정됩니다. 고객님의 사소한 수평 체크 피드백까지 꼼꼼히 들어 만족을 보장해 드립니다.
+        </p>
+        <div class="flex w-full flex-col items-start gap-3">
+          <div class="flex items-start gap-3">
+            <p class="w-20 shrink-0 text-base font-bold text-ink">전문 자격</p>
+            <p class="text-base text-ink-2">IKEA 홈 가구 조립 마스터 및 특수 벽체 구조 시공 라이센스 획득</p>
           </div>
+          <div class="flex items-start gap-3">
+            <p class="w-20 shrink-0 text-base font-bold text-ink">평균 경력</p>
+            <p class="text-base text-ink-2">누적 시공 500회 이상의 5년 이상 정밀 가구 인스톨 마에스터</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <p class="w-20 shrink-0 text-base font-bold text-ink">교육 이수</p>
+            <p class="text-base text-ink-2">매년 정기 아동 안전 안심 벽체 고정 가이드라인 필수 이수</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /SEGMENT: InstallerInfo -->
 
-          <!-- Right: Image Preview & Nav Arrow -->
-          <div class="lg:col-span-5 relative min-h-[300px] lg:min-h-[400px]">
-            <div class="h-full w-full overflow-hidden rounded-xl border border-line bg-shell">
-              <img src="../assets/cat-styling-tier.png" alt="베이직 플래닝 공간 연출 미리보기" class="h-full w-full object-cover">
-            </div>
-            <button type="button" class="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-white text-ink shadow-md hover:bg-shell hover:scale-105 transition-all" aria-label="다음 플랜 보기" onclick="alert('더 많은 플랜 옵션 준비 중입니다!')">
-              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+  <!-- SEGMENT: RelatedProducts -->
+  <section class="w-full bg-white py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-8 px-5 lg:gap-10 lg:px-20">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-bold text-ink lg:text-3xl">전문 설치 가능 홈퍼니싱 제품군</h2>
+        <p class="text-sm text-muted lg:text-base">해당 가구 제품군을 구매하시면 편리한 방문 설치 서비스를 함께 신청할 수 있습니다.</p>
+      </div>
+
+      <div class="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="flex flex-col overflow-hidden rounded-xl border border-line-light bg-white shadow-md">
+          <div class="relative flex h-45 w-full items-center justify-center bg-hair">
+            <button type="button" class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-ink-muted hover:text-red-500 transition-colors" aria-label="위시리스트에 추가">
+              <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
             </button>
           </div>
+          <div class="flex flex-1 flex-col items-start gap-3 p-4">
+            <div class="flex flex-col items-start gap-1">
+              <p class="text-sm font-bold text-ink">LANGFJÄLL 랑피엘 회전의자</p>
+              <p class="text-xs text-muted">접이식 선반/이자 + 쿠크 다리</p>
+            </div>
+            <p class="text-sm text-amber-500">★★★★☆ <span class="text-muted">(128)</span></p>
+            <p class="text-lg font-bold text-ink">₩89,900</p>
+            <div class="flex w-full items-center justify-between pt-2">
+              <a href="products.html" class="text-xs font-medium text-ink-2 underline underline-offset-2">상세페이지</a>
+              <div class="flex items-center gap-2">
+                <button type="button" class="flex size-8 items-center justify-center rounded-full border border-line-light text-ink-muted hover:text-brand" aria-label="장바구니에 담기">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                </button>
+                <a href="products.html" class="rounded-pill bg-brand px-5 py-2.5 text-xs font-bold text-white hover:bg-brand-dark transition-colors">구매하기</a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="flex flex-col overflow-hidden rounded-xl border border-line-light bg-white shadow-md">
+          <div class="relative flex h-45 w-full items-center justify-center bg-hair">
+            <button type="button" class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-ink-muted hover:text-red-500 transition-colors" aria-label="위시리스트에 추가">
+              <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-1 flex-col items-start gap-3 p-4">
+            <div class="flex flex-col items-start gap-1">
+              <p class="text-sm font-bold text-ink">LANGFJÄLL 랑피엘 회전의자</p>
+              <p class="text-xs text-muted">접이식 선반/이자 + 쿠크 다리</p>
+            </div>
+            <p class="text-sm text-amber-500">★★★★☆ <span class="text-muted">(128)</span></p>
+            <p class="text-lg font-bold text-ink">₩89,900</p>
+            <div class="flex w-full items-center justify-between pt-2">
+              <a href="products.html" class="text-xs font-medium text-ink-2 underline underline-offset-2">상세페이지</a>
+              <div class="flex items-center gap-2">
+                <button type="button" class="flex size-8 items-center justify-center rounded-full border border-line-light text-ink-muted hover:text-brand" aria-label="장바구니에 담기">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                </button>
+                <a href="products.html" class="rounded-pill bg-brand px-5 py-2.5 text-xs font-bold text-white hover:bg-brand-dark transition-colors">구매하기</a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="flex flex-col overflow-hidden rounded-xl border border-line-light bg-white shadow-md">
+          <div class="relative flex h-45 w-full items-center justify-center bg-hair">
+            <button type="button" class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-ink-muted hover:text-red-500 transition-colors" aria-label="위시리스트에 추가">
+              <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-1 flex-col items-start gap-3 p-4">
+            <div class="flex flex-col items-start gap-1">
+              <p class="text-sm font-bold text-ink">LANGFJÄLL 랑피엘 회전의자</p>
+              <p class="text-xs text-muted">접이식 선반/이자 + 쿠크 다리</p>
+            </div>
+            <p class="text-sm text-amber-500">★★★★☆ <span class="text-muted">(128)</span></p>
+            <p class="text-lg font-bold text-ink">₩89,900</p>
+            <div class="flex w-full items-center justify-between pt-2">
+              <a href="products.html" class="text-xs font-medium text-ink-2 underline underline-offset-2">상세페이지</a>
+              <div class="flex items-center gap-2">
+                <button type="button" class="flex size-8 items-center justify-center rounded-full border border-line-light text-ink-muted hover:text-brand" aria-label="장바구니에 담기">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                </button>
+                <a href="products.html" class="rounded-pill bg-brand px-5 py-2.5 text-xs font-bold text-white hover:bg-brand-dark transition-colors">구매하기</a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="flex flex-col overflow-hidden rounded-xl border border-line-light bg-white shadow-md">
+          <div class="relative flex h-45 w-full items-center justify-center bg-hair">
+            <button type="button" class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-ink-muted hover:text-red-500 transition-colors" aria-label="위시리스트에 추가">
+              <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-1 flex-col items-start gap-3 p-4">
+            <div class="flex flex-col items-start gap-1">
+              <p class="text-sm font-bold text-ink">LANGFJÄLL 랑피엘 회전의자</p>
+              <p class="text-xs text-muted">접이식 선반/이자 + 쿠크 다리</p>
+            </div>
+            <p class="text-sm text-amber-500">★★★★☆ <span class="text-muted">(128)</span></p>
+            <p class="text-lg font-bold text-ink">₩89,900</p>
+            <div class="flex w-full items-center justify-between pt-2">
+              <a href="products.html" class="text-xs font-medium text-ink-2 underline underline-offset-2">상세페이지</a>
+              <div class="flex items-center gap-2">
+                <button type="button" class="flex size-8 items-center justify-center rounded-full border border-line-light text-ink-muted hover:text-brand" aria-label="장바구니에 담기">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                </button>
+                <a href="products.html" class="rounded-pill bg-brand px-5 py-2.5 text-xs font-bold text-white hover:bg-brand-dark transition-colors">구매하기</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
 
-        </div>
+      <div class="flex w-full flex-col items-center gap-4 rounded-lg bg-brand px-10 py-12 text-center">
+        <p class="text-xl font-extrabold text-white">지금 바로 안심 시공 조립 전문가를 매칭해 보세요</p>
+        <p class="max-w-xl text-sm text-white/80">구매 장바구니 리스트만 있어도 즉시 요금 산정이 완료됩니다. 완벽하고 안전한 공간 마감을 지금 시작하세요.</p>
+        <a href="#" class="inline-flex items-center justify-center rounded-lg bg-accent px-8 py-3.5 text-base font-bold text-brand hover:bg-white transition-colors">온라인 전문가 매칭 예약 시작하기</a>
       </div>
     </div>
   </section>
-  <!-- /SEGMENT: TiersSection -->
+  <!-- /SEGMENT: RelatedProducts -->
 
-  <!-- SEGMENT: BeforeAfterSection -->
-  <section class="w-full bg-white pb-16 pt-8">
-    <div class="mx-auto flex max-w-[1280px] flex-col items-center gap-8 px-5 lg:px-20">
-      <h2 class="text-2xl font-extrabold text-ink text-center lg:text-3xl">
-        비포 &amp; 애프터 체인지
-      </h2>
-
-      <!-- Comparison Cards Grid -->
-      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- Before Card -->
-        <div class="flex flex-col gap-3">
-          <div class="overflow-hidden rounded-lg border border-line shadow-sm aspect-[16/9]">
-            <img src="../assets/p-before-room.png" alt="Before 기존 공간" class="h-full w-full object-cover">
-          </div>
-          <p class="text-center text-sm font-bold text-ink-2">
-            Before (기존 공간)
-          </p>
-        </div>
-
-        <!-- After Card -->
-        <div class="flex flex-col gap-3">
-          <div class="overflow-hidden rounded-lg border border-line shadow-sm aspect-[16/9]">
-            <img src="../assets/p-after-room.png" alt="After IKEA 디자인 제안 적용" class="h-full w-full object-cover">
-          </div>
-          <p class="text-center text-sm font-bold text-brand">
-            After (IKEA 디자인 제안 적용)
-          </p>
-        </div>
-
+  <!-- SEGMENT: FaqSection -->
+  <section class="w-full border-t border-line bg-bg-light py-16 lg:py-24">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-10 px-5 lg:px-20">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-bold text-ink lg:text-3xl">자주 묻는 질문 (FAQ)</h2>
+        <p class="text-sm text-muted lg:text-base">이케아 조립/설치 서비스 신청 시 가장 잦은 질답 내용을 요약해 드립니다.</p>
+      </div>
+      <div class="flex w-full flex-col items-start gap-3">
+        <details class="faq-item group w-full rounded border border-line bg-white p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="flex-1 text-base font-bold text-ink">벽 타공 시 석고보드 보강 상태도 점검해 주시나요?</span>
+            <svg class="faq-chevron size-5 shrink-0 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">자세한 안내는 고객센터(1670-4532)로 문의해 주시면 친절히 안내해 드립니다.</p>
+        </details>
+        <details class="faq-item group w-full rounded border border-line bg-white p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="flex-1 text-base font-bold text-ink">구매 후 당일에 바로 방문 조립/설치 서비스를 받을 수 있나요?</span>
+            <svg class="faq-chevron size-5 shrink-0 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">자세한 안내는 고객센터(1670-4532)로 문의해 주시면 친절히 안내해 드립니다.</p>
+        </details>
+        <details class="faq-item group w-full rounded border border-line bg-white p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="flex-1 text-base font-bold text-ink">잘못된 자재 조립 시 무상 1년 A/S 서비스 조건은 구체적으로 어떻게 되나요?</span>
+            <svg class="faq-chevron size-5 shrink-0 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">자세한 안내는 고객센터(1670-4532)로 문의해 주시면 친절히 안내해 드립니다.</p>
+        </details>
+        <details class="faq-item group w-full rounded border border-line bg-white p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="flex-1 text-base font-bold text-ink">주방 등 대규모 시스템 시공 시 가스 쿡탑 연결도 함께 대행이 가능합니까?</span>
+            <svg class="faq-chevron size-5 shrink-0 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">자세한 안내는 고객센터(1670-4532)로 문의해 주시면 친절히 안내해 드립니다.</p>
+        </details>
       </div>
     </div>
   </section>
-  <!-- /SEGMENT: BeforeAfterSection -->
+  <!-- /SEGMENT: FaqSection -->
 
-  <!-- SEGMENT: ProcessSection -->
-  <section class="w-full border-t border-b border-line bg-white py-16">
-    <div class="mx-auto flex max-w-[1280px] flex-col items-center gap-10 px-5 lg:px-20">
-      <h2 class="text-2xl font-extrabold text-ink text-center lg:text-3xl">
-        서비스 진행 안내
-      </h2>
-
-      <!-- Vertical Timeline Container -->
-      <div class="w-full max-w-[640px] flex flex-col gap-6">
-
-        <!-- Step 1 -->
-        <div class="flex gap-6 items-start">
-          <div class="flex flex-col items-center">
-            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
-              1
-            </div>
-            <div class="h-16 w-0.5 bg-line-2 my-1"></div>
-          </div>
-          <div class="flex flex-col gap-1 pt-1">
-            <h3 class="text-base font-bold text-ink">
-              신청 및 접수 (1차 무료 상담)
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">
-              간단한 자택 내부 사진과 원하는 컨셉 정보를 웹에 남겨 스타일링 예약을 접수합니다.
-            </p>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="flex gap-6 items-start">
-          <div class="flex flex-col items-center">
-            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
-              2
-            </div>
-            <div class="h-16 w-0.5 bg-line-2 my-1"></div>
-          </div>
-          <div class="flex flex-col gap-1 pt-1">
-            <h3 class="text-base font-bold text-ink">
-              전담 매치 및 대면 예약상담
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">
-              매칭된 디자이너와 원격 또는 오프라인 매장을 통해 심층적인 예산 및 가구 플랜 인터뷰를 나눕니다.
-            </p>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="flex gap-6 items-start">
-          <div class="flex flex-col items-center">
-            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
-              3
-            </div>
-            <div class="h-16 w-0.5 bg-line-2 my-1"></div>
-          </div>
-          <div class="flex flex-col gap-1 pt-1">
-            <h3 class="text-base font-bold text-ink">
-              디자인 제안서 및 견적 수령
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">
-              3D 모델링 설계 화면 및 이케아 가구 소품의 제품 조립 상세 견적 리포트를 검토합니다.
-            </p>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="flex gap-6 items-start">
-          <div class="flex flex-col items-center">
-            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white shadow">
-              4
-            </div>
-          </div>
-          <div class="flex flex-col gap-1 pt-1">
-            <h3 class="text-base font-bold text-ink">
-              배송 및 설치 완성
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">
-              이케아 가구 조립 조립팀과 전문 코디네이션 요원이 자택을 직접 방문하여 안전하고 완벽하게 스타일링을 최종 완료해 드립니다.
-            </p>
-          </div>
-        </div>
-
+  <!-- SEGMENT: CtaBanner -->
+  <section class="w-full bg-search-bg py-16 lg:py-20">
+    <div class="mx-auto flex max-w-container flex-col items-center gap-8 px-5 text-center lg:px-20">
+      <div class="flex flex-col items-center gap-4">
+        <h2 class="text-2xl font-extrabold text-slate-ink lg:text-3xl">지금 바로 안심 시공 조립 전문가를 매칭해 보세요</h2>
+        <p class="max-w-xl text-base text-gray-600">구매 장바구니 리스트만 있어도 즉시 요금 산정이 완료됩니다. 완벽하고 안전한 공간 마감을 지금 시작하세요.</p>
       </div>
+      <a href="#" class="inline-flex items-center justify-center rounded-lg bg-brand px-8 py-3.5 text-base font-bold text-white hover:bg-brand-dark transition-colors">온라인 전문가 매칭 예약 시작하기</a>
     </div>
   </section>
-  <!-- /SEGMENT: ProcessSection -->
+  <!-- /SEGMENT: CtaBanner -->
 
 </main>
 
@@ -814,7 +1230,6 @@
           <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
           <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
           <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
-          <li><a href="self-styling.html" class="hover:text-brand hover:underline">셀프 스타일링 (무료)</a></li>
           <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
           <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
         </ul>
@@ -851,45 +1266,6 @@
 
 </div>
 
-<!-- Booking Modal -->
-<div id="bookingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-  <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl transform scale-95 transition-transform duration-300" id="bookingModalBox">
-    <div class="flex items-center justify-between border-b border-line pb-4">
-      <h3 class="text-lg font-bold text-ink">이케아 홈스타일링 무료 상담 신청</h3>
-      <button type="button" onclick="closeBookingModal()" class="text-muted hover:text-ink p-1">
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <form class="mt-4 flex flex-col gap-4" onsubmit="handleBookingSubmit(event)">
-      <div>
-        <label class="block text-xs font-bold text-ink mb-1">성함</label>
-        <input type="text" required placeholder="홍길동" class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-ink mb-1">연락처</label>
-        <input type="tel" required placeholder="010-0000-0000" class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-ink mb-1">스타일링 희망 공간</label>
-        <select class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none bg-white">
-          <option>거실 (Living Room)</option>
-          <option>침실 (Bedroom)</option>
-          <option>홈오피스 (Home Office)</option>
-          <option>다이닝 (Dining Room)</option>
-          <option>어린이방 (Kids Room)</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-ink mb-1">요청 사항</label>
-        <textarea rows="3" placeholder="원하시는 컨셉이나 예산 범위를 자유롭게 입력해 주세요." class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"></textarea>
-      </div>
-      <button type="submit" class="w-full rounded-lg bg-brand py-3 text-sm font-bold text-white hover:bg-brand-dark transition-colors shadow mt-2">
-        상담 예약 접수하기
-      </button>
-    </form>
-  </div>
-</div>
-
 <script>
 function toggleMobileNav() {
   var mnav = document.getElementById('mobile-nav');
@@ -920,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (link.getAttribute('data-tab') === tabName) {
         link.classList.add('text-brand');
         link.classList.remove('text-ink');
-      } else if (link.getAttribute('data-tab') !== 'sale') {
+      } else if (link.getAttribute('data-tab') !== 'service') {
         link.classList.remove('text-brand');
         link.classList.add('text-ink');
       }
@@ -940,7 +1316,7 @@ document.addEventListener('DOMContentLoaded', function() {
         megaPanel.classList.add('opacity-0', 'invisible', 'translate-y-2', 'pointer-events-none');
       }
       navLinks.forEach(link => {
-        if (link.getAttribute('data-tab') !== 'sale') {
+        if (link.getAttribute('data-tab') !== 'service') {
           link.classList.remove('text-brand');
           link.classList.add('text-ink');
         }
@@ -965,28 +1341,6 @@ document.addEventListener('DOMContentLoaded', function() {
     megaPanel.addEventListener('mouseleave', closeMegaMenu);
   }
 });
-
-function openBookingModal() {
-  var modal = document.getElementById('bookingModal');
-  var box = document.getElementById('bookingModalBox');
-  modal.classList.remove('opacity-0', 'pointer-events-none');
-  box.classList.remove('scale-95');
-  box.classList.add('scale-100');
-}
-
-function closeBookingModal() {
-  var modal = document.getElementById('bookingModal');
-  var box = document.getElementById('bookingModalBox');
-  modal.classList.add('opacity-0', 'pointer-events-none');
-  box.classList.remove('scale-100');
-  box.classList.add('scale-95');
-}
-
-function handleBookingSubmit(e) {
-  e.preventDefault();
-  alert('스타일링 상담 신청이 완료되었습니다! 담당 디자이너가 빠른 시일 내에 연락드리겠습니다.');
-  closeBookingModal();
-}
 </script>
 
 </body>
