@@ -1525,7 +1525,7 @@
         document.title = `${paramName} | IKEA`;
       }
       if (paramDesc) {
-        const descEl = document.querySelector('#buy-box-section p.text-ink-muted');
+        const descEl = document.querySelector('#buy-box-section p.text-base, #buy-box-section p.text-ink-muted');
         if (descEl) descEl.textContent = paramDesc;
         const detailDescEl = document.querySelector('#heading-detail-info + div p.text-ink-sub');
         if (detailDescEl) detailDescEl.textContent = paramDesc;
@@ -1547,13 +1547,21 @@
         }
       }
       if (paramPrice) {
+        const cleanPrice = paramPrice.replace(/[^0-9,]/g, '');
+        const formattedPrice = cleanPrice ? '₩' + cleanPrice : paramPrice;
         const priceEl = document.querySelector('#buy-box-section span.text-3xl');
-        if (priceEl) priceEl.textContent = paramPrice;
-        // 할인 전 정가 정보 숨김 처리
+        if (priceEl) priceEl.textContent = formattedPrice;
+
+        // 타 상품의 경우 기존 고정 할인 배지 및 정가 정보 숨김 처리
+        const isDefaultSagmastare = paramName && paramName.includes('SÅGMÄSTARE');
+        const discountBadge = document.querySelector('#buy-box-section span.bg-slate-ink');
+        if (discountBadge && !isDefaultSagmastare) discountBadge.style.display = 'none';
+
         const discountInfo = document.querySelector('#buy-box-section div.text-xs.text-ink-muted');
-        if (discountInfo) discountInfo.style.display = 'none';
+        if (discountInfo && !isDefaultSagmastare) discountInfo.style.display = 'none';
+        
         const pointInfo = document.querySelector('#buy-box-section p.text-2xs.text-ink-muted');
-        if (pointInfo) pointInfo.style.display = 'none';
+        if (pointInfo && !isDefaultSagmastare) pointInfo.style.display = 'none';
       }
       if (paramImg) {
         let imgPath = paramImg;
@@ -1563,8 +1571,7 @@
         // 3. 그 외 파일명만 단독으로 넘어오는 특수 케이스 처리
         if (imgPath.startsWith('assets/')) {
           imgPath = '../' + imgPath;
-        } else if (!imgPath.startsWith('../') && !imgPath.startsWith('http') && !imgPath.startsWith('images/')) {
-          // 파일명만 있는 경우 기본 ../assets/ 폴더 하위로 설정
+        } else if (!imgPath.startsWith('../') && !imgPath.startsWith('http') && !imgPath.startsWith('/')) {
           imgPath = '../assets/' + imgPath;
         }
 
@@ -1572,10 +1579,10 @@
         const mainImg = document.getElementById('gallery-main-image');
         if (mainImg) {
           mainImg.src = imgPath;
+          if (paramName) mainImg.alt = paramName;
         }
         
         // 상세 사진(Thumbnail strip) 4종 매핑 이미지 선정
-        // SÅGMÄSTARE의 경우 피그마 고유의 각도별 4종 상세 이미지를 사용하고, 다른 일반 제품은 넘어온 대표 이미지 1종으로 4개 전체를 일치시킴
         const matchedImages = (paramName && paramName.includes('SÅGMÄSTARE'))
           ? [ '../assets/p-sagmastare-1.png', '../assets/p-sagmastare-2.png', '../assets/p-sagmastare-3.png', '../assets/p-sagmastare-4.png' ]
           : [ imgPath, imgPath, imgPath, imgPath ];

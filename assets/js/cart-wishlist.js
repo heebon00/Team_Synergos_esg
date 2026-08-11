@@ -115,33 +115,100 @@
     }, 2000);
   }
 
+  function findProductCard(btn) {
+    if (!btn) return null;
+    // 1. article, .product-card, .card, .swiper-slide 탐색
+    var card = btn.closest('article, .product-card, .card, .swiper-slide');
+    if (card && (card.querySelector('h3, h4, .product-title, strong') || card.querySelector('.text-price, [data-price], p.font-bold, p.font-extrabold'))) {
+      return card;
+    }
+    // 2. 만약 잡힌 card가 없거나 정보가 부족한 경우 상위 부모로 탐색
+    var curr = btn.parentElement;
+    while (curr && curr !== document.body) {
+      if (curr.querySelector('h3, h4, .product-title, strong') && curr.querySelector('img')) {
+        return curr;
+      }
+      curr = curr.parentElement;
+    }
+    return card;
+  }
+
   function extractProduct(card) {
     if (!card) return {};
+    // 1. 상품명 추출 (h3, h4, .product-title, [data-title], strong, img alt)
     var nameEl = card.querySelector('h3, h4, .product-title, [data-title], strong');
-    var priceEl = card.querySelector('.text-price, .price, [data-price]');
-    var descEl = card.querySelector('p.text-ink-muted, p.text-ink-2, .product-desc, p.text-xs');
     var imgEl = card.querySelector('img:not([alt*="로고"]):not([alt*="icon"]):not(.icon)');
-    var linkEl = card.querySelector('a[href*="detail"], a[href*="product"], a[href$=".html"]');
-    
     var name = nameEl ? nameEl.textContent.trim() : '';
+    if (!name && imgEl && imgEl.alt && !imgEl.alt.includes('로고') && !imgEl.alt.includes('IKEA')) {
+      name = imgEl.alt.trim();
+    }
     if (!name && card.getAttribute('data-product-name')) {
       name = card.getAttribute('data-product-name');
     }
-    
-    var price = priceEl ? priceEl.textContent.trim().replace(/^₩/, '').trim() : '';
-    var desc = descEl ? descEl.textContent.trim() : '';
-    var image = imgEl ? imgEl.src : '';
-    var href = linkEl ? linkEl.href : '';
 
-    var id = name || (imgEl ? imgEl.src.split('/').pop().split('?')[0] : 'item-' + Date.now());
+    // 2. 설명 추출 (p.text-xs, p.text-ink-muted, p.text-ink-3, p.text-ink-2 등)
+    var desc = '';
+    var descEls = card.querySelectorAll('p.text-ink-muted, p.text-ink-3, p.text-ink-2, p.text-xs, .product-desc');
+    for (var i = 0; i < descEls.length; i++) {
+      var dText = descEls[i].textContent.trim();
+      if (dText && !dText.startsWith('(') && !dText.startsWith('₩') && !descEls[i].classList.contains('text-price') && !descEls[i].classList.contains('font-bold')) {
+        desc = dText;
+        break;
+      }
+    }
+
+    // 3. 가격 추출 (.text-price, [data-price], p.font-bold, p.font-extrabold, p.text-lg, p.text-xl, span.font-bold)
+    var price = '';
+    var priceEl = card.querySelector('.text-price, [data-price], p.text-xl.font-bold, p.text-lg.font-bold, p.text-lg.font-extrabold, p.font-extrabold, p.font-bold, span.font-bold, .price');
+    if (priceEl) {
+      price = priceEl.textContent.trim().replace(/[^0-9,]/g, '');
+    }
+    if (!price) {
+      var allP = card.querySelectorAll('p, span');
+      for (var j = 0; j < allP.length; j++) {
+        var t = allP[j].textContent.trim();
+        if (t.includes('₩') || (/[0-9]{1,3}(,[0-9]{3})+/.test(t) && !t.includes('('))) {
+          var matched = t.replace(/[^0-9,]/g, '');
+          if (matched) {
+            price = matched;
+            break;
+          }
+        }
+      }
+    }
+
+    // 4. 이미지 경로 추출 및 정규화
+    var rawImg = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
+    var image = rawImg;
+    if (image && !image.startsWith('../') && !image.startsWith('http') && !image.startsWith('/')) {
+      if (image.startsWith('assets/')) {
+        image = '../' + image;
+      } else {
+        image = '../assets/' + image;
+      }
+    }
+
+    // 5. 상세페이지 링크 URL 빌드
+    var formattedPrice = price ? (price.startsWith('₩') ? price : '₩' + price) : '₩119,000';
+    var isInsideCommon = window.location.pathname.includes('/common/');
+    var detailPagePath = isInsideCommon ? 'product-detail.html' : 'common/product-detail.html';
+    
+    var params = new URLSearchParams();
+    if (name) params.set('name', name);
+    if (formattedPrice) params.set('price', formattedPrice);
+    if (desc) params.set('desc', desc);
+    if (image) params.set('img', image);
+
+    var href = detailPagePath + '?' + params.toString();
+    var id = name || (image ? image.split('/').pop().split('?')[0] : 'item-' + Date.now());
 
     return {
       id: id,
       name: name || id,
       title: name || id,
-      price: price || '0',
-      desc: desc,
-      image: image,
+      price: price || '119,000',
+      desc: desc || '',
+      image: image || '../assets/images/products/kivik.png',
       href: href
     };
   }
@@ -219,14 +286,14 @@
   function syncAllButtonStates() {
     document.querySelectorAll(WISH_SELECTOR).forEach(function (btn) {
       if (btn.classList.contains('delete-wish-btn')) return;
-      var card = btn.closest('article, .card, .product-card, .swiper-slide, [data-product-card], div.group, div.relative');
+      var card = findProductCard(btn);
       var product = card ? extractProduct(card) : null;
       var pId = (product && product.id) || (btn.getAttribute('data-id'));
       if (pId) syncHeartState(btn, pId);
     });
 
     document.querySelectorAll(CART_SELECTOR).forEach(function (btn) {
-      var card = btn.closest('article, .card, .product-card, .swiper-slide, [data-product-card], div.group, div.relative');
+      var card = findProductCard(btn);
       var product = card ? extractProduct(card) : null;
       var pId = (product && product.id) || (btn.getAttribute('data-id'));
       if (pId) syncCartState(btn, pId);
@@ -243,22 +310,27 @@
       e.preventDefault();
       e.stopPropagation();
 
-      var card = wishBtn.closest('article, .card, .product-card, .swiper-slide, [data-product-card], div.group, div.relative');
+      var card = findProductCard(wishBtn);
       var wishProduct = card ? extractProduct(card) : null;
 
       // 상세페이지 단독 버튼인 경우
       if ((!wishProduct || !wishProduct.name) && wishBtn.id === 'wishlist-toggle-btn') {
         var detailTitle = document.querySelector('h1, .product-detail-title');
-        var detailPrice = document.querySelector('.text-price, [data-price]');
-        var detailImg = document.querySelector('.product-main-img, img.main-prod-image');
+        var detailPrice = document.querySelector('.text-price, [data-price], span.text-3xl');
+        var detailImg = document.querySelector('#gallery-main-image, .product-main-img, img.main-prod-image');
+        var detailDesc = document.querySelector('#buy-box-section p.text-base, #buy-box-section p.text-ink-muted');
         if (detailTitle) {
+          var dName = detailTitle.textContent.trim();
+          var dPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
+          var dDesc = detailDesc ? detailDesc.textContent.trim() : '';
+          var dImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
           wishProduct = {
-            id: detailTitle.textContent.trim(),
-            name: detailTitle.textContent.trim(),
-            title: detailTitle.textContent.trim(),
-            price: detailPrice ? detailPrice.textContent.trim().replace(/^₩/, '').trim() : '0',
-            desc: '',
-            image: detailImg ? detailImg.src : '',
+            id: dName,
+            name: dName,
+            title: dName,
+            price: dPrice,
+            desc: dDesc,
+            image: dImg,
             href: window.location.href
           };
         }
@@ -297,21 +369,26 @@
       }
 
       e.preventDefault();
-      var card = cartBtn.closest('article, .card, .product-card, .swiper-slide, [data-product-card], div.group, div.relative');
+      var card = findProductCard(cartBtn);
       var cartProduct = card ? extractProduct(card) : null;
 
       if (!cartProduct || !cartProduct.id) {
         var detailTitle = document.querySelector('h1, .product-detail-title');
-        var detailPrice = document.querySelector('.text-price, [data-price]');
-        var detailImg = document.querySelector('.product-main-img, img.main-prod-image');
+        var detailPrice = document.querySelector('.text-price, [data-price], span.text-3xl');
+        var detailImg = document.querySelector('#gallery-main-image, .product-main-img, img.main-prod-image');
+        var detailDesc = document.querySelector('#buy-box-section p.text-base, #buy-box-section p.text-ink-muted');
         if (detailTitle) {
+          var cdName = detailTitle.textContent.trim();
+          var cdPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
+          var cdDesc = detailDesc ? detailDesc.textContent.trim() : '';
+          var cdImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
           cartProduct = {
-            id: detailTitle.textContent.trim(),
-            name: detailTitle.textContent.trim(),
-            title: detailTitle.textContent.trim(),
-            price: detailPrice ? detailPrice.textContent.trim().replace(/^₩/, '').trim() : '0',
-            desc: '',
-            image: detailImg ? detailImg.src : '',
+            id: cdName,
+            name: cdName,
+            title: cdName,
+            price: cdPrice,
+            desc: cdDesc,
+            image: cdImg,
             href: window.location.href
           };
         }
