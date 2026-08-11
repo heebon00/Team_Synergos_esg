@@ -98,7 +98,7 @@
   }
 
   /* 스크롤 등장 요소: JS가 살아있고 모션 허용일 때만 감춘다 */
-  .js:not(.no-motion) .rv { opacity: 0; }
+  .rv { opacity: 1 !important; transform: none !important; }
 
   /* Swiper 커스텀 */
   .swiper-slide { height: auto; }
@@ -224,7 +224,7 @@
           </a>
         </li>
         <li class="relative whitespace-nowrap shrink-0">
-          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" data-tab="sale" href="sale.html" class="nav-link py-2 px-1 hover:text-brand text-sale transition-colors flex items-center gap-1 group whitespace-nowrap">
+          <a class="nav-link py-2 px-1 !text-sale font-bold hover:!text-sale-dark transition-colors flex items-center gap-1 group whitespace-nowrap" style="color: #E00751 !important;" data-tab="sale" href="sale.html">
             <span>세일</span>
           </a>
         </li>
