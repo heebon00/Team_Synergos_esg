@@ -115,7 +115,12 @@
       width: 80px;
     }
     .prod-swiper {
-      padding: 12px 4px 28px 4px;
+      overflow: visible !important;
+      padding: 12px 6px 28px 6px !important;
+      margin: -12px -6px -28px -6px !important;
+    }
+    .prod-swiper .swiper-wrapper {
+      overflow: visible !important;
     }
     .prod-swiper .swiper-slide {
       width: 280px;
@@ -1419,6 +1424,36 @@
   <!-- JavaScript Interaction Logic -->
   <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Swiper Carousels Initialization
+  if (typeof Swiper !== 'undefined') {
+    new Swiper('.prod-swiper-1', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.next-1',
+        prevEl: '.prev-1',
+      },
+      breakpoints: {
+        640: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 4, spaceBetween: 24 }
+      }
+    });
+
+    new Swiper('.prod-swiper-2', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.next-2',
+        prevEl: '.prev-2',
+      },
+      breakpoints: {
+        640: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 4, spaceBetween: 24 }
+      }
+    });
+  }
+
+  // Header & Mega Menu Logic
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');
   const megaTabs = document.querySelectorAll('.mega-tab-content[data-mega-tab]');
