@@ -1916,6 +1916,45 @@
       } else {
         tab.classList.add('hidden');
       }
+
+      // 상세페이지 클릭 시 동적 파라미터 전송 로직
+      const detailLinks = document.querySelectorAll('a');
+      detailLinks.forEach(link => {
+        if (link.textContent.trim() === '상세페이지') {
+          // 원래 card.html로 되어 있던 링크를 product-detail.html로 치환
+          link.setAttribute('href', 'product-detail.html');
+          
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 가장 가까운 product-card(article) 탐색
+            const card = this.closest('article');
+            if (!card) return;
+            
+            // 정보 추출
+            const nameEl = card.querySelector('h4');
+            const descEl = card.querySelector('p.text-ink-3');
+            const priceEl = card.querySelector('p.text-base, p.text-lg, .text-price');
+            const imgEl = card.querySelector('img');
+            
+            const name = nameEl ? nameEl.textContent.trim() : '';
+            const desc = descEl ? descEl.textContent.trim() : '';
+            const price = priceEl ? priceEl.textContent.trim() : '';
+            
+            const img = imgEl ? imgEl.getAttribute('src') : '';
+            
+            // 쿼리 스트링 빌드 및 이동
+            const queryParams = new URLSearchParams({
+              name: name,
+              price: price,
+              desc: desc,
+              img: img
+            });
+            
+            location.href = 'product-detail.html?' + queryParams.toString();
+          });
+        }
+      });
     });
 
     navLinks.forEach(function (link) {
