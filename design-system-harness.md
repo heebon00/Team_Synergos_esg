@@ -1,5 +1,5 @@
 # 디자인 시스템 하네스
-https://www.figma.com/design/MRXglfrNf0JxhfhqBmAIdF/%EB%94%94%EC%9E%90%EC%9D%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=632-6164&t=oU9szzEDVKCPTY9q-4
+https://www.figma.com/design/MRXglfrNf0JxhfhqBmAIdF/%EB%94%94%EC%9E%90%EC%9D%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=1372-15471&t=QdZb8Vu1D4Fs3Mp2-4
 Figma 디자인 시스템을 코드로 변환하는 규칙 모음이다.
 
 ## 목적 (측정 가능한 완료 기준)

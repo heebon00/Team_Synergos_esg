@@ -61,4 +61,6 @@ work.md
 
 # 개인 로컬 전용 설정 (팀원마다 다른 값, git으로 동기화하지 않음)
 GO.md
-pr.md
+gitignore.md
+vibe_all.md
+work.md

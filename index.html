@@ -15,6 +15,37 @@
         rootEl.classList.add('no-motion');
       }
     } catch (e) {}
+
+    // 이미지 에러 발생 시 동적 접두사 및 폴더 Fallback 핸들러
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        var img = e.target;
+        var src = img.getAttribute('src');
+        if (!src) return;
+        var step = parseInt(img.dataset.fallbackStep || '0', 10);
+        var filename = src.split('/').pop().split('?')[0];
+        
+        var pFilename = filename.startsWith('p-') ? filename : 'p-' + filename;
+        
+        var candidates = [
+          '../assets/' + filename,
+          '../assets/' + pFilename,
+          '../assets/images/products/' + filename,
+          '../assets/images/products/' + pFilename,
+          'assets/' + filename,
+          'assets/' + pFilename,
+          'assets/images/products/' + filename,
+          'assets/images/products/' + pFilename,
+          './assets/' + filename,
+          './assets/' + pFilename
+        ];
+        
+        if (step < candidates.length) {
+          img.dataset.fallbackStep = (step + 1).toString();
+          img.src = candidates[step];
+        }
+      }
+    }, true);
   </script>
 
   <!-- Tailwind CSS v4 CDN -->
@@ -60,7 +91,7 @@
         -webkit-font-smoothing: antialiased;
         text-size-adjust: 100%;
         color: var(--color-ink);
-        background-color: #FFFFFF;
+        background-color: #FFFFFF; /* token-exempt */
       }
       :focus-visible {
         outline: 3px solid var(--color-brand);
@@ -694,7 +725,7 @@
                       <p class="text-lg font-extrabold text-price">₩89,900</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -728,7 +759,7 @@
                       <p class="text-lg font-extrabold text-price">₩299,000</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -762,7 +793,7 @@
                       <p class="text-lg font-extrabold text-price">₩129,000</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -796,7 +827,7 @@
                       <p class="text-lg font-extrabold text-price">₩249,000</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -830,7 +861,7 @@
                       <p class="text-lg font-extrabold text-price">₩199,000</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -904,7 +935,7 @@
                       <p class="text-lg font-extrabold text-price">₩59,900</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -938,7 +969,7 @@
                       <p class="text-lg font-extrabold text-price">₩9,900</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -972,7 +1003,7 @@
                       <p class="text-lg font-extrabold text-price">₩89,900</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1006,7 +1037,7 @@
                       <p class="text-lg font-extrabold text-price">₩399,000</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1040,7 +1071,7 @@
                       <p class="text-lg font-extrabold text-price">₩279,000</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
-                      <a href="#" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
+                      <a href="common/product-detail.html" class="text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">상세페이지</a>
                       <div class="flex items-center gap-2">
                         <button type="button" class="flex h-8 w-8 items-center justify-center rounded-full border border-line-light bg-white text-ink hover:text-brand transition-colors" aria-label="장바구니 담기">
                           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1544,6 +1575,58 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     megaPanel.addEventListener('mouseleave', closeMegaMenu);
   }
+
+  // 구매하기 버튼 클릭 시 주문서 페이지로 연결
+  document.querySelectorAll('button').forEach(btn => {
+    if (btn.textContent.trim() === '구매하기') {
+      btn.addEventListener('click', function() {
+        location.href = 'common/order.html';
+      });
+    }
+  });
+
+  // 상세페이지 클릭 시 동적 파라미터 전송 로직
+  document.querySelectorAll('a').forEach(link => {
+    if (link.textContent.trim() === '상세페이지') {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // 카드 내의 정보 추출 (부모 요소를 거슬러 올라감)
+        const card = link.closest('article') || link.closest('.prod-card') || link.closest('.swiper-slide');
+        if (!card) {
+          location.href = link.getAttribute('href');
+          return;
+        }
+        
+        // 정보 추출
+        const nameEl = card.querySelector('h3');
+        const name = nameEl ? nameEl.textContent.trim() : '';
+        
+        // 설명 추출
+        const descEl = card.querySelector('p:not(.text-lg):not(.text-price)') || card.querySelector('.text-xs');
+        const desc = descEl ? descEl.textContent.trim() : '';
+        
+        // 가격 추출
+        const priceEl = card.querySelector('.text-lg') || card.querySelector('.text-price') || card.querySelector('p.font-extrabold');
+        const price = priceEl ? priceEl.textContent.trim() : '';
+        
+        // 이미지 추출
+        const imgEl = card.querySelector('img');
+        let img = imgEl ? imgEl.getAttribute('src') : '';
+        
+        // 파라미터 빌드
+        const baseUrl = link.getAttribute('href').split('?')[0];
+        const params = new URLSearchParams();
+        if (name) params.set('name', name);
+        if (price) params.set('price', price);
+        if (desc) params.set('desc', desc);
+        if (img) params.set('img', img);
+        
+        // 이동
+        location.href = baseUrl + '?' + params.toString();
+      });
+    }
+  });
 });
 </script>
 

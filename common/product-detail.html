@@ -1,0 +1,1578 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="SÅGMÄSTARE 소그메스타레 수납장 상세정보 – 클래식한 스타일과 부드러운 모양이 어우러진 메탈 수납장을 만나보세요.">
+  <title>SÅGMÄSTARE 소그메스타레 수납장 | IKEA</title>
+
+  <!-- 접근성: 감선 운동 모드 감지 -->
+  <script>
+    var rootEl = document.documentElement;
+    rootEl.classList.add('js');
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        rootEl.classList.add('no-motion');
+      }
+    } catch (e) {}
+
+    // 이미지 에러 발생 시 동적 접두사 및 폴더 Fallback 핸들러
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        var img = e.target;
+        var src = img.getAttribute('src');
+        if (!src) return;
+        var step = parseInt(img.dataset.fallbackStep || '0', 10);
+        var filename = src.split('/').pop().split('?')[0];
+        
+        var pFilename = filename.startsWith('p-') ? filename : 'p-' + filename;
+        
+        var candidates = [
+          '../assets/' + filename,
+          '../assets/' + pFilename,
+          '../assets/images/products/' + filename,
+          '../assets/images/products/' + pFilename,
+          'assets/' + filename,
+          'assets/' + pFilename,
+          'assets/images/products/' + filename,
+          'assets/images/products/' + pFilename,
+          './assets/' + filename,
+          './assets/' + pFilename
+        ];
+        
+        if (step < candidates.length) {
+          img.dataset.fallbackStep = (step + 1).toString();
+          img.src = candidates[step];
+        }
+      }
+    }, true);
+  </script>
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- GSAP Animation CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
+
+  <!-- Swiper v12 Slider CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+  
+  <script src="../assets/js/cart-wishlist.js"></script>
+
+  <!-- Custom Theme Tokens & Base Styling -->
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <style type="text/tailwindcss">
+    @theme {
+      /* Brand colors */
+      --color-brand: #0051BA;
+      --color-brand-dark: #003D8F;
+      --color-accent: #FFC900;
+      
+      --color-ink: #111418;
+      --color-ink-sub: #3D4450;
+      --color-ink-muted: #6B7280;
+      --color-muted: #666666;
+      --color-price: #1A1A1A;
+
+      --color-line: #C5CCD6;
+      --color-line-light: #E6E6E6;
+      --color-hairline: #F0F0F0;
+      --color-bg-light: #F8F9FA;
+
+      --radius-pill: 20px;
+      --radius-card: 12px;
+
+      /* Figma Specific for Product Detail */
+      --spacing-main-img-h: 600px;
+      --spacing-buy-box-w: 420px;
+      --spacing-dim-card-w: 440px;
+      --spacing-thumb-w: 72px;
+      --spacing-thumb-h: 72px;
+      --spacing-prod-card-w: 260px;
+      --spacing-prod-card-h: 351px;
+      --spacing-prod-img-h: 180px;
+    }
+
+    @layer base {
+      body {
+        font-family: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+                     "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-size-adjust: 100%;
+        color: var(--color-ink);
+        background-color: #FFFFFF; /* token-exempt */
+      }
+      :focus-visible {
+        outline: 3px solid var(--color-brand);
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    /* Screen Reader Only / Hide utility */
+    .sr-only-hide {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Skip navigation link */
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -80px;
+      z-index: 100;
+      background-color: #FFFFFF;
+      color: var(--color-brand);
+      border: 2px solid var(--color-brand);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-weight: 700;
+      transition: top 0.15s ease-out;
+    }
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    /* Swiper custom navigation buttons */
+    .swiper-button-prev-custom,
+    .swiper-button-next-custom {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #111418;
+    }
+    .swiper-button-prev-custom:hover,
+    .swiper-button-next-custom:hover {
+      background: var(--color-brand);
+      color: #FFFFFF;
+    }
+    .swiper-button-disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen bg-white">
+
+  <!-- 접근성: 건너뛰기 링크 -->
+  <a class="skip-link" href="#main-content">본문 바로가기</a>
+
+  <!-- 페이지 전체 래퍼 -->
+  <div id="wrapper" class="flex-1 flex flex-col">
+
+    <!-- SEGMENT: Header -->
+    <header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
+
+      <!-- 1. Utility Navigation -->
+      <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
+        <div class="mx-auto flex max-w-[1280px] items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
+          <ul class="flex items-center gap-6">
+            <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
+            <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
+            <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">고객지원</a></li>
+          </ul>
+          <ul class="flex items-center gap-6">
+            <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors font-medium" href="family.html">IKEA Family 멤버십</a></li>
+            <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="orders.html">주문 배송 조회</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- 2. Main Navigation Bar -->
+      <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+
+        <!-- Logo -->
+        <a href="../index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">
+          <img src="../assets/logo-ikea.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-[98px] object-contain">
+        </a>
+
+        <!-- Desktop Navigation Menu -->
+        <nav aria-label="주 메뉴" class="hidden lg:block shrink-0">
+          <ul class="flex items-center gap-6 text-sm font-bold text-ink whitespace-nowrap shrink-0" id="desktop-nav-menu">
+            <li class="relative whitespace-nowrap shrink-0">
+              <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group focus:outline-none focus-visible:outline-none" href="category.html">
+                <span>모든 제품</span>
+              </a>
+            </li>
+            <li class="relative whitespace-nowrap shrink-0">
+              <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group focus:outline-none focus-visible:outline-none" data-tab="room" href="category.html">
+                <span>공간별 쇼핑하기</span>
+              </a>
+            </li>
+            <li class="relative whitespace-nowrap shrink-0">
+              <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group focus:outline-none focus-visible:outline-none" data-tab="styling" href="planning.html">
+                <span>플래닝 &amp; 아이디어</span>
+              </a>
+            </li>
+            <li class="relative whitespace-nowrap shrink-0">
+              <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group focus:outline-none focus-visible:outline-none" data-tab="service" href="service.html">
+                <span>서비스</span>
+              </a>
+            </li>
+            <li class="relative whitespace-nowrap shrink-0">
+              <a class="nav-link py-2 px-1 !text-sale font-bold hover:!text-sale-dark transition-colors flex items-center gap-1 group whitespace-nowrap" style="color: #E00751 !important;" data-tab="sale" href="sale.html">
+                <span>세일</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Search Bar -->
+        <form class="ml-auto hidden max-w-[320px] flex-1 lg:block" role="search" action="#">
+          <label for="search-input" class="sr-only-hide">제품 검색</label>
+          <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+            <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input id="search-input" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+                   class="min-w-0 flex-1 bg-transparent text-xs text-ink placeholder:text-ink-muted focus:outline-none">
+            <button type="button" class="shrink-0 p-1 hover:text-brand" aria-label="이미지로 검색">
+              <svg class="h-5 w-5 text-ink-muted hover:text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <circle cx="12" cy="13" r="3" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- User Action Icons -->
+        <ul class="ml-auto hidden items-center gap-4 lg:flex lg:ml-0 shrink-0 whitespace-nowrap">
+          <li class="shrink-0 whitespace-nowrap">
+            <a href="account.html" class="flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="마이페이지">
+              <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              <span class="whitespace-nowrap shrink-0">사용자</span>
+            </a>
+          </li>
+          <li class="shrink-0 whitespace-nowrap">
+            <a href="wishlist.html" id="header-wishlist-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="위시리스트">
+              <div class="relative shrink-0">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+                <span id="wishlist-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
+              </div>
+              <span class="whitespace-nowrap shrink-0">위시리스트</span>
+            </a>
+          </li>
+          <li class="shrink-0 whitespace-nowrap">
+            <a href="#" id="header-cart-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="장바구니">
+              <div class="relative shrink-0">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
+              </div>
+              <span class="whitespace-nowrap shrink-0">장바구니</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Controls -->
+        <div class="ml-auto flex items-center gap-2 lg:hidden">
+          <a href="#" class="p-2 text-ink hover:text-brand" aria-label="장바구니">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+          </a>
+          <button id="mobile-menu-btn" type="button" class="p-2 text-ink hover:text-brand" aria-expanded="false" aria-controls="mobile-nav" aria-label="모바일 메뉴 열기">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Mega Navigation Dropdown Panel -->
+      <div id="mega-menu-panel" 
+           class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[900px] max-w-[calc(100vw-2rem)] bg-white border border-line-light rounded-xl shadow-2xl p-6 opacity-0 invisible translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
+        
+        <!-- Tab 2: 공간별 쇼핑하기 -->
+        <div data-mega-tab="room" class="mega-tab-content hidden">
+          <div class="flex items-stretch gap-6">
+            <!-- Column 1 -->
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="category.html#s-living" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">거실</span>
+              </a>
+              <a href="category.html#s-dining" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">다이닝</span>
+              </a>
+              <a href="category.html#s-kitchen" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">주방</span>
+              </a>
+              <a href="category.html#s-bedroom" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">침실</span>
+              </a>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-px bg-line-light self-stretch"></div>
+
+            <!-- Column 2 -->
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="category.html#s-bath" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">욕실</span>
+              </a>
+              <a href="category.html#s-kids" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">아이방</span>
+              </a>
+              <a href="category.html#s-office" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">홈오피스</span>
+              </a>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-px bg-line-light self-stretch"></div>
+
+            <!-- Column 3 -->
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="category.html#s-entry" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">현관</span>
+              </a>
+              <a href="category.html#s-balcony" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">베란다</span>
+              </a>
+              <a href="category.html#s-laundry" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">세탁실</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: 플래닝 & 아이디어 -->
+        <div data-mega-tab="styling" class="mega-tab-content hidden">
+          <div class="flex items-stretch gap-6">
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">이케아 스타일링 서비스</span>
+              </a>
+              <a href="self-styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">셀프 스타일링</span>
+              </a>
+            </div>
+            <div class="w-px bg-line-light self-stretch"></div>
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="planning.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15l-3.5 3.5 1-4.5L6 11l4.5-.5L12 6l1.5 4.5 4.5.5-3.5 3 1 4.5z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">추천 스타일링</span>
+              </a>
+              <a href="styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">구매상담</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: 서비스 -->
+        <div data-mega-tab="service" class="mega-tab-content hidden">
+          <div class="flex items-stretch gap-6">
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="delivery.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8h4l3 3v5a1 1 0 01-1 1h-1m-6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">배송 서비스</span>
+              </a>
+              <a href="installation.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">조립/설치 서비스</span>
+              </a>
+              <a href="order.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">주문 결제 서비스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: 세일 -->
+        <div data-mega-tab="sale" class="mega-tab-content hidden">
+          <div class="flex items-stretch gap-6">
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="low%20price.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">가장 낮은 가격</span>
+              </a>
+            </div>
+            <div class="w-px bg-line-light self-stretch"></div>
+            <div class="flex-1 flex flex-col gap-1">
+              <a href="sale.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-bg-light text-ink-sub hover:text-brand group">
+                <div class="w-8 h-8 rounded-lg bg-bg-light group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 15L15 9M9.5 9.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 6a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg>
+                </div>
+                <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">세일</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile Dropdown Navigation -->
+      <nav id="mobile-nav" aria-label="모바일 메뉴" hidden class="border-t border-line-light bg-white lg:hidden px-5 py-4 shadow-lg">
+        <form role="search" action="#" class="mb-4">
+          <label for="mobile-search" class="sr-only-hide">제품 검색</label>
+          <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4">
+            <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input id="mobile-search" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+                   class="min-w-0 flex-1 bg-transparent text-sm placeholder:text-ink-muted focus:outline-none">
+          </div>
+        </form>
+        <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
+          <li><a class="block py-3 text-ink hover:text-brand" href="category.html">모든 제품</a></li>
+          <li><a class="block py-3 text-ink hover:text-brand" href="category.html">공간별 쇼핑하기</a></li>
+          <li><a class="block py-3 text-ink hover:text-brand" href="planning.html">플래닝 &amp; 아이디어</a></li>
+          <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
+          <li><a class="block py-3 text-red-600" href="sale.html">세일</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- /SEGMENT: Header -->
+
+    <!-- Main Content Body -->
+    <main id="main-content" class="flex-1">
+
+      <!-- SEGMENT: UtilityNav & Breadcrumb -->
+      <nav aria-label="브레드크럼" class="w-full bg-white border-b border-line-light/50">
+        <div class="mx-auto max-w-[1280px] px-10 py-3 flex items-center gap-2 text-xs text-ink-muted">
+          <a href="../index.html" class="hover:text-brand hover:underline">홈</a>
+          <span class="text-ink-muted" aria-hidden="true">&gt;</span>
+          <a href="category.html" class="hover:text-brand hover:underline">수납장 &amp; 진열장</a>
+          <span class="text-ink-muted" aria-hidden="true">&gt;</span>
+          <span class="text-ink font-semibold" aria-current="page">SÅGMÄSTARE 소그메스타레</span>
+        </div>
+      </nav>
+      <!-- /SEGMENT: UtilityNav & Breadcrumb -->
+
+      <!-- SEGMENT: ProductMain -->
+      <section class="mx-auto max-w-[1280px] px-10 py-10 flex flex-col lg:flex-row gap-10 bg-white" aria-label="제품 정보 및 주문">
+        
+        <!-- Left: Product Gallery -->
+        <div class="flex-1 flex flex-row gap-3 h-fit opacity-0 translate-y-4" id="product-gallery-section">
+          <!-- Thumbnail strip -->
+          <div class="flex flex-col gap-2 shrink-0">
+            <button type="button" class="w-thumb-w h-thumb-h border-2 border-brand rounded bg-bg-light overflow-hidden transition-all focus:outline-none active-thumbnail-btn" aria-label="썸네일 1번 이미지 보기" onclick="changeMainImage(0, this)">
+              <img src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 정면 샷" class="w-full h-full object-cover">
+            </button>
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 2번 이미지 보기" onclick="changeMainImage(1, this)">
+              <img src="../assets/p-sagmastare-2.png" alt="SÅGMÄSTARE 사선 디테일 샷" class="w-full h-full object-cover">
+            </button>
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 3번 이미지 보기" onclick="changeMainImage(2, this)">
+              <img src="../assets/p-sagmastare-3.png" alt="SÅGMÄSTARE 내부 수납 구성" class="w-full h-full object-cover">
+            </button>
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 4번 이미지 보기" onclick="changeMainImage(3, this)">
+              <img src="../assets/p-sagmastare-4.png" alt="SÅGMÄSTARE 라이프스타일 연출 샷" class="w-full h-full object-cover">
+            </button>
+          </div>
+          <!-- Main Image container -->
+          <div class="flex-1 h-main-img-h border border-line-light rounded-lg overflow-hidden shadow-sm bg-white relative">
+            <img id="gallery-main-image" src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 소그메스타레 수납장 메인" class="w-full h-full object-cover">
+          </div>
+        </div>
+
+        <!-- Right: Buy Box -->
+        <div class="w-full lg:w-buy-box-w flex flex-col gap-6 opacity-0 translate-y-4" id="buy-box-section">
+          <!-- NameBlock -->
+          <div class="flex flex-col gap-1.5">
+            <h1 class="text-3xl font-extrabold tracking-tight text-ink">SÅGMÄSTARE 소그메스타레</h1>
+            <p class="text-base text-ink-muted">수납장, 라이트그레이블루, 83x36x128 cm</p>
+          </div>
+
+          <!-- Rating -->
+          <div class="flex items-center gap-1.5">
+            <div class="flex text-star" aria-label="5점 만점에 4.5점">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current opacity-30" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <span class="text-sm font-bold text-ink">4.5</span>
+            <span class="text-xs text-ink-muted">|</span>
+            <a href="#reviews-accordion-header" class="text-xs text-ink-muted hover:text-brand hover:underline font-medium">리뷰 104개</a>
+          </div>
+
+          <!-- PriceBlock -->
+          <div class="flex flex-col gap-1 border-t border-line-light/50 pt-4">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl font-extrabold text-ink">₩116,000</span>
+              <span class="inline-flex items-center justify-center rounded bg-slate-ink px-2 py-0.5 text-2xs font-bold text-white uppercase tracking-wider">10% 할인</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-ink-muted font-medium">
+              <span class="line-through">정가 ₩129,000</span>
+              <span>₩13,000 할인</span>
+            </div>
+            <p class="text-2xs text-ink-muted mt-1 leading-relaxed">IKEA Family 멤버가 구매 시 2,320 포인트가 적립됩니다.</p>
+          </div>
+
+          <!-- Option/색상 -->
+          <div class="flex flex-col gap-2.5 border-t border-line-light/50 pt-4">
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="text-ink">색상</span>
+              <span class="text-ink-muted" id="selected-color-name">라이트그레이블루</span>
+            </div>
+            <!-- Swatches (Figma layout styling) -->
+            <div class="flex items-center gap-2.5">
+              <button type="button" class="w-14 h-14 rounded-lg bg-bg-light overflow-hidden border-2 border-slate-ink p-0.5 focus:outline-none select-swatch-btn" aria-label="라이트그레이블루 색상 선택됨" onclick="selectSwatch('라이트그레이블루', this)">
+                <img src="../assets/p-sagmastare-1.png" alt="라이트그레이블루 스와치" class="w-full h-full object-cover rounded-md">
+              </button>
+            </div>
+          </div>
+
+          <!-- Option/사이즈 -->
+          <div class="flex flex-col gap-2.5 border-t border-line-light/50 pt-4">
+            <span class="text-xs font-semibold text-ink">사이즈</span>
+            <div class="flex">
+              <button type="button" class="px-4 py-3 rounded-lg border-2 border-slate-ink text-xs font-bold text-ink focus:outline-none" aria-label="사이즈 83x36x128 cm 선택됨">
+                83x36x128 cm
+              </button>
+            </div>
+          </div>
+
+          <!-- Option/수량 -->
+          <div class="flex items-center gap-4 border-t border-line-light/50 pt-4">
+            <span class="text-xs font-semibold text-ink">수량</span>
+            <!-- Stepper -->
+            <div class="flex items-center justify-between border border-line-light rounded-lg w-[120px] bg-white h-10 px-3 shrink-0">
+              <button type="button" class="text-lg font-medium text-ink hover:text-brand focus:outline-none px-2.5 py-1" aria-label="수량 1개 줄이기" onclick="updateQty(-1)">−</button>
+              <span id="product-quantity" class="text-sm font-bold text-ink" aria-live="polite">1</span>
+              <button type="button" class="text-lg font-medium text-ink hover:text-brand focus:outline-none px-2.5 py-1" aria-label="수량 1개 늘리기" onclick="updateQty(1)">+</button>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="flex items-center gap-3 border-t border-line-light/50 pt-4">
+            <button type="button" class="flex-1 bg-brand hover:bg-brand-dark text-white rounded-lg py-4 text-sm font-bold shadow-sm transition-all focus:outline-none focus-visible:outline-none transform active:scale-95" onclick="addToCart()">
+              구매하기
+            </button>
+            <button type="button" id="wishlist-toggle-btn" class="w-14 h-14 border border-line-light rounded-lg flex items-center justify-center text-2xl hover:bg-bg-light transition-all focus:outline-none active:scale-95" aria-label="위시리스트 추가" onclick="toggleWishlist()">
+              ♡
+            </button>
+          </div>
+
+          <!-- StockInfo -->
+          <div class="flex flex-col gap-2.5 border-t border-line-light/50 pt-4 text-xs font-medium text-ink">
+            <!-- StockRow 1 -->
+            <div class="flex items-center gap-3 py-2 px-3.5 border border-line-light rounded-lg bg-bg-light/60">
+              <div class="w-5 h-5 rounded bg-search-bg flex items-center justify-center shrink-0 text-brand">✓</div>
+              <span>배달 가능 여부 · <span class="text-brand font-bold">재고 있음</span></span>
+            </div>
+            <!-- StockRow 2 -->
+            <div class="flex items-center gap-3 py-2 px-3.5 border border-line-light rounded-lg bg-bg-light/60">
+              <div class="w-5 h-5 rounded bg-search-bg flex items-center justify-center shrink-0 text-brand">✓</div>
+              <span>매장 수령 가능 여부 · <span class="text-brand font-bold">광명점 재고 소량</span></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <!-- /SEGMENT: ProductMain -->
+
+      <!-- SEGMENT: ProductInfoTable -->
+      <section class="w-full bg-search-bg py-12 border-t border-b border-line-light/50" aria-labelledby="heading-detail-info">
+        <div class="mx-auto max-w-[1280px] px-10">
+          <h2 id="heading-detail-info" class="text-xl font-extrabold tracking-tight text-ink mb-6">제품 상세 정보</h2>
+          
+          <div class="flex flex-col lg:flex-row gap-10">
+            <!-- Left description & MetaList -->
+            <div class="flex-1 flex flex-col gap-6">
+              <p class="text-sm leading-relaxed text-ink-sub">
+                클래식한 스타일과 부드러운 모양이 어우러졌어요. SÅGMÄSTARE 소그메스타레 메탈 수납장은 우아한 모양의 다리와 둥근 모서리로 구성되어 있습니다.
+              </p>
+              
+              <!-- MetaList -->
+              <div class="flex flex-col border-t border-line-light/50">
+                <div class="flex items-center justify-between border-b border-line-light/50 py-3.5 text-xs">
+                  <span class="w-[80px] text-ink-muted font-medium">소재</span>
+                  <span class="flex-1 text-ink font-semibold">스틸, 에폭시/폴리에스테르 파우더코팅</span>
+                </div>
+                <div class="flex items-center justify-between border-b border-line-light/50 py-3.5 text-xs">
+                  <span class="w-[80px] text-ink-muted font-medium">디자이너</span>
+                  <span class="flex-1 text-ink font-semibold">Sarah Fager</span>
+                </div>
+                <div class="flex items-center justify-between border-b border-line-light/50 py-3.5 text-xs">
+                  <span class="w-[80px] text-ink-muted font-medium">제품 번호</span>
+                  <span class="flex-1 text-ink font-semibold text-brand">705.702.52</span>
+                </div>
+                <div class="flex items-center justify-between border-b border-line-light/50 py-3.5 text-xs">
+                  <span class="w-[80px] text-ink-muted font-medium">제조국</span>
+                  <span class="flex-1 text-ink font-semibold">캐나다</span>
+                </div>
+                <div class="flex items-center justify-between border-b border-line-light/50 py-3.5 text-xs">
+                  <span class="w-[80px] text-ink-muted font-medium">제품 관리</span>
+                  <span class="flex-1 text-ink font-semibold leading-relaxed">순한 세제에 적신 천으로 닦은 뒤 물기를 제거하세요</span>
+                </div>
+              </div>
+
+              <!-- DocumentList (Download Links) -->
+              <div class="flex flex-col gap-3.5 mt-2">
+                <h3 class="text-xs font-bold text-ink">조립 및 문서</h3>
+                <div class="flex flex-col gap-2">
+                  <a href="#" class="flex items-center justify-between py-3 px-4 border border-line-light rounded-lg bg-white hover:bg-bg-light transition-all text-xs font-medium text-ink group">
+                    <div class="flex items-center gap-3">
+                      <div class="w-5 h-5 rounded bg-search-bg group-hover:bg-brand/10 group-hover:text-brand flex items-center justify-center shrink-0 transition-colors">📄</div>
+                      <span class="group-hover:text-brand transition-colors">SÅGMÄSTARE 소그메스타레 수납장 조립 설명서</span>
+                    </div>
+                    <span class="text-ink-muted text-2xs uppercase tracking-wider font-bold">PDF</span>
+                  </a>
+                  <a href="#" class="flex items-center justify-between py-3 px-4 border border-line-light rounded-lg bg-white hover:bg-bg-light transition-all text-xs font-medium text-ink group">
+                    <div class="flex items-center gap-3">
+                      <div class="w-5 h-5 rounded bg-search-bg group-hover:bg-brand/10 group-hover:text-brand flex items-center justify-center shrink-0 transition-colors">📄</div>
+                      <span class="group-hover:text-brand transition-colors">조언 및 관리 매뉴얼</span>
+                    </div>
+                    <span class="text-ink-muted text-2xs uppercase tracking-wider font-bold">PDF</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right: Dimensions Card -->
+            <div class="w-full lg:w-dim-card-w rounded-lg border border-line-light bg-white p-6 shadow-sm flex flex-col gap-4 self-start">
+              <h3 class="text-sm font-bold text-ink">제품 치수</h3>
+              <div class="flex flex-col border-t border-line-light/50">
+                <div class="flex justify-between py-3 border-b border-line-light/50 text-xs">
+                  <span class="text-ink-muted font-medium">폭</span>
+                  <span class="text-ink font-bold">83.2 cm</span>
+                </div>
+                <div class="flex justify-between py-3 border-b border-line-light/50 text-xs">
+                  <span class="text-ink-muted font-medium">깊이</span>
+                  <span class="text-ink font-bold">36.2 cm</span>
+                </div>
+                <div class="flex justify-between py-3 border-b border-line-light/50 text-xs">
+                  <span class="text-ink-muted font-medium">높이</span>
+                  <span class="text-ink font-bold">127.5 cm</span>
+                </div>
+                <div class="flex justify-between py-3 border-b border-line-light/50 text-xs">
+                  <span class="text-ink-muted font-medium">가구 밑 여유공간</span>
+                  <span class="text-ink font-bold">33.0 cm</span>
+                </div>
+                <div class="flex justify-between py-3 border-b border-line-light/50 text-xs">
+                  <span class="text-ink-muted font-medium">상단패널 최대하중</span>
+                  <span class="text-ink font-bold">15 kg</span>
+                </div>
+                <div class="flex justify-between py-3 border-b border-line-light/50 text-xs">
+                  <span class="text-ink-muted font-medium">선반당 최대하중</span>
+                  <span class="text-ink font-bold">15 kg</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /SEGMENT: ProductInfoTable -->
+
+      <!-- SEGMENT: Accordion -->
+      <section class="w-full bg-white border-b border-line-light/50" aria-label="상세 정보 접이식 메뉴">
+        <div class="mx-auto max-w-[1280px] px-10">
+          
+          <!-- Accordion Row 1: 상품평 -->
+          <div class="border-b border-line-light/50">
+            <button type="button" class="w-full py-5 flex items-center justify-between text-left focus:outline-none group text-xs font-bold text-ink" aria-expanded="false" aria-controls="accordion-panel-reviews" id="reviews-accordion-header" onclick="toggleAccordion('reviews')">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-bold text-ink group-hover:text-brand transition-colors">상품평</span>
+                <span class="text-xs text-ink-muted font-medium">4.5 / 5 · 리뷰 104개</span>
+              </div>
+              <span class="text-xl font-light text-ink group-hover:text-brand transition-all transform active-accordion-icon" id="accordion-icon-reviews">+</span>
+            </button>
+            <div id="accordion-panel-reviews" class="h-0 overflow-hidden transition-all duration-300" role="region" aria-labelledby="reviews-accordion-header">
+              <div class="py-4 text-xs leading-relaxed text-ink-sub flex flex-col gap-4">
+                <div class="border border-line-light rounded-lg p-4 bg-bg-light/40">
+                  <div class="flex items-center gap-1.5 text-star mb-1">★★★★★</div>
+                  <p class="font-semibold text-ink">"수납 공간이 넓어서 너무 실용적이에요!"</p>
+                  <p class="mt-1 text-ink-sub">조립도 간편했고 다리 디자인이 너무 세련되어서 방 안의 분위기가 달라졌습니다. 철제 프레임인데도 마감이 깔끔해서 마음에 듭니다.</p>
+                  <p class="mt-2 text-2xs text-ink-muted">한*성 님 | 2026.07.24</p>
+                </div>
+                <div class="border border-line-light rounded-lg p-4 bg-bg-light/40">
+                  <div class="flex items-center gap-1.5 text-star mb-1">★★★★☆</div>
+                  <p class="font-semibold text-ink">"디자인도 예쁘고 색상도 유니크합니다."</p>
+                  <p class="mt-1 text-ink-sub">라이트그레이블루 색감이 정말 마음에 들어 구매했습니다. 가로 너비 대비 수납력이 좋네요. 문 여닫을 때 힌지가 부드럽게 동작해서 좋습니다.</p>
+                  <p class="mt-2 text-2xs text-ink-muted">최*현 님 | 2026.08.01</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion Row 2: 조립 설명서 -->
+          <div class="border-b border-line-light/50">
+            <button type="button" class="w-full py-5 flex items-center justify-between text-left focus:outline-none group text-xs font-bold text-ink" aria-expanded="false" aria-controls="accordion-panel-docs" id="docs-accordion-header" onclick="toggleAccordion('docs')">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-bold text-ink group-hover:text-brand transition-colors">조립 설명서</span>
+                <span class="text-xs text-ink-muted font-medium">조립 설명서 · 조언 및 관리 매뉴얼</span>
+              </div>
+              <span class="text-xl font-light text-ink group-hover:text-brand transition-all transform" id="accordion-icon-docs">+</span>
+            </button>
+            <div id="accordion-panel-docs" class="h-0 overflow-hidden transition-all duration-300" role="region" aria-labelledby="docs-accordion-header">
+              <div class="py-4 text-xs leading-relaxed text-ink-sub">
+                <p>본 제품은 직접 조립해야 하는 DIY 가구입니다. 구성품에 포함된 설명서의 안내 절차를 엄격히 준수하여 주십시오. 잘못된 조립으로 인한 결함은 교환 및 반품 사유에 포함되지 않을 수 있습니다.</p>
+                <div class="mt-3 flex flex-col md:flex-row gap-3">
+                  <a href="#" class="inline-flex items-center justify-center border border-line rounded px-4 py-2 hover:bg-bg-light transition-all text-xs font-semibold text-ink">조립설명서 다운로드 (PDF)</a>
+                  <a href="#" class="inline-flex items-center justify-center border border-line rounded px-4 py-2 hover:bg-bg-light transition-all text-xs font-semibold text-ink">조언 및 관리 매뉴얼 (PDF)</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion Row 3: 배송 및 반품 -->
+          <div class="border-b border-line-light/50">
+            <button type="button" class="w-full py-5 flex items-center justify-between text-left focus:outline-none group text-xs font-bold text-ink" aria-expanded="false" aria-controls="accordion-panel-delivery" id="delivery-accordion-header" onclick="toggleAccordion('delivery')">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-bold text-ink group-hover:text-brand transition-colors">배송 및 반품</span>
+                <span class="text-xs text-ink-muted font-medium">365일 이내 반품 시 전액 환불</span>
+              </div>
+              <span class="text-xl font-light text-ink group-hover:text-brand transition-all transform" id="accordion-icon-delivery">+</span>
+            </button>
+            <div id="accordion-panel-delivery" class="h-0 overflow-hidden transition-all duration-300" role="region" aria-labelledby="delivery-accordion-header">
+              <div class="py-4 text-xs leading-relaxed text-ink-sub flex flex-col gap-2">
+                <p><span class="font-bold text-ink">택배 배송:</span> 전국 배송 가능. 배송 시작 시 운송장 정보를 보내드립니다.</p>
+                <p><span class="font-bold text-ink">365일 반품 규정:</span> 마음이 바뀌어도 괜찮습니다. 포장을 뜯지 않았거나 사용하지 않았다면 영수증을 지참하여 365일 이내에 반품하세요.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <!-- /SEGMENT: Accordion -->
+
+      <!-- SEGMENT: RelatedProducts -->
+      <section class="py-12 bg-white border-b border-line-light/50" aria-labelledby="heading-related-items">
+        <div class="mx-auto max-w-[1280px] px-10 relative">
+          
+          <div class="flex items-end justify-between mb-6">
+            <div>
+              <h2 id="heading-related-items" class="text-2xl font-extrabold tracking-tight text-ink">함께 구매하면 좋은 상품</h2>
+              <p class="mt-1 text-xs text-ink-muted">이 제품과 어울리는 수납 솔루션</p>
+            </div>
+            <a href="products.html" class="inline-flex items-center gap-1 text-xs font-bold text-ink hover:text-brand transition-colors group">
+              <span>전체 보기</span>
+              <span class="transform group-hover:translate-x-1 transition-transform" aria-hidden="true">&gt;</span>
+            </a>
+          </div>
+
+          <!-- Carousel Container -->
+          <div class="swiper-container prod-swiper-1 overflow-hidden relative">
+            <div class="swiper-wrapper">
+              
+              <!-- Slide 1: LANGFJÄLL 랑피엘 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-langfjall.png" alt="LANGFJÄLL 랑피엘 회전의자" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="LANGFJÄLL 랑피엘 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">LANGFJÄLL 랑피엘</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">회전의자, 군나레드 베이지/화이트</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★★</span>
+                        <span class="text-2xs text-ink-muted">(128)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩89,900</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('LANGFJÄLL 랑피엘')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Slide 2: KALLAX 칼락스 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-kallax.png" alt="KALLAX 칼락스 선반유닛" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="KALLAX 칼락스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">KALLAX 칼락스</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">선반유닛, 화이트, 77x147 cm</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★★</span>
+                        <span class="text-2xs text-ink-muted">(2,456)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩79,900</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('KALLAX 칼락스')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Slide 3: BILLY 빌리 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-billy.png" alt="BILLY 책장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="BILLY 빌리 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">BILLY 빌리</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">책장, 화이트, 80x28x202 cm</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★★</span>
+                        <span class="text-2xs text-ink-muted">(1,873)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩59,900</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('BILLY 빌리')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Slide 4: MALM 말름 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-malm.png" alt="MALM 6칸 서랍장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="MALM 말름 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">MALM 말름</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">6칸 서랍장, 화이트, 80x123 cm</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★☆</span>
+                        <span class="text-2xs text-ink-muted">(945)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩199,000</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('MALM 말름')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+            </div>
+
+            <!-- Custom navigation buttons -->
+            <button type="button" class="swiper-button-prev-custom prev-1" aria-label="이전 추천 상품 목록 보기">&lt;</button>
+            <button type="button" class="swiper-button-next-custom next-1" aria-label="다음 추천 상품 목록 보기">&gt;</button>
+          </div>
+
+        </div>
+      </section>
+      <!-- /SEGMENT: RelatedProducts -->
+
+      <!-- SEGMENT: RecentlyViewed -->
+      <section class="py-12 bg-white border-b border-line-light/50" aria-labelledby="heading-recent-items">
+        <div class="mx-auto max-w-[1280px] px-10 relative">
+          
+          <div class="flex items-end justify-between mb-6">
+            <div>
+              <h2 id="heading-recent-items" class="text-2xl font-extrabold tracking-tight text-ink">최근 본 상품</h2>
+              <p class="mt-1 text-xs text-ink-muted">최근에 확인한 제품이에요</p>
+            </div>
+            <a href="products.html" class="inline-flex items-center gap-1 text-xs font-bold text-ink hover:text-brand transition-colors group">
+              <span>전체 보기</span>
+              <span class="transform group-hover:translate-x-1 transition-transform" aria-hidden="true">&gt;</span>
+            </a>
+          </div>
+
+          <!-- Carousel Container -->
+          <div class="swiper-container prod-swiper-2 overflow-hidden relative">
+            <div class="swiper-wrapper">
+              
+              <!-- Slide 1: POÄNG 포엥 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-poang.png" alt="POÄNG 포엥 안락의자" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="POÄNG 포엥 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">POÄNG 포엥</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">안락의자, 자작나무무늬목/베이지</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★★</span>
+                        <span class="text-2xs text-ink-muted">(3,201)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩129,000</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('POÄNG 포엥')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Slide 2: ALEX 알렉스 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-alex.png" alt="ALEX 서랍유닛" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="ALEX 알렉스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">ALEX 알렉스</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">서랍유닛, 화이트, 36x70 cm</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★★</span>
+                        <span class="text-2xs text-ink-muted">(756)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩89,900</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('ALEX 알렉스')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Slide 3: LACK 라크 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-lack.png" alt="LACK 사이드테이블" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="LACK 라크 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">LACK 라크</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">사이드테이블, 화이트, 55x55 cm</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★★</span>
+                        <span class="text-2xs text-ink-muted">(4,102)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩9,900</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('LACK 라크')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Slide 4: HEMNES 헴네스 -->
+              <div class="swiper-slide w-prod-card-w">
+                <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
+                    <img src="../assets/p-hemnes.png" alt="HEMNES 수납장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="HEMNES 헴네스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="text-xs font-bold text-ink">HEMNES 헴네스</h3>
+                      <p class="text-[11px] text-ink-muted leading-tight">수납장, 화이트스테인, 108x131 cm</p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <span class="text-star text-2xs">★★★★★</span>
+                        <span class="text-2xs text-ink-muted">(621)</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                      <span class="text-sm font-bold text-ink">₩249,000</span>
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('HEMNES 헴네스')">🛒</button>
+                        <a href="order.html" class="px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+            </div>
+
+            <!-- Custom navigation buttons -->
+            <button type="button" class="swiper-button-prev-custom prev-2" aria-label="이전 본 상품 목록 보기">&lt;</button>
+            <button type="button" class="swiper-button-next-custom next-2" aria-label="다음 본 상품 목록 보기">&gt;</button>
+          </div>
+
+        </div>
+      </section>
+      <!-- /SEGMENT: RecentlyViewed -->
+
+    </main>
+
+    <!-- SEGMENT: Footer -->
+    <footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
+      <div class="mx-auto max-w-[1280px] px-5 py-12 lg:px-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+          <!-- Col 1 -->
+          <div>
+            <img src="../assets/logo-ikea.svg" alt="IKEA" width="80" height="32" class="h-8 w-auto mb-4">
+            <p class="text-xs leading-relaxed text-ink-muted">
+              IKEA 코리아는 더 많은 사람들을 위해 더 나은 일상을 만듭니다. 고품질의 지속 가능한 가구와 홈퍼니싱 솔루션을 합리적인 가격에 만나보세요.
+            </p>
+          </div>
+
+          <!-- Col 2 -->
+          <div>
+            <h3 class="text-sm font-bold text-ink mb-3">고객 지원</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="#" class="hover:text-brand hover:underline">고객지원센터</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문(FAQ)</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">반품 및 환불 규정</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">제품 회수 및 리콜 정보</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3 -->
+          <div>
+            <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="family.html" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
+              <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
+              <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 4 -->
+          <div>
+            <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
+            <p class="text-lg font-extrabold text-brand">1670-4532</p>
+            <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
+            <div class="mt-4 flex items-center gap-3">
+              <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
+          <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+          <div class="flex gap-4">
+            <a href="#" class="hover:underline">개인정보처리방침</a>
+            <a href="#" class="hover:underline">이용약관</a>
+            <a href="#" class="hover:underline">웹 접근성 고지</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /SEGMENT: Footer -->
+
+  </div>
+
+  <!-- JavaScript Interaction Logic -->
+  <script>
+    // 갤러리 메인 이미지 변경 함수
+    const productImages = [
+      '../assets/p-sagmastare-1.png',
+      '../assets/p-sagmastare-2.png',
+      '../assets/p-sagmastare-3.png',
+      '../assets/p-sagmastare-4.png'
+    ];
+
+    function changeMainImage(index, btnEl) {
+      // 메인 이미지 변경
+      const mainImg = document.getElementById('gallery-main-image');
+      if (mainImg) {
+        // GSAP으로 부드러운 트랜지션 추가
+        gsap.to(mainImg, {
+          opacity: 0,
+          duration: 0.15,
+          onComplete: () => {
+            mainImg.src = productImages[index];
+            gsap.to(mainImg, { opacity: 1, duration: 0.25 });
+          }
+        });
+      }
+
+      // 이전 활성 버튼 테두리 리셋
+      const activeBtn = document.querySelector('.active-thumbnail-btn');
+      if (activeBtn) {
+        activeBtn.classList.remove('border-brand', 'border-2', 'active-thumbnail-btn');
+        activeBtn.classList.add('border-line-light', 'border');
+      }
+
+      // 현재 버튼에 활성 테두리 부여
+      btnEl.classList.remove('border-line-light', 'border');
+      btnEl.classList.add('border-brand', 'border-2', 'active-thumbnail-btn');
+    }
+
+    // 수량 조절 함수
+    function updateQty(change) {
+      const qtyEl = document.getElementById('product-quantity');
+      if (qtyEl) {
+        let currentQty = parseInt(qtyEl.innerText, 10);
+        currentQty += change;
+        if (currentQty < 1) currentQty = 1;
+        qtyEl.innerText = currentQty;
+      }
+    }
+
+    // 색상 선택 함수
+    function selectSwatch(colorName, btnEl) {
+      const colorNameEl = document.getElementById('selected-color-name');
+      if (colorNameEl) {
+        colorNameEl.innerText = colorName;
+      }
+
+      // 테두리 클래스 조절
+      const activeSwatch = document.querySelector('.select-swatch-btn');
+      if (activeSwatch) {
+        activeSwatch.classList.remove('border-slate-ink', 'border-2', 'select-swatch-btn');
+        activeSwatch.classList.add('border-line-light', 'border');
+      }
+
+      btnEl.classList.remove('border-line-light', 'border');
+      btnEl.classList.add('border-slate-ink', 'border-2', 'select-swatch-btn');
+    }
+
+    // 아코디언 토글 함수
+    function toggleAccordion(id) {
+      const panel = document.getElementById(`accordion-panel-${id}`);
+      const icon = document.getElementById(`accordion-icon-${id}`);
+      const header = document.getElementById(`${id}-accordion-header`);
+
+      if (!panel || !icon) return;
+
+      const isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      if (isExpanded) {
+        // 닫기 애니메이션
+        gsap.to(panel, {
+          height: 0,
+          duration: 0.3,
+          ease: 'power2.inOut',
+          onComplete: () => {
+            header.setAttribute('aria-expanded', 'false');
+          }
+        });
+        gsap.to(icon, { rotation: 0, duration: 0.25 });
+        icon.innerText = '+';
+      } else {
+        // 열기 애니메이션
+        header.setAttribute('aria-expanded', 'true');
+        // 높이 자동 측정
+        gsap.set(panel, { height: 'auto' });
+        const targetHeight = panel.offsetHeight;
+        gsap.set(panel, { height: 0 });
+
+        gsap.to(panel, {
+          height: targetHeight,
+          duration: 0.3,
+          ease: 'power2.inOut'
+        });
+        gsap.to(icon, { rotation: 45, duration: 0.25 });
+        icon.innerText = '×';
+      }
+    }
+
+    // 장바구니 담기 토스트/로직
+    function addToCart() {
+      const qty = document.getElementById('product-quantity').innerText;
+      if (typeof window.CartWishlist !== 'undefined') {
+        window.CartWishlist.addToCart('SÅGMÄSTARE 소그메스타레', parseInt(qty, 10));
+      }
+
+      // GSAP을 이용한 부드러운 화면 전환 효과 후 order.html로 이동
+      if (typeof gsap !== 'undefined') {
+        gsap.to('#wrapper', {
+          opacity: 0,
+          y: -10,
+          duration: 0.4,
+          ease: 'power2.in',
+          onComplete: () => {
+            location.href = 'order.html';
+          }
+        });
+      } else {
+        location.href = 'order.html';
+      }
+    }
+
+    // 카드 내부 장바구니 / 위시리스트 도우미
+    function addCardToCart(name) {
+      if (typeof window.CartWishlist !== 'undefined') {
+        window.CartWishlist.addToCart(name, 1);
+      } else {
+        alert(`${name} 1개가 장바구니에 담겼습니다.`);
+      }
+    }
+
+    function toggleCardWishlist(btnEl) {
+      const isWish = btnEl.innerText === '♥';
+      if (isWish) {
+        btnEl.innerText = '♡';
+        btnEl.classList.remove('text-red-500');
+      } else {
+        btnEl.innerText = '♥';
+        btnEl.classList.add('text-red-500');
+      }
+    }
+
+    // 위시리스트 토글 함수
+    function toggleWishlist() {
+      const wishBtn = document.getElementById('wishlist-toggle-btn');
+      if (!wishBtn) return;
+
+      const isWish = wishBtn.innerText === '♥';
+      if (isWish) {
+        wishBtn.innerText = '♡';
+        wishBtn.classList.remove('text-red-500');
+        if (typeof window.CartWishlist !== 'undefined') {
+          window.CartWishlist.removeFromWishlist('SÅGMÄSTARE 소그메스타레');
+        }
+      } else {
+        wishBtn.innerText = '♥';
+        wishBtn.classList.add('text-red-500');
+        if (typeof window.CartWishlist !== 'undefined') {
+          window.CartWishlist.addToWishlist('SÅGMÄSTARE 소그메스타레');
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Swiper Carousels 초기화
+      if (typeof Swiper !== 'undefined') {
+        new Swiper('.prod-swiper-1', {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          navigation: {
+            nextEl: '.next-1',
+            prevEl: '.prev-1',
+          },
+          breakpoints: {
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 4, spaceBetween: 24 }
+          }
+        });
+
+        new Swiper('.prod-swiper-2', {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          navigation: {
+            nextEl: '.next-2',
+            prevEl: '.prev-2',
+          },
+          breakpoints: {
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 4, spaceBetween: 24 }
+          }
+        });
+      }
+
+      // GSAP을 이용한 페이지 로드 애니메이션
+      gsap.to('#product-gallery-section', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+        delay: 0.1
+      });
+
+      gsap.to('#buy-box-section', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+        delay: 0.25
+      });
+
+      // 스크롤 시 페이드인 애니메이션
+      const scrollElements = document.querySelectorAll('section');
+      scrollElements.forEach(section => {
+        gsap.fromTo(section, 
+          { opacity: 0.9, y: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+
+      // 헤더 메가 메뉴 인터랙션
+      const navLinks = document.querySelectorAll('.nav-link[data-tab]');
+      const megaPanel = document.getElementById('mega-menu-panel');
+      const megaTabs = document.querySelectorAll('.mega-tab-content[data-mega-tab]');
+      let megaTimer = null;
+
+      function openMegaTab(tabName) {
+        let hasActiveContent = false;
+        megaTabs.forEach(tab => {
+          if (tab.getAttribute('data-mega-tab') === tabName) {
+            tab.classList.remove('hidden');
+            hasActiveContent = true;
+          } else {
+            tab.classList.add('hidden');
+          }
+        });
+
+        navLinks.forEach(link => {
+          const isSale = link.getAttribute('data-tab') === 'sale';
+          if (isSale) {
+            link.style.setProperty('color', '#E00751', 'important');
+            link.classList.remove('text-ink');
+            link.classList.remove('text-brand');
+          } else if (link.getAttribute('data-tab') === tabName) {
+            link.classList.add('text-brand');
+            link.classList.remove('text-ink');
+          } else {
+            link.classList.remove('text-brand');
+            link.classList.add('text-ink');
+          }
+        });
+
+        if (hasActiveContent && megaPanel) {
+          clearTimeout(megaTimer);
+          megaPanel.classList.remove('opacity-0', 'invisible', 'translate-y-2', 'pointer-events-none');
+          megaPanel.classList.add('opacity-100', 'visible', 'translate-y-0', 'pointer-events-auto');
+        }
+      }
+
+      function closeMegaMenu() {
+        megaTimer = setTimeout(() => {
+          if (megaPanel) {
+            megaPanel.classList.remove('opacity-100', 'visible', 'translate-y-0', 'pointer-events-auto');
+            megaPanel.classList.add('opacity-0', 'invisible', 'translate-y-2', 'pointer-events-none');
+          }
+          navLinks.forEach(link => {
+            const isSale = link.getAttribute('data-tab') === 'sale';
+            if (isSale) {
+              link.style.setProperty('color', '#E00751', 'important');
+              link.classList.remove('text-ink');
+              link.classList.remove('text-brand');
+            } else {
+              link.classList.remove('text-brand');
+              link.classList.add('text-ink');
+            }
+          });
+        }, 150);
+      }
+
+      navLinks.forEach(link => {
+        const isSale = link.getAttribute('data-tab') === 'sale';
+        if (isSale) {
+          link.style.setProperty('color', '#E00751', 'important');
+        }
+        link.addEventListener('mouseenter', () => {
+          const tabName = link.getAttribute('data-tab');
+          if (tabName) openMegaTab(tabName);
+        });
+        link.addEventListener('focus', () => {
+          const tabName = link.getAttribute('data-tab');
+          if (tabName) openMegaTab(tabName);
+        });
+        link.addEventListener('mouseleave', closeMegaMenu);
+      });
+
+      if (megaPanel) {
+        megaPanel.addEventListener('mouseenter', () => {
+          clearTimeout(megaTimer);
+        });
+        megaPanel.addEventListener('mouseleave', closeMegaMenu);
+      }
+
+      // URL 쿼리 파라미터로부터 상품정보를 읽어 동적으로 화면 변경
+      const params = new URLSearchParams(window.location.search);
+      const paramName = params.get('name');
+      const paramPrice = params.get('price');
+      const paramDesc = params.get('desc');
+      const paramImg = params.get('img');
+
+      if (paramName) {
+        // 상품명 변경
+        const h1 = document.querySelector('#buy-box-section h1');
+        if (h1) h1.textContent = paramName;
+        // 브레드크럼 변경
+        const breadcrumbCurrent = document.querySelector('nav[aria-label="브레드크럼"] span[aria-current="page"]');
+        if (breadcrumbCurrent) breadcrumbCurrent.textContent = paramName;
+        // 타이틀 태그 변경
+        document.title = `${paramName} | IKEA`;
+      }
+      if (paramDesc) {
+        const descEl = document.querySelector('#buy-box-section p.text-ink-muted');
+        if (descEl) descEl.textContent = paramDesc;
+        const detailDescEl = document.querySelector('#heading-detail-info + div p.text-ink-sub');
+        if (detailDescEl) detailDescEl.textContent = paramDesc;
+
+        // 색상 명칭을 설명서(desc)에서 동적으로 추출하여 표시! (예: "수납장, 라이트그레이블루, 83x36x128 cm" -> "라이트그레이블루")
+        const descParts = paramDesc.split(',');
+        if (descParts.length >= 2) {
+          const extractedColor = descParts[1].trim();
+          const colorNameEl = document.getElementById('selected-color-name');
+          if (colorNameEl) {
+            colorNameEl.innerText = extractedColor;
+          }
+          // 스와치 버튼 클릭 이벤트용 컬러명 인자 갱신
+          const swatchBtn = document.querySelector('.select-swatch-btn');
+          if (swatchBtn) {
+            swatchBtn.setAttribute('onclick', `selectSwatch('${extractedColor}', this)`);
+            swatchBtn.setAttribute('aria-label', `${extractedColor} 색상 선택됨`);
+          }
+        }
+      }
+      if (paramPrice) {
+        const priceEl = document.querySelector('#buy-box-section span.text-3xl');
+        if (priceEl) priceEl.textContent = paramPrice;
+        // 할인 전 정가 정보 숨김 처리
+        const discountInfo = document.querySelector('#buy-box-section div.text-xs.text-ink-muted');
+        if (discountInfo) discountInfo.style.display = 'none';
+        const pointInfo = document.querySelector('#buy-box-section p.text-2xs.text-ink-muted');
+        if (pointInfo) pointInfo.style.display = 'none';
+      }
+      if (paramImg) {
+        let imgPath = paramImg;
+        // 경로 보정: 
+        // 1. assets/ 로 시작하는 경우 (index.html 등 루트에서 직접 넘어온 경우) -> ../assets/ 로 보정
+        // 2. ../assets/ 로 시작하는 경우 (common/ 하위 페이지 category.html 등에서 넘어온 경우) -> 그대로 사용
+        // 3. 그 외 파일명만 단독으로 넘어오는 특수 케이스 처리
+        if (imgPath.startsWith('assets/')) {
+          imgPath = '../' + imgPath;
+        } else if (!imgPath.startsWith('../') && !imgPath.startsWith('http') && !imgPath.startsWith('images/')) {
+          // 파일명만 있는 경우 기본 ../assets/ 폴더 하위로 설정
+          imgPath = '../assets/' + imgPath;
+        }
+
+        // 메인 이미지 변경
+        const mainImg = document.getElementById('gallery-main-image');
+        if (mainImg) {
+          mainImg.src = imgPath;
+        }
+        
+        // 상세 사진(Thumbnail strip) 4종 매핑 이미지 선정
+        // SÅGMÄSTARE의 경우 피그마 고유의 각도별 4종 상세 이미지를 사용하고, 다른 일반 제품은 넘어온 대표 이미지 1종으로 4개 전체를 일치시킴
+        const matchedImages = (paramName && paramName.includes('SÅGMÄSTARE'))
+          ? [ '../assets/p-sagmastare-1.png', '../assets/p-sagmastare-2.png', '../assets/p-sagmastare-3.png', '../assets/p-sagmastare-4.png' ]
+          : [ imgPath, imgPath, imgPath, imgPath ];
+
+        // 썸네일 클릭 시 변경을 지원하기 위해 전역 이미지 풀 productImages 동기화
+        for (let i = 0; i < productImages.length; i++) {
+          productImages[i] = matchedImages[i] || imgPath;
+        }
+
+        // 썸네일 이미지 요소(Thumbnail strip) 일괄 변경
+        const thumbImgs = document.querySelectorAll('#product-gallery-section button img');
+        thumbImgs.forEach((thumbImg, idx) => {
+          if (matchedImages[idx]) {
+            thumbImg.src = matchedImages[idx];
+          }
+        });
+
+        // 색상 스와치(Color swatch button inside Option/색상) 이미지도 넘어온 제품 이미지로 동적 변경!
+        const swatchBtn = document.querySelector('.select-swatch-btn');
+        if (swatchBtn) {
+          const swatchImg = swatchBtn.querySelector('img');
+          if (swatchImg) {
+            swatchImg.src = imgPath;
+            if (paramName) {
+              swatchImg.alt = `${paramName} 색상 스와치`;
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
