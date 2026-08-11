@@ -1288,21 +1288,43 @@
 
     // 카드 내부 장바구니 / 위시리스트 도우미
     function addCardToCart(name) {
-      if (typeof window.CartWishlist !== 'undefined') {
-        window.CartWishlist.addToCart(name, 1);
+      if (window.WishlistCart && typeof window.WishlistCart.addItem === 'function') {
+        window.WishlistCart.addItem(window.WishlistCart.CART_KEY, { id: name, name: name, title: name });
+        window.WishlistCart.refreshBadges();
+        window.WishlistCart.showToast(`[${name}] 장바구니에 담았습니다.`);
       } else {
         alert(`${name} 1개가 장바구니에 담겼습니다.`);
       }
     }
 
     function toggleCardWishlist(btnEl) {
-      const isWish = btnEl.innerText === '♥';
-      if (isWish) {
-        btnEl.innerText = '♡';
-        btnEl.classList.remove('text-red-500');
-      } else {
-        btnEl.innerText = '♥';
-        btnEl.classList.add('text-red-500');
+      const card = btnEl.closest('article, .swiper-slide, .card');
+      const nameEl = card ? card.querySelector('h3, h4') : null;
+      const name = nameEl ? nameEl.textContent.trim() : '추천 상품';
+      
+      if (window.WishlistCart) {
+        const isWish = window.WishlistCart.isInList(window.WishlistCart.WISHLIST_KEY, name);
+        if (isWish) {
+          window.WishlistCart.removeItem(window.WishlistCart.WISHLIST_KEY, name);
+          btnEl.innerText = '♡';
+          btnEl.classList.remove('text-red-500');
+          window.WishlistCart.showToast(`[${name}] 위시리스트에서 제외되었습니다.`);
+        } else {
+          const imgEl = card ? card.querySelector('img') : null;
+          const priceEl = card ? card.querySelector('.text-price, [data-price], .font-bold.text-ink') : null;
+          window.WishlistCart.addItem(window.WishlistCart.WISHLIST_KEY, {
+            id: name,
+            name: name,
+            title: name,
+            price: priceEl ? priceEl.textContent.trim().replace(/^₩/, '').trim() : '0',
+            image: imgEl ? imgEl.src : '',
+            href: window.location.href
+          });
+          btnEl.innerText = '♥';
+          btnEl.classList.add('text-red-500');
+          window.WishlistCart.showToast(`[${name}] 위시리스트에 저장되었습니다.`);
+        }
+        window.WishlistCart.refreshBadges();
       }
     }
 
@@ -1310,20 +1332,31 @@
     function toggleWishlist() {
       const wishBtn = document.getElementById('wishlist-toggle-btn');
       if (!wishBtn) return;
+      const name = 'SÅGMÄSTARE 소그메스타레';
 
-      const isWish = wishBtn.innerText === '♥';
-      if (isWish) {
-        wishBtn.innerText = '♡';
-        wishBtn.classList.remove('text-red-500');
-        if (typeof window.CartWishlist !== 'undefined') {
-          window.CartWishlist.removeFromWishlist('SÅGMÄSTARE 소그메스타레');
+      if (window.WishlistCart) {
+        const isWish = window.WishlistCart.isInList(window.WishlistCart.WISHLIST_KEY, name);
+        if (isWish) {
+          window.WishlistCart.removeItem(window.WishlistCart.WISHLIST_KEY, name);
+          wishBtn.innerText = '♡';
+          wishBtn.classList.remove('text-red-500');
+          window.WishlistCart.showToast(`[${name}] 위시리스트에서 제외되었습니다.`);
+        } else {
+          const detailPrice = document.querySelector('.text-price');
+          const detailImg = document.querySelector('.product-main-img');
+          window.WishlistCart.addItem(window.WishlistCart.WISHLIST_KEY, {
+            id: name,
+            name: name,
+            title: name,
+            price: detailPrice ? detailPrice.textContent.trim().replace(/^₩/, '').trim() : '179,000',
+            image: detailImg ? detailImg.src : '../assets/images/products/kivik.png',
+            href: window.location.href
+          });
+          wishBtn.innerText = '♥';
+          wishBtn.classList.add('text-red-500');
+          window.WishlistCart.showToast(`[${name}] 위시리스트에 저장되었습니다.`);
         }
-      } else {
-        wishBtn.innerText = '♥';
-        wishBtn.classList.add('text-red-500');
-        if (typeof window.CartWishlist !== 'undefined') {
-          window.CartWishlist.addToWishlist('SÅGMÄSTARE 소그메스타레');
-        }
+        window.WishlistCart.refreshBadges();
       }
     }
 
