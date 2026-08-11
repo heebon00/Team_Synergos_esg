@@ -1336,37 +1336,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 2. 위시리스트 토글
-  let wishlistCount = 0;
-  const wishBadge = document.getElementById('wishlist-badge');
-  document.querySelectorAll('.wish-btn').forEach(btn => {
+  // 2. 위시리스트 및 장바구니 처리는 assets/js/cart-wishlist.js 전역 스크립트가 처리합니다.
+  document.querySelectorAll('.buy-btn').forEach(btn => {
     btn.addEventListener('click', function () {
-      const svg = this.querySelector('svg');
-      if (this.classList.contains('active')) {
-        this.classList.remove('active', 'text-red-500');
-        this.classList.add('text-brand');
-        if (svg) svg.setAttribute('fill', 'none');
-        wishlistCount = Math.max(0, wishlistCount - 1);
-      } else {
-        this.classList.add('active', 'text-red-500');
-        this.classList.remove('text-brand');
-        if (svg) svg.setAttribute('fill', 'currentColor');
-        wishlistCount++;
-      }
-      if (wishBadge) {
-        wishBadge.textContent = wishlistCount;
-        wishBadge.classList.toggle('hidden', wishlistCount === 0);
-      }
+      const origText = btn.textContent;
+      btn.textContent = '담김 ✓';
+      btn.classList.add('bg-emerald-600');
+      setTimeout(() => {
+        btn.textContent = origText;
+        btn.classList.remove('bg-emerald-600');
+      }, 1500);
     });
   });
-
-  // 3. 장바구니 담기 및 구매하기
-  let cartCount = 0;
-  const cartBadge = document.getElementById('cart-badge');
-  document.querySelectorAll('.add-cart-btn, .buy-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-      cartCount++;
-      if (cartBadge) cartBadge.textContent = cartCount;
 
       // 피드백 효과
       if (btn.classList.contains('buy-btn')) {
@@ -1455,6 +1436,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // 이동
         location.href = baseUrl + '?' + params.toString();
       });
+
+      // 카드 내의 이미지 요소를 찾아서 클릭 동작 매핑 (마우스 포인터 스타일 주입)
+      const card = link.closest('article') || link.closest('.prod-card') || link.closest('.swiper-slide');
+      if (card) {
+        const cardImg = card.querySelector('img');
+        if (cardImg) {
+          cardImg.style.cursor = 'pointer';
+          cardImg.addEventListener('click', function(evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+          });
+        }
+      }
     }
   });
 

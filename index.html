@@ -1625,6 +1625,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // 이동
         location.href = baseUrl + '?' + params.toString();
       });
+
+      // 카드 내의 이미지 요소를 찾아서 클릭 동작 매핑 (마우스 포인터 스타일 주입)
+      const card = link.closest('article') || link.closest('.prod-card') || link.closest('.swiper-slide');
+      if (card) {
+        const cardImg = card.querySelector('img');
+        if (cardImg) {
+          cardImg.style.cursor = 'pointer';
+          cardImg.addEventListener('click', function(evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+          });
+        }
+      }
     }
   });
 });
