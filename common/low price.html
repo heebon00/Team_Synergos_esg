@@ -1120,36 +1120,7 @@
         }, 2200);
       }
 
-      // Wishlist toggle
-      document.querySelectorAll('.wish-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const svg = btn.querySelector('svg');
-          const isFilled = svg.getAttribute('fill') === 'currentColor';
-          if (isFilled) {
-            svg.setAttribute('fill', 'none');
-            wishCount = Math.max(0, wishCount - 1);
-            showToast('위시리스트에서 제외되었습니다.');
-          } else {
-            svg.setAttribute('fill', 'currentColor');
-            wishCount += 1;
-            showToast('위시리스트에 저장되었습니다.');
-          }
-          if (wishBadge) wishBadge.textContent = wishCount;
-        });
-      });
-
-      // Add to cart & Buy now
-      document.querySelectorAll('.add-cart-btn, .buy-now-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          cartCount += 1;
-          if (cartBadge) cartBadge.textContent = cartCount;
-          const card = btn.closest('.product-card');
-          const title = card ? card.querySelector('h3')?.textContent : '제품';
-          showToast(`[${title}] 장바구니에 추가되었습니다.`);
-        });
-      });
+      // 위시리스트 및 장바구니 처리는 assets/js/cart-wishlist.js 전역 스크립트가 처리합니다.
 
       // Quick Pill Filter
       const pillBtns = document.querySelectorAll('.pill-btn');
