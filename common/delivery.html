@@ -17,6 +17,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="../assets/js/cart-wishlist.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
 <style type="text/tailwindcss">
   @theme {
@@ -98,6 +99,28 @@
   /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
   .prod-sw { padding: 10px 2px 26px; }
   .nav-btn[aria-disabled="true"] { opacity: .3; }
+  .review-swiper .swiper-wrapper { align-items: stretch; }
+  .review-swiper .swiper-slide { display: flex; height: auto; }
+  .review-card { width: 100%; }
+  .review-pagination {
+    position: static;
+    display: flex;
+    min-height: 0.5rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .review-pagination .swiper-pagination-bullet {
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin: 0;
+    opacity: 1;
+    background: var(--color-line);
+  }
+  .review-pagination .swiper-pagination-bullet-active { background: var(--color-brand); }
 
   /* 아코디언 화살표 회전 */
   .faq-item[open] .faq-chevron { transform: rotate(180deg); }
@@ -879,58 +902,75 @@
         <p class="text-sm text-muted lg:text-base">실제 이케아 배송 서비스를 이용하신 고객님들의 생생한 경험담을 확인해보세요.</p>
       </div>
 
-      <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
-        <div class="flex flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 h-full">
-          <div class="flex items-start gap-0.5" aria-hidden="true">
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
+      <div class="relative w-full">
+        <div class="swiper review-swiper">
+          <div class="swiper-wrapper items-stretch">
+            <div class="swiper-slide flex">
+              <div class="review-card flex h-full w-full flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 shadow-sm">
+          <div class="flex w-full flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-divider pb-4">
+            <div class="flex items-center gap-2" aria-label="5점 만점에 5점">
+              <div class="flex items-center gap-0.5 text-lg leading-none" aria-hidden="true">
+                <span class="text-accent">★</span><span class="text-accent">★</span><span class="text-accent">★</span><span class="text-accent">★</span><span class="text-accent">★</span>
+              </div>
+              <span class="whitespace-nowrap text-sm font-bold text-ink">5.0/5</span>
+            </div>
+            <span class="rounded-full bg-bg-light px-2.5 py-1 text-xs font-semibold text-ink-2">대형 가구 배송</span>
           </div>
           <p class="text-sm leading-relaxed text-ink-2 flex-1">"침대와 소파를 함께 주문했는데 사다리차 걱정 없이 안전하게 문 앞까지 배송받을 수 있었어요. 당일 배송도 가능해서 정말 편했고, 배송 기사님도 친절하셨습니다. 다음에도 꼭 또 이용하겠습니다!"</p>
-          <div class="flex items-center gap-3 pt-2 border-t border-divider w-full">
+          <div class="flex w-full items-center gap-3 border-t border-divider pt-4">
             <span class="size-10 shrink-0 rounded-full bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center text-white text-sm font-bold">김</span>
             <div class="flex flex-col">
               <p class="text-sm font-semibold text-ink">김주희</p>
-              <p class="text-xs text-muted">대형 가구 배송 이용</p>
+              <p class="text-xs text-muted">대형 가구 배송 이용 고객</p>
             </div>
           </div>
-        </div>
-        <div class="flex flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 h-full">
-          <div class="flex items-start gap-0.5" aria-hidden="true">
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
+              </div>
+            </div>
+            <div class="swiper-slide flex">
+              <div class="review-card flex h-full w-full flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 shadow-sm">
+          <div class="flex w-full flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-divider pb-4">
+            <div class="flex items-center gap-2" aria-label="5점 만점에 4점">
+              <div class="flex items-center gap-0.5 text-lg leading-none" aria-hidden="true">
+                <span class="text-accent">★</span><span class="text-accent">★</span><span class="text-accent">★</span><span class="text-accent">★</span><span class="text-ink-3">☆</span>
+              </div>
+              <span class="whitespace-nowrap text-sm font-bold text-ink">4.0/5</span>
+            </div>
+            <span class="rounded-full bg-bg-light px-2.5 py-1 text-xs font-semibold text-ink-2">소형 가구 배송</span>
           </div>
           <p class="text-sm leading-relaxed text-ink-2 flex-1">"배송 전에 미리 문자로 연락주셔서 시간을 정확하게 맞춀 수 있었어요. 정확한 시간에 도착하셨고 배송 기사분이 정말 친절하게 안내해주셨습니다. 예상했던 가격대와 실제 가격이 일치해서 신뢰가 생겼습니다!"</p>
-          <div class="flex items-center gap-3 pt-2 border-t border-divider w-full">
+          <div class="flex w-full items-center gap-3 border-t border-divider pt-4">
             <span class="size-10 shrink-0 rounded-full bg-gradient-to-br from-yellow-400 to-accent flex items-center justify-center text-white text-sm font-bold">이</span>
             <div class="flex flex-col">
               <p class="text-sm font-semibold text-ink">이준호</p>
-              <p class="text-xs text-muted">소형 가구 배송 이용</p>
+              <p class="text-xs text-muted">소형 가구 배송 이용 고객</p>
             </div>
           </div>
-        </div>
-        <div class="flex flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 h-full">
-          <div class="flex items-start gap-0.5" aria-hidden="true">
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
-            <span class="size-4 rounded-sm bg-accent"></span>
+              </div>
+            </div>
+            <div class="swiper-slide flex">
+              <div class="review-card flex h-full w-full flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 shadow-sm">
+          <div class="flex w-full flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-divider pb-4">
+            <div class="flex items-center gap-2" aria-label="5점 만점에 4점">
+              <div class="flex items-center gap-0.5 text-lg leading-none" aria-hidden="true">
+                <span class="text-accent">★</span><span class="text-accent">★</span><span class="text-accent">★</span><span class="text-accent">★</span><span class="text-ink-3">☆</span>
+              </div>
+              <span class="whitespace-nowrap text-sm font-bold text-ink">4.0/5</span>
+            </div>
+            <span class="rounded-full bg-bg-light px-2.5 py-1 text-xs font-semibold text-ink-2">트럭 배송 서비스</span>
           </div>
           <p class="text-sm leading-relaxed text-ink-2 flex-1">"2시간 단위로 배송 시간을 정확히 알려주셔서 기다리는 동안 편했습니다. 배송비도 사전에 정확히 안내받았고 숨겨진 비용이 없어서 투명하다고 느꼈어요. 다량 구매했는데도 정찰제 요금이 적용되어 합리적입니다!"</p>
-          <div class="flex items-center gap-3 pt-2 border-t border-divider w-full">
+          <div class="flex w-full items-center gap-3 border-t border-divider pt-4">
             <span class="size-10 shrink-0 rounded-full bg-gradient-to-br from-brand to-blue-400 flex items-center justify-center text-white text-sm font-bold">박</span>
             <div class="flex flex-col">
               <p class="text-sm font-semibold text-ink">박지은</p>
-              <p class="text-xs text-muted">트럭 배송 서비스 이용</p>
+              <p class="text-xs text-muted">트럭 배송 서비스 이용 고객</p>
+            </div>
+          </div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="review-pagination swiper-pagination flex w-full items-center justify-center" aria-label="리뷰 슬라이드 위치"></div>
       </div>
 
       <div class="flex w-full items-center justify-center pt-6">
@@ -1183,6 +1223,28 @@ document.querySelectorAll('.delivery-filter').forEach(function (filter) {
     });
   });
 });
+
+if (typeof Swiper !== 'undefined') {
+  var reviewPagination = document.querySelector('.review-pagination');
+  new Swiper('.review-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    pagination: {
+      el: reviewPagination,
+      clickable: true
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      1280: {
+        slidesPerView: 3,
+        spaceBetween: 24
+      }
+    }
+  });
+}
 </script>
 
 </body>
