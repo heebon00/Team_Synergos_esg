@@ -128,7 +128,7 @@
       </ul>
       <ul class="flex items-center gap-6">
         <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
-        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="order.html">주문 배송 조회</a></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="orders.html">주문 배송 조회</a></li>
       </ul>
     </div>
   </nav>
@@ -449,18 +449,17 @@
   <!-- SEGMENT: MainContent -->
   <main id="main-content" class="w-full">
 
-    <!-- 1. Breadcrumb -->
-    <div class="mx-auto max-w-container px-5 py-3 lg:px-10">
-      <nav aria-label="브레드크럼">
-        <ol class="flex items-center gap-2 text-xs text-ink-3">
-          <li><a href="../index.html" class="hover:text-brand hover:underline">홈</a></li>
-          <li aria-hidden="true">&gt;</li>
-          <li><a href="sale.html" class="hover:text-brand hover:underline">세일</a></li>
-          <li aria-hidden="true">&gt;</li>
-          <li class="font-bold text-ink" aria-current="page">종합 세일</li>
-        </ol>
-      </nav>
+  <!-- SEGMENT: Breadcrumb Navigation -->
+  <nav aria-label="이동 경로" class="w-full bg-white">
+    <div class="mx-auto max-w-container px-5 lg:px-10 py-3 text-xs text-ink-muted">
+      <ol class="flex items-center gap-2 list-none">
+        <li><a href="../index.html" class="hover:text-brand hover:underline whitespace-nowrap">홈</a></li>
+        <li aria-hidden="true" class="text-ink-muted">&gt;</li>
+        <li class="text-ink font-semibold whitespace-nowrap" aria-current="page">세일</li>
+      </ol>
     </div>
+  </nav>
+  <!-- /SEGMENT: Breadcrumb Navigation -->
 
     <!-- 2. Hero Section (SEASON SALE) -->
     <section aria-labelledby="hero-sale-heading" class="mx-auto max-w-container px-5 lg:px-10 mt-2">

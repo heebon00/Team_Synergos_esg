@@ -102,7 +102,7 @@
       </ul>
       <ul class="flex items-center gap-6">
         <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
-        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="order.html">주문 배송 조회</a></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="orders.html">주문 배송 조회</a></li>
       </ul>
     </div>
   </nav>
@@ -421,13 +421,13 @@
   <!-- /SEGMENT: Header -->
 
   <!-- SEGMENT: Breadcrumb Navigation -->
-  <nav aria-label="경로" class="w-full bg-white">
-    <div class="mx-auto max-w-container px-5 lg:px-10 py-3 text-xs text-ink-3">
-      <ol class="flex items-center gap-1.5 list-none">
+  <nav aria-label="이동 경로" class="w-full bg-white">
+    <div class="mx-auto max-w-container px-5 lg:px-10 py-3 text-xs text-ink-muted">
+      <ol class="flex items-center gap-2 list-none">
         <li><a href="../index.html" class="hover:text-brand hover:underline whitespace-nowrap">홈</a></li>
-        <li><span>&gt;</span></li>
-        <li><a href="sale.html" class="hover:text-brand hover:underline whitespace-nowrap">특가</a></li>
-        <li><span>&gt;</span></li>
+        <li aria-hidden="true" class="text-ink-muted">&gt;</li>
+        <li><a href="sale.html" class="hover:text-brand hover:underline whitespace-nowrap">세일</a></li>
+        <li aria-hidden="true" class="text-ink-muted">&gt;</li>
         <li class="text-ink font-semibold whitespace-nowrap" aria-current="page">가장 낮은 가격</li>
       </ol>
     </div>
