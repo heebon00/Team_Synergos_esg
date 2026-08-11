@@ -60,6 +60,7 @@
     --container-mobile: 640px;
     --spacing-logo: 98px;
     --spacing-search: 320px;
+    --text-detail-link: 17px;
   }
 
   @layer base {
@@ -667,9 +668,14 @@
   <!-- SEGMENT: FurniturePriceTable -->
   <section id="delivery-price" class="w-full bg-white py-16 lg:py-20 scroll-mt-20">
     <div class="mx-auto flex max-w-container flex-col items-start gap-8 px-5 lg:gap-10 lg:px-20">
-      <div class="flex flex-col gap-1">
-        <h2 class="text-2xl font-bold text-ink lg:text-3xl">가구 배송 요금</h2>
-        <p class="text-sm text-muted lg:text-base">제품의 분류와 조건에 따라 정찰제 배송 요금이 적용됩니다.</p>
+      <div class="flex w-full flex-col items-start gap-1">
+        <div class="flex w-full items-end justify-between">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-2xl font-bold text-ink lg:text-3xl">가구 배송 요금</h2>
+            <p class="text-sm text-muted lg:text-base">제품의 분류와 조건에 따라 정찰제 배송 요금이 적용됩니다.</p>
+          </div>
+          <a href="#" class="shrink-0 -translate-x-3 text-detail-link font-semibold text-ink underline underline-offset-2">더 알아보기 &gt;</a>
+        </div>
       </div>
 
       <div class="w-full overflow-x-auto rounded-lg border border-line">
@@ -780,7 +786,7 @@
           <div class="flex flex-col items-start gap-3 p-6">
             <h3 class="text-lg font-bold text-ink">실시간 배송 추적</h3>
             <p class="text-base leading-snug text-ink-2">출발부터 문 앞 도착까지 지도로 확인하는 투명한 경로</p>
-            <a href="#" class="text-base font-bold text-ink underline underline-offset-2">자세히 &gt;</a>
+            <a href="#" class="text-sm font-semibold text-ink underline underline-offset-2">자세히보기 &gt;</a>
           </div>
         </div>
         <div class="flex flex-col overflow-hidden rounded-lg border border-line">
@@ -790,7 +796,7 @@
           <div class="flex flex-col items-start gap-3 p-6">
             <h3 class="text-lg font-bold text-ink">배송 일정 변경</h3>
             <p class="text-base leading-snug text-ink-2">전화 없이 마이페이지에서 원터치로 날짜 및 예약시간 수정</p>
-            <a href="#" class="text-base font-bold text-ink underline underline-offset-2">자세히 &gt;</a>
+            <a href="#" class="text-sm font-semibold text-ink underline underline-offset-2">자세히보기 &gt;</a>
           </div>
         </div>
         <div class="flex flex-col overflow-hidden rounded-lg border border-line">
@@ -800,7 +806,7 @@
           <div class="flex flex-col items-start gap-3 p-6">
             <h3 class="text-lg font-bold text-ink">비대면 안심 배송</h3>
             <p class="text-base leading-snug text-ink-2">희망 지정 장소 안심 거치 후 고화질 사진 전송 마감</p>
-            <a href="#" class="text-base font-bold text-ink underline underline-offset-2">자세히 &gt;</a>
+            <a href="#" class="text-sm font-semibold text-ink underline underline-offset-2">자세히보기 &gt;</a>
           </div>
         </div>
       </div>
@@ -874,49 +880,55 @@
       </div>
 
       <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
-        <div class="flex flex-col items-start gap-3 rounded-xl border border-divider bg-white p-6">
+        <div class="flex flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 h-full">
           <div class="flex items-start gap-0.5" aria-hidden="true">
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
           </div>
-          <p class="text-sm text-muted">고객님의 생생한 후기 텍스트가 여기에 표시됩니다.</p>
-          <div class="flex items-center gap-2">
-            <span class="size-8 shrink-0 rounded-full bg-gray-200"></span>
-            <p class="text-sm font-semibold text-ink">고객 이름</p>
-            <p class="text-xs text-muted">서비스 이용 정보</p>
+          <p class="text-sm leading-relaxed text-ink-2 flex-1">"침대와 소파를 함께 주문했는데 사다리차 걱정 없이 안전하게 문 앞까지 배송받을 수 있었어요. 당일 배송도 가능해서 정말 편했고, 배송 기사님도 친절하셨습니다. 다음에도 꼭 또 이용하겠습니다!"</p>
+          <div class="flex items-center gap-3 pt-2 border-t border-divider w-full">
+            <span class="size-10 shrink-0 rounded-full bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center text-white text-sm font-bold">김</span>
+            <div class="flex flex-col">
+              <p class="text-sm font-semibold text-ink">김주희</p>
+              <p class="text-xs text-muted">대형 가구 배송 이용</p>
+            </div>
           </div>
         </div>
-        <div class="flex flex-col items-start gap-3 rounded-xl border border-divider bg-white p-6">
+        <div class="flex flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 h-full">
           <div class="flex items-start gap-0.5" aria-hidden="true">
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
           </div>
-          <p class="text-sm text-muted">고객님의 생생한 후기 텍스트가 여기에 표시됩니다.</p>
-          <div class="flex items-center gap-2">
-            <span class="size-8 shrink-0 rounded-full bg-gray-200"></span>
-            <p class="text-sm font-semibold text-ink">고객 이름</p>
-            <p class="text-xs text-muted">서비스 이용 정보</p>
+          <p class="text-sm leading-relaxed text-ink-2 flex-1">"배송 전에 미리 문자로 연락주셔서 시간을 정확하게 맞춀 수 있었어요. 정확한 시간에 도착하셨고 배송 기사분이 정말 친절하게 안내해주셨습니다. 예상했던 가격대와 실제 가격이 일치해서 신뢰가 생겼습니다!"</p>
+          <div class="flex items-center gap-3 pt-2 border-t border-divider w-full">
+            <span class="size-10 shrink-0 rounded-full bg-gradient-to-br from-yellow-400 to-accent flex items-center justify-center text-white text-sm font-bold">이</span>
+            <div class="flex flex-col">
+              <p class="text-sm font-semibold text-ink">이준호</p>
+              <p class="text-xs text-muted">소형 가구 배송 이용</p>
+            </div>
           </div>
         </div>
-        <div class="flex flex-col items-start gap-3 rounded-xl border border-divider bg-white p-6">
+        <div class="flex flex-col items-start gap-4 rounded-xl border border-divider bg-white p-6 h-full">
           <div class="flex items-start gap-0.5" aria-hidden="true">
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
-            <span class="size-3.5 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
+            <span class="size-4 rounded-sm bg-accent"></span>
           </div>
-          <p class="text-sm text-muted">고객님의 생생한 후기 텍스트가 여기에 표시됩니다.</p>
-          <div class="flex items-center gap-2">
-            <span class="size-8 shrink-0 rounded-full bg-gray-200"></span>
-            <p class="text-sm font-semibold text-ink">고객 이름</p>
-            <p class="text-xs text-muted">서비스 이용 정보</p>
+          <p class="text-sm leading-relaxed text-ink-2 flex-1">"2시간 단위로 배송 시간을 정확히 알려주셔서 기다리는 동안 편했습니다. 배송비도 사전에 정확히 안내받았고 숨겨진 비용이 없어서 투명하다고 느꼈어요. 다량 구매했는데도 정찰제 요금이 적용되어 합리적입니다!"</p>
+          <div class="flex items-center gap-3 pt-2 border-t border-divider w-full">
+            <span class="size-10 shrink-0 rounded-full bg-gradient-to-br from-brand to-blue-400 flex items-center justify-center text-white text-sm font-bold">박</span>
+            <div class="flex flex-col">
+              <p class="text-sm font-semibold text-ink">박지은</p>
+              <p class="text-xs text-muted">트럭 배송 서비스 이용</p>
+            </div>
           </div>
         </div>
       </div>
@@ -995,6 +1007,18 @@
   </section>
   <!-- /SEGMENT: CtaBanner -->
 
+  <!-- SEGMENT: NoticeBanner -->
+  <div class="w-full border-t border-line bg-bg-light">
+    <div class="mx-auto flex max-w-container flex-col items-start gap-3 px-5 py-6 text-base lg:px-20">
+      <p class="font-bold text-ink">💡 배송 서비스 이용 시 꼭 유의해 주세요!</p>
+      <div class="flex flex-col items-start gap-2 text-ink-2">
+        <p>• 제주도 및 일부 도서산간 지역의 경우, 특수 유통 단가에 따라 추가 배송비가 발생할 수 있습니다.</p>
+        <p>• 엘리베이터 이용이 불가능하거나 사다리차 사용이 필수인 특수 설치 조건의 비용은 배송 요금에 포함되지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+  <!-- /SEGMENT: NoticeBanner -->
+
 </main>
 
 <!-- SEGMENT: Footer -->
@@ -1062,18 +1086,6 @@
   </div>
 </footer>
 <!-- /SEGMENT: Footer -->
-
-<!-- SEGMENT: NoticeBanner -->
-<div class="w-full border-t border-line bg-bg-light">
-  <div class="mx-auto flex max-w-container flex-col items-start gap-3 px-5 py-6 text-base lg:px-10">
-    <p class="font-bold text-ink">💡 배송 서비스 이용 시 꼭 유의해 주세요!</p>
-    <div class="flex flex-col items-start gap-2 text-ink-2">
-      <p>• 제주도 및 일부 도서산간 지역의 경우, 특수 유통 단가에 따라 추가 배송비가 발생할 수 있습니다.</p>
-      <p>• 엘리베이터 이용이 불가능하거나 사다리차 사용이 필수인 특수 설치 조건의 비용은 배송 요금에 포함되지 않습니다.</p>
-    </div>
-  </div>
-</div>
-<!-- /SEGMENT: NoticeBanner -->
 
 </div>
 
