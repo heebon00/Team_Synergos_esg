@@ -204,7 +204,7 @@
     <nav aria-label="주 메뉴" class="hidden lg:block shrink-0">
       <ul class="flex items-center gap-6 text-sm font-bold text-ink whitespace-nowrap shrink-0" id="desktop-nav-menu">
         <li class="relative whitespace-nowrap shrink-0">
-          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" data-tab="all" href="category.html">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" data-tab="all" href="products.html">
             <span>모든 제품</span>
           </a>
         </li>
@@ -491,7 +491,7 @@
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="consulting.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
             </div>
@@ -596,7 +596,7 @@
       </div>
     </form>
     <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
-      <li><a class="block py-3 text-ink hover:text-brand" href="category.html">모든 제품</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="products.html">모든 제품</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="category.html">공간별 쇼핑하기</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
@@ -613,7 +613,7 @@
     <ol class="flex flex-wrap items-center gap-2 text-xs text-muted">
       <li><a class="hover:text-brand hover:underline" href="../index.html">홈</a></li>
       <li aria-hidden="true">&gt;</li>
-      <li><span aria-current="page" class="text-ink">공간별 쇼핑</span></li>
+      <li><span aria-current="page" class="text-ink font-semibold">공간별 쇼핑</span></li>
     </ol>
   </nav>
 
@@ -2012,6 +2012,10 @@
       var r = el.getBoundingClientRect();
       if (r.top < 80 || r.bottom > window.innerHeight - 20) smoother.scrollTo(el, false, 'center center');
     });
+  }
+
+  if (typeof gsap !== 'undefined') {
+    gsap.fromTo('h1', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
   }
 
   $$('.rv').forEach(function (el) {

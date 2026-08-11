@@ -75,9 +75,15 @@
     var svg = btn.querySelector('svg');
     if (!svg) return;
     var active = isInList(WISHLIST_KEY, id);
-    svg.classList.toggle('text-red-500', active);
-    svg.classList.remove('text-gray-400');
-    svg.setAttribute('fill', active ? 'currentColor' : 'none');
+    if (active) {
+      btn.classList.add('active', 'text-red-500');
+      btn.classList.remove('text-ink', 'text-gray-400');
+      svg.setAttribute('fill', 'currentColor');
+    } else {
+      btn.classList.remove('active', 'text-red-500');
+      btn.classList.add('text-ink');
+      svg.setAttribute('fill', 'none');
+    }
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   }
 
@@ -86,15 +92,20 @@
     var bagIcon = btn.querySelector('.cart-icon-bag');
     var checkIcon = btn.querySelector('.cart-icon-check');
     btn.classList.toggle('in-cart', active);
-    /* Tailwind 유틸리티 클래스 순서/우선순위에 영향받지 않도록 인라인 스타일로 강제 적용 */
     if (active) {
       btn.style.borderColor = '#10b981';
       btn.style.backgroundColor = '#ecfdf5';
       btn.style.color = '#059669';
+      if (btn.classList.contains('buy-btn')) {
+        btn.textContent = '담김 ✓';
+      }
     } else {
       btn.style.borderColor = '';
       btn.style.backgroundColor = '';
       btn.style.color = '';
+      if (btn.classList.contains('buy-btn')) {
+        btn.textContent = '구매하기';
+      }
     }
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     if (bagIcon && checkIcon) {
@@ -104,14 +115,14 @@
   }
 
   function syncAllButtonStates() {
-    document.querySelectorAll('button[aria-label="위시리스트에 추가"]').forEach(function (btn) {
-      var card = btn.closest('article') || btn.closest('.card');
+    document.querySelectorAll('button[aria-label*="위시리스트"], .wish-btn').forEach(function (btn) {
+      var card = btn.closest('article') || btn.closest('.card') || btn.closest('.prod-card');
       if (!card) return;
       var product = extractProduct(card);
       if (product.id) syncHeartState(btn, product.id);
     });
-    document.querySelectorAll('button[aria-label="장바구니 담기"]').forEach(function (btn) {
-      var card = btn.closest('article') || btn.closest('.card');
+    document.querySelectorAll('button[aria-label*="장바구니"], .add-cart-btn, .buy-btn').forEach(function (btn) {
+      var card = btn.closest('article') || btn.closest('.card') || btn.closest('.prod-card');
       if (!card) return;
       var product = extractProduct(card);
       if (product.id) syncCartState(btn, product.id);
@@ -121,9 +132,9 @@
   /* 클릭 위임(event delegation) 방식: Swiper/GSAP 등이 나중에 DOM을 다시 그리거나
      슬라이드를 복제해도, document 에 한 번만 걸어둔 리스너라 항상 동작한다. */
   document.addEventListener('click', function (e) {
-    var wishBtn = e.target.closest('button[aria-label="위시리스트에 추가"]');
+    var wishBtn = e.target.closest('button[aria-label*="위시리스트"], .wish-btn');
     if (wishBtn) {
-      var wishCard = wishBtn.closest('article') || wishBtn.closest('.card');
+      var wishCard = wishBtn.closest('article') || wishBtn.closest('.card') || wishBtn.closest('.prod-card');
       if (!wishCard) return;
       var wishProduct = extractProduct(wishCard);
       if (!wishProduct.id) return;
@@ -138,9 +149,9 @@
       return;
     }
 
-    var cartBtn = e.target.closest('button[aria-label="장바구니 담기"]');
+    var cartBtn = e.target.closest('button[aria-label*="장바구니"], .add-cart-btn, .buy-btn');
     if (cartBtn) {
-      var cartCard = cartBtn.closest('article') || cartBtn.closest('.card');
+      var cartCard = cartBtn.closest('article') || cartBtn.closest('.card') || cartBtn.closest('.prod-card');
       if (!cartCard) return;
       var cartProduct = extractProduct(cartCard);
       if (!cartProduct.id) return;

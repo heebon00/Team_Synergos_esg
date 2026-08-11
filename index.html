@@ -115,10 +115,21 @@
       width: 80px;
     }
     .prod-swiper {
-      padding: 12px 4px 28px 4px;
+      overflow: visible !important;
+      padding-top: 8px;
+      padding-bottom: 16px;
+    }
+    .prod-swiper .swiper-wrapper {
+      overflow: visible !important;
     }
     .prod-swiper .swiper-slide {
-      width: 280px;
+      height: auto;
+    }
+    .prod-swiper .swiper-slide article {
+      position: relative;
+    }
+    .prod-swiper .swiper-slide article:hover {
+      z-index: 10;
     }
     .swiper-button-prev-custom,
     .swiper-button-next-custom {
@@ -188,7 +199,7 @@
         <nav aria-label="주 메뉴" class="hidden lg:block shrink-0">
           <ul class="flex items-center gap-6 text-sm font-bold text-ink whitespace-nowrap shrink-0" id="desktop-nav-menu">
             <li class="relative whitespace-nowrap shrink-0">
-              <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group focus:outline-none focus-visible:outline-none" href="common/category.html">
+              <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group focus:outline-none focus-visible:outline-none" href="common/products.html">
                 <span>모든 제품</span>
               </a>
             </li>
@@ -479,7 +490,7 @@
           </div>
         </form>
         <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
-          <li><a class="block py-3 text-ink hover:text-brand" href="common/category.html">모든 제품</a></li>
+          <li><a class="block py-3 text-ink hover:text-brand" href="common/products.html">모든 제품</a></li>
           <li><a class="block py-3 text-ink hover:text-brand" href="common/category.html">공간별 쇼핑하기</a></li>
           <li><a class="block py-3 text-ink hover:text-brand" href="common/styling.html">플래닝 &amp; 아이디어</a></li>
           <li><a class="block py-3 text-ink hover:text-brand" href="common/service.html">서비스</a></li>
@@ -497,7 +508,7 @@
           <div class="grid grid-cols-4 sm:grid-cols-7 gap-y-6 gap-x-4 items-center justify-items-center">
             
             <!-- Row 1: Item 1 - 모든제품 -->
-            <a href="common/category.html" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
+            <a href="common/products.html" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
               <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
                 <img src="assets/cat-all.png" alt="모든제품" width="56" height="56" class="h-14 w-14 object-contain">
               </div>
@@ -659,7 +670,8 @@
 
         <!-- Carousel Wrapper -->
         <div class="relative">
-          <div class="swiper prod-swiper-1 prod-swiper">
+          <div class="overflow-hidden py-8 -my-8 px-1 -mx-1">
+            <div class="swiper prod-swiper-1 prod-swiper">
             <div class="swiper-wrapper">
               
               <!-- Card 1 -->
@@ -834,11 +846,12 @@
 
             </div>
           </div>
+          </div>
           <!-- Custom Nav Controls -->
-          <button type="button" class="swiper-button-prev-custom prev-1 -left-5" aria-label="이전 추천 상품 보기">
+          <button type="button" class="swiper-button-prev-custom prev-1 -left-5 z-30" aria-label="이전 추천 상품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button type="button" class="swiper-button-next-custom next-1 -right-5" aria-label="다음 추천 상품 보기">
+          <button type="button" class="swiper-button-next-custom next-1 -right-5 z-30" aria-label="다음 추천 상품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -867,7 +880,8 @@
 
         <!-- Carousel Wrapper -->
         <div class="relative">
-          <div class="swiper prod-swiper-2 prod-swiper">
+          <div class="overflow-hidden py-8 -my-8 px-1 -mx-1">
+            <div class="swiper prod-swiper-2 prod-swiper">
             <div class="swiper-wrapper">
 
               <!-- Card 1 -->
@@ -1042,11 +1056,12 @@
 
             </div>
           </div>
+          </div>
           <!-- Custom Nav Controls -->
-          <button type="button" class="swiper-button-prev-custom prev-2 -left-5" aria-label="이전 신제품 보기">
+          <button type="button" class="swiper-button-prev-custom prev-2 -left-5 z-30" aria-label="이전 신제품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button type="button" class="swiper-button-next-custom next-2 -right-5" aria-label="다음 신제품 보기">
+          <button type="button" class="swiper-button-next-custom next-2 -right-5 z-30" aria-label="다음 신제품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -1419,6 +1434,36 @@
   <!-- JavaScript Interaction Logic -->
   <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Swiper Carousels Initialization
+  if (typeof Swiper !== 'undefined') {
+    new Swiper('.prod-swiper-1', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.next-1',
+        prevEl: '.prev-1',
+      },
+      breakpoints: {
+        640: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 4, spaceBetween: 24 }
+      }
+    });
+
+    new Swiper('.prod-swiper-2', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.next-2',
+        prevEl: '.prev-2',
+      },
+      breakpoints: {
+        640: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 4, spaceBetween: 24 }
+      }
+    });
+  }
+
+  // Header & Mega Menu Logic
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');
   const megaTabs = document.querySelectorAll('.mega-tab-content[data-mega-tab]');
