@@ -513,11 +513,11 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
     <!-- Cart Items List (JS로 실제 담긴 상품을 렌더링) -->
-    <section aria-label="장바구니 상품 목록" class="lg:col-span-2 flex flex-col gap-4">
+    <section id="cart-list-section" aria-label="장바구니 상품 목록" class="lg:col-span-2 flex flex-col gap-4">
       <div id="cart-list" class="flex flex-col gap-4"></div>
 
       <!-- Empty State -->
-      <div id="cart-empty" class="hidden flex-col items-center justify-center text-center gap-5 p-12 bg-shell border border-dashed border-line rounded-card shadow-sm">
+      <div id="cart-empty" class="hidden flex-col items-center justify-center text-center gap-5 p-12 bg-shell border border-line-light rounded-card shadow-sm">
         <div class="w-16 h-16 bg-hairline border-2 border-line rounded-full flex items-center justify-center text-ink shrink-0">
           <svg class="w-7 h-7 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -534,7 +534,7 @@
     </section>
 
     <!-- Order Summary -->
-    <aside id="cart-summary" class="hidden lg:col-span-1 flex-col gap-5 rounded-card border border-line-light bg-shell p-6 lg:sticky lg:top-24">
+    <aside id="cart-summary" class="flex lg:col-span-1 flex-col gap-5 rounded-card border border-line-light bg-shell p-6 lg:sticky lg:top-24">
       <h2 class="text-base font-bold text-ink">주문 요약</h2>
 
       <dl class="flex flex-col gap-3 text-sm">
@@ -779,28 +779,30 @@ document.addEventListener('DOMContentLoaded', function() {
     var listEl = document.getElementById('cart-list');
     var emptyEl = document.getElementById('cart-empty');
     var summaryEl = document.getElementById('cart-summary');
+    var checkoutBtn = document.getElementById('checkout-btn');
     var clearBtn = document.getElementById('cart-clear-btn');
     var countLabel = document.getElementById('cart-count-label');
     if (!listEl || !emptyEl || !summaryEl) return;
 
     var items = getCartItems();
+    var isEmpty = items.length === 0;
 
     if (countLabel) countLabel.textContent = items.length > 0 ? '(' + items.length + ')' : '';
-    if (clearBtn) clearBtn.classList.toggle('hidden', items.length === 0);
-
-    if (items.length === 0) {
-      listEl.innerHTML = '';
-      emptyEl.classList.remove('hidden');
-      emptyEl.classList.add('flex');
-      summaryEl.classList.add('hidden');
-      summaryEl.classList.remove('flex');
-      return;
+    if (clearBtn) clearBtn.classList.toggle('hidden', isEmpty);
+    listEl.classList.toggle('hidden', isEmpty);
+    emptyEl.classList.toggle('hidden', !isEmpty);
+    emptyEl.classList.toggle('flex', isEmpty);
+    if (checkoutBtn) {
+      checkoutBtn.classList.toggle('pointer-events-none', isEmpty);
+      checkoutBtn.classList.toggle('opacity-50', isEmpty);
+      checkoutBtn.setAttribute('aria-disabled', isEmpty ? 'true' : 'false');
     }
 
-    emptyEl.classList.add('hidden');
-    emptyEl.classList.remove('flex');
-    summaryEl.classList.remove('hidden');
-    summaryEl.classList.add('flex');
+    if (isEmpty && window.innerWidth >= 1024) {
+      emptyEl.style.minHeight = summaryEl.offsetHeight + 'px';
+    } else {
+      emptyEl.style.minHeight = '';
+    }
 
     listEl.innerHTML = items.map(function (item, index) {
       var unitPrice = parsePrice(item.price);
@@ -886,6 +888,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   renderCart();
+
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(renderCart, 150);
+  });
 });
 </script>
 

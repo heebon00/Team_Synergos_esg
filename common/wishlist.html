@@ -374,7 +374,7 @@
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="consulting.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
             </div>
@@ -531,8 +531,51 @@
     <section class="flex-1 flex flex-col gap-8">
       <h1 class="text-title font-extrabold text-ink tracking-tight">선물/위시리스트</h1>
 
-      <!-- Wishlist Grid (JS로 실제 담긴 상품을 렌더링) -->
-      <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <!-- Wishlist Grid (JS로 실제 담긴 상품을 렌더링, 최초 방문 기본값은 레이아웃 점프 방지를 위해 미리 렌더링해둔다) -->
+      <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="card flex flex-col overflow-hidden rounded-card border border-line-light bg-white shadow-sm hover:shadow-card-hover transition-all duration-300">
+          <div class="relative h-48 w-full overflow-hidden bg-shell flex items-center justify-center p-4">
+            <img src="../assets/images/products/kivik.png" alt="POÄNG 포엔 암체어" width="200" height="160" class="max-h-full w-auto object-contain">
+            <button type="button" data-index="0" class="delete-wish-btn group absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white shadow-sm border border-line text-sale hover:bg-hairline transition-all" aria-label="위시리스트에서 삭제">
+              <svg class="h-4 w-4 fill-sale stroke-sale" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-1 flex-col justify-between p-5">
+            <div>
+              <h3 class="text-sm font-bold text-ink">POÄNG 포엔 암체어</h3>
+              <p class="mt-1 text-xs text-ink-muted">군세레드 베이지 / 자작나무 베니어</p>
+              <p class="mt-3 text-lg font-bold text-price">₩119,000</p>
+            </div>
+            <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
+              <a href="#" class="text-xs font-medium text-ink-sub underline hover:text-brand">상세보기</a>
+              <button type="button" class="rounded-full bg-brand hover:bg-brand-dark px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
+                장바구니 담기
+              </button>
+            </div>
+          </div>
+        </article>
+        <article class="card flex flex-col overflow-hidden rounded-card border border-line-light bg-white shadow-sm hover:shadow-card-hover transition-all duration-300">
+          <div class="relative h-48 w-full overflow-hidden bg-shell flex items-center justify-center p-4">
+            <img src="../assets/images/products/strandmon.png" alt="STRANDMON 스트란드몬 윙체어" width="200" height="160" class="max-h-full w-auto object-contain">
+            <button type="button" data-index="1" class="delete-wish-btn group absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white shadow-sm border border-line text-sale hover:bg-hairline transition-all" aria-label="위시리스트에서 삭제">
+              <svg class="h-4 w-4 fill-sale stroke-sale" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-1 flex-col justify-between p-5">
+            <div>
+              <h3 class="text-sm font-bold text-ink">STRANDMON 스트란드몬 윙체어</h3>
+              <p class="mt-1 text-xs text-ink-muted">노르드발라 다크그레이</p>
+              <p class="mt-3 text-lg font-bold text-price">₩299,000</p>
+            </div>
+            <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
+              <a href="#" class="text-xs font-medium text-ink-sub underline hover:text-brand">상세보기</a>
+              <button type="button" class="rounded-full bg-brand hover:bg-brand-dark px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
+                장바구니 담기
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
 
       <!-- Empty State (위시리스트 비었을 때 노출 안내 카드) -->
       <div id="wishlist-empty" class="hidden flex flex-col items-center justify-center text-center gap-5 p-12 bg-shell border border-dashed border-line rounded-card shadow-sm">
@@ -710,13 +753,31 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Dynamic Wishlist Render Logic ---
+  // 헤더 하트 버튼 등 사이트 전역에서 쓰는 것과 동일한 저장소 키를 공유한다 (assets/js/cart-wishlist.js 참고)
+  var WISHLIST_KEY = (window.WishlistCart && window.WishlistCart.WISHLIST_KEY) || 'ikea_wishlist_items';
+
+  var DEFAULT_WISHLIST_ITEMS = [
+    {
+      id: 'p1',
+      title: 'POÄNG 포엔 암체어',
+      desc: '군세레드 베이지 / 자작나무 베니어',
+      price: '119,000',
+      image: '../assets/images/products/kivik.png'
+    },
+    {
+      id: 'p2',
+      title: 'STRANDMON 스트란드몬 윙체어',
+      desc: '노르드발라 다크그레이',
+      price: '299,000',
+      image: '../assets/images/products/strandmon.png'
+    }
+  ];
+
   function getWishlistItems() {
     let items = [];
     try {
-      const raw1 = localStorage.getItem('ikea_wishlist');
-      const raw2 = localStorage.getItem('wishlist');
-      if (raw1) items = JSON.parse(raw1);
-      else if (raw2) items = JSON.parse(raw2);
+      const raw = localStorage.getItem(WISHLIST_KEY);
+      if (raw) items = JSON.parse(raw);
     } catch(e) {
       console.error(e);
     }
@@ -725,95 +786,93 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function saveWishlistItems(items) {
     try {
-      localStorage.setItem('ikea_wishlist', JSON.stringify(items));
-      localStorage.setItem('wishlist', JSON.stringify(items));
+      localStorage.setItem(WISHLIST_KEY, JSON.stringify(items));
     } catch(e) {}
+    if (window.WishlistCart && window.WishlistCart.refreshBadges) {
+      window.WishlistCart.refreshBadges();
+    }
   }
 
-  function renderWishlist() {
-    const grid = document.getElementById('wishlist-grid');
-    const emptyState = document.getElementById('wishlist-empty');
+  function attachDeleteListeners() {
+    document.querySelectorAll('.delete-wish-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const idx = parseInt(this.getAttribute('data-index'), 10);
+        let list = getWishlistItems();
+        list.splice(idx, 1);
+        saveWishlistItems(list);
+        renderWishlist(true);
+      });
+    });
+  }
+
+  function updateCountAndBadge(count) {
     const countLabel = document.getElementById('wishlist-count-label');
     const badge = document.getElementById('wishlist-badge');
-
-    let items = getWishlistItems();
-
-    // If local storage is empty, initialize default 2 saved items to represent user's saved wishlist
-    if (items.length === 0) {
-      items = [
-        {
-          id: 'p1',
-          title: 'POÄNG 포엔 암체어',
-          desc: '군세레드 베이지 / 자작나무 베니어',
-          price: '119,000',
-          image: '../assets/images/products/kivik.png'
-        },
-        {
-          id: 'p2',
-          title: 'STRANDMON 스트란드몬 윙체어',
-          desc: '노르드발라 다크그레이',
-          price: '299,000',
-          image: '../assets/images/products/strandmon.png'
-        }
-      ];
-      saveWishlistItems(items);
-    }
-
-    if (countLabel) countLabel.textContent = items.length;
+    if (countLabel) countLabel.textContent = count;
     if (badge) {
-      if (items.length > 0) {
-        badge.textContent = items.length;
+      if (count > 0) {
+        badge.textContent = count;
         badge.style.display = 'flex';
       } else {
         badge.style.display = 'none';
       }
     }
+  }
 
+  // forceRebuild가 없고 저장된 방문 기록도 없는 첫 방문이면, HTML에 이미 그려둔
+  // 기본 카드 마크업을 그대로 두어 "빈 화면 -> 콘텐츠 팝인"으로 인한 레이아웃 흔들림을 막는다.
+  function renderWishlist(forceRebuild) {
+    const grid = document.getElementById('wishlist-grid');
+    const emptyState = document.getElementById('wishlist-empty');
     if (!grid || !emptyState) return;
+
+    const hasStoredData = localStorage.getItem(WISHLIST_KEY) !== null;
+
+    if (!forceRebuild && !hasStoredData) {
+      saveWishlistItems(DEFAULT_WISHLIST_ITEMS);
+      updateCountAndBadge(DEFAULT_WISHLIST_ITEMS.length);
+      attachDeleteListeners();
+      return;
+    }
+
+    const items = getWishlistItems();
+    updateCountAndBadge(items.length);
 
     if (items.length === 0) {
       grid.innerHTML = '';
       emptyState.classList.remove('hidden');
       emptyState.classList.add('flex');
-    } else {
-      emptyState.classList.add('hidden');
-      emptyState.classList.remove('flex');
+      return;
+    }
 
-      grid.innerHTML = items.map((item, index) => `
-        <article class="card flex flex-col overflow-hidden rounded-card border border-line-light bg-white shadow-sm hover:shadow-card-hover transition-all duration-300">
-          <div class="relative h-48 w-full overflow-hidden bg-[#F8F9FA] flex items-center justify-center p-4">
-            <img src="${item.image || '../assets/images/products/kivik.png'}" alt="${item.title}" width="200" height="160" class="max-h-full w-auto object-contain">
-            <button type="button" data-index="${index}" class="delete-wish-btn group absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white shadow-sm border border-slate-200 text-red-500 hover:bg-red-50 transition-all" aria-label="위시리스트에서 삭제">
-              <svg class="h-4 w-4 fill-red-500 stroke-red-500" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    emptyState.classList.add('hidden');
+    emptyState.classList.remove('flex');
+
+    grid.innerHTML = items.map((item, index) => `
+      <article class="card flex flex-col overflow-hidden rounded-card border border-line-light bg-white shadow-sm hover:shadow-card-hover transition-all duration-300">
+        <div class="relative h-48 w-full overflow-hidden bg-shell flex items-center justify-center p-4">
+          <img src="${item.image || '../assets/images/products/kivik.png'}" alt="${item.title || item.name || '상품'}" width="200" height="160" class="max-h-full w-auto object-contain">
+          <button type="button" data-index="${index}" class="delete-wish-btn group absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white shadow-sm border border-line text-sale hover:bg-hairline transition-all" aria-label="위시리스트에서 삭제">
+            <svg class="h-4 w-4 fill-sale stroke-sale" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+        </div>
+        <div class="flex flex-1 flex-col justify-between p-5">
+          <div>
+            <h3 class="text-sm font-bold text-ink">${item.title || item.name || '상품'}</h3>
+            <p class="mt-1 text-xs text-ink-muted">${item.desc || ''}</p>
+            <p class="mt-3 text-lg font-bold text-price">₩${item.price}</p>
+          </div>
+          <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
+            <a href="#" class="text-xs font-medium text-ink-sub underline hover:text-brand">상세보기</a>
+            <button type="button" class="rounded-full bg-brand hover:bg-brand-dark px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
+              장바구니 담기
             </button>
           </div>
-          <div class="flex flex-1 flex-col justify-between p-5">
-            <div>
-              <h3 class="text-sm font-bold text-ink">${item.title}</h3>
-              <p class="mt-1 text-xs text-ink-muted">${item.desc || ''}</p>
-              <p class="mt-3 text-lg font-bold text-price">₩${item.price}</p>
-            </div>
-            <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
-              <a href="#" class="text-xs font-medium text-ink-sub underline hover:text-brand">상세보기</a>
-              <button type="button" class="rounded-full bg-brand hover:bg-[#003D8F] px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
-                장바구니 담기
-              </button>
-            </div>
-          </div>
-        </article>
-      `).join('');
+        </div>
+      </article>
+    `).join('');
 
-      // Add delete button event listeners
-      document.querySelectorAll('.delete-wish-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const idx = parseInt(this.getAttribute('data-index'), 10);
-          let list = getWishlistItems();
-          list.splice(idx, 1);
-          saveWishlistItems(list);
-          renderWishlist();
-        });
-      });
-    }
+    attachDeleteListeners();
   }
 
   renderWishlist();
