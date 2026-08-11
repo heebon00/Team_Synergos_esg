@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="IKEA 이달의 특가 및 세일 페이지 – 한정 혜택, 온라인 아울렛, 소형가구 추가할인 및 인기 할인 제품을 특별한 가격에 만나보세요.">
-<title>세일 &amp; 특별 혜택 | IKEA</title>
+<meta name="description" content="IKEA 장바구니 – 담아둔 상품의 수량과 금액을 확인하고 바로 구매를 진행하세요.">
+<title>장바구니 | IKEA</title>
 
 <script>
   var d = document.documentElement;
@@ -17,25 +17,31 @@
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="../assets/js/cart-wishlist.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
 
+<link rel="stylesheet" href="../assets/css/tokens.css">
 <style type="text/tailwindcss">
   @theme {
+    /* Brand colors */
     --color-brand: #0051BA;
     --color-brand-dark: #003D8F;
     --color-accent: #FFC900;
     --color-link: #0058A3;
     --color-sale: #E00751;
-    --color-discount: #D00000;
+    --color-sale-dark: #B8003F;
 
+    /* Neutrals / Ink */
+    --color-white: #FFFFFF;
+    --color-black: #000000;
     --color-ink: #111418;
     --color-ink-2: #3D4450;
     --color-ink-3: #6B7280;
     --color-ink-sub: #3D4450;
     --color-ink-muted: #6B7280;
     --color-muted: #666666;
+    --color-gray-dark: #212121;
     --color-price: #1A1A1A;
 
+    /* Lines & Dividers */
     --color-line: #C5CCD6;
     --color-line-2: #D1D5DB;
     --color-line-light: #E6E6E6;
@@ -44,6 +50,7 @@
     --color-divider: #D9D9D9;
     --color-nav-line: #E5E7EB;
 
+    /* Backgrounds */
     --color-bg-light: #F8F9FA;
     --color-shell: #F8F9FA;
     --color-crust: #F5F5F5;
@@ -52,17 +59,50 @@
     --color-search-bg: #F3F4F6;
     --color-footer-bg: #F9FAFB;
 
-    --radius-pill: 20px;
+    /* Radius & Border Tokens */
+    --radius-sm: 4px;
+    --radius-md: 8px;
     --radius-card: 12px;
+    --radius-pill: 20px;
+    --radius-btn: 8px;
 
+    /* Spacings */
     --spacing-container: 1280px;
+    --spacing-promo-max: 760px;
     --spacing-card-img: 200px;
     --spacing-card-min: 340px;
     --spacing-hero-img: 260px;
+    --spacing-hero-col: 420px;
     --spacing-max-mobile: 440px;
-    --container-mobile: 640px;
     --spacing-logo: 98px;
     --spacing-search: 320px;
+    --container-mobile: 640px;
+
+    /* Figma Specific Layout Spacings */
+    --spacing-sidebar: 252px;
+    --spacing-card-col: 200px;
+    --spacing-footer-col: 150px;
+    --spacing-menu-item: 228px;
+    --spacing-search-bar: 278px;
+    --spacing-nav-px: 140px;
+    --spacing-nav-py: 12px;
+    --spacing-body-px: 80px;
+    --spacing-body-py: 40px;
+    --spacing-footer-pt: 48px;
+    --spacing-footer-px: 80px;
+    --spacing-footer-pb: 32px;
+    --spacing-mega-panel: 900px;
+
+    /* Shadow Tokens */
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-card-hover: 0 14px 30px rgba(0, 0, 0, 0.14);
+
+    /* Custom Font Sizes */
+    --font-size-title: 30px;
+    --font-size-footer-link: 13px;
+
+    /* Custom Border Widths */
+    --border-width-tab: 3px;
   }
 
   @layer base {
@@ -80,11 +120,13 @@
     img { max-width: 100%; }
   }
 
-  /* 스크린리더 전용 텍스트 숨김 */
-  .sr-only-hide {
+  /* 화면에서만 감추고 스크린리더에는 남기는 텍스트 */
+  .hide, .sr-only-hide {
     position: absolute;
-    width: 1px; height: 1px;
-    padding: 0; margin: -1px;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
@@ -92,31 +134,36 @@
   }
 
   /* 건너뛰기 링크 */
-  .skip-link {
+  .skip {
     position: absolute;
     left: 16px;
     top: -80px;
     z-index: 100;
-    background: #ffffff;
+    background: var(--color-white);
     color: var(--color-brand);
     border: 2px solid var(--color-brand);
     border-radius: 8px;
     padding: 12px 20px;
     font-weight: 700;
-    transition: top 0.15s ease-out;
+    transition: top .15s ease-out;
   }
-  .skip-link:focus {
+  .skip:focus {
     top: 16px;
   }
+
+  /* 수량 스테퍼 버튼 disabled 상태 */
+  .qty-btn:disabled { opacity: .35; cursor: not-allowed; }
 </style>
 </head>
-<body class="bg-white text-ink antialiased selection:bg-brand selection:text-white">
 
-  <!-- 접근성 건너뛰기 링크 -->
-  <a href="#main-content" class="skip-link">본문 바로가기</a>
+<body class="bg-white text-ink flex flex-col min-h-screen">
 
-  <!-- SEGMENT: Header -->
-  <header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
+<a class="skip" href="#main">본문 바로가기</a>
+
+<div id="wrap" class="flex-1 flex flex-col">
+
+<!-- SEGMENT: Header -->
+<header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
 
   <!-- 1. Utility Navigation -->
   <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
@@ -145,7 +192,7 @@
     <nav aria-label="주 메뉴" class="hidden lg:block shrink-0">
       <ul class="flex items-center gap-6 text-sm font-bold text-ink whitespace-nowrap shrink-0" id="desktop-nav-menu">
         <li class="relative whitespace-nowrap shrink-0">
-          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" href="products.html">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" href="category.html">
             <span>모든 제품</span>
           </a>
         </li>
@@ -165,7 +212,7 @@
           </a>
         </li>
         <li class="relative whitespace-nowrap shrink-0">
-          <a class="nav-link py-2 px-1 !text-sale font-extrabold border-b-2 border-sale transition-colors flex items-center gap-1 group whitespace-nowrap" style="color: #E00751 !important;" aria-current="page" data-tab="sale" href="sale.html">
+          <a class="nav-link py-2 px-1 !text-sale font-bold hover:!text-sale-dark transition-colors flex items-center gap-1 group whitespace-nowrap" style="color: var(--color-sale) !important;" data-tab="sale" href="sale.html">
             <span>세일</span>
           </a>
         </li>
@@ -206,18 +253,18 @@
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>
-            <span id="wishlist-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
+            <span id="wishlist-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-xs font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
           </div>
           <span class="whitespace-nowrap shrink-0">위시리스트</span>
         </a>
       </li>
       <li class="shrink-0 whitespace-nowrap">
-        <a href="cart.html" id="header-cart-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="장바구니">
+        <a href="cart.html" id="header-cart-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-brand font-medium p-1.5 rounded-lg bg-bg-light transition-all" aria-current="page" aria-label="장바구니">
           <div class="relative shrink-0">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
-            <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
+            <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-xs font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
           </div>
           <span class="whitespace-nowrap shrink-0">장바구니</span>
         </a>
@@ -226,7 +273,7 @@
 
     <!-- Mobile Menu Controls -->
     <div class="ml-auto flex items-center gap-2 lg:hidden">
-      <a href="cart.html" class="p-2 text-ink hover:text-brand" aria-label="장바구니">
+      <a href="cart.html" class="p-2 text-brand" aria-current="page" aria-label="장바구니">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
         </svg>
@@ -240,9 +287,8 @@
   </div>
 
   <!-- 3. Figma Mega Navigation Dropdown Panel -->
-  <div id="mega-menu-panel" 
-       class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[900px] max-w-[calc(100vw-2rem)] bg-white border border-[#E6E6E6] rounded-xl shadow-2xl p-6 opacity-0 invisible translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
-    
+  <div id="mega-menu-panel" class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-(--spacing-mega-panel) max-w-screen bg-white border border-line-light rounded-xl shadow-2xl p-6 opacity-0 invisible translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
+
         <!-- Tab 2: 공간별 쇼핑하기 -->
     <div data-mega-tab="room" class="mega-tab-content hidden">
       <div class="flex items-stretch gap-6">
@@ -275,7 +321,7 @@
         </div>
 
         <!-- Divider -->
-        <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+        <div class="w-px bg-line-light self-stretch"></div>
 
         <!-- Column 2 -->
         <div class="flex-1 flex flex-col gap-1">
@@ -300,7 +346,7 @@
         </div>
 
         <!-- Divider -->
-        <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+        <div class="w-px bg-line-light self-stretch"></div>
 
         <!-- Column 3 -->
         <div class="flex-1 flex flex-col gap-1">
@@ -331,7 +377,7 @@
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="consulting.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
             </div>
@@ -346,7 +392,7 @@
         </div>
 
         <!-- Divider -->
-        <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+        <div class="w-px bg-line-light self-stretch"></div>
 
         <!-- Column 2 -->
         <div class="flex-1 flex flex-col gap-1">
@@ -356,7 +402,7 @@
             </div>
             <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">추천 스타일링</span>
           </a>
-          <a href="consulting.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="styling.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
             </div>
@@ -407,7 +453,7 @@
         </div>
 
         <!-- Divider -->
-        <div class="w-px bg-[#E6E6E6] self-stretch"></div>
+        <div class="w-px bg-line-light self-stretch"></div>
 
         <!-- Column 2 -->
         <div class="flex-1 flex flex-col gap-1">
@@ -436,7 +482,7 @@
       </div>
     </form>
     <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
-      <li><a class="block py-3 text-ink hover:text-brand" href="products.html">모든 제품</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="category.html">모든 제품</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="category.html">공간별 쇼핑하기</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
       <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
@@ -444,403 +490,156 @@
     </ul>
   </nav>
 </header>
-  <!-- /SEGMENT: Header -->
+<!-- /SEGMENT: Header -->
 
-  <!-- SEGMENT: MainContent -->
-  <main id="main-content" class="w-full">
+<!-- SEGMENT: Breadcrumbs -->
+<nav aria-label="브레드크럼" class="w-full border-b border-line/40 bg-white">
+  <div class="mx-auto flex max-w-container items-center gap-2 px-5 py-3 text-xs text-muted lg:px-10">
+    <a href="../index.html" class="hover:text-brand hover:underline">홈</a>
+    <span class="text-gray-400" aria-hidden="true">&gt;</span>
+    <span class="font-medium text-ink" aria-current="page">장바구니</span>
+  </div>
+</nav>
+<!-- /SEGMENT: Breadcrumbs -->
 
-  <!-- SEGMENT: Breadcrumb Navigation -->
-  <nav aria-label="이동 경로" class="w-full bg-white">
-    <div class="mx-auto max-w-container px-5 lg:px-10 py-3 text-xs text-ink-muted">
-      <ol class="flex items-center gap-2 list-none">
-        <li><a href="../index.html" class="hover:text-brand hover:underline whitespace-nowrap">홈</a></li>
-        <li aria-hidden="true" class="text-ink-muted">&gt;</li>
-        <li class="text-ink font-semibold whitespace-nowrap" aria-current="page">세일</li>
-      </ol>
+<!-- SEGMENT: MainContent -->
+<main id="main" class="mx-auto w-full max-w-container px-body-px py-body-py flex-1">
+
+  <div class="flex items-baseline justify-between gap-4 mb-8">
+    <h1 class="text-title font-extrabold text-ink tracking-tight">장바구니<span id="cart-count-label" class="ml-2 text-lg font-bold text-ink-muted"></span></h1>
+    <button type="button" id="cart-clear-btn" class="hidden shrink-0 text-xs font-medium text-ink-muted underline hover:text-brand transition-colors">전체 삭제</button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+    <!-- Cart Items List (JS로 실제 담긴 상품을 렌더링) -->
+    <section aria-label="장바구니 상품 목록" class="lg:col-span-2 flex flex-col gap-4">
+      <div id="cart-list" class="flex flex-col gap-4"></div>
+
+      <!-- Empty State -->
+      <div id="cart-empty" class="hidden flex-col items-center justify-center text-center gap-5 p-12 bg-shell border border-dashed border-line rounded-card shadow-sm">
+        <div class="w-16 h-16 bg-hairline border-2 border-line rounded-full flex items-center justify-center text-ink shrink-0">
+          <svg class="w-7 h-7 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+        </div>
+        <div class="flex flex-col gap-1.5 max-w-md">
+          <h2 class="text-base font-bold text-ink">장바구니가 비어 있어요</h2>
+          <p class="text-sm text-ink-muted leading-relaxed">마음에 드는 상품을 담아 바로 구매해보세요.</p>
+        </div>
+        <a href="category.html" class="mt-2 rounded-full bg-brand hover:bg-brand-dark px-6 py-3 text-xs font-bold text-white transition-all shadow-sm">
+          쇼핑 계속하기
+        </a>
+      </div>
+    </section>
+
+    <!-- Order Summary -->
+    <aside id="cart-summary" class="hidden lg:col-span-1 flex-col gap-5 rounded-card border border-line-light bg-shell p-6 lg:sticky lg:top-24">
+      <h2 class="text-base font-bold text-ink">주문 요약</h2>
+
+      <dl class="flex flex-col gap-3 text-sm">
+        <div class="flex items-center justify-between">
+          <dt class="text-ink-2">상품금액</dt>
+          <dd id="summary-subtotal" class="font-semibold text-ink">₩0</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="text-ink-2">배송비</dt>
+          <dd id="summary-shipping" class="font-semibold text-ink">₩0</dd>
+        </div>
+      </dl>
+
+      <p id="summary-shipping-note" class="text-xs text-ink-muted leading-relaxed"></p>
+
+      <div class="border-t border-line pt-4 flex items-center justify-between">
+        <span class="text-sm font-bold text-ink">총 결제금액</span>
+        <span id="summary-total" class="text-xl font-extrabold text-price">₩0</span>
+      </div>
+
+      <a href="order.html" id="checkout-btn" class="mt-1 w-full rounded-full bg-brand hover:bg-brand-dark px-6 py-3.5 text-sm font-bold text-white text-center transition-all shadow-sm">
+        구매하기
+      </a>
+      <a href="category.html" class="text-center text-xs font-medium text-ink-sub underline hover:text-brand transition-colors">
+        쇼핑 계속하기
+      </a>
+    </aside>
+
+  </div>
+</main>
+<!-- /SEGMENT: MainContent -->
+
+<!-- SEGMENT: Footer -->
+<footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
+  <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Col 1 -->
+      <div>
+        <img src="../assets/logo-ikea.svg" alt="IKEA" width="80" height="32" class="h-8 w-auto mb-4">
+        <p class="text-xs leading-relaxed text-ink-muted">
+          IKEA 코리아는 더 많은 사람들을 위해 더 나은 일상을 만듭니다. 고품질의 지속 가능한 가구와 홈퍼니싱 솔루션을 합리적인 가격에 만나보세요.
+        </p>
+      </div>
+
+      <!-- Col 2 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객 지원</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">고객지원센터</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문(FAQ)</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">반품 및 환불 규정</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">제품 회수 및 리콜 정보</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
+          <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
+          <li><a href="self-styling.html" class="hover:text-brand hover:underline">셀프 스타일링 (무료)</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
+        <p class="text-lg font-extrabold text-brand">1670-4532</p>
+        <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
+        <div class="mt-4 flex items-center gap-3">
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+
     </div>
-  </nav>
-  <!-- /SEGMENT: Breadcrumb Navigation -->
 
-    <!-- 2. Hero Section (SEASON SALE) -->
-    <section aria-labelledby="hero-sale-heading" class="mx-auto max-w-container px-5 lg:px-10 mt-2">
-      <div class="grid grid-cols-1 lg:grid-cols-12 rounded-card overflow-hidden shadow-sm border border-line-light">
-        <!-- Blue Hero Content Box (Left) -->
-        <div class="lg:col-span-6 bg-brand text-white p-8 lg:p-12 flex flex-col justify-between items-start">
-          <div>
-            <!-- Badge -->
-            <span class="inline-block bg-accent text-ink text-xs font-black px-2.5 py-1 rounded-sm tracking-wider uppercase">
-              SEASON SALE
-            </span>
-            <!-- Heading -->
-            <h1 id="hero-sale-heading" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight mt-5 leading-tight text-white">
-              이달의 특가 및 한정 혜택
-            </h1>
-            <!-- Description -->
-            <p class="mt-4 text-xs sm:text-sm text-white/90 leading-relaxed max-w-lg font-normal">
-              IKEA 패밀리 멤버만을 위한 특별한 가격과 시즌 할인 혜택을 온/오프라인 매장에서 모두 만나보세요. 인기 가구부터 수납 용품까지 다양한 구성으로 준비되어 있습니다.
-            </p>
-          </div>
-          <!-- CTA Button -->
-          <div class="mt-8 lg:mt-12">
-            <a href="#sale-products" class="inline-flex items-center justify-center bg-accent text-ink font-bold text-xs sm:text-sm px-6 py-3 rounded-full hover:bg-yellow-400 hover:shadow-md transition-all">
-              특별한 혜택 모두 보기
-            </a>
-          </div>
-        </div>
-
-        <!-- Hero Image (Right) -->
-        <div class="lg:col-span-6 bg-shell min-h-[260px] lg:min-h-[380px] relative overflow-hidden">
-          <img src="../assets/images/yunjae/hero-living.png" alt="IKEA 시즌 세일 거실 인테리어 쇼룸" class="w-full h-full object-cover">
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. Quick Promotion 2-Column Banner Cards -->
-    <section aria-label="프로모션 바로가기" class="mx-auto max-w-container px-5 lg:px-10 mt-6 lg:mt-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-        <!-- Card 1: 자원순환 허브 -->
-        <a href="#" class="group flex flex-col justify-between rounded-card border border-line-light bg-shell p-6 transition-all duration-200 hover:border-line hover:shadow-card hover:bg-white">
-          <div class="flex items-start justify-between">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand shadow-sm group-hover:scale-105 transition-transform">
-              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-              </svg>
-            </div>
-            <span class="text-ink-muted group-hover:text-brand group-hover:translate-x-0.5 transition-all">
-              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </div>
-          <div class="mt-4">
-            <h2 class="text-base sm:text-lg font-bold text-ink group-hover:text-brand transition-colors">
-              자원순환 허브 (Refurb)
-            </h2>
-            <p class="mt-1.5 text-xs text-ink-2 leading-relaxed">
-              이케아 매장별 전시 제품과 리퍼브 알뜰 특가 소식을 실시간으로 직접 확인해보세요.
-            </p>
-          </div>
-        </a>
-
-        <!-- Card 2: 온라인 아울렛 -->
-        <a href="#" class="group flex flex-col justify-between rounded-card border border-line-light bg-shell p-6 transition-all duration-200 hover:border-line hover:shadow-card hover:bg-white">
-          <div class="flex items-start justify-between">
-            <span class="inline-flex items-center rounded-full bg-white px-3 py-1.5 text-xs font-bold text-link shadow-sm uppercase tracking-wide">
-              OUTLET
-            </span>
-            <span class="text-ink-muted group-hover:text-brand group-hover:translate-x-0.5 transition-all">
-              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </div>
-          <div class="mt-4">
-            <h2 class="text-base sm:text-lg font-bold text-ink group-hover:text-brand transition-colors">
-              온라인 아울렛 최대 70% 세일
-            </h2>
-            <p class="mt-1.5 text-xs text-ink-2 leading-relaxed">
-              단종 예정 상품 및 시즌 이월 초특가 할인 찬스
-            </p>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- 4. Currently Running Campaigns (2-Column Cards) -->
-    <section aria-labelledby="campaigns-heading" class="mx-auto max-w-container px-5 lg:px-10 mt-12 lg:mt-16">
-      <h2 id="campaigns-heading" class="text-xl sm:text-2xl font-extrabold text-ink tracking-tight mb-6">
-        현재 진행중인 캠페인
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Campaign Card 1 -->
-        <article class="group rounded-card border border-line-light bg-white overflow-hidden shadow-sm hover:shadow-card transition-all duration-300 flex flex-col">
-          <div class="w-full h-52 sm:h-64 bg-shell overflow-hidden relative">
-            <img src="../assets/images/yunjae/campaign-shelf.png" alt="소형가구 및 액세서리 10% 추가할인" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500">
-          </div>
-          <div class="p-6 bg-shell flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-1">
-            <div>
-              <h3 class="font-bold text-sm sm:text-base text-ink leading-snug">
-                이케사는 세일: 소형가구 및 액세서리 10% 추가할인
-              </h3>
-              <p class="mt-1 text-xs text-ink-3">
-                봄맞이 인테리어를 위한 수납 솔루션과 포인트 장식 기획전
-              </p>
-            </div>
-            <button type="button" aria-label="자세히 보기" class="shrink-0 rounded-lg border-2 border-brand px-8 py-3.5 text-sm font-bold text-brand hover:bg-brand hover:text-white transition-colors">
-              &rarr;
-            </button>
-          </div>
-        </article>
-
-        <!-- Campaign Card 2 -->
-        <article class="group rounded-card border border-line-light bg-white overflow-hidden shadow-sm hover:shadow-card transition-all duration-300 flex flex-col">
-          <div class="w-full h-52 sm:h-64 bg-shell overflow-hidden relative">
-            <img src="../assets/images/yunjae/campaign-box.png" alt="6만원 이상 구매 시 택배배송 전국 6천원 균일가 혜택" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500">
-          </div>
-          <div class="p-6 bg-shell flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-1">
-            <div>
-              <h3 class="font-bold text-sm sm:text-base text-ink leading-snug">
-                6만원 이상 구매 시 택배배송 전국 6천원 균일가 혜택
-              </h3>
-              <p class="mt-1 text-xs text-ink-3">
-                부피가 큰 생활용품도 부담 없는 가격에 집 앞까지 배송
-              </p>
-            </div>
-            <button type="button" aria-label="자세히 보기" class="shrink-0 rounded-lg border-2 border-brand px-8 py-3.5 text-sm font-bold text-brand hover:bg-brand hover:text-white transition-colors">
-              &rarr;
-            </button>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- 5. New Lower Price Banner -->
-    <section aria-labelledby="nlp-heading" class="mx-auto max-w-container px-5 lg:px-10 mt-12 lg:mt-16">
-      <div class="rounded-card border border-line-light bg-shell p-6 sm:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-        <div class="max-w-3xl">
-          <h2 id="nlp-heading" class="text-lg sm:text-xl font-extrabold text-brand tracking-tight">
-            더 낮은 새로운 가격 (New Lower Price)
-          </h2>
-          <p class="mt-2 text-xs sm:text-sm text-ink-2 leading-relaxed">
-            이케아는 언제나 변치 않는 품질과 실용성은 견고히 유지하면서도, 글로벌 생산 혁신과 정교화된 유통 프로세스 최적화를 거쳐 매해 한층 더 합리적이고 가벼워진 가격으로 홈퍼니싱 제안을 거듭 실천하고 있습니다.
-          </p>
-        </div>
-        <a href="#sale-products" class="shrink-0 rounded-lg border-2 border-brand px-8 py-3.5 text-sm font-bold text-brand hover:bg-brand hover:text-white transition-all text-center">
-          해당 제품 보러가기
-        </a>
-      </div>
-    </section>
-
-    <!-- 6. Popular Sale Products Grid (8 Items) -->
-    <section id="sale-products" aria-labelledby="sale-list-heading" class="mx-auto max-w-container px-5 lg:px-10 mt-12 lg:mt-16 mb-20">
-      <div class="flex items-center justify-between mb-6">
-        <h2 id="sale-list-heading" class="text-xl sm:text-2xl font-extrabold text-ink tracking-tight">
-          인기 할인 제품 리스트
-        </h2>
-        <span class="text-xs text-ink-3">총 8개 상품</span>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
-
-        <!-- Product 1: HEMNES -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/images/yunjae/product-stockholm.png" alt="HEMNES 햄네스 8단서랍장" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              HEMNES 햄네스 8단서랍장
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              160×96 cm, 화이트스테인 고품질원목
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩349,000</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩299,000</span>
-          </div>
-        </article>
-
-        <!-- Product 2: SÖDERHAMN -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/images/yunjae/product-kivik.png" alt="SÖDERHAMN 쇠데르함 3인용소파" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              SÖDERHAMN 쇠데르함 3인용소파
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              피아스트라 다크그레이 모던 린넨
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩799,000</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩649,000</span>
-          </div>
-        </article>
-
-        <!-- Product 3: LACK -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/p-lack.png" alt="LACK 라크 보조테이블" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              LACK 라크 보조테이블
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              55×55 cm, 하이글로스 화이트
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩19,900</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩15,000</span>
-          </div>
-        </article>
-
-        <!-- Product 4: EKET -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/images/yunjae/product-eket.png" alt="EKET 에케트 수납장" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              EKET 에케트 수납장
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              35×35×35 cm, 라이트그레이 모듈형
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩55,000</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩45,000</span>
-          </div>
-        </article>
-
-        <!-- Product 5: FADO -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/images/yunjae/product-besta.png" alt="FADO 파도 탁상스탠드" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              FADO 파도 탁상스탠드
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              25 cm, 구형 화이트 글라스
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩29,900</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩19,900</span>
-          </div>
-        </article>
-
-        <!-- Product 6: RÅSKOG -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/images/yunjae/product-alex.png" alt="RÅSKOG 로스코그 카트" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              RÅSKOG 로스코그 카트
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              35×45×78 cm, 3단 메탈 다크그레이
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩45,000</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩34,900</span>
-          </div>
-        </article>
-
-        <!-- Product 7: GLADOM -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/images/yunjae/product-brimnes.png" alt="GLADOM 글라도무 트레이테이블" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              GLADOM 글라도무 트레이테이블
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              45×53 cm, 스틸 더스티그린
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩34,900</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩24,900</span>
-          </div>
-        </article>
-
-        <!-- Product 8: NESNA -->
-        <article class="group rounded-card border border-line-light bg-white p-3.5 sm:p-4 flex flex-col justify-between hover:shadow-card-hover transition-all duration-300">
-          <div>
-            <div class="relative w-full aspect-square bg-shell rounded-md overflow-hidden mb-3.5">
-              <img src="../assets/images/yunjae/product-nordli.png" alt="NESNA 네스나 침대협탁" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-ink group-hover:text-brand transition-colors line-clamp-1">
-              NESNA 네스나 침대협탁
-            </h3>
-            <p class="text-xs text-ink-3 mt-1 line-clamp-1">
-              36×35 cm, 대나무 및 강화유리
-            </p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-hairline flex items-baseline justify-between">
-            <span class="text-xs text-ink-3 line-through">₩29,900</span>
-            <span class="text-xs sm:text-sm font-black text-discount">₩19,900</span>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-  </main>
-  <!-- /SEGMENT: MainContent -->
-
-  <!-- SEGMENT: Footer -->
-  <footer class="w-full bg-bg-light border-t border-line-light text-ink-sub">
-    <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-
-        <!-- Col 1 -->
-        <div>
-          <h3 class="text-sm font-bold text-ink mb-3">고객문의</h3>
-          <ul class="space-y-2 text-xs">
-            <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문</a></li>
-            <li><a href="#" class="hover:text-brand hover:underline">문의하기</a></li>
-            <li><a href="#" class="hover:text-brand hover:underline">배송 서비스 안내</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 2 -->
-        <div>
-          <h3 class="text-sm font-bold text-ink mb-3">쇼핑하기</h3>
-          <ul class="space-y-2 text-xs">
-            <li><a href="#" class="hover:text-brand hover:underline">온라인 쇼핑 가이드</a></li>
-            <li><a href="#" class="hover:text-brand hover:underline">전화 주문 및 상담</a></li>
-            <li><a href="#" class="hover:text-brand hover:underline">IKEA 기프트 카드</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 3 -->
-        <div>
-          <h3 class="text-sm font-bold text-ink mb-3">서비스</h3>
-          <ul class="space-y-2 text-xs">
-            <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
-            <li><a href="styling.html" class="hover:text-brand hover:underline">주방 플래닝 서비스</a></li>
-            <li><a href="#" class="hover:text-brand hover:underline">바이백 &amp; 되팔기</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 4 -->
-        <div>
-          <h3 class="text-sm font-bold text-ink mb-3">IKEA 이야기</h3>
-          <ul class="space-y-2 text-xs">
-            <li><a href="#" class="hover:text-brand hover:underline">브랜드 스토리</a></li>
-            <li><a href="#" class="hover:text-brand hover:underline">지속가능한 생활</a></li>
-            <li><a href="#" class="hover:text-brand hover:underline">채용 정보</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
-        <p>© Inter IKEA Systems B.V 1999-2026</p>
-        <div class="flex gap-4">
-          <a href="#" class="hover:underline">쿠키 설정</a>
-          <a href="#" class="hover:underline">대한민국 | 한국어</a>
-        </div>
+    <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
+      <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+      <div class="flex gap-4">
+        <a href="#" class="hover:underline">개인정보처리방침</a>
+        <a href="#" class="hover:underline">이용약관</a>
+        <a href="#" class="hover:underline">웹 접근성 고지</a>
       </div>
     </div>
-  </footer>
-  <!-- /SEGMENT: Footer -->
+  </div>
+</footer>
+<!-- /SEGMENT: Footer -->
 
-  <!-- Interactive Scripts -->
-  <script>
+</div>
+
+
+<script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Mega Menu Hover Logic
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');
   const megaTabs = document.querySelectorAll('.mega-tab-content[data-mega-tab]');
@@ -860,7 +659,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
       const isSale = link.getAttribute('data-tab') === 'sale';
       if (isSale) {
-        link.style.setProperty('color', '#E00751', 'important');
+        link.style.setProperty('color', 'var(--color-sale)', 'important');
         link.classList.remove('text-ink');
         link.classList.remove('text-brand');
       } else if (link.getAttribute('data-tab') === tabName) {
@@ -888,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
       navLinks.forEach(link => {
         const isSale = link.getAttribute('data-tab') === 'sale';
         if (isSale) {
-          link.style.setProperty('color', '#E00751', 'important');
+          link.style.setProperty('color', 'var(--color-sale)', 'important');
           link.classList.remove('text-ink');
           link.classList.remove('text-brand');
         } else {
@@ -902,7 +701,7 @@ document.addEventListener('DOMContentLoaded', function() {
   navLinks.forEach(link => {
     const isSale = link.getAttribute('data-tab') === 'sale';
     if (isSale) {
-      link.style.setProperty('color', '#E00751', 'important');
+      link.style.setProperty('color', 'var(--color-sale)', 'important');
     }
     link.addEventListener('mouseenter', () => {
       const tabName = link.getAttribute('data-tab');
@@ -921,7 +720,174 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     megaPanel.addEventListener('mouseleave', closeMegaMenu);
   }
+
+  // Mobile menu toggle
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  if (mobileBtn && mobileNav) {
+    mobileBtn.addEventListener('click', function () {
+      const isOpen = !mobileNav.hasAttribute('hidden');
+      if (isOpen) {
+        mobileNav.setAttribute('hidden', '');
+        mobileBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        mobileNav.removeAttribute('hidden');
+        mobileBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  }
+
+  // --- Dynamic Cart Render Logic ---
+  // 상품 카드의 "장바구니 담기" 버튼과 동일한 저장소(ikea_cart_items)를 공유한다 (assets/js/cart-wishlist.js 참고)
+  var CART_KEY = (window.WishlistCart && window.WishlistCart.CART_KEY) || 'ikea_cart_items';
+  var FREE_SHIPPING_THRESHOLD = 50000;
+  var SHIPPING_FEE = 3000;
+
+  function getCartItems() {
+    var items = [];
+    try {
+      var raw = localStorage.getItem(CART_KEY);
+      items = raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      items = [];
+    }
+    if (!Array.isArray(items)) items = [];
+    return items.map(function (item) {
+      return Object.assign({ qty: 1 }, item, { qty: item.qty > 0 ? item.qty : 1 });
+    });
+  }
+
+  function saveCartItems(items) {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+    } catch (e) {}
+    if (window.WishlistCart && window.WishlistCart.refreshBadges) {
+      window.WishlistCart.refreshBadges();
+    }
+  }
+
+  function parsePrice(priceText) {
+    var digits = String(priceText || '0').replace(/[^0-9]/g, '');
+    return digits ? parseInt(digits, 10) : 0;
+  }
+
+  function formatWon(amount) {
+    return '₩' + amount.toLocaleString('ko-KR');
+  }
+
+  function renderCart() {
+    var listEl = document.getElementById('cart-list');
+    var emptyEl = document.getElementById('cart-empty');
+    var summaryEl = document.getElementById('cart-summary');
+    var clearBtn = document.getElementById('cart-clear-btn');
+    var countLabel = document.getElementById('cart-count-label');
+    if (!listEl || !emptyEl || !summaryEl) return;
+
+    var items = getCartItems();
+
+    if (countLabel) countLabel.textContent = items.length > 0 ? '(' + items.length + ')' : '';
+    if (clearBtn) clearBtn.classList.toggle('hidden', items.length === 0);
+
+    if (items.length === 0) {
+      listEl.innerHTML = '';
+      emptyEl.classList.remove('hidden');
+      emptyEl.classList.add('flex');
+      summaryEl.classList.add('hidden');
+      summaryEl.classList.remove('flex');
+      return;
+    }
+
+    emptyEl.classList.add('hidden');
+    emptyEl.classList.remove('flex');
+    summaryEl.classList.remove('hidden');
+    summaryEl.classList.add('flex');
+
+    listEl.innerHTML = items.map(function (item, index) {
+      var unitPrice = parsePrice(item.price);
+      var lineTotal = unitPrice * item.qty;
+      return (
+        '<article class="cart-row flex gap-4 rounded-card border border-line-light bg-white p-4 sm:p-5 shadow-sm">' +
+          '<div class="h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-md border border-line-light bg-shell flex items-center justify-center p-2">' +
+            '<img src="' + (item.image || '../assets/images/products/kivik.png') + '" alt="' + (item.name || '') + '" class="max-h-full w-auto object-contain">' +
+          '</div>' +
+          '<div class="flex flex-1 flex-col justify-between min-w-0">' +
+            '<div class="flex items-start justify-between gap-3">' +
+              '<div class="min-w-0">' +
+                '<h3 class="text-sm font-bold text-ink truncate">' + (item.name || '상품') + '</h3>' +
+                (item.desc ? '<p class="mt-1 text-xs text-ink-muted truncate">' + item.desc + '</p>' : '') +
+              '</div>' +
+              '<button type="button" data-index="' + index + '" class="cart-remove-btn shrink-0 grid size-8 place-items-center rounded-full text-ink-muted hover:text-sale hover:bg-hairline transition-colors" aria-label="상품 삭제">' +
+                '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>' +
+              '</button>' +
+            '</div>' +
+            '<div class="flex items-end justify-between gap-3 mt-3">' +
+              '<div class="flex items-center rounded-full border border-line" role="group" aria-label="수량 조절">' +
+                '<button type="button" data-index="' + index + '" data-delta="-1" class="qty-btn h-8 w-8 grid place-items-center text-ink hover:text-brand transition-colors" aria-label="수량 감소"' + (item.qty <= 1 ? ' disabled' : '') + '>−</button>' +
+                '<span class="w-8 text-center text-sm font-semibold text-ink" aria-live="polite">' + item.qty + '</span>' +
+                '<button type="button" data-index="' + index + '" data-delta="1" class="qty-btn h-8 w-8 grid place-items-center text-ink hover:text-brand transition-colors" aria-label="수량 증가">+</button>' +
+              '</div>' +
+              '<p class="text-base font-bold text-price">' + formatWon(lineTotal) + '</p>' +
+            '</div>' +
+          '</div>' +
+        '</article>'
+      );
+    }).join('');
+
+    var subtotal = items.reduce(function (sum, item) {
+      return sum + parsePrice(item.price) * item.qty;
+    }, 0);
+    var shipping = subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+    var total = subtotal + shipping;
+
+    var subtotalEl = document.getElementById('summary-subtotal');
+    var shippingEl = document.getElementById('summary-shipping');
+    var noteEl = document.getElementById('summary-shipping-note');
+    var totalEl = document.getElementById('summary-total');
+    if (subtotalEl) subtotalEl.textContent = formatWon(subtotal);
+    if (shippingEl) shippingEl.textContent = shipping === 0 ? '무료' : formatWon(shipping);
+    if (totalEl) totalEl.textContent = formatWon(total);
+    if (noteEl) {
+      noteEl.textContent = shipping === 0
+        ? ''
+        : formatWon(FREE_SHIPPING_THRESHOLD - subtotal) + ' 더 담으면 무료배송이에요.';
+    }
+
+    listEl.querySelectorAll('.cart-remove-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = parseInt(this.getAttribute('data-index'), 10);
+        var list = getCartItems();
+        list.splice(idx, 1);
+        saveCartItems(list);
+        renderCart();
+      });
+    });
+
+    listEl.querySelectorAll('.qty-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = parseInt(this.getAttribute('data-index'), 10);
+        var delta = parseInt(this.getAttribute('data-delta'), 10);
+        var list = getCartItems();
+        if (!list[idx]) return;
+        var nextQty = list[idx].qty + delta;
+        if (nextQty < 1) return;
+        list[idx].qty = nextQty;
+        saveCartItems(list);
+        renderCart();
+      });
+    });
+  }
+
+  var clearBtn = document.getElementById('cart-clear-btn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function () {
+      saveCartItems([]);
+      renderCart();
+    });
+  }
+
+  renderCart();
 });
 </script>
+
 </body>
 </html>
