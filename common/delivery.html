@@ -683,6 +683,7 @@
             <a href="#" class="text-sm font-semibold text-ink underline underline-offset-2">자세히보기 &gt;</a>
           </div>
         </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1205,6 +1206,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+var deliverySwiper;
+
 document.querySelectorAll('.delivery-filter').forEach(function (filter) {
   filter.addEventListener('click', function () {
     var category = filter.dataset.filter;
@@ -1219,8 +1222,12 @@ document.querySelectorAll('.delivery-filter').forEach(function (filter) {
       button.classList.toggle('font-medium', !selected);
     });
     document.querySelectorAll('.delivery-card').forEach(function (card) {
-      card.hidden = category !== 'all' && card.dataset.category !== category;
+      var isHidden = category !== 'all' && card.dataset.category !== category;
+      card.hidden = isHidden;
+      var slide = card.closest('.swiper-slide');
+      if (slide) slide.hidden = isHidden;
     });
+    if (deliverySwiper) deliverySwiper.update();
   });
 });
 
@@ -1241,6 +1248,25 @@ if (typeof Swiper !== 'undefined') {
       1280: {
         slidesPerView: 3,
         spaceBetween: 24
+      }
+    }
+  });
+  var deliveryPagination = document.querySelector('.delivery-pagination');
+  deliverySwiper = new Swiper('.delivery-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    pagination: {
+      el: deliveryPagination,
+      clickable: true
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 16
+      },
+      1280: {
+        slidesPerView: 6,
+        spaceBetween: 16
       }
     }
   });
