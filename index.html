@@ -115,10 +115,21 @@
       width: 80px;
     }
     .prod-swiper {
-      padding: 16px 8px 30px 8px;
+      overflow: visible !important;
+      padding-top: 8px;
+      padding-bottom: 16px;
+    }
+    .prod-swiper .swiper-wrapper {
+      overflow: visible !important;
     }
     .prod-swiper .swiper-slide {
       height: auto;
+    }
+    .prod-swiper .swiper-slide article {
+      position: relative;
+    }
+    .prod-swiper .swiper-slide article:hover {
+      z-index: 10;
     }
     .swiper-button-prev-custom,
     .swiper-button-next-custom {
@@ -659,7 +670,8 @@
 
         <!-- Carousel Wrapper -->
         <div class="relative">
-          <div class="swiper prod-swiper-1 prod-swiper">
+          <div class="overflow-hidden py-8 -my-8 px-1 -mx-1">
+            <div class="swiper prod-swiper-1 prod-swiper">
             <div class="swiper-wrapper">
               
               <!-- Card 1 -->
@@ -834,11 +846,12 @@
 
             </div>
           </div>
+          </div>
           <!-- Custom Nav Controls -->
-          <button type="button" class="swiper-button-prev-custom prev-1 -left-5" aria-label="이전 추천 상품 보기">
+          <button type="button" class="swiper-button-prev-custom prev-1 -left-5 z-30" aria-label="이전 추천 상품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button type="button" class="swiper-button-next-custom next-1 -right-5" aria-label="다음 추천 상품 보기">
+          <button type="button" class="swiper-button-next-custom next-1 -right-5 z-30" aria-label="다음 추천 상품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -867,7 +880,8 @@
 
         <!-- Carousel Wrapper -->
         <div class="relative">
-          <div class="swiper prod-swiper-2 prod-swiper">
+          <div class="overflow-hidden py-8 -my-8 px-1 -mx-1">
+            <div class="swiper prod-swiper-2 prod-swiper">
             <div class="swiper-wrapper">
 
               <!-- Card 1 -->
@@ -1042,11 +1056,12 @@
 
             </div>
           </div>
+          </div>
           <!-- Custom Nav Controls -->
-          <button type="button" class="swiper-button-prev-custom prev-2 -left-5" aria-label="이전 신제품 보기">
+          <button type="button" class="swiper-button-prev-custom prev-2 -left-5 z-30" aria-label="이전 신제품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button type="button" class="swiper-button-next-custom next-2 -right-5" aria-label="다음 신제품 보기">
+          <button type="button" class="swiper-button-next-custom next-2 -right-5 z-30" aria-label="다음 신제품 보기">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
