@@ -1585,61 +1585,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // 상세페이지 클릭 시 동적 파라미터 전송 로직
-  document.querySelectorAll('a').forEach(link => {
-    if (link.textContent.trim() === '상세페이지') {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // 카드 내의 정보 추출 (부모 요소를 거슬러 올라감)
-        const card = link.closest('article') || link.closest('.prod-card') || link.closest('.swiper-slide');
-        if (!card) {
-          location.href = link.getAttribute('href');
-          return;
-        }
-        
-        // 정보 추출
-        const nameEl = card.querySelector('h3');
-        const name = nameEl ? nameEl.textContent.trim() : '';
-        
-        // 설명 추출
-        const descEl = card.querySelector('p:not(.text-lg):not(.text-price)') || card.querySelector('.text-xs');
-        const desc = descEl ? descEl.textContent.trim() : '';
-        
-        // 가격 추출
-        const priceEl = card.querySelector('.text-lg') || card.querySelector('.text-price') || card.querySelector('p.font-extrabold');
-        const price = priceEl ? priceEl.textContent.trim() : '';
-        
-        // 이미지 추출
-        const imgEl = card.querySelector('img');
-        let img = imgEl ? imgEl.getAttribute('src') : '';
-        
-        // 파라미터 빌드
-        const baseUrl = link.getAttribute('href').split('?')[0];
-        const params = new URLSearchParams();
-        if (name) params.set('name', name);
-        if (price) params.set('price', price);
-        if (desc) params.set('desc', desc);
-        if (img) params.set('img', img);
-        
-        // 이동
-        location.href = baseUrl + '?' + params.toString();
-      });
-
-      // 카드 내의 이미지 요소를 찾아서 클릭 동작 매핑 (마우스 포인터 스타일 주입)
-      const card = link.closest('article') || link.closest('.prod-card') || link.closest('.swiper-slide');
-      if (card) {
-        const cardImg = card.querySelector('img');
-        if (cardImg) {
-          cardImg.style.cursor = 'pointer';
-          cardImg.addEventListener('click', function(evt) {
-            evt.preventDefault();
-            evt.stopPropagation();
-            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-          });
-        }
-      }
+  // 상세페이지 이동 로직 (이미지, 상품명, 상세보기 링크 클릭 시 동적 파라미터 전달)
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('button[aria-label*="위시리스트"], button[aria-label*="장바구니"], button')) {
+      return;
     }
+
+    const card = e.target.closest('article, .swiper-slide');
+    if (!card) return;
+
+    const isImage = e.target.tagName === 'IMG' || e.target.closest('.relative');
+    const isTitle = e.target.tagName === 'H3' || e.target.closest('h3');
+    const isDetailLink = e.target.textContent && e.target.textContent.trim() === '상세페이지';
+
+    if (isImage || isTitle || isDetailLink) {
+      e.preventDefault();
+
+      const nameEl = card.querySelector('h3, h4, strong');
+      const imgEl = card.querySelector('img:not([alt*="로고"])');
+      const name = nameEl ? nameEl.textContent.trim() : (imgEl ? imgEl.alt : '');
+
+      const descEl = card.querySelector('p.text-xs.text-ink-muted, p:not(.text-lg):not(.text-price)');
+      const desc = descEl ? descEl.textContent.trim() : '';
+
+      const priceEl = card.querySelector('.text-lg, .text-price, p.font-extrabold');
+      let price = priceEl ? priceEl.textContent.trim() : '';
+      if (price && !price.startsWith('₩')) {
+        const num = price.replace(/[^0-9,]/g, '');
+        if (num) price = '₩' + num;
+      }
+
+      let img = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
+
+      const params = new URLSearchParams();
+      if (name) params.set('name', name);
+      if (price) params.set('price', price);
+      if (desc) params.set('desc', desc);
+      if (img) params.set('img', img);
+
+      location.href = 'common/product-detail.html?' + params.toString();
+    }
+  });
+
+  document.querySelectorAll('article img, article h3').forEach(el => {
+    el.style.cursor = 'pointer';
   });
 });
 </script>
