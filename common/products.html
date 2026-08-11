@@ -1338,31 +1338,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 2. 위시리스트 및 장바구니 처리는 assets/js/cart-wishlist.js 전역 스크립트가 처리합니다.
   document.querySelectorAll('.buy-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
       const origText = btn.textContent;
       btn.textContent = '담김 ✓';
       btn.classList.add('bg-emerald-600');
+      btn.classList.remove('bg-brand');
       setTimeout(() => {
         btn.textContent = origText;
         btn.classList.remove('bg-emerald-600');
+        btn.classList.add('bg-brand');
       }, 1500);
-    });
-  });
-
-      // 피드백 효과
-      if (btn.classList.contains('buy-btn')) {
-        const origText = btn.textContent;
-        btn.textContent = '담김 ✓';
-        btn.classList.add('bg-emerald-600');
-        btn.classList.remove('bg-brand');
-        setTimeout(() => {
-          btn.textContent = origText;
-          btn.classList.remove('bg-emerald-600');
-          btn.classList.add('bg-brand');
-          // 결제 페이지로 이동
-          location.href = 'order.html';
-        }, 800);
-      }
     });
   });
 
@@ -1396,61 +1383,57 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 상세페이지 클릭 시 동적 파라미터 전송 로직
-  document.querySelectorAll('a').forEach(link => {
-    if (link.textContent.trim() === '상세페이지') {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // 카드 내의 정보 추출 (부모 요소를 거슬러 올라감)
-        const card = link.closest('article') || link.closest('.prod-card') || link.closest('.swiper-slide');
-        if (!card) {
-          location.href = link.getAttribute('href');
-          return;
-        }
-        
-        // 정보 추출
-        const nameEl = card.querySelector('h3');
-        const name = nameEl ? nameEl.textContent.trim() : '';
-        
-        // 설명 추출
-        const descEl = card.querySelector('p:not(.text-lg):not(.text-price)') || card.querySelector('.text-xs');
-        const desc = descEl ? descEl.textContent.trim() : '';
-        
-        // 가격 추출
-        const priceEl = card.querySelector('.text-lg') || card.querySelector('.text-price') || card.querySelector('p.font-extrabold');
-        const price = priceEl ? priceEl.textContent.trim() : '';
-        
-        // 이미지 추출
-        const imgEl = card.querySelector('img');
-        let img = imgEl ? imgEl.getAttribute('src') : '';
-        
-        // 파라미터 빌드
-        const baseUrl = link.getAttribute('href').split('?')[0];
-        const params = new URLSearchParams();
-        if (name) params.set('name', name);
-        if (price) params.set('price', price);
-        if (desc) params.set('desc', desc);
-        if (img) params.set('img', img);
-        
-        // 이동
-        location.href = baseUrl + '?' + params.toString();
-      });
-
-      // 카드 내의 이미지 요소를 찾아서 클릭 동작 매핑 (마우스 포인터 스타일 주입)
-      const card = link.closest('article') || link.closest('.prod-card') || link.closest('.swiper-slide');
-      if (card) {
-        const cardImg = card.querySelector('img');
-        if (cardImg) {
-          cardImg.style.cursor = 'pointer';
-          cardImg.addEventListener('click', function(evt) {
-            evt.preventDefault();
-            evt.stopPropagation();
-            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-          });
-        }
-      }
+  // 상세페이지 이동 로직 (이미지, 이미지 영역, 상품명, 상세보기 링크 클릭 시 동적 파라미터 전달)
+  document.addEventListener('click', function(e) {
+    // 하트 버튼, 장바구니 버튼, 구매 버튼 등 interactive 버튼 클릭 시 상세페이지 이동 제외
+    if (e.target.closest('.wish-btn, button[aria-label*="위시리스트"], .add-cart-btn, button[aria-label*="장바구니"], .buy-btn, button')) {
+      return;
     }
+
+    const card = e.target.closest('article.prod-card, article.product-card, .prod-card, article');
+    if (!card) return;
+
+    // 이미지, 이미지 박스, 제목, 상세링크 클릭 감지
+    const isImage = e.target.tagName === 'IMG' || e.target.closest('.relative, .aspect-square, div[class*="h-44"]');
+    const isTitle = e.target.tagName === 'H3' || e.target.closest('h3, h4');
+    const isDetailLink = (e.target.tagName === 'A' && e.target.getAttribute('href') && e.target.getAttribute('href').includes('product-detail')) || (e.target.textContent && e.target.textContent.trim() === '상세페이지');
+
+    if (isImage || isTitle || isDetailLink) {
+      e.preventDefault();
+
+      // 1. 상품명 추출
+      const nameEl = card.querySelector('h3, h4, .product-title, strong');
+      const imgEl = card.querySelector('img:not([alt*="로고"])');
+      const name = nameEl ? nameEl.textContent.trim() : (imgEl ? imgEl.alt : '');
+
+      // 2. 설명 추출
+      const descEl = card.querySelector('p.text-xs.text-ink-muted, p:not(.text-lg):not(.text-price):not(.text-star)');
+      const desc = descEl ? descEl.textContent.trim() : '';
+
+      // 3. 가격 추출
+      const priceEl = card.querySelector('.text-lg, .text-price, p.font-bold, span.font-bold');
+      let price = priceEl ? priceEl.textContent.trim() : '';
+      if (price && !price.startsWith('₩')) {
+        const num = price.replace(/[^0-9,]/g, '');
+        if (num) price = '₩' + num;
+      }
+
+      // 4. 이미지 경로 추출
+      let img = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
+
+      const params = new URLSearchParams();
+      if (name) params.set('name', name);
+      if (price) params.set('price', price);
+      if (desc) params.set('desc', desc);
+      if (img) params.set('img', img);
+
+      location.href = 'product-detail.html?' + params.toString();
+    }
+  });
+
+  // 모든 상품 카드 이미지 및 제목에 커서 포인터 스타일 적용
+  document.querySelectorAll('article.prod-card img, article.product-card img, article.prod-card h3, article.product-card h3').forEach(el => {
+    el.style.cursor = 'pointer';
   });
 
 });
