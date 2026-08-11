@@ -1041,6 +1041,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
@@ -1060,10 +1061,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     navLinks.forEach(link => {
-      if (link.getAttribute('data-tab') === tabName) {
+      const isSale = link.getAttribute('data-tab') === 'sale';
+      if (isSale) {
+        link.style.setProperty('color', '#E00751', 'important');
+        link.classList.remove('text-ink');
+        link.classList.remove('text-brand');
+      } else if (link.getAttribute('data-tab') === tabName) {
         link.classList.add('text-brand');
         link.classList.remove('text-ink');
-      } else if (link.getAttribute('data-tab') !== 'sale') {
+      } else {
         link.classList.remove('text-brand');
         link.classList.add('text-ink');
       }
@@ -1083,7 +1089,12 @@ document.addEventListener('DOMContentLoaded', function() {
         megaPanel.classList.add('opacity-0', 'invisible', 'translate-y-2', 'pointer-events-none');
       }
       navLinks.forEach(link => {
-        if (link.getAttribute('data-tab') !== 'sale') {
+        const isSale = link.getAttribute('data-tab') === 'sale';
+        if (isSale) {
+          link.style.setProperty('color', '#E00751', 'important');
+          link.classList.remove('text-ink');
+          link.classList.remove('text-brand');
+        } else {
           link.classList.remove('text-brand');
           link.classList.add('text-ink');
         }
@@ -1092,11 +1103,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   navLinks.forEach(link => {
+    const isSale = link.getAttribute('data-tab') === 'sale';
+    if (isSale) {
+      link.style.setProperty('color', '#E00751', 'important');
+    }
     link.addEventListener('mouseenter', () => {
-      openMegaTab(link.getAttribute('data-tab'));
+      const tabName = link.getAttribute('data-tab');
+      if (tabName) openMegaTab(tabName);
     });
     link.addEventListener('focus', () => {
-      openMegaTab(link.getAttribute('data-tab'));
+      const tabName = link.getAttribute('data-tab');
+      if (tabName) openMegaTab(tabName);
     });
     link.addEventListener('mouseleave', closeMegaMenu);
   });
@@ -1109,6 +1126,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
 
 </body>
 </html>
