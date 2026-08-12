@@ -89,6 +89,8 @@
       --radius-pill: 20px;
       --radius-card: 12px;
 
+      --spacing-container: 1280px;
+
       /* Figma Specific for Product Detail */
       --spacing-main-img-h: 600px;
       --spacing-buy-box-w: 420px;
@@ -190,7 +192,7 @@
   <div id="wrapper" class="flex-1 flex flex-col">
 
     <!-- SEGMENT: Header -->
-    <header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
+    <header id="main-header" class="w-full bg-white border-b border-line-light sticky top-0 z-40">
 
       <!-- 1. Utility Navigation -->
       <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
@@ -208,7 +210,7 @@
       </nav>
 
       <!-- 2. Main Navigation Bar -->
-      <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+      <div class="mx-auto flex max-w-container items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
 
         <!-- Logo -->
         <a href="../index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">

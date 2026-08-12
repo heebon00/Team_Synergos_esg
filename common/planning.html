@@ -88,6 +88,28 @@
 
   .scrollbar-none::-webkit-scrollbar { display: none; }
   .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* 히어로 배너: 제목 → 본문 순차 페이드업 (GPU 가속) */
+  @keyframes heroFadeUp {
+    0% { opacity: 0; transform: translateY(28px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .hero-banner h1 {
+    animation: heroFadeUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation-delay: 0.15s;
+  }
+  .hero-banner p {
+    animation: heroFadeUp 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation-delay: 0.8s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-banner h1,
+    .hero-banner p {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
 </style>
 </head>
 
@@ -96,7 +118,7 @@
 <div class="flex min-h-screen flex-col bg-white">
 
 <!-- SEGMENT: Header -->
-<header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
+<header id="main-header" class="w-full bg-white border-b border-line-light sticky top-0 z-40">
 
   <!-- 1. Utility Navigation -->
   <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
@@ -547,7 +569,7 @@
   <!-- SEGMENT: Hero Styling Banner -->
   <section class="w-full bg-white py-4">
     <div class="mx-auto max-w-container px-5 lg:px-10">
-      <div class="relative overflow-hidden rounded-card bg-slate-ink text-white min-h-80 flex items-center justify-center">
+      <div class="hero-banner relative overflow-hidden rounded-card bg-slate-ink text-white min-h-80 flex items-center justify-center">
         <!-- Hero Background Image -->
         <img src="../assets/seungwoon/images/hero-banner.png" alt="영감을 주는 홈퍼니싱 아이디어 메인 이미지" class="absolute inset-0 h-full w-full object-cover">
         <!-- Dark Overlay -->
@@ -558,7 +580,8 @@
             영감을 주는 홈퍼니싱 아이디어
           </h1>
           <p class="text-xs sm:text-sm lg:text-base leading-relaxed text-white/90 font-medium max-w-xl">
-            다채로운 이케아 스타일의 방 구성안을 살펴보시고, 일상 공간을 더욱 아름답고 효율적으로 바꾸어 줄 홈퍼니싱 팁을 확인해보세요.
+            다채로운 이케아 스타일의 방 구성안을 살펴보시고, 일상 공간을 더욱 아름답고<br>
+            효율적으로 바꾸어 줄 홈퍼니싱 팁을 확인해보세요.
           </p>
         </div>
       </div>
