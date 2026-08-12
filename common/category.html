@@ -24,6 +24,10 @@
      자주 쓰이는 크기 클래스를 그대로 복제해 두면, Tailwind가 나중에 같은 값으로
      덮어써도 화면상 변화가 없어 점프가 사라진다. -->
 <style>
+  html {
+    overflow-y: scroll !important;
+    scrollbar-gutter: stable !important;
+  }
   body {
     margin: 0;
     background: white;
@@ -35,16 +39,9 @@
   .h-\[240px\]  { height: 240px; }
   .h-\[200px\]  { height: 200px; }
   .rounded-\[20px\] { border-radius: 20px; }
-  @media (min-width: 1024px) {
-    .lg\:h-\[270px\] { height: 270px; }
-    .lg\:h-\[220px\] { height: 220px; }
-    .lg\:w-\[400px\] { width: 400px; }
-  }
   @media (min-width: 1280px) {
     .xl\:w-\[420px\] { width: 420px; }
   }
-
-  /* Swiper 초기화 전 매칭 추천 제품 레이아웃 점프(길어졌다 줄어듦) 방지 */
   .prod-sw:not(.swiper-initialized) .swiper-wrapper {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -82,20 +79,20 @@
     overflow-x: hidden !important;
     max-width: 100vw !important;
   }
-  #wrap, #cont {
-    overflow-x: hidden !important;
-    width: 100% !important;
-  }
-  .cat-sw {
-    touch-action: pan-y;
-  }
+  /* 헤더 메가메뉴 반투명 잔상 및 서서히 이동하는 흔들림 완벽 제거 */
   #mega-menu-panel {
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease !important;
+    transition: none !important;
+    transform: translateX(-50%) !important;
   }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
+<script src="../assets/js/cart-wishlist.js"></script>
 
 <style type="text/tailwindcss">
   @theme {
@@ -444,7 +441,7 @@
 
   <!-- 3. Figma Mega Navigation Dropdown Panel -->
   <div id="mega-menu-panel" 
-       class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[900px] max-w-[calc(100vw-2rem)] bg-white border border-[#E6E6E6] rounded-xl shadow-2xl p-6 opacity-0 invisible translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
+       class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[900px] max-w-[calc(100vw-2rem)] bg-white border border-[#E6E6E6] rounded-xl shadow-2xl p-6 opacity-0 invisible pointer-events-none z-50">
     
     <!-- Tab 1: 모든 제품 -->
     <div data-mega-tab="all" class="mega-tab-content hidden">
@@ -876,7 +873,7 @@
         <div class="rv flex flex-col overflow-hidden rounded-[20px] border border-line-light bg-white shadow-sm lg:w-[400px] xl:w-[420px] shrink-0">
           <div class="relative h-[240px] lg:h-[270px] w-full shrink-0 overflow-hidden">
             <img src="../assets/images/hero/living.png" alt="원목 가구와 패브릭 소파로 연출한 밝은 톤의 거실 쇼룸"
-                 width="420" height="270" loading="lazy" class="h-full w-full object-cover">
+                 width="420" height="270" loading="eager" fetchpriority="high" class="h-full w-full object-cover">
           </div>
           <div class="flex flex-1 flex-col justify-center p-6 bg-white">
             <h3 class="text-base lg:text-lg font-bold text-ink">거실 스타일 연출 제안</h3>
@@ -893,7 +890,7 @@
               <div class="swiper-slide h-auto">
                 <article class="card flex flex-col h-full overflow-hidden rounded-[20px] border border-line-light bg-white shadow-sm justify-between">
                   <div class="relative h-[200px] lg:h-[220px] w-full shrink-0 overflow-hidden bg-[#F8F9FA] flex items-center justify-center p-4">
-                    <img src="../assets/images/products/kivik.png" alt="KIVIK 시비크 3인용 소파" width="300" height="200" loading="lazy" class="pic max-h-full w-auto object-contain">
+                    <img src="../assets/images/products/kivik.png" alt="KIVIK 시비크 3인용 소파" width="300" height="200" loading="eager" class="pic max-h-full w-auto object-contain">
                     <button type="button" class="group absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-white shadow-sm border border-slate-200 hover:border-red-300 hover:bg-red-50/50 transition-all" aria-label="위시리스트에 추가">
                       <svg class="h-5 w-5 text-gray-400 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     </button>
@@ -926,7 +923,7 @@
               <div class="swiper-slide h-auto">
                 <article class="card flex flex-col h-full overflow-hidden rounded-[20px] border border-line-light bg-white shadow-sm justify-between">
                   <div class="relative h-[200px] lg:h-[220px] w-full shrink-0 overflow-hidden bg-[#F8F9FA] flex items-center justify-center p-4">
-                    <img src="../assets/images/products/stockholm.png" alt="STOCKHOLM 스톡홀름 원형 커피테이블" width="300" height="200" loading="lazy" class="pic max-h-full w-auto object-contain">
+                    <img src="../assets/images/products/stockholm.png" alt="STOCKHOLM 스톡홀름 원형 커피테이블" width="300" height="200" loading="eager" class="pic max-h-full w-auto object-contain">
                     <button type="button" class="group absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-white shadow-sm border border-slate-200 hover:border-red-300 hover:bg-red-50/50 transition-all" aria-label="위시리스트에 추가">
                       <svg class="h-5 w-5 text-gray-400 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     </button>
@@ -1925,15 +1922,11 @@
 </div><!-- /#cont -->
 </div><!-- /#wrap -->
 
-<!-- defer로 바꿔서 6개 스크립트를 순차 다운로드 대신 병렬로 받는다.
-     (기존에는 하나씩 받고 실행하느라, 그 시간만큼 아래 body-reveal이 늦게 일어나
-     흰 화면이 오래 보였다) -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js" defer></script>
-<script src="../assets/js/cart-wishlist.js"></script>
+<script>
+  if (window.WishlistCart && window.WishlistCart.syncAllButtonStates) {
+    window.WishlistCart.syncAllButtonStates();
+  }
+</script>
 <script>
   if (window.WishlistCart && window.WishlistCart.syncAllButtonStates) {
     window.WishlistCart.syncAllButtonStates();
@@ -2136,20 +2129,15 @@ document.addEventListener('DOMContentLoaded', function () {
   if (window.ScrollSmoother)  gsap.registerPlugin(ScrollSmoother);
 
   var smoother = null;
-  if (window.ScrollSmoother && ScrollSmoother.create) {
-    smoother = ScrollSmoother.create({
-      wrapper: '#wrap',
-      content: '#cont',
-      smooth: 1,
-      effects: false,
-      normalizeScroll: false
-    });
-  }
 
   function goto(target) {
-    window.scrollTo({ left: 0 });
-    if (smoother) smoother.scrollTo(target, true, 'top 80px');
-    else gsap.to(window, { duration: .6, ease: 'power2.out', scrollTo: { y: target, offsetY: 80, autoKill: false } });
+    if (typeof gsap !== 'undefined' && window.ScrollToPlugin) {
+      gsap.to(window, { duration: .5, ease: 'power2.out', scrollTo: { y: target, offsetY: 80, autoKill: false } });
+    } else {
+      var rect = target.getBoundingClientRect();
+      var top = window.pageYOffset + rect.top - 80;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
   }
 
   $$('a[href*="#"]').forEach(function (a) {
@@ -2193,12 +2181,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   $$('.rv').forEach(function (el) {
-    gsap.fromTo(el,
-      { opacity: 0, y: 28 },
-      {
-        opacity: 1, y: 0, duration: .7, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-      });
+    var r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight) {
+      gsap.set(el, { opacity: 1, y: 0 });
+    } else {
+      gsap.fromTo(el,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1, y: 0, duration: .5, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        });
+    }
   });
 
   gsap.fromTo('.cat', { opacity: 0, y: 16 }, {
