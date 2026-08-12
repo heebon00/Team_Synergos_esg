@@ -112,30 +112,27 @@
         }
       }
 
-      /* Swiper 초기화 전 카테고리 아이콘들이 다닥다닥 뭉치거나 붙어 보이는 현상(FOUC) 완벽 방지 */
+      /* Swiper 초기화 전/후 카테고리 아이콘들의 가변 간격 (#cat-h .swiper-slide 가변 Spacing) */
       .cat-sw:not(.swiper-initialized) .swiper-wrapper {
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
         scrollbar-width: none !important;
-        gap: 35.5px !important;
+        gap: clamp(16px, 3.5vw, 36px) !important;
       }
       .cat-sw:not(.swiper-initialized) .swiper-wrapper::-webkit-scrollbar {
         display: none !important;
       }
-      .cat-sw:not(.swiper-initialized) .swiper-slide {
+      .cat-sw:not(.swiper-initialized) .swiper-slide,
+      section[aria-labelledby="cat-h"] .swiper-slide,
+      .cat-sw .swiper-slide {
         width: 80px !important;
         flex-shrink: 0 !important;
+        margin-right: clamp(14px, 3.2vw, 40px) !important;
       }
-      @media (max-width: 1023px) {
-        .cat-sw:not(.swiper-initialized) .swiper-wrapper {
-          gap: 20px !important;
-        }
-      }
-      @media (max-width: 639px) {
-        .cat-sw:not(.swiper-initialized) .swiper-wrapper {
-          gap: 16px !important;
-        }
+      section[aria-labelledby="cat-h"] .swiper-slide:last-child,
+      .cat-sw .swiper-slide:last-child {
+        margin-right: 0 !important;
       }
 
       /* Screen Reader Only / Hide utility */
@@ -1762,16 +1759,20 @@
           // 카테고리 아이콘 캐러셀 2줄 (각자 독립적인 스크롤 + 좌우 반투명 화살표, 화면이 좁아지면 스크롤로 전환)
           var CAT_SLIDE_WIDTH = 80;
           var CAT_EDGE_OFFSET = 36; // slidesOffsetBefore/After 합
-          var CAT_GAP_MIN = 16;
+          var CAT_GAP_MIN = 14;
           var CAT_GAP_MAX = 48;
-          // 컨테이너 실제 너비에 맞춰 간격을 매 순간 다시 계산한다(가변 간격).
-          // slidesPerView가 고정 개수(6, 10)인 구간에서만 적용하고,
-          // "auto"(모바일 가로 스크롤) 구간은 기본 간격을 그대로 쓴다.
+          // #cat-h .swiper-slide의 컨테이너 실제 너비 및 반응형 브레이크포인트에 맞춰 간격을 매 순간 가변 계산
           function syncCatGap(swiper) {
-            var n = swiper.params.slidesPerView;
-            if (typeof n !== "number" || n <= 1) return;
+            if (!swiper || !swiper.el) return;
             var usable = swiper.el.clientWidth - CAT_EDGE_OFFSET * 2;
-            var gap = (usable - n * CAT_SLIDE_WIDTH) / (n - 1);
+            var n = swiper.params.slidesPerView;
+            var gap;
+            if (typeof n === "number" && n > 1) {
+              gap = (usable - n * CAT_SLIDE_WIDTH) / (n - 1);
+            } else {
+              // slidesPerView가 "auto"인 모바일/소형 화면에서도 화면 너비 비율에 따른 가변 간격 적용
+              gap = usable * 0.045;
+            }
             gap = Math.max(CAT_GAP_MIN, Math.min(CAT_GAP_MAX, gap));
             if (Math.abs((swiper.params.spaceBetween || 0) - gap) > 0.5) {
               swiper.params.spaceBetween = gap;
@@ -1811,12 +1812,15 @@
               },
             });
           }
-          // 상품 카테고리(14개)와 공간별 카테고리(10개) 두 줄 모두 같은 컨테이너 너비와 같은
-          // slidesPerView 구간을 공유하므로, 화면 폭별로 보이는 개수는 항상 동일하게 유지된다.
-          // 간격(spaceBetween)만 syncCatGap이 컨테이너 실제 너비에 맞춰 가변적으로 채운다.
+          // 상품 카테고리(14개)와 공간별 카테고리(10개) 브레이크포인트를 세분화하여
+          // 모든 화면 크기에서 .swiper-slide의 간격(spaceBetween)이 부드럽게 가변 조정되도록 설정
           var catBreakpoints = {
-            640: { slidesPerView: 6 },
-            1024: { slidesPerView: 10 },
+            480: { slidesPerView: 4 },
+            640: { slidesPerView: 5 },
+            768: { slidesPerView: 6 },
+            900: { slidesPerView: 7 },
+            1024: { slidesPerView: 9 },
+            1180: { slidesPerView: 10 },
           };
           initCatSwiper(".cat-sw-products", ".cat-nav-products-prev", ".cat-nav-products-next", catBreakpoints);
           initCatSwiper(".cat-sw-spaces", ".cat-nav-spaces-prev", ".cat-nav-spaces-next", catBreakpoints);

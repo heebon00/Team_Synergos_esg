@@ -198,7 +198,16 @@
 
   /* Swiper 커스텀 */
   .swiper-slide { height: auto; }
-  .cat-sw .swiper-slide { width: 80px; }
+  .cat-sw .swiper-slide,
+  section[aria-labelledby="cat-h"] .swiper-slide {
+    width: 80px !important;
+    flex-shrink: 0 !important;
+    margin-right: clamp(14px, 3.2vw, 40px) !important;
+  }
+  section[aria-labelledby="cat-h"] .swiper-slide:last-child,
+  .cat-sw .swiper-slide:last-child {
+    margin-right: 0 !important;
+  }
   /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
   .prod-sw { padding: 10px 2px 26px; }
   .nav-btn[aria-disabled="true"] { opacity: .3; }
