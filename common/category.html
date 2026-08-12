@@ -154,6 +154,17 @@
     overflow: visible !important;
     padding-top: 4px !important;
   }
+  .cat-scrollbar {
+    position: relative;
+    height: 4px;
+    margin-top: 16px;
+    border-radius: var(--radius-pill);
+    background: var(--color-line-light);
+  }
+  .cat-scrollbar .swiper-scrollbar-drag {
+    background: var(--color-brand);
+    border-radius: var(--radius-pill);
+  }
   .cat {
     transition: transform 0.2s ease, color 0.2s ease;
   }
@@ -720,6 +731,7 @@
           </a>
         </li>
       </ul>
+      <div class="cat-scrollbar swiper-scrollbar" aria-hidden="true" hidden></div>
     </div>
   </section>
 
@@ -1818,6 +1830,11 @@
 
   var swipers = [];
 
+  var catScrollbarEl = $('.cat-scrollbar');
+  function markCatScrollbar(sw) {
+    if (catScrollbarEl) catScrollbarEl.hidden = sw.isBeginning && sw.isEnd;
+  }
+
   swipers.push(new Swiper('.cat-sw', {
     a11y: a11y,
     speed: calm ? 0 : 420,
@@ -1829,10 +1846,12 @@
     observeParents: true,
     resizeObserver: true,
     keyboard: { enabled: true, onlyInViewport: true },
+    scrollbar: { el: '.cat-scrollbar', draggable: true, hide: false },
     breakpoints: {
       640:  { slidesPerView: 6,  spaceBetween: 20 },
       1024: { slidesPerView: 10, spaceBetween: 35.5 }
-    }
+    },
+    on: { init: markCatScrollbar, resize: markCatScrollbar, update: markCatScrollbar, breakpoint: markCatScrollbar }
   }));
 
   $$('.prod-sw').forEach(function (el) {

@@ -56,7 +56,6 @@
 
     --color-line: #C5CCD6; /* token-exempt */
     --color-line-light: #E6E6E6; /* token-exempt */
-    --color-line-2: #D1D5DB; /* token-exempt */
     --color-card-border: #F0F0F0; /* token-exempt */
     --color-divider: #D9D9D9; /* token-exempt */
 
@@ -105,7 +104,25 @@
     border-width: 0 !important;
   }
 
-  /* 카테고리 아이콘 (공간별 쇼핑 페이지와 동일한 원형·풀블리드 스타일, 2줄 그리드 배치) */
+  /* 카테고리 아이콘 2줄 그리드: 화면이 좁아지면 두 줄이 함께 가로 스크롤된다 */
+  .cat-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-brand) var(--color-line-light);
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .cat-scroll::-webkit-scrollbar { height: 6px; }
+  .cat-scroll::-webkit-scrollbar-track { background: var(--color-line-light); border-radius: var(--radius-chip); }
+  .cat-scroll::-webkit-scrollbar-thumb { background: var(--color-brand); border-radius: var(--radius-chip); }
+  .cat-grid-2row {
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-columns: 80px;
+    width: max-content;
+  }
   .cat {
     transition: transform 0.2s ease, color 0.2s ease;
   }
@@ -493,120 +510,122 @@
     <div class="mx-auto max-w-container px-5 lg:px-10">
       <h2 id="cat-h" class="hide">상품 카테고리</h2>
 
-      <div class="cat-grid grid grid-cols-4 sm:grid-cols-7 gap-y-6 gap-x-4 justify-items-center">
+      <div class="cat-scroll">
+        <div class="cat-grid-2row mx-auto grid gap-y-6 gap-x-4 sm:gap-x-5 lg:gap-x-9 justify-items-center">
 
-        <!-- 1. 신제품 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-new.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">신제품</span>
+          <!-- 1. 신제품 -->
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-new.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">신제품</span>
           </a>
 
           <!-- 2. 수납가구 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-storage.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">수납가구</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-storage.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">수납가구</span>
           </a>
 
           <!-- 3. 침구/러그 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-bedding.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">침구/러그</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-bedding.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">침구/러그</span>
           </a>
 
           <!-- 4. 소파/의자 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-sofa.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">소파/의자</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-sofa.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">소파/의자</span>
           </a>
 
           <!-- 5. 주방가구 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-kitchen.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">주방가구</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-kitchen.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">주방가구</span>
           </a>
 
           <!-- 6. 욕실가구 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-bath.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">욕실가구</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-bath.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">욕실가구</span>
           </a>
 
           <!-- 7. 세탁/청소가구 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-laundry.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">세탁/청소가구</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-laundry.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">세탁/청소가구</span>
           </a>
 
           <!-- 8. 가전제품 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-appliance.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">가전제품</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-appliance.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">가전제품</span>
           </a>
 
           <!-- 9. 타일/벽지 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-deco.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">타일/벽지</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-deco.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">타일/벽지</span>
           </a>
 
           <!-- 10. 식품 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-food.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">식품</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-food.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">식품</span>
           </a>
 
           <!-- 11. 키즈 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-kids.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">키즈</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-kids.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">키즈</span>
           </a>
 
           <!-- 12. 아웃도어 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-outdoor.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">아웃도어</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-outdoor.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">아웃도어</span>
           </a>
 
           <!-- 13. 가드닝/조경 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-gardening.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">가드닝/조경</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-gardening.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">가드닝/조경</span>
           </a>
 
           <!-- 14. 기타 -->
-          <a href="products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
-              <span class="block size-20 overflow-hidden rounded-cat border border-line-2">
-                <img src="../assets/cat-etc.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
-              </span>
-              <span class="text-center text-xs text-slate-ink">기타</span>
+          <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+            <span class="block size-20 overflow-hidden rounded-cat">
+              <img src="../assets/cat-etc.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
+            </span>
+            <span class="text-center text-xs text-slate-ink">기타</span>
           </a>
 
+        </div>
       </div>
     </div>
   </section>
@@ -1381,12 +1400,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 카테고리 아이콘이 순차적으로 떠오르며 등장 (공간별 쇼핑 페이지와 동일한 로딩 애니메이션)
     if (typeof ScrollTrigger !== 'undefined') {
-      gsap.fromTo('.cat-grid .cat', { opacity: 0, y: 16 }, {
+      gsap.fromTo('.cat-grid-2row .cat', { opacity: 0, y: 16 }, {
         opacity: 1, y: 0, duration: .45, ease: 'power2.out', stagger: .05,
-        scrollTrigger: { trigger: '.cat-grid', start: 'top 90%', once: true }
+        scrollTrigger: { trigger: '.cat-grid-2row', start: 'top 90%', once: true }
       });
     } else {
-      document.querySelectorAll('.cat-grid .cat').forEach(function (c) { c.style.opacity = '1'; });
+      document.querySelectorAll('.cat-grid-2row .cat').forEach(function (c) { c.style.opacity = '1'; });
     }
 
     // 각 상품 카드가 부드럽게 등장하도록 개별 트리거 적용 (초기 가시성 100% 보장)
