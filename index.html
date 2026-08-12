@@ -14,13 +14,13 @@
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           rootEl.classList.add("no-motion");
         }
-      } catch (e) {}
+      } catch { /* matchMedia 미지원 브라우저는 무시 */ }
       try {
-        var introLastSeen = parseInt(localStorage.getItem("ikeaIntroSeen"), 10);
+        const introLastSeen = parseInt(localStorage.getItem("ikeaIntroSeen"), 10);
         if (!isNaN(introLastSeen) && Date.now() - introLastSeen < 24 * 60 * 60 * 1000) {
           rootEl.classList.add("intro-seen");
         }
-      } catch (e) {}
+      } catch { /* localStorage 미지원 브라우저는 무시 */ }
 
       // 이미지 에러 발생 시 동적 접두사 및 폴더 Fallback 핸들러
       window.addEventListener(
@@ -224,15 +224,15 @@
   </div>
   <script>
     (function () {
-      var KEY = 'ikeaIntroSeen';
-      var DAY_MS = 24 * 60 * 60 * 1000;
-      var overlay = document.getElementById('intro-video-overlay');
-      var seen = false, reduceMotion = false;
+      const KEY = 'ikeaIntroSeen';
+      const DAY_MS = 24 * 60 * 60 * 1000;
+      const overlay = document.getElementById('intro-video-overlay');
+      let seen = false, reduceMotion = false;
       try {
-        var last = parseInt(localStorage.getItem(KEY), 10);
+        const last = parseInt(localStorage.getItem(KEY), 10);
         seen = !isNaN(last) && (Date.now() - last) < DAY_MS;
-      } catch (e) {}
-      try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      } catch { /* localStorage 미지원 브라우저는 무시 */ }
+      try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { /* matchMedia 미지원 브라우저는 무시 */ }
       if (!overlay || seen || reduceMotion) return;
 
             const video = document.getElementById('intro-video');
@@ -242,7 +242,7 @@
             function closeIntro() {
               if (closed) return;
               closed = true;
-              try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+              try { localStorage.setItem(KEY, String(Date.now())); } catch { /* localStorage 미지원 브라우저는 무시 */ }
               overlay.classList.add('intro-fade-out');
               overlay.addEventListener('transitionend', function onEnd() {
                 overlay.removeEventListener('transitionend', onEnd);
@@ -1595,7 +1595,7 @@
               if (num) price = "₩" + num;
             }
 
-            let img = imgEl ? imgEl.getAttribute("src") || imgEl.src : "";
+            const img = imgEl ? imgEl.getAttribute("src") || imgEl.src : "";
 
             const params = new URLSearchParams();
             if (name) params.set("name", name);

@@ -1,35 +1,35 @@
 /* 사이트 전역 위시리스트 / 장바구니 상태 (localStorage 기반, 페이지 간 공유) */
 (function () {
-  var WISHLIST_KEY = 'ikea_wishlist_items';
-  var CART_KEY = 'ikea_cart_items';
-  var INIT_FLAG_KEY = 'ikea_wishlist_initialized';
+  const WISHLIST_KEY = 'ikea_wishlist_items';
+  const CART_KEY = 'ikea_cart_items';
+  const INIT_FLAG_KEY = 'ikea_wishlist_initialized';
 
-  var WISH_SELECTOR = 'button[aria-label*="위시리스트"], .wish-btn, button[aria-label*="찜"], button[aria-label*="관심상품"], #wishlist-toggle-btn';
-  var CART_SELECTOR = 'button[aria-label*="장바구니"], .add-cart-btn, .buy-btn, .buy-now-btn';
+  const WISH_SELECTOR = 'button[aria-label*="위시리스트"], .wish-btn, button[aria-label*="찜"], button[aria-label*="관심상품"], #wishlist-toggle-btn';
+  const CART_SELECTOR = 'button[aria-label*="장바구니"], .add-cart-btn, .buy-btn, .buy-now-btn';
 
   function getItems(key) {
     try {
-      var raw = localStorage.getItem(key);
+      let raw = localStorage.getItem(key);
       if (!raw && key === WISHLIST_KEY) {
         raw = localStorage.getItem('ikea_wishlist') || localStorage.getItem('wishlist');
       }
-      var parsed = raw ? JSON.parse(raw) : [];
+      const parsed = raw ? JSON.parse(raw) : [];
       return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
+    } catch {
       return [];
     }
   }
 
   function setItems(key, items) {
     try {
-      var json = JSON.stringify(items);
+      const json = JSON.stringify(items);
       localStorage.setItem(key, json);
       if (key === WISHLIST_KEY) {
         localStorage.setItem('ikea_wishlist', json);
         localStorage.setItem('wishlist', json);
         localStorage.setItem(INIT_FLAG_KEY, 'true');
       }
-    } catch (e) {}
+    } catch { /* localStorage 미지원 브라우저는 무시 */ }
   }
 
   function isInList(key, id) {
@@ -40,8 +40,8 @@
   }
 
   function addItem(key, product) {
-    var items = getItems(key);
-    var pId = product.id || product.name || product.title;
+    const items = getItems(key);
+    const pId = product.id || product.name || product.title;
     if (!pId) return items;
     if (!items.some(function (item) { return (item.id === pId) || (item.name === pId) || (item.title === pId); })) {
       items.push(product);
@@ -51,7 +51,7 @@
   }
 
   function removeItem(key, id) {
-    var items = getItems(key).filter(function (item) {
+    const items = getItems(key).filter(function (item) {
       return (item.id !== id) && (item.name !== id) && (item.title !== id);
     });
     setItems(key, items);
@@ -72,8 +72,8 @@
   }
 
   function refreshBadges() {
-    var wishCount = getItems(WISHLIST_KEY).length;
-    var cartCount = getItems(CART_KEY).length;
+    const wishCount = getItems(WISHLIST_KEY).length;
+    const cartCount = getItems(CART_KEY).length;
     
     document.querySelectorAll('#wishlist-badge, .wishlist-badge').forEach(function(el) {
       updateBadgeEl(el, wishCount);
@@ -82,15 +82,15 @@
       updateBadgeEl(el, cartCount);
     });
     
-    var wishLabel = document.getElementById('wishlist-count-label');
+    const wishLabel = document.getElementById('wishlist-count-label');
     if (wishLabel) wishLabel.textContent = wishCount;
   }
 
   function showToast(message) {
-    var existingToast = document.getElementById('ikea-global-toast');
+    const existingToast = document.getElementById('ikea-global-toast');
     if (existingToast) existingToast.remove();
 
-    var toast = document.createElement('div');
+    const toast = document.createElement('div');
     toast.id = 'ikea-global-toast';
     toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#111418]/90 text-white text-xs font-semibold shadow-2xl backdrop-blur-sm transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-none';
     toast.innerHTML = `
@@ -118,12 +118,12 @@
   function findProductCard(btn) {
     if (!btn) return null;
     // 1. article, .product-card, .card, .swiper-slide 탐색
-    var card = btn.closest('article, .product-card, .card, .swiper-slide');
+    const card = btn.closest('article, .product-card, .card, .swiper-slide');
     if (card && (card.querySelector('h3, h4, .product-title, strong') || card.querySelector('.text-price, [data-price], p.font-bold, p.font-extrabold'))) {
       return card;
     }
     // 2. 만약 잡힌 card가 없거나 정보가 부족한 경우 상위 부모로 탐색
-    var curr = btn.parentElement;
+    let curr = btn.parentElement;
     while (curr && curr !== document.body) {
       if (curr.querySelector('h3, h4, .product-title, strong') && curr.querySelector('img')) {
         return curr;
@@ -136,9 +136,9 @@
   function extractProduct(card) {
     if (!card) return {};
     // 1. 상품명 추출 (h3, h4, .product-title, [data-title], strong, img alt)
-    var nameEl = card.querySelector('h3, h4, .product-title, [data-title], strong');
-    var imgEl = card.querySelector('img:not([alt*="로고"]):not([alt*="icon"]):not(.icon)');
-    var name = nameEl ? nameEl.textContent.trim() : '';
+    const nameEl = card.querySelector('h3, h4, .product-title, [data-title], strong');
+    const imgEl = card.querySelector('img:not([alt*="로고"]):not([alt*="icon"]):not(.icon)');
+    let name = nameEl ? nameEl.textContent.trim() : '';
     if (!name && imgEl && imgEl.alt && !imgEl.alt.includes('로고') && !imgEl.alt.includes('IKEA')) {
       name = imgEl.alt.trim();
     }
@@ -147,10 +147,10 @@
     }
 
     // 2. 설명 추출 (p.text-xs, p.text-ink-muted, p.text-ink-3, p.text-ink-2 등)
-    var desc = '';
-    var descEls = card.querySelectorAll('p.text-ink-muted, p.text-ink-3, p.text-ink-2, p.text-xs, .product-desc');
-    for (var i = 0; i < descEls.length; i++) {
-      var dText = descEls[i].textContent.trim();
+    let desc = '';
+    const descEls = card.querySelectorAll('p.text-ink-muted, p.text-ink-3, p.text-ink-2, p.text-xs, .product-desc');
+    for (let i = 0; i < descEls.length; i++) {
+      const dText = descEls[i].textContent.trim();
       if (dText && !dText.startsWith('(') && !dText.startsWith('₩') && !descEls[i].classList.contains('text-price') && !descEls[i].classList.contains('font-bold')) {
         desc = dText;
         break;
@@ -158,17 +158,17 @@
     }
 
     // 3. 가격 추출 (.text-price, [data-price], p.font-bold, p.font-extrabold, p.text-lg, p.text-xl, span.font-bold)
-    var price = '';
-    var priceEl = card.querySelector('.text-price, [data-price], p.text-xl.font-bold, p.text-lg.font-bold, p.text-lg.font-extrabold, p.font-extrabold, p.font-bold, span.font-bold, .price');
+    let price = '';
+    const priceEl = card.querySelector('.text-price, [data-price], p.text-xl.font-bold, p.text-lg.font-bold, p.text-lg.font-extrabold, p.font-extrabold, p.font-bold, span.font-bold, .price');
     if (priceEl) {
       price = priceEl.textContent.trim().replace(/[^0-9,]/g, '');
     }
     if (!price) {
-      var allP = card.querySelectorAll('p, span');
-      for (var j = 0; j < allP.length; j++) {
-        var t = allP[j].textContent.trim();
+      const allP = card.querySelectorAll('p, span');
+      for (let j = 0; j < allP.length; j++) {
+        const t = allP[j].textContent.trim();
         if (t.includes('₩') || (/[0-9]{1,3}(,[0-9]{3})+/.test(t) && !t.includes('('))) {
-          var matched = t.replace(/[^0-9,]/g, '');
+          const matched = t.replace(/[^0-9,]/g, '');
           if (matched) {
             price = matched;
             break;
@@ -178,8 +178,8 @@
     }
 
     // 4. 이미지 경로 추출 및 정규화
-    var rawImg = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
-    var image = rawImg;
+    const rawImg = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
+    let image = rawImg;
     if (image && !image.startsWith('../') && !image.startsWith('http') && !image.startsWith('/')) {
       if (image.startsWith('assets/')) {
         image = '../' + image;
@@ -189,18 +189,18 @@
     }
 
     // 5. 상세페이지 링크 URL 빌드
-    var formattedPrice = price ? (price.startsWith('₩') ? price : '₩' + price) : '₩119,000';
-    var isInsideCommon = window.location.pathname.includes('/common/');
-    var detailPagePath = isInsideCommon ? 'product-detail.html' : 'common/product-detail.html';
+    const formattedPrice = price ? (price.startsWith('₩') ? price : '₩' + price) : '₩119,000';
+    const isInsideCommon = window.location.pathname.includes('/common/');
+    const detailPagePath = isInsideCommon ? 'product-detail.html' : 'common/product-detail.html';
     
-    var params = new URLSearchParams();
+    const params = new URLSearchParams();
     if (name) params.set('name', name);
     if (formattedPrice) params.set('price', formattedPrice);
     if (desc) params.set('desc', desc);
     if (image) params.set('img', image);
 
-    var href = detailPagePath + '?' + params.toString();
-    var id = name || (image ? image.split('/').pop().split('?')[0] : 'item-' + Date.now());
+    const href = detailPagePath + '?' + params.toString();
+    const id = name || (image ? image.split('/').pop().split('?')[0] : 'item-' + Date.now());
 
     return {
       id: id,
@@ -215,8 +215,8 @@
 
   function syncHeartState(btn, id) {
     if (!btn || !id) return;
-    var active = isInList(WISHLIST_KEY, id);
-    var svg = btn.querySelector('svg');
+    const active = isInList(WISHLIST_KEY, id);
+    const svg = btn.querySelector('svg');
     
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     btn.classList.toggle('active', active);
@@ -235,7 +235,7 @@
         svg.setAttribute('fill', 'currentColor');
         svg.style.fill = '#ef4444';
         svg.style.color = '#ef4444';
-        var paths = svg.querySelectorAll('path');
+        const paths = svg.querySelectorAll('path');
         paths.forEach(function(p) {
           p.style.fill = '#ef4444';
           p.style.stroke = '#ef4444';
@@ -245,7 +245,7 @@
         svg.setAttribute('fill', 'none');
         svg.style.fill = '';
         svg.style.color = '';
-        var paths = svg.querySelectorAll('path');
+        const paths = svg.querySelectorAll('path');
         paths.forEach(function(p) {
           p.style.fill = '';
           p.style.stroke = '';
@@ -263,9 +263,9 @@
 
   function syncCartState(btn, id) {
     if (!btn || !id) return;
-    var active = isInList(CART_KEY, id);
-    var bagIcon = btn.querySelector('.cart-icon-bag');
-    var checkIcon = btn.querySelector('.cart-icon-check');
+    const active = isInList(CART_KEY, id);
+    const bagIcon = btn.querySelector('.cart-icon-bag');
+    const checkIcon = btn.querySelector('.cart-icon-check');
     btn.classList.toggle('in-cart', active);
     if (active) {
       btn.style.borderColor = '#10b981';
@@ -286,16 +286,16 @@
   function syncAllButtonStates() {
     document.querySelectorAll(WISH_SELECTOR).forEach(function (btn) {
       if (btn.classList.contains('delete-wish-btn')) return;
-      var card = findProductCard(btn);
-      var product = card ? extractProduct(card) : null;
-      var pId = (product && product.id) || (btn.getAttribute('data-id'));
+      const card = findProductCard(btn);
+      const product = card ? extractProduct(card) : null;
+      const pId = (product && product.id) || (btn.getAttribute('data-id'));
       if (pId) syncHeartState(btn, pId);
     });
 
     document.querySelectorAll(CART_SELECTOR).forEach(function (btn) {
-      var card = findProductCard(btn);
-      var product = card ? extractProduct(card) : null;
-      var pId = (product && product.id) || (btn.getAttribute('data-id'));
+      const card = findProductCard(btn);
+      const product = card ? extractProduct(card) : null;
+      const pId = (product && product.id) || (btn.getAttribute('data-id'));
       if (pId) syncCartState(btn, pId);
     });
   }
@@ -303,27 +303,27 @@
   /* 클릭 위임(event delegation) */
   document.addEventListener('click', function (e) {
     // 1. 위시리스트 버튼 클릭
-    var wishBtn = e.target.closest(WISH_SELECTOR);
+    const wishBtn = e.target.closest(WISH_SELECTOR);
     if (wishBtn) {
       if (wishBtn.classList.contains('delete-wish-btn')) return; // wishlist.html 자체 핸들러 처리
 
       e.preventDefault();
       e.stopPropagation();
 
-      var card = findProductCard(wishBtn);
-      var wishProduct = card ? extractProduct(card) : null;
+      const card = findProductCard(wishBtn);
+      let wishProduct = card ? extractProduct(card) : null;
 
       // 상세페이지 단독 버튼인 경우
       if ((!wishProduct || !wishProduct.name) && wishBtn.id === 'wishlist-toggle-btn') {
-        var detailTitle = document.querySelector('h1, .product-detail-title');
-        var detailPrice = document.querySelector('.text-price, [data-price], span.text-3xl');
-        var detailImg = document.querySelector('#gallery-main-image, .product-main-img, img.main-prod-image');
-        var detailDesc = document.querySelector('#buy-box-section p.text-base, #buy-box-section p.text-ink-muted');
+        const detailTitle = document.querySelector('h1, .product-detail-title');
+        const detailPrice = document.querySelector('.text-price, [data-price], span.text-3xl');
+        const detailImg = document.querySelector('#gallery-main-image, .product-main-img, img.main-prod-image');
+        const detailDesc = document.querySelector('#buy-box-section p.text-base, #buy-box-section p.text-ink-muted');
         if (detailTitle) {
-          var dName = detailTitle.textContent.trim();
-          var dPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
-          var dDesc = detailDesc ? detailDesc.textContent.trim() : '';
-          var dImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
+          const dName = detailTitle.textContent.trim();
+          const dPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
+          const dDesc = detailDesc ? detailDesc.textContent.trim() : '';
+          const dImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
           wishProduct = {
             id: dName,
             name: dName,
@@ -338,8 +338,8 @@
 
       if (!wishProduct || !wishProduct.id) return;
 
-      var pId = wishProduct.id;
-      var wasInList = isInList(WISHLIST_KEY, pId);
+      const pId = wishProduct.id;
+      const wasInList = isInList(WISHLIST_KEY, pId);
 
       // 하트 팝 애니메이션
       wishBtn.style.transform = 'scale(1.25)';
@@ -362,26 +362,26 @@
     }
 
     // 2. 장바구니 버튼 클릭
-    var cartBtn = e.target.closest(CART_SELECTOR);
+    const cartBtn = e.target.closest(CART_SELECTOR);
     if (cartBtn) {
       if (cartBtn.classList.contains('add-cart-btn') && window.location.pathname.includes('wishlist.html')) {
         return; // wishlist.html 자체 핸들러 처리
       }
 
       e.preventDefault();
-      var card = findProductCard(cartBtn);
-      var cartProduct = card ? extractProduct(card) : null;
+      const card = findProductCard(cartBtn);
+      let cartProduct = card ? extractProduct(card) : null;
 
       if (!cartProduct || !cartProduct.id) {
-        var detailTitle = document.querySelector('h1, .product-detail-title');
-        var detailPrice = document.querySelector('.text-price, [data-price], span.text-3xl');
-        var detailImg = document.querySelector('#gallery-main-image, .product-main-img, img.main-prod-image');
-        var detailDesc = document.querySelector('#buy-box-section p.text-base, #buy-box-section p.text-ink-muted');
+        const detailTitle = document.querySelector('h1, .product-detail-title');
+        const detailPrice = document.querySelector('.text-price, [data-price], span.text-3xl');
+        const detailImg = document.querySelector('#gallery-main-image, .product-main-img, img.main-prod-image');
+        const detailDesc = document.querySelector('#buy-box-section p.text-base, #buy-box-section p.text-ink-muted');
         if (detailTitle) {
-          var cdName = detailTitle.textContent.trim();
-          var cdPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
-          var cdDesc = detailDesc ? detailDesc.textContent.trim() : '';
-          var cdImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
+          const cdName = detailTitle.textContent.trim();
+          const cdPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
+          const cdDesc = detailDesc ? detailDesc.textContent.trim() : '';
+          const cdImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
           cartProduct = {
             id: cdName,
             name: cdName,
@@ -396,7 +396,7 @@
 
       if (!cartProduct || !cartProduct.id) return;
 
-      var pId = cartProduct.id;
+      const pId = cartProduct.id;
       if (isInList(CART_KEY, pId)) {
         removeItem(CART_KEY, pId);
         showToast(cartProduct.name ? `[${cartProduct.name}] 장바구니에서 제외되었습니다.` : '장바구니에서 제외되었습니다.');
