@@ -1,5 +1,8 @@
 /* 사이트 전역 위시리스트 / 장바구니 상태 (localStorage 기반, 페이지 간 공유) */
 (function () {
+  if (window.__CART_WISHLIST_INITIALIZED__) return;
+  window.__CART_WISHLIST_INITIALIZED__ = true;
+
   var WISHLIST_KEY = 'ikea_wishlist_items';
   var CART_KEY = 'ikea_cart_items';
   var INIT_FLAG_KEY = 'ikea_wishlist_initialized';
@@ -7,7 +10,7 @@
   var BUYNOW_KEY = 'ikea_buynow_item';
 
   var WISH_SELECTOR = 'button[aria-label*="위시리스트"], .wish-btn, button[aria-label*="찜"], button[aria-label*="관심상품"], #wishlist-toggle-btn';
-  var CART_SELECTOR = 'button[aria-label*="장바구니"], .add-cart-btn';
+  var CART_SELECTOR = 'button[aria-label*="장바구니"], .add-cart-btn, .cart-toggle-btn';
   /* "구매하기" 버튼: 장바구니 담기와 달리 토글이 아니라 항상 담고 바로 결제 페이지로 이동한다 */
   var BUY_SELECTOR = '.buy, .buy-btn, .buy-now-btn';
 
@@ -179,26 +182,24 @@
 
   function findProductCard(btn) {
     if (!btn) return null;
-    // 1. article, .product-card, .card, .swiper-slide 탐색
-    var card = btn.closest('article, .product-card, .card, .swiper-slide');
-    if (card && (card.querySelector('h3, h4, .product-title, strong') || card.querySelector('.text-price, [data-price], p.font-bold, p.font-extrabold'))) {
-      return card;
-    }
-    // 2. 만약 잡힌 card가 없거나 정보가 부족한 경우 상위 부모로 탐색
-    var curr = btn.parentElement;
-    while (curr && curr !== document.body) {
-      if (curr.querySelector('h3, h4, .product-title, strong') && curr.querySelector('img')) {
-        return curr;
+    // 1. article, .product-card, .card, .swiper-slide, [data-product-name], div.group 탐색
+    var card = btn.closest('article, .product-card, .card, .swiper-slide, [data-product-name], div.group');
+    if (!card) {
+      var curr = btn.parentElement;
+      while (curr && curr !== document.body) {
+        if (curr.querySelector('h1, h2, h3, h4, h5, .product-title, strong, img')) {
+          return curr;
+        }
+        curr = curr.parentElement;
       }
-      curr = curr.parentElement;
     }
-    return card;
+    return card || btn.parentElement;
   }
 
   function extractProduct(card) {
     if (!card) return {};
-    // 1. 상품명 추출 (h3, h4, .product-title, [data-title], strong, img alt)
-    var nameEl = card.querySelector('h3, h4, .product-title, [data-title], strong');
+    // 1. 상품명 추출 (h1~h5, .product-title, [data-title], strong, b, p.font-bold 등)
+    var nameEl = card.querySelector('h1, h2, h3, h4, h5, .product-title, [data-title], strong, b, p.font-bold, p.font-semibold');
     var imgEl = card.querySelector('img:not([alt*="로고"]):not([alt*="icon"]):not(.icon)');
     var name = nameEl ? nameEl.textContent.trim() : '';
     if (!name && imgEl && imgEl.alt && !imgEl.alt.includes('로고') && !imgEl.alt.includes('IKEA')) {
@@ -206,6 +207,9 @@
     }
     if (!name && card.getAttribute('data-product-name')) {
       name = card.getAttribute('data-product-name');
+    }
+    if (name) {
+      name = name.replace(/^[\s–—-]+/, '').trim();
     }
 
     // 2. 설명 추출 (p.text-xs, p.text-ink-muted, p.text-ink-3, p.text-ink-2 등)
@@ -263,7 +267,7 @@
     if (image) params.set('img', image);
 
     var href = detailPagePath + '?' + params.toString();
-    var id = name || (image ? image.split('/').pop().split('?')[0] : 'item-' + Date.now());
+    var id = name || (imgEl ? (imgEl.getAttribute('src') || imgEl.src).split('/').pop().split('?')[0] : '') || card.getAttribute('data-id') || 'item-' + Date.now();
 
     return {
       id: id,
@@ -278,6 +282,9 @@
 
   function syncHeartState(btn, id) {
     if (!btn || !id) return;
+    var btnLabel = btn.getAttribute('aria-label') || '';
+    if (btn.classList.contains('add-cart-btn') || btn.classList.contains('cart-toggle-btn') || btnLabel.includes('장바구니')) return;
+
     var active = isInList(WISHLIST_KEY, id);
     var svg = btn.querySelector('svg');
     
@@ -294,7 +301,7 @@
     if (svg) {
       if (active) {
         svg.classList.add('text-red-500', 'fill-red-500');
-        svg.classList.remove('text-ink', 'text-ink-muted', 'text-ink-3', 'text-gray-400', 'text-brand');
+        svg.classList.remove('text-ink', 'text-ink-muted', 'text-ink-3', 'text-gray-400', 'text-brand', 'text-emerald-600');
         svg.setAttribute('fill', 'currentColor');
         svg.style.fill = '#ef4444';
         svg.style.color = '#ef4444';
@@ -310,55 +317,87 @@
         svg.style.color = '';
         var paths = svg.querySelectorAll('path');
         paths.forEach(function(p) {
-          p.style.fill = '';
+          p.removeAttribute('style');
+          p.style.fill = 'none';
           p.style.stroke = '';
         });
-      }
-    } else if (btn.id === 'wishlist-toggle-btn' || btn.innerText.includes('♡') || btn.innerText.includes('♥')) {
-      btn.innerText = active ? '♥' : '♡';
-      if (active) {
-        btn.classList.add('text-red-500');
-      } else {
-        btn.classList.remove('text-red-500');
       }
     }
   }
 
   function syncCartState(btn, id) {
     if (!btn || !id) return;
+    var btnLabel = btn.getAttribute('aria-label') || '';
+    if (btn.classList.contains('wish-btn') || btnLabel.includes('위시리스트') || btn.id === 'wishlist-toggle-btn') return;
+
     var active = isInList(CART_KEY, id);
-    var bagIcon = btn.querySelector('.cart-icon-bag');
-    var checkIcon = btn.querySelector('.cart-icon-check');
     btn.classList.toggle('in-cart', active);
+    var svg = btn.querySelector('svg');
+
     if (active) {
       btn.style.borderColor = '#10b981';
       btn.style.backgroundColor = '#ecfdf5';
       btn.style.color = '#059669';
+      btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-600');
+      btn.classList.remove('text-gray-400', 'text-ink', 'text-red-500', 'bg-red-50');
+
+      if (svg) {
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.style.color = '#059669';
+        svg.style.fill = 'none';
+        svg.classList.add('text-emerald-600');
+        svg.classList.remove('text-gray-400', 'text-ink', 'text-red-500', 'fill-red-500');
+        
+        var paths = svg.querySelectorAll('path');
+        paths.forEach(function(p) {
+          p.removeAttribute('style'); // 인라인 style="fill: #ef4444" 잔여 오염 완전 제거!
+          p.setAttribute('fill', 'none');
+          p.setAttribute('stroke', 'currentColor');
+          p.style.fill = 'none';
+          p.style.stroke = '#059669';
+          p.style.color = '#059669';
+        });
+      }
     } else {
       btn.style.borderColor = '';
       btn.style.backgroundColor = '';
       btn.style.color = '';
+      btn.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-600', 'text-red-500');
+
+      if (svg) {
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.style.color = '';
+        svg.style.fill = 'none';
+        svg.classList.remove('text-emerald-600', 'text-red-500', 'fill-red-500');
+
+        var paths2 = svg.querySelectorAll('path');
+        paths2.forEach(function(p) {
+          p.removeAttribute('style'); // 인라인 style 잔여 오염 완전 제거!
+          p.setAttribute('fill', 'none');
+          p.setAttribute('stroke', 'currentColor');
+          p.style.fill = 'none';
+          p.style.stroke = '';
+        });
+      }
     }
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-    if (bagIcon && checkIcon) {
-      bagIcon.classList.toggle('hidden', active);
-      checkIcon.classList.toggle('hidden', !active);
-    }
   }
 
   function syncAllButtonStates() {
-    document.querySelectorAll(WISH_SELECTOR).forEach(function (btn) {
+    document.querySelectorAll(WISH_SELECTOR).forEach(function (btn, idx) {
       if (btn.classList.contains('delete-wish-btn')) return;
       var card = findProductCard(btn);
       var product = card ? extractProduct(card) : null;
-      var pId = (product && product.id) || (btn.getAttribute('data-id'));
+      var pId = (product && product.id) || (btn.getAttribute('data-id')) || ('wish-fallback-' + idx);
       if (pId) syncHeartState(btn, pId);
     });
 
-    document.querySelectorAll(CART_SELECTOR).forEach(function (btn) {
+    document.querySelectorAll(CART_SELECTOR).forEach(function (btn, idx) {
       var card = findProductCard(btn);
       var product = card ? extractProduct(card) : null;
-      var pId = (product && product.id) || (btn.getAttribute('data-id'));
+      var pId = (product && product.id) || (btn.getAttribute('data-id')) || ('cart-fallback-' + idx);
       if (pId) syncCartState(btn, pId);
     });
   }
@@ -427,6 +466,9 @@
     // 2. 장바구니 버튼 클릭
     var cartBtn = e.target.closest(CART_SELECTOR);
     if (cartBtn) {
+      if (cartBtn.tagName === 'A' || cartBtn.id === 'header-cart-btn' || cartBtn.closest('#header-cart-btn')) {
+        return; // 상단 헤더 장바구니 페이지 이동 링크는 원래 브라우저 이동 동작(cart.html)을 유지한다
+      }
       if (cartBtn.classList.contains('add-cart-btn') && window.location.pathname.includes('wishlist.html')) {
         return; // wishlist.html 자체 핸들러 처리
       }

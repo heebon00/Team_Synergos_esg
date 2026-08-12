@@ -714,67 +714,75 @@
 </main>
 
 <!-- SEGMENT: Footer -->
-<footer class="w-full bg-crust border-t border-line-light mt-auto text-ink-sub">
+<footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
   <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
-    <!-- 4 Columns Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-      <!-- Col 1: 고객문의 -->
-      <div class="space-y-3">
-        <h3 class="text-sm font-bold text-ink">고객문의</h3>
-        <ul class="space-y-2 text-xs text-ink-3">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Col 1 -->
+      <div>
+        <img src="../assets/logo-ikea.svg" alt="IKEA" width="80" height="32" class="h-8 w-auto mb-4">
+        <p class="text-xs leading-relaxed text-ink-muted">
+          IKEA 코리아는 더 많은 사람들을 위해 더 나은 일상을 만듭니다. 고품질의 지속 가능한 가구와 홈퍼니싱 솔루션을 합리적인 가격에 만나보세요.
+        </p>
+      </div>
+
+      <!-- Col 2 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객 지원</h3>
+        <ul class="space-y-2 text-xs">
           <li><button type="button" data-open-chatbot="true" class="hover:text-brand hover:underline text-left cursor-pointer flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>AI 챗봇 상담 (24시간)</button></li>
-          <li><a href="#" class="hover:text-brand hover:underline transition-colors">자주 묻는 질문</a></li>
-          <li><a href="#" class="hover:text-brand hover:underline transition-colors">문의하기</a></li>
-          <li><a href="delivery.html" class="hover:text-brand hover:underline transition-colors">배송 서비스 안내</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">고객지원센터</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문(FAQ)</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">반품 및 환불 규정</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">제품 회수 및 리콜 정보</a></li>
         </ul>
-        <div class="pt-1">
-          <button type="button" data-open-chatbot="true" class="w-full flex items-center justify-center gap-2 rounded-full bg-accent hover:bg-yellow-400 text-ink font-bold text-xs py-2 px-3 shadow-xs transition-all duration-200 cursor-pointer">
+      </div>
+
+      <!-- Col 3 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
+          <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
+          <li><a href="self-styling.html" class="hover:text-brand hover:underline">셀프 스타일링 (무료)</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
+        <p class="text-lg font-extrabold text-brand">1670-4532</p>
+        <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
+        <div class="mt-3">
+          <button type="button" data-open-chatbot="true" class="w-full flex items-center justify-center gap-2 rounded-full bg-accent hover:bg-yellow-400 text-ink font-bold text-xs py-2.5 px-4 shadow-xs transition-all duration-200 cursor-pointer">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.477 2 2 6.03 2 11c0 2.274 0.942 4.354 2.518 5.892L3.5 21.5l5.084-1.695C9.722 20.082 10.838 20.2 12 20.2c5.523 0 10-4.03 10-9.2S17.523 2 12 2zm-3.5 8.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3.5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3.5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
             </svg>
             <span>24시간 AI 챗봇 상담</span>
           </button>
         </div>
+        <div class="mt-4 flex items-center gap-3">
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
       </div>
 
-      <!-- Col 2: 쇼핑하기 -->
-      <div class="space-y-3">
-        <h3 class="text-sm font-bold text-ink">쇼핑하기</h3>
-        <ul class="space-y-2 text-xs text-ink-3">
-          <li><a href="#" class="hover:text-brand hover:underline transition-colors">온라인 쇼핑 가이드</a></li>
-          <li><a href="consulting.html" class="hover:text-brand hover:underline transition-colors">전화 주문 및 상담</a></li>
-          <li><a href="#" class="hover:text-brand hover:underline transition-colors">IKEA 기프트 카드</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 3: 서비스 -->
-      <div class="space-y-3">
-        <h3 class="text-sm font-bold text-ink">서비스</h3>
-        <ul class="space-y-2 text-xs text-ink-3">
-          <li><a href="installation.html" class="hover:text-brand hover:underline transition-colors">배송 및 조립 서비스</a></li>
-          <li><a href="consulting.html" class="hover:text-brand hover:underline transition-colors">주방 플래닝 서비스</a></li>
-          <li><a href="service.html" class="hover:text-brand hover:underline transition-colors">바이백 &amp; 되팔기</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 4: IKEA 이야기 -->
-      <div class="space-y-3">
-        <h3 class="text-sm font-bold text-ink">IKEA 이야기</h3>
-        <ul class="space-y-2 text-xs text-ink-3">
-          <li><a href="#" class="hover:text-brand hover:underline transition-colors">브랜드 스토리</a></li>
-          <li><a href="#" class="hover:text-brand hover:underline transition-colors">지속가능한 생활</a></li>
-          <li><a href="#" class="hover:text-brand hover:underline transition-colors">채용 정보</a></li>
-        </ul>
-      </div>
     </div>
 
-    <!-- Bottom Row & Copyright -->
-    <div class="border-t border-line-2 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-ink-3 gap-4">
-      <p>&copy; Inter IKEA Systems B.V 1999-2026</p>
-      <div class="flex items-center gap-4">
-        <a href="#" class="hover:text-brand hover:underline transition-colors">쿠키 설정</a>
-        <span>|</span>
-        <a href="#" class="hover:text-brand hover:underline transition-colors">대한민국 | 한국어</a>
+    <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
+      <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+      <div class="flex gap-4">
+        <a href="#" class="hover:underline">개인정보처리방침</a>
+        <a href="#" class="hover:underline">이용약관</a>
+        <a href="#" class="hover:underline">웹 접근성 고지</a>
       </div>
     </div>
   </div>
@@ -978,7 +986,7 @@ function handleBookingSubmit(e) {
 })();
 </script>
 
-            <!-- SEGMENT: ScrollToTop -->
+                <!-- SEGMENT: ScrollToTop -->
     <button id="scrollToTopBtn" class="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-white shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:bg-brand-dark hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:bottom-8" aria-label="맨 위로 이동">
       <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
