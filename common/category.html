@@ -2078,14 +2078,7 @@
     });
   });
 
-  /* 위시리스트/장바구니는 assets/js/cart-wishlist.js 공용 스크립트가 처리 (localStorage 연동) */
-
-  /* 구매하기 버튼 클릭 처리 */
-  $$('.buy').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-    });
-  });
+  /* 위시리스트/장바구니/구매하기는 assets/js/cart-wishlist.js 공용 스크립트가 처리 (localStorage 연동) */
 
   // 상세페이지 클릭 시 동적 파라미터 전송 로직
   const detailLinks = document.querySelectorAll('a');

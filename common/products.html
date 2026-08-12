@@ -1355,22 +1355,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 2. 위시리스트 및 장바구니 처리는 assets/js/cart-wishlist.js 전역 스크립트가 처리합니다.
-  document.querySelectorAll('.buy-btn').forEach(btn => {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const origText = btn.textContent;
-      btn.textContent = '담김 ✓';
-      btn.classList.add('bg-emerald-600');
-      btn.classList.remove('bg-brand');
-      setTimeout(() => {
-        btn.textContent = origText;
-        btn.classList.remove('bg-emerald-600');
-        btn.classList.add('bg-brand');
-      }, 1500);
-    });
-  });
+  // 2. 위시리스트/장바구니/구매하기 처리는 assets/js/cart-wishlist.js 전역 스크립트가 처리합니다.
 
   // 4. GSAP 애니메이션 (모든 카드가 항상 보이도록 안전한 fromTo 적용)
   if (typeof gsap !== 'undefined') {
