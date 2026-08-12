@@ -533,22 +533,22 @@
         <div class="flex-1 flex flex-row gap-3 h-fit opacity-0 translate-y-4" id="product-gallery-section">
           <!-- Thumbnail strip -->
           <div class="flex flex-col gap-2 shrink-0">
-            <button type="button" class="w-thumb-w h-thumb-h border-2 border-brand rounded bg-bg-light overflow-hidden transition-all focus:outline-none active-thumbnail-btn" aria-label="썸네일 1번 이미지 보기" onclick="changeMainImage(0, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border-2 border-brand rounded overflow-hidden transition-all focus:outline-none active-thumbnail-btn bg-bg-light" aria-label="썸네일 1번 이미지 보기" onclick="changeMainImage(0, this)">
               <img src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 정면 샷" class="w-full h-full object-cover">
             </button>
-            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 2번 이미지 보기" onclick="changeMainImage(1, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded overflow-hidden transition-all focus:outline-none bg-bg-light" aria-label="썸네일 2번 이미지 보기" onclick="changeMainImage(1, this)">
               <img src="../assets/p-sagmastare-2.png" alt="SÅGMÄSTARE 사선 디테일 샷" class="w-full h-full object-cover">
             </button>
-            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 3번 이미지 보기" onclick="changeMainImage(2, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded overflow-hidden transition-all focus:outline-none bg-bg-light" aria-label="썸네일 3번 이미지 보기" onclick="changeMainImage(2, this)">
               <img src="../assets/p-sagmastare-3.png" alt="SÅGMÄSTARE 내부 수납 구성" class="w-full h-full object-cover">
             </button>
-            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 4번 이미지 보기" onclick="changeMainImage(3, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded overflow-hidden transition-all focus:outline-none bg-bg-light" aria-label="썸네일 4번 이미지 보기" onclick="changeMainImage(3, this)">
               <img src="../assets/p-sagmastare-4.png" alt="SÅGMÄSTARE 라이프스타일 연출 샷" class="w-full h-full object-cover">
             </button>
           </div>
           <!-- Main Image container -->
-          <div class="flex-1 h-main-img-h border border-line-light rounded-lg overflow-hidden shadow-sm bg-white relative">
-            <img id="gallery-main-image" src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 소그메스타레 수납장 메인" class="w-full h-full object-cover">
+          <div class="flex-1 h-main-img-h rounded-lg overflow-hidden relative flex items-center justify-center bg-bg-light">
+            <img id="gallery-main-image" src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 소그메스타레 수납장 메인" class="w-full h-full object-contain transition-transform duration-300">
           </div>
         </div>
 
