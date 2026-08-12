@@ -45,6 +45,13 @@
 
 <style type="text/tailwindcss">
   @theme {
+    /* Font size updates */
+    --font-size-xs: 1rem;
+    --font-size-xs--line-height: 1.25rem;
+    --font-size-sm: 1rem;
+    --font-size-sm--line-height: 1.25rem;
+    --font-size-base: 1.125rem;
+    --font-size-base--line-height: 1.5rem;
     --color-white: #FFFFFF; /* token-exempt */
     --color-brand: #0058A3; /* token-exempt */
     --color-brand-hover: #004b8d; /* token-exempt */
@@ -180,6 +187,18 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
 </style>
+    <!-- Font Size Override Rule -->
+    <style>
+      .text-xs { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-sm { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-base { font-size: 1.125rem !important; line-height: 1.5rem !important; }
+      .text-\[10px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[11px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[12px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[13px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[14px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[15px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+    </style>
 </head>
 
 <body class="bg-white text-ink">
