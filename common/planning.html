@@ -125,7 +125,7 @@
     <nav aria-label="주 메뉴" class="hidden lg:block shrink-0">
       <ul class="flex items-center gap-6 text-sm font-bold text-ink whitespace-nowrap shrink-0" id="desktop-nav-menu">
         <li class="relative whitespace-nowrap shrink-0">
-          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" href="products.html">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" data-tab="all" href="products.html">
             <span>모든 제품</span>
           </a>
         </li>
@@ -222,8 +222,109 @@
   <!-- 3. Figma Mega Navigation Dropdown Panel -->
   <div id="mega-menu-panel" 
        class="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[900px] max-w-[calc(100vw-2rem)] bg-white border border-[#E6E6E6] rounded-xl shadow-2xl p-6 opacity-0 invisible translate-y-2 pointer-events-none transition-all duration-200 ease-out z-50">
-    
-        <!-- Tab 2: 공간별 쇼핑하기 -->
+
+    <!-- Tab 1: 모든 제품 -->
+    <div data-mega-tab="all" class="mega-tab-content hidden">
+      <div class="flex items-stretch gap-6">
+        <!-- Column 1 -->
+        <div class="flex-1 flex flex-col gap-1">
+          <a href="products.html?cat=storage" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">수납가구</span>
+          </a>
+          <a href="products.html?cat=bedding" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">침구/러그</span>
+          </a>
+          <a href="products.html?cat=sofa" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9V6a2 2 0 00-2-2H7a2 2 0 00-2 2v3M3 11v5a2 2 0 002 2h14a2 2 0 002-2v-5a2 2 0 00-2-2H5a2 2 0 00-2 2zm3 7v2m12-2v2"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">소파/의자</span>
+          </a>
+          <a href="products.html?cat=kitchen" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v3m-4-3v3m8-3v3M4 9h16v8a3 3 0 01-3 3H7a3 3 0 01-3-3V9zm-2 3h2m16 0h2"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">주방가구</span>
+          </a>
+          <a href="products.html?cat=bath" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">욕실가구</span>
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="w-px bg-line-light self-stretch"></div>
+
+        <!-- Column 2 -->
+        <div class="flex-1 flex flex-col gap-1">
+          <a href="products.html?cat=laundry" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm4 4h.01M12 15a3 3 0 100-6 3 3 0 000 6z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">세탁/청소가구</span>
+          </a>
+          <a href="products.html?cat=appliances" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4L12 9L17 4M21 9V19a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">가전제품</span>
+          </a>
+          <a href="products.html?cat=tiles" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2h-4a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zm10 0a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">타일/벽지</span>
+          </a>
+          <a href="products.html?cat=food" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">식품</span>
+          </a>
+          <a href="products.html?cat=kids" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">키즈</span>
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="w-px bg-line-light self-stretch"></div>
+
+        <!-- Column 3 -->
+        <div class="flex-1 flex flex-col gap-1">
+          <a href="products.html?cat=outdoor" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">아웃도어</span>
+          </a>
+          <a href="products.html?cat=gardening" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20A7 7 0 014 13V6a2 2 0 012-2h7a7 7 0 017 7v7a2 2 0 01-2 2h-7zM2 21l9-9"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">가드닝/조경</span>
+          </a>
+          <a href="products.html?cat=etc" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+            <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
+              <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
+            </div>
+            <span class="text-sm font-medium text-ink-sub group-hover:text-brand transition-colors">기타</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: 공간별 쇼핑하기 -->
     <div data-mega-tab="room" class="mega-tab-content hidden">
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
