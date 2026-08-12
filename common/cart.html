@@ -557,7 +557,7 @@
         <span id="summary-total" class="text-xl font-extrabold text-price">₩0</span>
       </div>
 
-      <a href="order.html" id="checkout-btn" class="mt-1 w-full rounded-full bg-brand hover:bg-brand-dark px-6 py-3.5 text-sm font-bold text-white text-center transition-all shadow-sm">
+      <a href="checkout.html" id="checkout-btn" class="mt-1 w-full rounded-full bg-brand hover:bg-brand-dark px-6 py-3.5 text-sm font-bold text-white text-center transition-all shadow-sm">
         구매하기
       </a>
       <a href="category.html" class="text-center text-xs font-medium text-ink-sub underline hover:text-brand transition-colors">
@@ -742,8 +742,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- Dynamic Cart Render Logic ---
   // 상품 카드의 "장바구니 담기" 버튼과 동일한 저장소(ikea_cart_items)를 공유한다 (assets/js/cart-wishlist.js 참고)
   var CART_KEY = (window.WishlistCart && window.WishlistCart.CART_KEY) || 'ikea_cart_items';
-  var FREE_SHIPPING_THRESHOLD = 50000;
-  var SHIPPING_FEE = 3000;
+
+  function getShippingFee(item) {
+    if (window.WishlistCart && window.WishlistCart.getShippingFee) {
+      return window.WishlistCart.getShippingFee(item);
+    }
+    return 29000;
+  }
 
   function getCartItems() {
     var items = [];
@@ -809,6 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
     listEl.innerHTML = items.map(function (item, index) {
       var unitPrice = parsePrice(item.price);
       var lineTotal = unitPrice * item.qty;
+      var itemShipping = getShippingFee(item);
       return (
         '<article class="cart-row flex gap-4 rounded-card border border-line-light bg-white p-4 sm:p-5 shadow-sm">' +
           '<div class="h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-md border border-line-light bg-shell flex items-center justify-center p-2">' +
@@ -819,6 +825,7 @@ document.addEventListener('DOMContentLoaded', function() {
               '<div class="min-w-0">' +
                 '<h3 class="text-sm font-bold text-ink truncate">' + (item.name || '상품') + '</h3>' +
                 (item.desc ? '<p class="mt-1 text-xs text-ink-muted truncate">' + item.desc + '</p>' : '') +
+                '<p class="mt-1 text-xs text-ink-muted">배송비 ' + formatWon(itemShipping) + '</p>' +
               '</div>' +
               '<button type="button" data-index="' + index + '" class="cart-remove-btn shrink-0 grid size-8 place-items-center rounded-full text-ink-muted hover:text-sale hover:bg-hairline transition-colors" aria-label="상품 삭제">' +
                 '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>' +
@@ -840,7 +847,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var subtotal = items.reduce(function (sum, item) {
       return sum + parsePrice(item.price) * item.qty;
     }, 0);
-    var shipping = subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+    var shipping = items.reduce(function (sum, item) {
+      return sum + getShippingFee(item);
+    }, 0);
     var total = subtotal + shipping;
 
     var subtotalEl = document.getElementById('summary-subtotal');
@@ -851,9 +860,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (shippingEl) shippingEl.textContent = shipping === 0 ? '무료' : formatWon(shipping);
     if (totalEl) totalEl.textContent = formatWon(total);
     if (noteEl) {
-      noteEl.textContent = shipping === 0
-        ? ''
-        : formatWon(FREE_SHIPPING_THRESHOLD - subtotal) + ' 더 담으면 무료배송이에요.';
+      noteEl.textContent = isEmpty ? '' : '상품 종류에 따라 배송비가 다르게 적용돼요.';
     }
 
     listEl.querySelectorAll('.cart-remove-btn').forEach(function (btn) {
@@ -886,6 +893,17 @@ document.addEventListener('DOMContentLoaded', function() {
     clearBtn.addEventListener('click', function () {
       saveCartItems([]);
       renderCart();
+    });
+  }
+
+  var checkoutBtnEl = document.getElementById('checkout-btn');
+  if (checkoutBtnEl) {
+    checkoutBtnEl.addEventListener('click', function () {
+      // 이전에 개별 상품 "구매하기"(바로구매)로 남아있을 수 있는 단일 상품 세션을 지워
+      // 장바구니 전체가 결제 페이지에 정상적으로 표시되도록 한다.
+      if (window.WishlistCart && window.WishlistCart.clearBuyNowItem) {
+        window.WishlistCart.clearBuyNowItem();
+      }
     });
   }
 
