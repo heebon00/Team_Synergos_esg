@@ -190,14 +190,49 @@
      스크립트 실행 시점에 갑자기 사라졌다 다시 나타나는 점프를 막기 위해
      GSAP fromTo의 시작 상태(opacity 0, y 이동)를 CSS로 미리 맞춰 둔다.
      GSAP 로드에 실패하면 no-motion이 추가되어 즉시 원래대로 보인다. */
-  .js:not(.no-motion) h1,
-  .js:not(.no-motion) .cat-sw .cat {
+  .js:not(.no-motion) h1 {
     opacity: 0;
     transform: translateY(16px);
   }
 
-  /* Swiper 커스텀 */
+  /* 순수 CSS GPU 가속 순차 등장 애니메이션 (자바스크립트 대기 지연/빈 화면 100% 해결) */
+  @keyframes catEntrance {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .cat-sw .swiper-slide .cat {
+    animation: catEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .cat-sw .swiper-slide:nth-child(1) .cat { animation-delay: 0s; }
+  .cat-sw .swiper-slide:nth-child(2) .cat { animation-delay: 0.04s; }
+  .cat-sw .swiper-slide:nth-child(3) .cat { animation-delay: 0.08s; }
+  .cat-sw .swiper-slide:nth-child(4) .cat { animation-delay: 0.12s; }
+  .cat-sw .swiper-slide:nth-child(5) .cat { animation-delay: 0.16s; }
+  .cat-sw .swiper-slide:nth-child(6) .cat { animation-delay: 0.20s; }
+  .cat-sw .swiper-slide:nth-child(7) .cat { animation-delay: 0.24s; }
+  .cat-sw .swiper-slide:nth-child(8) .cat { animation-delay: 0.28s; }
+  .cat-sw .swiper-slide:nth-child(9) .cat { animation-delay: 0.32s; }
+  .cat-sw .swiper-slide:nth-child(10) .cat { animation-delay: 0.36s; }
+
+  /* Swiper 커스텀 및 초기화 전/후 위치 고정 (Layout Shift 방지) */
   .swiper-slide { height: auto; }
+  .cat-sw:not(.swiper-initialized) .swiper-wrapper {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
+  }
+  .cat-sw:not(.swiper-initialized) .swiper-wrapper::-webkit-scrollbar {
+    display: none !important;
+  }
   .cat-sw .swiper-slide,
   section[aria-labelledby="cat-h"] .swiper-slide {
     width: 80px !important;
@@ -2385,10 +2420,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  gsap.fromTo('.cat', { opacity: 0, y: 16 }, {
-    opacity: 1, y: 0, duration: .45, ease: 'power2.out', stagger: .05,
-    scrollTrigger: { trigger: '.cat-sw', start: 'top 90%', once: true }
-  });
+
 
   /* ---------- 4. GSAP 호버 / 포커스 마이크로 인터랙션 ---------- */
 
