@@ -67,8 +67,14 @@
     --radius-card: 12px;
     --radius-cat: 20px;
     --radius-btn: 100px;
+    --radius-pill: 20px;
 
     --spacing-container: 1280px;
+
+    --color-nav-bg: rgba(255, 255, 255, 0.5); /* token-exempt: 반투명 배경 토큰 */
+    --color-nav-bg-hover: rgba(255, 255, 255, 0.78); /* token-exempt: 반투명 배경 토큰 */
+    --color-nav-border: rgba(0, 0, 0, 0.05); /* token-exempt: 반투명 테두리 토큰 */
+    --shadow-nav: 0 2px 6px rgba(0, 0, 0, 0.08); /* token-exempt: 그림자 토큰 */
   }
 
   @layer base {
@@ -113,43 +119,42 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding-top: 14px;
-    padding-bottom: 14px;
+    padding-bottom: 4px;
     overscroll-behavior-x: none;
   }
   .cat-scroll::-webkit-scrollbar { display: none; }
 
-  /* index.html 과 동일한 커스텀 스크롤바 */
-  .cat-scrollbar {
-    position: relative;
-    height: 4px;
-    margin-top: 24px;
-    border-radius: var(--radius-pill);
-    background: var(--color-line-light);
-    opacity: 0.05;
-    transition: opacity 0.3s ease;
-  }
-  .cat-scrollbar-drag {
+  /* 스크롤바 대신 좌우 반투명 화살표로 스크롤 (얇은 바를 드래그할 필요 없음) */
+  .cat-nav {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: var(--color-brand);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
     border-radius: var(--radius-pill);
-    cursor: grab;
-    will-change: transform;
+    background: var(--color-nav-bg);
+    border: 1px solid var(--color-nav-border);
+    box-shadow: var(--shadow-nav);
+    color: var(--color-brand);
+    cursor: pointer;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
   }
-  .cat-scrollbar-drag:active { cursor: grabbing; }
-  /* cat-scroll 영역에 마우스 올리면 스크롤바 표시 */
-  .cat-scroll:hover ~ .cat-scrollbar,
-  .cat-scrollbar:hover,
-  .cat-scrollbar.is-active {
-    opacity: 1;
+  .cat-nav:hover { background: var(--color-nav-bg-hover); }
+  .cat-nav-prev { left: 4px; }
+  .cat-nav-next { right: 4px; }
+  .cat-nav.is-off,
+  .cat-nav[hidden] {
+    display: none;
   }
   .cat-grid-2row {
     grid-auto-flow: column;
     grid-template-rows: repeat(2, auto);
     grid-auto-columns: 80px;
     width: max-content;
+    padding-top: 4px;
   }
   .cat {
     transition: transform 0.2s ease, color 0.2s ease;
@@ -635,8 +640,8 @@
   </div>
 
   <!-- SEGMENT: Category 14 Icons Grid -->
-  <section aria-labelledby="cat-h" class="w-full bg-white pb-8">
-    <div class="mx-auto max-w-container px-5 lg:px-10">
+  <section aria-labelledby="cat-h" class="w-full bg-white py-6">
+    <div class="relative mx-auto max-w-container px-5 lg:px-10">
       <h2 id="cat-h" class="hide">상품 카테고리</h2>
 
       <div class="cat-scroll">
@@ -756,9 +761,17 @@
 
         </div>
       </div>
-      <div class="cat-scrollbar" aria-hidden="true" hidden>
-        <div class="cat-scrollbar-drag"></div>
-      </div>
+
+      <button type="button" class="cat-nav cat-nav-prev" aria-label="이전 카테고리 보기" hidden>
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button type="button" class="cat-nav cat-nav-next" aria-label="다음 카테고리 보기" hidden>
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
     </div>
   </section>
   <!-- /SEGMENT: Category 14 Icons Grid -->
@@ -1615,60 +1628,35 @@ document.addEventListener('DOMContentLoaded', function () {
     var scrollEl = document.querySelector('.cat-scroll');
     if (!scrollEl) return;
 
-    // ── 커스텀 스크롤바 동기화 ──
-    var bar = document.querySelector('.cat-scrollbar');
-    var drag = bar ? bar.querySelector('.cat-scrollbar-drag') : null;
-    var barTimer = null;
+    // ── 좌우 반투명 화살표: 스크롤 가능 여부에 따라 표시/숨김 ──
+    var prevBtn = document.querySelector('.cat-nav-prev');
+    var nextBtn = document.querySelector('.cat-nav-next');
+    var EDGE = 2; // 경계 판정 여유(px)
 
-    function updateBar() {
-      if (!bar || !drag) return;
+    function updateNav() {
+      if (!prevBtn || !nextBtn) return;
       var scrollW = scrollEl.scrollWidth;
       var clientW = scrollEl.clientWidth;
-      if (scrollW <= clientW) { bar.hidden = true; return; }
-      bar.hidden = false;
-      var ratio = clientW / scrollW;
-      var dragW = Math.max(ratio * 100, 8); // 최소 8%
-      var pos = (scrollEl.scrollLeft / (scrollW - clientW)) * (100 - dragW);
-      drag.style.width = dragW + '%';
-      drag.style.left = pos + '%';
+      if (scrollW <= clientW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
+      prevBtn.hidden = false;
+      nextBtn.hidden = false;
+      var maxScroll = scrollW - clientW;
+      prevBtn.classList.toggle('is-off', scrollEl.scrollLeft <= EDGE);
+      nextBtn.classList.toggle('is-off', scrollEl.scrollLeft >= maxScroll - EDGE);
     }
 
-    function activateBar() {
-      if (!bar) return;
-      bar.classList.add('is-active');
-      clearTimeout(barTimer);
-      barTimer = setTimeout(function () { bar.classList.remove('is-active'); }, 1000);
+    function scrollByPage(dir) {
+      var step = Math.round(scrollEl.clientWidth * 0.9) * dir;
+      var calm = document.documentElement.classList.contains('no-motion');
+      scrollEl.scrollBy({ left: step, behavior: calm ? 'auto' : 'smooth' });
     }
 
-    scrollEl.addEventListener('scroll', function () { updateBar(); activateBar(); }, { passive: true });
-    window.addEventListener('resize', updateBar);
-    updateBar();
+    if (prevBtn) prevBtn.addEventListener('click', function () { scrollByPage(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { scrollByPage(1); });
 
-    // ── 커스텀 스크롤바 drag ──
-    if (drag) {
-      var barDragging = false, barStartX = 0, barStartLeft = 0;
-      drag.addEventListener('mousedown', function (e) {
-        e.preventDefault();
-        barDragging = true;
-        barStartX = e.clientX;
-        barStartLeft = scrollEl.scrollLeft;
-        bar.classList.add('is-active');
-      });
-      document.addEventListener('mousemove', function (e) {
-        if (!barDragging) return;
-        var barW = bar.offsetWidth;
-        var scrollW = scrollEl.scrollWidth;
-        var clientW = scrollEl.clientWidth;
-        var ratio = (scrollW - clientW) / (barW - drag.offsetWidth);
-        scrollEl.scrollLeft = barStartLeft + (e.clientX - barStartX) * ratio;
-        updateBar();
-      });
-      document.addEventListener('mouseup', function () {
-        if (!barDragging) return;
-        barDragging = false;
-        barTimer = setTimeout(function () { bar.classList.remove('is-active'); }, 1000);
-      });
-    }
+    scrollEl.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('resize', updateNav);
+    updateNav();
 
     // ── 마우스 드래그 스크롤 (Swiper speed:420 동일 감속) ──
     var isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
@@ -1713,15 +1701,18 @@ document.addEventListener('DOMContentLoaded', function () {
       // 손 뗀 시점 속도가 없으면 즉시 정지
       if (Math.abs(velocity) < 0.5) return;
 
+      // 모션 감소 설정 시 관성 스크롤 생략 (category.html의 Swiper speed:0 처리와 동일)
+      if (document.documentElement.classList.contains('no-motion')) { velocity = 0; updateNav(); return; }
+
       // Swiper speed:420 과 유사한 ease-out 감속 (마찰 0.92/frame, 최대 420ms)
-      var friction = 1.2;
+      var friction = 0.92;
       var maxFrames = Math.round(420 / 16); // ~26프레임
       var frame = 0;
 
       function decelerate() {
         if (frame >= maxFrames || Math.abs(velocity) < 0.3) {
           velocity = 0;
-          updateBar();
+          updateNav();
           return;
         }
         velocity *= friction;
@@ -1730,8 +1721,7 @@ document.addEventListener('DOMContentLoaded', function () {
         next = Math.max(0, Math.min(next, scrollEl.scrollWidth - scrollEl.clientWidth));
         scrollEl.scrollLeft = next;
         frame++;
-        updateBar();
-        activateBar();
+        updateNav();
         rafId = requestAnimationFrame(decelerate);
       }
       rafId = requestAnimationFrame(decelerate);
