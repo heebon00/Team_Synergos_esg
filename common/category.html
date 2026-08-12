@@ -27,6 +27,8 @@
   html {
     overflow-y: scroll !important;
     scrollbar-gutter: stable !important;
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
   }
   body {
     margin: 0;
@@ -36,10 +38,51 @@
   }
   img { max-width: 100%; }
 
-  /* Tailwind CDN이 DOM을 파싱하는 동안 스타일을 여러 번 다시 생성하면서
-     이미지/카드 크기가 커졌다가 줄어드는 게 반복되므로(특히 캐러셀),
-     본문을 페이지 하단 스크립트가 준비를 마칠 때까지 숨겨 둔다. */
-  .js:not(.ready) #wrap { visibility: hidden; }
+  .h-\[240px\]  { height: 240px; }
+  .h-\[200px\]  { height: 200px; }
+  .rounded-\[20px\] { border-radius: 20px; }
+  @media (min-width: 1280px) {
+    .xl\:w-\[420px\] { width: 420px; }
+  }
+
+  /* Swiper 초기화 전 매칭 추천 제품 레이아웃 점프(길어졌다 줄어듦) 방지 */
+  .prod-sw:not(.swiper-initialized) .swiper-wrapper {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    gap: 20px;
+  }
+  .prod-sw:not(.swiper-initialized) .swiper-slide {
+    width: calc(50% - 10px) !important;
+    flex-shrink: 0 !important;
+  }
+  @media (max-width: 767px) {
+    .prod-sw:not(.swiper-initialized) .swiper-slide {
+      width: calc(62.5% - 10px) !important;
+    }
+  }
+  @media (max-width: 479px) {
+    .prod-sw:not(.swiper-initialized) .swiper-slide {
+      width: calc(85% - 10px) !important;
+    }
+  }
+
+  /* 위시리스트 활성화 하트 버튼 새로고침 시 깜빡임/트랜지션 어색함 방지 */
+  button[aria-pressed="true"] svg,
+  button.active svg,
+  button.active svg path,
+  button[aria-pressed="true"] svg path {
+    color: #ef4444 !important;
+    fill: #ef4444 !important;
+    stroke: #ef4444 !important;
+    transition: none !important;
+  }
+
+  /* 헤더 메가메뉴 반투명 잔상 및 서서히 이동하는 흔들림 완벽 제거 */
+  #mega-menu-panel {
+    transition: none !important;
+    transform: translateX(-50%) !important;
+  }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
