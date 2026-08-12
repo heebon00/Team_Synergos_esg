@@ -601,6 +601,7 @@
             <a href="#" class="text-sm font-semibold text-ink underline underline-offset-2">자세히보기 &gt;</a>
           </div>
         </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1130,6 +1131,71 @@ document.addEventListener('DOMContentLoaded', function() {
     megaPanel.addEventListener('mouseleave', closeMegaMenu);
   }
 });
+var deliverySwiper;
+
+document.querySelectorAll('.delivery-filter').forEach(function (filter) {
+  filter.addEventListener('click', function () {
+    var category = filter.dataset.filter;
+    document.querySelectorAll('.delivery-filter').forEach(function (button) {
+      var selected = button === filter;
+      button.setAttribute('aria-selected', selected ? 'true' : 'false');
+      button.classList.toggle('bg-ink', selected);
+      button.classList.toggle('text-white', selected);
+      button.classList.toggle('font-bold', selected);
+      button.classList.toggle('bg-hair', !selected);
+      button.classList.toggle('text-ink-2', !selected);
+      button.classList.toggle('font-medium', !selected);
+    });
+    document.querySelectorAll('.delivery-card').forEach(function (card) {
+      var isHidden = category !== 'all' && card.dataset.category !== category;
+      card.hidden = isHidden;
+      var slide = card.closest('.swiper-slide');
+      if (slide) slide.hidden = isHidden;
+    });
+    if (deliverySwiper) deliverySwiper.update();
+  });
+});
+
+if (typeof Swiper !== 'undefined') {
+  var reviewPagination = document.querySelector('.review-pagination');
+  new Swiper('.review-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    pagination: {
+      el: reviewPagination,
+      clickable: true
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      1280: {
+        slidesPerView: 3,
+        spaceBetween: 24
+      }
+    }
+  });
+  var deliveryPagination = document.querySelector('.delivery-pagination');
+  deliverySwiper = new Swiper('.delivery-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    pagination: {
+      el: deliveryPagination,
+      clickable: true
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 16
+      },
+      1280: {
+        slidesPerView: 6,
+        spaceBetween: 16
+      }
+    }
+  });
+}
 </script>
 
 </body>
