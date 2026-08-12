@@ -198,13 +198,20 @@
       .cat-scrollbar {
         position: relative;
         height: 4px;
-        margin-top: 16px;
+        margin-top: 24px;
         border-radius: var(--radius-pill);
         background: var(--color-line-light);
+        opacity: 0.05;
+        transition: opacity 0.3s ease;
       }
       .cat-scrollbar .swiper-scrollbar-drag {
         background: var(--color-brand);
         border-radius: var(--radius-pill);
+      }
+      .cat-sw:hover .cat-scrollbar,
+      .cat-scrollbar:hover,
+      .cat-scrollbar.is-active {
+        opacity: 1;
       }
       .prod-swiper {
         overflow: visible !important;
@@ -798,7 +805,7 @@
             </div>
 
             <!-- 공간별 카테고리 (공간별 쇼핑 페이지와 동일한 목록) -->
-            <div class="cat-sw cat-sw-spaces swiper mt-8">
+            <div class="cat-sw cat-sw-spaces swiper mt-2">
               <ul class="swiper-wrapper items-start">
 
                 <!-- 1. 거실 -->
@@ -1647,8 +1654,17 @@
           // 카테고리 아이콘 캐러셀 2줄 (각자 독립적인 스크롤 + 스크롤바, 화면이 좁아지면 스크롤로 전환)
           function initCatSwiper(swiperSelector, scrollbarSelector, breakpoints) {
             var scrollbarEl = document.querySelector(scrollbarSelector);
+            var activeTimer = null;
             function markCatScrollbar(sw) {
               if (scrollbarEl) scrollbarEl.hidden = sw.isBeginning && sw.isEnd;
+            }
+            function activateScrollbar() {
+              if (!scrollbarEl) return;
+              scrollbarEl.classList.add('is-active');
+              clearTimeout(activeTimer);
+              activeTimer = setTimeout(function () {
+                scrollbarEl.classList.remove('is-active');
+              }, 1000);
             }
             new Swiper(swiperSelector, {
               speed: 420,
@@ -1663,7 +1679,15 @@
               keyboard: { enabled: true, onlyInViewport: true },
               scrollbar: { el: scrollbarSelector, draggable: true, hide: false },
               breakpoints: breakpoints,
-              on: { init: markCatScrollbar, resize: markCatScrollbar, update: markCatScrollbar, breakpoint: markCatScrollbar },
+              on: {
+                init: markCatScrollbar,
+                resize: markCatScrollbar,
+                update: markCatScrollbar,
+                breakpoint: markCatScrollbar,
+                touchStart: activateScrollbar,
+                touchMove: activateScrollbar,
+                slideChange: activateScrollbar,
+              },
             });
           }
           // 상품 카테고리(14개)와 공간별 카테고리(10개) 두 줄 모두, 화면 폭별로 보이는 개수를 동일하게 맞춘다

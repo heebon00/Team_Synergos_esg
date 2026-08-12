@@ -181,6 +181,26 @@
   .prod-sw { padding: 10px 2px 26px; }
   .nav-btn[aria-disabled="true"] { opacity: .3; }
 
+  /* 카테고리 스크롤바: 평소엔 거의 안 보이고, 마우스 오버·스크롤 시에만 선명해짐 */
+  .cat-scrollbar {
+    position: relative;
+    height: 4px;
+    margin-top: 24px;
+    border-radius: var(--radius-pill);
+    background: var(--color-line-light);
+    opacity: 0.05;
+    transition: opacity 0.3s ease;
+  }
+  .cat-scrollbar .swiper-scrollbar-drag {
+    background: var(--color-brand);
+    border-radius: var(--radius-pill);
+  }
+  .cat-sw:hover .cat-scrollbar,
+  .cat-scrollbar:hover,
+  .cat-scrollbar.is-active {
+    opacity: 1;
+  }
+
   /* 건너뛰기 링크 */
   .skip {
     position: absolute; left: 16px; top: -80px; z-index: 100;
@@ -245,17 +265,7 @@
     overflow: visible !important;
     padding-top: 4px !important;
   }
-  .cat-scrollbar {
-    position: relative;
-    height: 4px;
-    margin-top: 16px;
-    border-radius: var(--radius-pill);
-    background: var(--color-line-light);
-  }
-  .cat-scrollbar .swiper-scrollbar-drag {
-    background: var(--color-brand);
-    border-radius: var(--radius-pill);
-  }
+
   .cat {
     transition: transform 0.2s ease, color 0.2s ease;
   }
@@ -1950,8 +1960,17 @@ document.addEventListener('DOMContentLoaded', function () {
   var swipers = [];
 
   var catScrollbarEl = $('.cat-scrollbar');
+  var catScrollbarTimer = null;
   function markCatScrollbar(sw) {
     if (catScrollbarEl) catScrollbarEl.hidden = sw.isBeginning && sw.isEnd;
+  }
+  function activateCatScrollbar() {
+    if (!catScrollbarEl) return;
+    catScrollbarEl.classList.add('is-active');
+    clearTimeout(catScrollbarTimer);
+    catScrollbarTimer = setTimeout(function () {
+      catScrollbarEl.classList.remove('is-active');
+    }, 1000);
   }
 
   swipers.push(new Swiper('.cat-sw', {
@@ -1970,7 +1989,7 @@ document.addEventListener('DOMContentLoaded', function () {
       640:  { slidesPerView: 6,  spaceBetween: 20 },
       1024: { slidesPerView: 10, spaceBetween: 35.5 }
     },
-    on: { init: markCatScrollbar, resize: markCatScrollbar, update: markCatScrollbar, breakpoint: markCatScrollbar }
+    on: { init: markCatScrollbar, resize: markCatScrollbar, update: markCatScrollbar, breakpoint: markCatScrollbar, touchStart: activateCatScrollbar, touchMove: activateCatScrollbar, slideChange: activateCatScrollbar }
   }));
 
   $$('.prod-sw').forEach(function (el) {

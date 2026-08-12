@@ -108,15 +108,42 @@
   .cat-scroll {
     overflow-x: auto;
     overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-brand) var(--color-line-light);
+    /* 네이티브 스크롤바 완전히 숨김 (커스텀 스크롤바 사용) */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     padding-top: 14px;
     padding-bottom: 14px;
+    overscroll-behavior-x: none;
   }
-  .cat-scroll::-webkit-scrollbar { height: 6px; }
-  .cat-scroll::-webkit-scrollbar-track { background: var(--color-line-light); border-radius: var(--radius-chip); }
-  .cat-scroll::-webkit-scrollbar-thumb { background: var(--color-brand); border-radius: var(--radius-chip); }
+  .cat-scroll::-webkit-scrollbar { display: none; }
+
+  /* index.html 과 동일한 커스텀 스크롤바 */
+  .cat-scrollbar {
+    position: relative;
+    height: 4px;
+    margin-top: 24px;
+    border-radius: var(--radius-pill);
+    background: var(--color-line-light);
+    opacity: 0.05;
+    transition: opacity 0.3s ease;
+  }
+  .cat-scrollbar-drag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--color-brand);
+    border-radius: var(--radius-pill);
+    cursor: grab;
+    will-change: transform;
+  }
+  .cat-scrollbar-drag:active { cursor: grabbing; }
+  /* cat-scroll 영역에 마우스 올리면 스크롤바 표시 */
+  .cat-scroll:hover ~ .cat-scrollbar,
+  .cat-scrollbar:hover,
+  .cat-scrollbar.is-active {
+    opacity: 1;
+  }
   .cat-grid-2row {
     grid-auto-flow: column;
     grid-template-rows: repeat(2, auto);
@@ -511,7 +538,7 @@
       <h2 id="cat-h" class="hide">상품 카테고리</h2>
 
       <div class="cat-scroll">
-        <div class="cat-grid-2row mx-auto grid gap-y-6 gap-x-4 sm:gap-x-5 lg:gap-x-9 justify-items-center">
+        <div class="cat-grid-2row mx-auto grid gap-y-4 gap-x-4 sm:gap-x-5 lg:gap-x-9 justify-items-center">
 
           <!-- 1. 신제품 -->
           <a href="products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
@@ -626,6 +653,9 @@
           </a>
 
         </div>
+      </div>
+      <div class="cat-scrollbar" aria-hidden="true" hidden>
+        <div class="cat-scrollbar-drag"></div>
       </div>
     </div>
   </section>
@@ -1468,6 +1498,162 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('article.prod-card img, article.product-card img, article.prod-card h3, article.product-card h3').forEach(el => {
     el.style.cursor = 'pointer';
   });
+
+  // cat-scroll: 마우스 드래그 가로 스크롤 + tap vs drag 구분 (Swiper처럼 클릭드래그로 이동 가능)
+  (function () {
+    var scrollEl = document.querySelector('.cat-scroll');
+    if (!scrollEl) return;
+
+    // ── 커스텀 스크롤바 동기화 ──
+    var bar = document.querySelector('.cat-scrollbar');
+    var drag = bar ? bar.querySelector('.cat-scrollbar-drag') : null;
+    var barTimer = null;
+
+    function updateBar() {
+      if (!bar || !drag) return;
+      var scrollW = scrollEl.scrollWidth;
+      var clientW = scrollEl.clientWidth;
+      if (scrollW <= clientW) { bar.hidden = true; return; }
+      bar.hidden = false;
+      var ratio = clientW / scrollW;
+      var dragW = Math.max(ratio * 100, 8); // 최소 8%
+      var pos = (scrollEl.scrollLeft / (scrollW - clientW)) * (100 - dragW);
+      drag.style.width = dragW + '%';
+      drag.style.left = pos + '%';
+    }
+
+    function activateBar() {
+      if (!bar) return;
+      bar.classList.add('is-active');
+      clearTimeout(barTimer);
+      barTimer = setTimeout(function () { bar.classList.remove('is-active'); }, 1000);
+    }
+
+    scrollEl.addEventListener('scroll', function () { updateBar(); activateBar(); }, { passive: true });
+    window.addEventListener('resize', updateBar);
+    updateBar();
+
+    // ── 커스텀 스크롤바 drag ──
+    if (drag) {
+      var barDragging = false, barStartX = 0, barStartLeft = 0;
+      drag.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        barDragging = true;
+        barStartX = e.clientX;
+        barStartLeft = scrollEl.scrollLeft;
+        bar.classList.add('is-active');
+      });
+      document.addEventListener('mousemove', function (e) {
+        if (!barDragging) return;
+        var barW = bar.offsetWidth;
+        var scrollW = scrollEl.scrollWidth;
+        var clientW = scrollEl.clientWidth;
+        var ratio = (scrollW - clientW) / (barW - drag.offsetWidth);
+        scrollEl.scrollLeft = barStartLeft + (e.clientX - barStartX) * ratio;
+        updateBar();
+      });
+      document.addEventListener('mouseup', function () {
+        if (!barDragging) return;
+        barDragging = false;
+        barTimer = setTimeout(function () { bar.classList.remove('is-active'); }, 1000);
+      });
+    }
+
+    // ── 마우스 드래그 스크롤 (Swiper speed:420 동일 감속) ──
+    var isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
+    var velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
+    scrollEl.style.cursor = 'grab';
+
+    scrollEl.addEventListener('mousedown', function (e) {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      // 진행 중인 감속 애니메이션 취소
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      isMouseDown = true;
+      mouseDragged = false;
+      velocity = 0;
+      startMouseX = e.pageX;
+      lastMoveX = e.pageX;
+      lastMoveTime = Date.now();
+      startScrollLeft = scrollEl.scrollLeft;
+      scrollEl.style.cursor = 'grabbing';
+      scrollEl.style.userSelect = 'none';
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      if (!isMouseDown) return;
+      var dx = e.pageX - startMouseX;
+      if (Math.abs(dx) > 4) mouseDragged = true;
+      // 속도 추적 (px/ms → px/frame 환산, 60fps 기준)
+      var now = Date.now();
+      var dt = now - lastMoveTime;
+      if (dt > 0) velocity = ((lastMoveX - e.pageX) / dt) * 16;
+      lastMoveX = e.pageX;
+      lastMoveTime = now;
+      scrollEl.scrollLeft = startScrollLeft - dx;
+    });
+
+    document.addEventListener('mouseup', function () {
+      if (!isMouseDown) return;
+      isMouseDown = false;
+      scrollEl.style.cursor = 'grab';
+      scrollEl.style.userSelect = '';
+
+      // 손 뗀 시점 속도가 없으면 즉시 정지
+      if (Math.abs(velocity) < 0.5) return;
+
+      // Swiper speed:420 과 유사한 ease-out 감속 (마찰 0.92/frame, 최대 420ms)
+      var friction = 1.2;
+      var maxFrames = Math.round(420 / 16); // ~26프레임
+      var frame = 0;
+
+      function decelerate() {
+        if (frame >= maxFrames || Math.abs(velocity) < 0.3) {
+          velocity = 0;
+          updateBar();
+          return;
+        }
+        velocity *= friction;
+        var next = scrollEl.scrollLeft + velocity;
+        // 경계 클램프
+        next = Math.max(0, Math.min(next, scrollEl.scrollWidth - scrollEl.clientWidth));
+        scrollEl.scrollLeft = next;
+        frame++;
+        updateBar();
+        activateBar();
+        rafId = requestAnimationFrame(decelerate);
+      }
+      rafId = requestAnimationFrame(decelerate);
+    });
+
+    // 드래그였으면 클릭 이벤트 차단 (링크 이동 방지)
+    scrollEl.addEventListener('click', function (e) {
+      if (mouseDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+        mouseDragged = false;
+      }
+    }, true);
+
+    // ── 터치 tap vs drag 구분 ──
+    var startTX = 0, startTY = 0, touchDragged = false;
+    scrollEl.addEventListener('touchstart', function (e) {
+      startTX = e.touches[0].clientX;
+      startTY = e.touches[0].clientY;
+      touchDragged = false;
+    }, { passive: true });
+    scrollEl.addEventListener('touchmove', function (e) {
+      if (Math.abs(e.touches[0].clientX - startTX) > 8 ||
+          Math.abs(e.touches[0].clientY - startTY) > 8) touchDragged = true;
+    }, { passive: true });
+    scrollEl.addEventListener('click', function (e) {
+      if (touchDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+        touchDragged = false;
+      }
+    }, true);
+  })();
 
 });
 </script>
