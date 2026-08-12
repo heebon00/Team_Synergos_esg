@@ -223,8 +223,8 @@
         transition: opacity 0.2s ease, background-color 0.2s ease;
       }
       .cat-nav:hover { background: var(--color-nav-bg-hover); }
-      .cat-nav-prev { left: 4px; }
-      .cat-nav-next { right: 4px; }
+      .cat-nav-prev { left: 6px; }
+      .cat-nav-next { right: 6px; }
       .cat-nav.is-off,
       .cat-nav.is-locked {
         opacity: 0;
@@ -1741,6 +1741,24 @@
         // Swiper Carousels Initialization
         if (typeof Swiper !== "undefined") {
           // 카테고리 아이콘 캐러셀 2줄 (각자 독립적인 스크롤 + 좌우 반투명 화살표, 화면이 좁아지면 스크롤로 전환)
+          var CAT_SLIDE_WIDTH = 80;
+          var CAT_EDGE_OFFSET = 36; // slidesOffsetBefore/After 합
+          var CAT_GAP_MIN = 16;
+          var CAT_GAP_MAX = 48;
+          // 컨테이너 실제 너비에 맞춰 간격을 매 순간 다시 계산한다(가변 간격).
+          // slidesPerView가 고정 개수(6, 10)인 구간에서만 적용하고,
+          // "auto"(모바일 가로 스크롤) 구간은 기본 간격을 그대로 쓴다.
+          function syncCatGap(swiper) {
+            var n = swiper.params.slidesPerView;
+            if (typeof n !== "number" || n <= 1) return;
+            var usable = swiper.el.clientWidth - CAT_EDGE_OFFSET * 2;
+            var gap = (usable - n * CAT_SLIDE_WIDTH) / (n - 1);
+            gap = Math.max(CAT_GAP_MIN, Math.min(CAT_GAP_MAX, gap));
+            if (Math.abs((swiper.params.spaceBetween || 0) - gap) > 0.5) {
+              swiper.params.spaceBetween = gap;
+              swiper.update();
+            }
+          }
           function initCatSwiper(swiperSelector, prevSelector, nextSelector, breakpoints) {
             var swiperEl = document.querySelector(swiperSelector);
             if (!swiperEl) return;
@@ -1751,6 +1769,8 @@
               speed: 420,
               slidesPerView: "auto",
               spaceBetween: 16,
+              slidesOffsetBefore: CAT_EDGE_OFFSET,
+              slidesOffsetAfter: CAT_EDGE_OFFSET,
               slidesPerGroupAuto: true,
               centerInsufficientSlides: true,
               watchOverflow: true,
@@ -1765,12 +1785,19 @@
                 lockClass: "is-locked",
               },
               breakpoints: breakpoints,
+              on: {
+                init: function () { syncCatGap(this); },
+                resize: function () { syncCatGap(this); },
+                breakpoint: function () { syncCatGap(this); },
+              },
             });
           }
-          // 상품 카테고리(14개)와 공간별 카테고리(10개) 두 줄 모두, 화면 폭별로 보이는 개수를 동일하게 맞춘다
+          // 상품 카테고리(14개)와 공간별 카테고리(10개) 두 줄 모두 같은 컨테이너 너비와 같은
+          // slidesPerView 구간을 공유하므로, 화면 폭별로 보이는 개수는 항상 동일하게 유지된다.
+          // 간격(spaceBetween)만 syncCatGap이 컨테이너 실제 너비에 맞춰 가변적으로 채운다.
           var catBreakpoints = {
-            640: { slidesPerView: 6, spaceBetween: 20 },
-            1024: { slidesPerView: 10, spaceBetween: 35.5 },
+            640: { slidesPerView: 6 },
+            1024: { slidesPerView: 10 },
           };
           initCatSwiper(".cat-sw-products", ".cat-nav-products-prev", ".cat-nav-products-next", catBreakpoints);
           initCatSwiper(".cat-sw-spaces", ".cat-nav-spaces-prev", ".cat-nav-spaces-next", catBreakpoints);
