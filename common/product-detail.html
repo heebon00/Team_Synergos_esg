@@ -89,6 +89,8 @@
       --radius-pill: 20px;
       --radius-card: 12px;
 
+      --spacing-container: 1280px;
+
       /* Figma Specific for Product Detail */
       --spacing-main-img-h: 600px;
       --spacing-buy-box-w: 420px;
@@ -190,7 +192,7 @@
   <div id="wrapper" class="flex-1 flex flex-col">
 
     <!-- SEGMENT: Header -->
-    <header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
+    <header id="main-header" class="w-full bg-white border-b border-line-light sticky top-0 z-40">
 
       <!-- 1. Utility Navigation -->
       <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
@@ -208,7 +210,7 @@
       </nav>
 
       <!-- 2. Main Navigation Bar -->
-      <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+      <div class="mx-auto flex max-w-container items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
 
         <!-- Logo -->
         <a href="../index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">
@@ -531,22 +533,22 @@
         <div class="flex-1 flex flex-row gap-3 h-fit opacity-0 translate-y-4" id="product-gallery-section">
           <!-- Thumbnail strip -->
           <div class="flex flex-col gap-2 shrink-0">
-            <button type="button" class="w-thumb-w h-thumb-h border-2 border-brand rounded bg-bg-light overflow-hidden transition-all focus:outline-none active-thumbnail-btn" aria-label="썸네일 1번 이미지 보기" onclick="changeMainImage(0, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border-2 border-brand rounded overflow-hidden transition-all focus:outline-none active-thumbnail-btn bg-bg-light" aria-label="썸네일 1번 이미지 보기" onclick="changeMainImage(0, this)">
               <img src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 정면 샷" class="w-full h-full object-cover">
             </button>
-            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 2번 이미지 보기" onclick="changeMainImage(1, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded overflow-hidden transition-all focus:outline-none bg-bg-light" aria-label="썸네일 2번 이미지 보기" onclick="changeMainImage(1, this)">
               <img src="../assets/p-sagmastare-2.png" alt="SÅGMÄSTARE 사선 디테일 샷" class="w-full h-full object-cover">
             </button>
-            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 3번 이미지 보기" onclick="changeMainImage(2, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded overflow-hidden transition-all focus:outline-none bg-bg-light" aria-label="썸네일 3번 이미지 보기" onclick="changeMainImage(2, this)">
               <img src="../assets/p-sagmastare-3.png" alt="SÅGMÄSTARE 내부 수납 구성" class="w-full h-full object-cover">
             </button>
-            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded bg-bg-light overflow-hidden transition-all focus:outline-none" aria-label="썸네일 4번 이미지 보기" onclick="changeMainImage(3, this)">
+            <button type="button" class="w-thumb-w h-thumb-h border border-line-light rounded overflow-hidden transition-all focus:outline-none bg-bg-light" aria-label="썸네일 4번 이미지 보기" onclick="changeMainImage(3, this)">
               <img src="../assets/p-sagmastare-4.png" alt="SÅGMÄSTARE 라이프스타일 연출 샷" class="w-full h-full object-cover">
             </button>
           </div>
           <!-- Main Image container -->
-          <div class="flex-1 h-main-img-h border border-line-light rounded-lg overflow-hidden shadow-sm bg-white relative">
-            <img id="gallery-main-image" src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 소그메스타레 수납장 메인" class="w-full h-full object-cover">
+          <div class="flex-1 h-main-img-h rounded-lg overflow-hidden relative flex items-center justify-center bg-bg-light">
+            <img id="gallery-main-image" src="../assets/p-sagmastare-1.png" alt="SÅGMÄSTARE 소그메스타레 수납장 메인" class="w-full h-full object-contain transition-transform duration-300">
           </div>
         </div>
 
@@ -837,12 +839,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-langfjall.png" alt="LANGFJÄLL 랑피엘 회전의자" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="LANGFJÄLL 랑피엘 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=LANGFJÄLL 랑피엘&amp;price=₩89,900&amp;desc=회전의자, 군나레드 베이지/화이트&amp;img=../assets/p-langfjall.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-langfjall.png" alt="LANGFJÄLL 랑피엘 회전의자" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="LANGFJÄLL 랑피엘 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">LANGFJÄLL 랑피엘</h3>
+                      <a href="product-detail.html?name=LANGFJÄLL 랑피엘&amp;price=₩89,900&amp;desc=회전의자, 군나레드 베이지/화이트&amp;img=../assets/p-langfjall.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">LANGFJÄLL 랑피엘</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">회전의자, 군나레드 베이지/화이트</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★★</span>
@@ -851,8 +857,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩89,900</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('LANGFJÄLL 랑피엘')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('LANGFJÄLL 랑피엘')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -864,12 +872,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-kallax.png" alt="KALLAX 칼락스 선반유닛" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="KALLAX 칼락스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=KALLAX 칼락스&amp;price=₩79,900&amp;desc=선반유닛, 화이트, 77x147 cm&amp;img=../assets/p-kallax.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-kallax.png" alt="KALLAX 칼락스 선반유닛" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="KALLAX 칼락스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">KALLAX 칼락스</h3>
+                      <a href="product-detail.html?name=KALLAX 칼락스&amp;price=₩79,900&amp;desc=선반유닛, 화이트, 77x147 cm&amp;img=../assets/p-kallax.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">KALLAX 칼락스</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">선반유닛, 화이트, 77x147 cm</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★★</span>
@@ -878,8 +890,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩79,900</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('KALLAX 칼락스')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('KALLAX 칼락스')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -891,12 +905,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-billy.png" alt="BILLY 책장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="BILLY 빌리 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=BILLY 빌리&amp;price=₩59,900&amp;desc=책장, 화이트, 80x28x202 cm&amp;img=../assets/p-billy.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-billy.png" alt="BILLY 책장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="BILLY 빌리 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">BILLY 빌리</h3>
+                      <a href="product-detail.html?name=BILLY 빌리&amp;price=₩59,900&amp;desc=책장, 화이트, 80x28x202 cm&amp;img=../assets/p-billy.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">BILLY 빌리</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">책장, 화이트, 80x28x202 cm</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★★</span>
@@ -905,8 +923,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩59,900</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('BILLY 빌리')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('BILLY 빌리')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -918,12 +938,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-malm.png" alt="MALM 6칸 서랍장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="MALM 말름 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=MALM 말름&amp;price=₩199,000&amp;desc=6칸 서랍장, 화이트, 80x123 cm&amp;img=../assets/p-malm.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-malm.png" alt="MALM 6칸 서랍장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="MALM 말름 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">MALM 말름</h3>
+                      <a href="product-detail.html?name=MALM 말름&amp;price=₩199,000&amp;desc=6칸 서랍장, 화이트, 80x123 cm&amp;img=../assets/p-malm.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">MALM 말름</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">6칸 서랍장, 화이트, 80x123 cm</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★☆</span>
@@ -932,8 +956,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩199,000</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('MALM 말름')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('MALM 말름')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -975,12 +1001,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-poang.png" alt="POÄNG 포엥 안락의자" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="POÄNG 포엥 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=POÄNG 포엥&amp;price=₩129,000&amp;desc=안락의자, 자작나무무늬목/베이지&amp;img=../assets/p-poang.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-poang.png" alt="POÄNG 포엥 안락의자" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="POÄNG 포엥 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">POÄNG 포엥</h3>
+                      <a href="product-detail.html?name=POÄNG 포엥&amp;price=₩129,000&amp;desc=안락의자, 자작나무무늬목/베이지&amp;img=../assets/p-poang.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">POÄNG 포엥</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">안락의자, 자작나무무늬목/베이지</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★★</span>
@@ -989,8 +1019,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩129,000</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('POÄNG 포엥')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('POÄNG 포엥')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -1002,12 +1034,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-alex.png" alt="ALEX 서랍유닛" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="ALEX 알렉스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=ALEX 알렉스&amp;price=₩89,900&amp;desc=서랍유닛, 화이트, 36x70 cm&amp;img=../assets/p-alex.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-alex.png" alt="ALEX 서랍유닛" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="ALEX 알렉스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">ALEX 알렉스</h3>
+                      <a href="product-detail.html?name=ALEX 알렉스&amp;price=₩89,900&amp;desc=서랍유닛, 화이트, 36x70 cm&amp;img=../assets/p-alex.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">ALEX 알렉스</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">서랍유닛, 화이트, 36x70 cm</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★★</span>
@@ -1016,8 +1052,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩89,900</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('ALEX 알렉스')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('ALEX 알렉스')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -1029,12 +1067,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-lack.png" alt="LACK 사이드테이블" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="LACK 라크 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=LACK 라크&amp;price=₩9,900&amp;desc=사이드테이블, 화이트, 55x55 cm&amp;img=../assets/p-lack.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-lack.png" alt="LACK 사이드테이블" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="LACK 라크 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">LACK 라크</h3>
+                      <a href="product-detail.html?name=LACK 라크&amp;price=₩9,900&amp;desc=사이드테이블, 화이트, 55x55 cm&amp;img=../assets/p-lack.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">LACK 라크</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">사이드테이블, 화이트, 55x55 cm</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★★</span>
@@ -1043,8 +1085,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩9,900</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('LACK 라크')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('LACK 라크')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -1056,12 +1100,16 @@
               <div class="swiper-slide w-prod-card-w">
                 <article class="flex flex-col w-prod-card-w h-prod-card-h rounded-xl border border-hairline bg-white shadow-sm hover:shadow-md transition-all duration-300 relative group overflow-hidden">
                   <div class="h-prod-img-h w-full relative overflow-hidden bg-bg-light">
-                    <img src="../assets/p-hemnes.png" alt="HEMNES 수납장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none" aria-label="HEMNES 헴네스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
+                    <a href="product-detail.html?name=HEMNES 헴네스&amp;price=₩249,000&amp;desc=수납장, 화이트스테인, 108x131 cm&amp;img=../assets/p-hemnes.png" class="block w-full h-full cursor-pointer">
+                      <img src="../assets/p-hemnes.png" alt="HEMNES 수납장" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </a>
+                    <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light/50 shadow-sm flex items-center justify-center text-xs hover:bg-bg-light transition-all focus:outline-none z-10" aria-label="HEMNES 헴네스 위시리스트 추가" onclick="toggleCardWishlist(this)">♡</button>
                   </div>
-                  <div class="p-4 flex-1 flex flex-col justify-between">
+                  <div class="p-5 flex-1 flex flex-col justify-between">
                     <div class="flex flex-col gap-1">
-                      <h3 class="text-xs font-bold text-ink">HEMNES 헴네스</h3>
+                      <a href="product-detail.html?name=HEMNES 헴네스&amp;price=₩249,000&amp;desc=수납장, 화이트스테인, 108x131 cm&amp;img=../assets/p-hemnes.png" class="hover:underline cursor-pointer">
+                        <h3 class="text-xs font-bold text-ink">HEMNES 헴네스</h3>
+                      </a>
                       <p class="text-[11px] text-ink-muted leading-tight">수납장, 화이트스테인, 108x131 cm</p>
                       <div class="flex items-center gap-1 mt-1">
                         <span class="text-star text-2xs">★★★★★</span>
@@ -1070,8 +1118,10 @@
                     </div>
                     <div class="flex items-center justify-between mt-3">
                       <span class="text-sm font-bold text-ink">₩249,000</span>
-                      <div class="flex items-center gap-2">
-                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-xs hover:bg-bg-light focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('HEMNES 헴네스')">🛒</button>
+                      <div class="flex items-center gap-3">
+                        <button type="button" class="w-8 h-8 border border-line-light rounded-full flex items-center justify-center text-ink hover:text-brand hover:border-brand transition-colors focus:outline-none" aria-label="장바구니 담기" onclick="addCardToCart('HEMNES 헴네스')">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </button>
                         <a href="checkout.html" class="buy px-2.5 py-1.5 bg-brand hover:bg-brand-dark text-white rounded-full text-2xs font-bold transition-colors">구매하기</a>
                       </div>
                     </div>
@@ -1133,7 +1183,7 @@
           <!-- Col 4 -->
           <div>
             <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
-            <p class="text-lg font-extrabold text-brand">1670-4532</p>
+            <p class="text-lg font-extrabold text-brand">1588-0000</p>
             <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
             <div class="mt-3">
               <button type="button" data-open-chatbot="true" class="w-full flex items-center justify-center gap-2 rounded-full bg-accent hover:bg-yellow-400 text-ink font-bold text-xs py-2.5 px-4 shadow-xs transition-all duration-200 cursor-pointer">
@@ -1155,12 +1205,31 @@
 
         </div>
 
-        <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
-          <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
-          <div class="flex gap-4">
-            <a href="#" class="hover:underline">개인정보처리방침</a>
-            <a href="#" class="hover:underline">이용약관</a>
-            <a href="#" class="hover:underline">웹 접근성 고지</a>
+        <div class="mt-8 border-t border-line-light pt-6 flex flex-col gap-4 text-2xs sm:text-xs text-ink-muted">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 border-b border-line-light pb-4">
+            <div>
+              <span class="font-bold text-ink">대표자:</span> 팀 시너지
+            </div>
+            <div>
+              <span class="font-bold text-ink">사업자등록번호:</span> 222-22-2222222222
+            </div>
+            <div>
+              <span class="font-bold text-ink">통신판매업 신고:</span> 2026-서울가상-0000호
+            </div>
+            <div>
+              <span class="font-bold text-ink">고객지원센터:</span> 1588-0000
+            </div>
+            <div class="md:col-span-2 lg:col-span-4">
+              <span class="font-bold text-ink">주소:</span> 서울특별시 마포구 가상로 123 (우편번호 00000)
+            </div>
+          </div>
+          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+            <div class="flex gap-4">
+              <a href="#" class="hover:underline">개인정보처리방침</a>
+              <a href="#" class="hover:underline">이용약관</a>
+              <a href="#" class="hover:underline">웹 접근성 고지</a>
+            </div>
           </div>
         </div>
       </div>

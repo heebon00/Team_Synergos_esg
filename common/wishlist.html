@@ -162,7 +162,7 @@
 <div id="wrap" class="flex-1 flex flex-col">
 
 <!-- SEGMENT: Header -->
-<header id="main-header" class="w-full bg-white border-b border-line-light relative z-40">
+<header id="main-header" class="w-full bg-white border-b border-line-light sticky top-0 z-40">
 
   <!-- 1. Utility Navigation -->
   <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
@@ -604,7 +604,7 @@
       <!-- Col 4 -->
       <div>
         <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
-        <p class="text-lg font-extrabold text-brand">1670-4532</p>
+        <p class="text-lg font-extrabold text-brand">1588-0000</p>
         <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
         <div class="mt-3">
           <button type="button" data-open-chatbot="true" class="w-full flex items-center justify-center gap-2 rounded-full bg-accent hover:bg-yellow-400 text-ink font-bold text-xs py-2.5 px-4 shadow-xs transition-all duration-200 cursor-pointer">
@@ -626,12 +626,31 @@
 
     </div>
 
-    <div class="mt-8 border-t border-line-light pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-ink-muted gap-4">
-      <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
-      <div class="flex gap-4">
-        <a href="#" class="hover:underline">개인정보처리방침</a>
-        <a href="#" class="hover:underline">이용약관</a>
-        <a href="#" class="hover:underline">웹 접근성 고지</a>
+    <div class="mt-8 border-t border-line-light pt-6 flex flex-col gap-4 text-2xs sm:text-xs text-ink-muted">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 border-b border-line-light pb-4">
+        <div>
+          <span class="font-bold text-ink">대표자:</span> 팀 시너지
+        </div>
+        <div>
+          <span class="font-bold text-ink">사업자등록번호:</span> 222-22-2222222222
+        </div>
+        <div>
+          <span class="font-bold text-ink">통신판매업 신고:</span> 2026-서울가상-0000호
+        </div>
+        <div>
+          <span class="font-bold text-ink">고객지원센터:</span> 1588-0000
+        </div>
+        <div class="md:col-span-2 lg:col-span-4">
+          <span class="font-bold text-ink">주소:</span> 서울특별시 마포구 가상로 123 (우편번호 00000)
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+        <div class="flex gap-4">
+          <a href="#" class="hover:underline">개인정보처리방침</a>
+          <a href="#" class="hover:underline">이용약관</a>
+          <a href="#" class="hover:underline">웹 접근성 고지</a>
+        </div>
       </div>
     </div>
   </div>
@@ -906,11 +925,11 @@ document.addEventListener('DOMContentLoaded', function() {
       return `
       <article class="card flex flex-col overflow-hidden rounded-card border border-line-light bg-white shadow-sm hover:shadow-card-hover transition-all duration-300 group">
         <div class="relative h-48 w-full overflow-hidden bg-[#F8F9FA] flex items-center justify-center p-4">
-          <a href="${detailUrl}" class="flex items-center justify-center w-full h-full cursor-pointer hover:opacity-90 transition-opacity" title="${itemTitle} 상세보기로 이동">
+          <a href="${detailUrl}" class="flex items-center justify-center w-full h-full cursor-pointer hover:opacity-90 transition-opacity" title="${itemTitle} 상세페이지로 이동">
             <img src="${itemImage}" alt="${itemTitle}" width="200" height="160" class="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105">
           </a>
           <button type="button" data-id="${itemId}" data-index="${index}" class="delete-wish-btn group/btn absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white shadow-sm border border-slate-200 text-red-500 hover:bg-red-50 hover:border-red-300 hover:scale-105 active:scale-95 transition-all" aria-label="위시리스트에서 삭제" title="위시리스트에서 삭제">
-            <svg class="h-4 w-4 fill-red-500 text-red-500" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <svg class="h-4.5 w-4.5 fill-red-500 text-red-500" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
         </div>
         <div class="flex flex-1 flex-col justify-between p-5">
@@ -922,7 +941,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <p class="mt-3 text-lg font-bold text-price">₩${itemPrice}</p>
           </div>
           <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
-            <a href="${detailUrl}" class="text-xs font-medium text-ink-sub underline hover:text-brand transition-colors">상세보기</a>
+            <a href="${detailUrl}" class="text-base font-medium text-ink-sub underline hover:text-brand transition-colors">상세페이지</a>
             <button type="button" data-index="${index}" class="add-cart-btn rounded-full bg-brand hover:bg-[#003D8F] px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
               장바구니 담기
             </button>
