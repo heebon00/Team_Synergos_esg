@@ -16,7 +16,8 @@
       }
     } catch (e) {}
     try {
-      if (localStorage.getItem('ikeaIntroSeen') === '1') {
+      var introLastSeen = parseInt(localStorage.getItem('ikeaIntroSeen'), 10);
+      if (!isNaN(introLastSeen) && (Date.now() - introLastSeen) < 24 * 60 * 60 * 1000) {
         rootEl.classList.add('intro-seen');
       }
     } catch (e) {}
@@ -216,18 +217,22 @@
   <!-- 접근성: 건너뛰기 링크 -->
   <a class="skip-link" href="#main-content">본문 바로가기</a>
 
-  <!-- 최초 접속 인트로 영상: localStorage에 기록을 남겨 이 브라우저에서 딱 한 번만 재생하고,
-       다른 페이지에서 메인으로 돌아올 때는 뜨지 않는다 -->
+  <!-- 최초 접속 인트로 영상: localStorage에 마지막 재생 시각을 남겨, 24시간 이내 재방문/다른 페이지에서
+       메인으로 돌아올 때는 뜨지 않고 24시간이 지나면 다시 재생된다 -->
   <div id="intro-video-overlay" class="intro-video-overlay fixed inset-0 z-50 items-center justify-center bg-black" role="region" aria-label="IKEA 인트로 영상">
-    <video id="intro-video" class="h-full w-full object-contain" muted playsinline aria-hidden="true"></video>
+    <video id="intro-video" class="h-4/5 w-4/5 object-contain" muted playsinline aria-hidden="true"></video>
     <button type="button" id="intro-skip-btn" class="absolute bottom-6 right-6 rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">건너뛰기</button>
   </div>
   <script>
     (function () {
       var KEY = 'ikeaIntroSeen';
+      var DAY_MS = 24 * 60 * 60 * 1000;
       var overlay = document.getElementById('intro-video-overlay');
       var seen = false, reduceMotion = false;
-      try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
+      try {
+        var last = parseInt(localStorage.getItem(KEY), 10);
+        seen = !isNaN(last) && (Date.now() - last) < DAY_MS;
+      } catch (e) {}
       try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
       if (!overlay || seen || reduceMotion) return;
 
@@ -238,7 +243,7 @@
       function closeIntro() {
         if (closed) return;
         closed = true;
-        try { localStorage.setItem(KEY, '1'); } catch (e) {}
+        try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
         overlay.classList.add('intro-fade-out');
         overlay.addEventListener('transitionend', function onEnd() {
           overlay.removeEventListener('transitionend', onEnd);
