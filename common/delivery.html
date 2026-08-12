@@ -1210,5 +1210,34 @@ if (typeof Swiper !== 'undefined') {
 }
 </script>
 
+            <!-- SEGMENT: ScrollToTop -->
+    <button id="scrollToTopBtn" class="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-white shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:bg-brand-dark hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:bottom-8" aria-label="맨 위로 이동">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+      </svg>
+    </button>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const scrollBtn = document.getElementById("scrollToTopBtn");
+        if (scrollBtn) {
+          window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+              scrollBtn.classList.remove("opacity-0", "pointer-events-none");
+              scrollBtn.classList.add("opacity-100", "pointer-events-auto");
+            } else {
+              scrollBtn.classList.remove("opacity-100", "pointer-events-auto");
+              scrollBtn.classList.add("opacity-0", "pointer-events-none");
+            }
+          });
+          scrollBtn.addEventListener("click", function () {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          });
+        }
+      });
+    </script>
+    <!-- /SEGMENT: ScrollToTop -->
 </body>
 </html>

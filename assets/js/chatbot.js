@@ -134,7 +134,7 @@
     container.className = 'ikea-chatbot-root';
     container.innerHTML = `
       <!-- 플로팅 트리거 버튼 (FAB) -->
-      <aside aria-label="IKEA AI 실시간 상담" class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[9990] flex flex-col items-end gap-2 font-sans select-none">
+      <aside aria-label="IKEA AI 실시간 상담" class="fixed bottom-24 right-5 sm:bottom-28 sm:right-6 z-[9990] flex flex-col items-end gap-2 font-sans select-none">
         
         <!-- 말풍선 안내 툴팁 (첫 방문 시 주목도 UP) -->
         <div id="ikea-chat-tooltip" class="hidden sm:flex items-center gap-2 bg-ink text-white text-xs font-semibold px-3.5 py-2 rounded-full shadow-lg border border-white/20 animate-bounce cursor-pointer hover:bg-brand transition-colors duration-200">
@@ -181,7 +181,7 @@
         role="dialog"
         aria-label="IKEA AI 실시간 상담창"
         aria-hidden="true"
-        class="hidden fixed bottom-0 right-0 sm:bottom-24 sm:right-6 w-full sm:w-[410px] h-[85vh] sm:h-[620px] max-h-[700px] bg-white sm:rounded-2xl shadow-2xl border border-line-light z-[9995] flex flex-col overflow-hidden transition-all duration-300 transform origin-bottom-right"
+        class="hidden fixed bottom-0 right-0 sm:bottom-48 sm:right-6 w-full sm:w-[410px] h-[85vh] sm:h-[620px] max-h-[700px] bg-white sm:rounded-2xl shadow-2xl border border-line-light z-[9995] flex flex-col overflow-hidden transition-all duration-300 transform origin-bottom-right"
         style="box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);"
       >
         <!-- 챗봇 헤더 (IKEA 브랜드 컬러) -->
