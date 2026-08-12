@@ -2083,16 +2083,11 @@
       </button>
       <button type="button" id="floating-video-play-btn" class="relative block w-40 cursor-pointer overflow-hidden rounded-2xl border-2 border-white bg-ink shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-brand sm:w-48" style="aspect-ratio: 540 / 720;" aria-label="IKEA 소개 영상 재생">
         <video id="floating-video-preview" class="h-full w-full object-cover" src="assets/video/ikea.mp4" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
-        <span class="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors group-hover:bg-black/40">
-          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-lg">
-            <svg class="h-5 w-5 translate-x-0.5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
-          </span>
-        </span>
       </button>
     </div>
 
     <div id="floating-video-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90" role="dialog" aria-modal="true" aria-label="IKEA 소개 영상">
-      <video id="floating-video-full" class="h-4/5 w-4/5 object-contain" controls playsinline></video>
+      <video id="floating-video-full" class="h-4/5 w-4/5 cursor-pointer object-contain" playsinline aria-label="추천 스타일링"></video>
       <button type="button" id="floating-video-close-btn" class="absolute top-6 right-6 cursor-pointer rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">닫기</button>
     </div>
     <script>
@@ -2126,6 +2121,9 @@
 
         playBtn.addEventListener("click", openVideo);
         closeBtn.addEventListener("click", closeVideo);
+        fullVideo.addEventListener("click", function () {
+          window.location.href = "common/planning.html";
+        });
         overlay.addEventListener("click", function (e) {
           if (e.target === overlay) closeVideo();
         });
