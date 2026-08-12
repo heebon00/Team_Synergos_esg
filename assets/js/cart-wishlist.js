@@ -511,11 +511,21 @@
     }
   });
 
-  document.addEventListener('DOMContentLoaded', function () {
+  // 페이지 로드/새로고침 시 배지 및 상태를 깜빡임 없이 즉시 반영
+  refreshBadges();
+  syncAllButtonStates();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      refreshBadges();
+      syncAllButtonStates();
+    });
+  }
+  window.addEventListener('load', function () {
     refreshBadges();
     syncAllButtonStates();
   });
-  window.addEventListener('load', function () {
+  window.addEventListener('pageshow', function () {
     refreshBadges();
     syncAllButtonStates();
   });

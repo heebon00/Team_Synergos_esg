@@ -14,15 +14,15 @@
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
   } catch (e) {}
-  /* Tailwind CDN이 파싱 중에도 계속 스타일을 다시 생성해서, 캐러셀(매칭 추천 제품 등)이
-     페이지 하단 스크립트가 화면을 공개하기 전까지 커지고 줄어드는 게 반복될 수 있다.
-     혹시 그 공개 로직이 스크립트 오류 등으로 실행되지 못하는 경우를 대비한 안전장치. */
-  setTimeout(function () { d.classList.add('ready'); }, 4000);
 </script>
 
 <!-- Tailwind CDN이 유틸리티 클래스를 브라우저에서 실시간으로 생성하는 동안(JIT),
      그 처리가 끝나기 전까지 스타일 없는 원본 HTML이 잠깐 그대로 보이는 FOUC를 줄이기 위한
-     최소한의 임계 스타일. Tailwind 처리를 기다리지 않고 즉시 적용된다. -->
+     최소한의 임계 스타일. Tailwind 처리를 기다리지 않고 즉시 적용된다.
+     특히 카드 이미지 박스 높이(h-[...]) 값은 Tailwind가 처리하기 전엔 존재하지 않아서
+     "매칭 추천 제품" 캐러셀이 원래 크기보다 커졌다가 줄어드는 것처럼 보였다.
+     자주 쓰이는 크기 클래스를 그대로 복제해 두면, Tailwind가 나중에 같은 값으로
+     덮어써도 화면상 변화가 없어 점프가 사라진다. -->
 <style>
   body {
     margin: 0;
@@ -32,10 +32,50 @@
   }
   img { max-width: 100%; }
 
-  /* Tailwind CDN이 DOM을 파싱하는 동안 스타일을 여러 번 다시 생성하면서
-     이미지/카드 크기가 커졌다가 줄어드는 게 반복되므로(특히 캐러셀),
-     본문을 페이지 하단 스크립트가 준비를 마칠 때까지 숨겨 둔다. */
-  .js:not(.ready) #wrap { visibility: hidden; }
+  .h-\[240px\]  { height: 240px; }
+  .h-\[200px\]  { height: 200px; }
+  .rounded-\[20px\] { border-radius: 20px; }
+  @media (min-width: 1024px) {
+    .lg\:h-\[270px\] { height: 270px; }
+    .lg\:h-\[220px\] { height: 220px; }
+    .lg\:w-\[400px\] { width: 400px; }
+  }
+  @media (min-width: 1280px) {
+    .xl\:w-\[420px\] { width: 420px; }
+  }
+
+  /* Swiper 초기화 전 매칭 추천 제품 레이아웃 점프(길어졌다 줄어듦) 방지 */
+  .prod-sw:not(.swiper-initialized) .swiper-wrapper {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    gap: 20px;
+  }
+  .prod-sw:not(.swiper-initialized) .swiper-slide {
+    width: calc(50% - 10px) !important;
+    flex-shrink: 0 !important;
+  }
+  @media (max-width: 767px) {
+    .prod-sw:not(.swiper-initialized) .swiper-slide {
+      width: calc(62.5% - 10px) !important;
+    }
+  }
+  @media (max-width: 479px) {
+    .prod-sw:not(.swiper-initialized) .swiper-slide {
+      width: calc(85% - 10px) !important;
+    }
+  }
+
+  /* 위시리스트 활성화 하트 버튼 새로고침 시 깜빡임/트랜지션 어색함 방지 */
+  button[aria-pressed="true"] svg,
+  button.active svg,
+  button.active svg path,
+  button[aria-pressed="true"] svg path {
+    color: #ef4444 !important;
+    fill: #ef4444 !important;
+    stroke: #ef4444 !important;
+    transition: none !important;
+  }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -159,7 +199,7 @@
 
   
   
-  /* Fix matching product card hover shadow overflow */
+  /* Fix matching product card hover shadow overflow & pre-init layout shift */
   .prod-sw {
     overflow: visible !important;
     padding: 12px !important;
@@ -167,6 +207,25 @@
   }
   .prod-sw .swiper-wrapper {
     overflow: visible !important;
+  }
+  .prod-sw:not(.swiper-initialized) .swiper-wrapper {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 20px;
+  }
+  .prod-sw:not(.swiper-initialized) .swiper-slide {
+    width: calc(50% - 10px) !important;
+    flex-shrink: 0 !important;
+  }
+  @media (max-width: 767px) {
+    .prod-sw:not(.swiper-initialized) .swiper-slide {
+      width: calc(62.5% - 10px) !important;
+    }
+  }
+  @media (max-width: 479px) {
+    .prod-sw:not(.swiper-initialized) .swiper-slide {
+      width: calc(85% - 10px) !important;
+    }
   }
   .prod-sw .card {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -333,6 +392,24 @@
         </a>
       </li>
     </ul>
+    <script>
+      (function(){
+        try {
+          var w = JSON.parse(localStorage.getItem('ikea_wishlist_items') || localStorage.getItem('ikea_wishlist') || localStorage.getItem('wishlist') || '[]');
+          var c = JSON.parse(localStorage.getItem('ikea_cart_items') || '[]');
+          var wb = document.getElementById('wishlist-badge');
+          var cb = document.getElementById('cart-badge');
+          if (wb) {
+            if (Array.isArray(w) && w.length > 0) { wb.textContent = String(w.length); wb.style.display = 'inline-flex'; }
+            else { wb.textContent = ''; wb.style.display = 'none'; }
+          }
+          if (cb) {
+            if (Array.isArray(c) && c.length > 0) { cb.textContent = String(c.length); cb.style.display = 'inline-flex'; }
+            else { cb.textContent = ''; cb.style.display = 'none'; }
+          }
+        } catch(e){}
+      })();
+    </script>
 
     <!-- Mobile Menu Controls -->
     <div class="ml-auto flex items-center gap-2 lg:hidden">
@@ -1832,15 +1909,25 @@
 </div><!-- /#cont -->
 </div><!-- /#wrap -->
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<!-- defer로 바꿔서 6개 스크립트를 순차 다운로드 대신 병렬로 받는다.
+     (기존에는 하나씩 받고 실행하느라, 그 시간만큼 아래 body-reveal이 늦게 일어나
+     흰 화면이 오래 보였다) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js" defer></script>
 <script src="../assets/js/cart-wishlist.js"></script>
+<script>
+  if (window.WishlistCart && window.WishlistCart.syncAllButtonStates) {
+    window.WishlistCart.syncAllButtonStates();
+  }
+</script>
 
 <script>
-(function () {
+/* 인라인 스크립트는 defer가 적용되지 않으므로, 위 defer 스크립트들이 실행을 마치는
+   DOMContentLoaded 시점까지 직접 대기시켜 순서를 맞춘다. */
+document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   var root  = document.documentElement;
@@ -1930,9 +2017,6 @@
   window.addEventListener('load', resync);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(resync);
   [120, 400, 1000].forEach(function (t) { setTimeout(resync, t); });
-
-  /* 캐러셀 초기화까지 끝난 시점에 본문을 공개한다(위쪽 <style>의 .js:not(.ready) #wrap 참고). */
-  root.classList.add('ready');
 
   /* ---------- 2. 모바일 메뉴 & 메가 메뉴 ---------- */
 
@@ -2186,7 +2270,7 @@
       }
     }
   });
-})();
+});
 </script>
 
 </body>
