@@ -18,15 +18,6 @@
       } catch {
         /* matchMedia 미지원 브라우저는 무시 */
       }
-      try {
-        const introLastSeen = parseInt(localStorage.getItem("ikeaIntroSeen"), 10);
-        if (!isNaN(introLastSeen) && Date.now() - introLastSeen < 24 * 60 * 60 * 1000) {
-          rootEl.classList.add("intro-seen");
-        }
-      } catch {
-        /* localStorage 미지원 브라우저는 무시 */
-      }
-
       // 이미지 에러 발생 시 동적 접두사 및 폴더 Fallback 핸들러
       window.addEventListener(
         "error",
@@ -166,20 +157,6 @@
         transform: none !important;
       }
 
-      /* 최초 접속 인트로 영상 오버레이: JS가 최초 방문 여부를 판단해 표시/숨김을 제어한다 */
-      .intro-video-overlay {
-        display: flex;
-        opacity: 1;
-        transition: opacity 0.5s ease;
-      }
-      .intro-video-overlay.intro-fade-out {
-        opacity: 0;
-        pointer-events: none;
-      }
-      html.intro-seen .intro-video-overlay {
-        display: none;
-      }
-
       /* Skip navigation link */
       .skip-link {
         position: absolute;
@@ -303,62 +280,6 @@
   <body class="flex flex-col min-h-screen bg-white">
     <!-- 접근성: 건너뛰기 링크 -->
     <a class="skip-link" href="#main-content">본문 바로가기</a>
-
-    <!-- 최초 접속 인트로 영상: localStorage에 마지막 재생 시각을 남겨, 24시간 이내 재방문/다른 페이지에서
-       메인으로 돌아올 때는 뜨지 않고 24시간이 지나면 다시 재생된다 -->
-    <div id="intro-video-overlay" class="intro-video-overlay fixed inset-0 z-50 items-center justify-center bg-black" role="region" aria-label="IKEA 인트로 영상">
-      <video id="intro-video" class="h-4/5 w-4/5 object-contain" muted playsinline aria-hidden="true"></video>
-      <button type="button" id="intro-skip-btn" class="absolute bottom-6 right-6 rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">건너뛰기</button>
-    </div>
-    <script>
-      (function () {
-        const KEY = "ikeaIntroSeen";
-        const DAY_MS = 24 * 60 * 60 * 1000;
-        const overlay = document.getElementById("intro-video-overlay");
-        let seen = false,
-          reduceMotion = false;
-        try {
-          const last = parseInt(localStorage.getItem(KEY), 10);
-          seen = !isNaN(last) && Date.now() - last < DAY_MS;
-        } catch {
-          /* localStorage 미지원 브라우저는 무시 */
-        }
-        try {
-          reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        } catch {
-          /* matchMedia 미지원 브라우저는 무시 */
-        }
-        if (!overlay || seen || reduceMotion) return;
-
-        const video = document.getElementById("intro-video");
-        const skipBtn = document.getElementById("intro-skip-btn");
-        let closed = false;
-
-        function closeIntro() {
-          if (closed) return;
-          closed = true;
-          try {
-            localStorage.setItem(KEY, String(Date.now()));
-          } catch {
-            /* localStorage 미지원 브라우저는 무시 */
-          }
-          overlay.classList.add("intro-fade-out");
-          overlay.addEventListener("transitionend", function onEnd() {
-            overlay.removeEventListener("transitionend", onEnd);
-            overlay.style.display = "none";
-            video.pause();
-            video.removeAttribute("src");
-            video.load();
-          });
-        }
-
-        video.addEventListener("ended", closeIntro);
-        video.addEventListener("error", closeIntro);
-        skipBtn.addEventListener("click", closeIntro);
-        video.src = "assets/video/ikea.mp4";
-        video.play().catch(closeIntro);
-      })();
-    </script>
 
     <!-- 페이지 전체 래퍼 -->
     <div id="wrapper" class="flex-1 flex flex-col">
@@ -2058,5 +1979,74 @@
       });
     </script>
     <!-- /SEGMENT: ScrollToTop -->
+
+    <!-- SEGMENT: FloatingIntroVideo -->
+    <!-- 우측 여백에 떠 있는 소개 영상 위젯: 클릭하면 기존 인트로 영상 크기로 재생되고, 삭제 버튼으로 완전히 없앨 수 있다 -->
+    <div id="floating-video-widget" class="fixed right-5 top-1/2 z-40 -translate-y-1/2 group">
+      <button type="button" id="floating-video-delete-btn" class="absolute -top-2 -right-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-ink text-white shadow-md transition-colors hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-white" aria-label="소개 영상 위젯 닫기">
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <button type="button" id="floating-video-play-btn" class="relative block w-40 cursor-pointer overflow-hidden rounded-2xl border-2 border-white bg-ink shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-brand sm:w-48" style="aspect-ratio: 540 / 720;" aria-label="IKEA 소개 영상 재생">
+        <video id="floating-video-preview" class="h-full w-full object-cover" src="assets/video/ikea.mp4" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+        <span class="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors group-hover:bg-black/40">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-lg">
+            <svg class="h-5 w-5 translate-x-0.5 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+          </span>
+        </span>
+      </button>
+    </div>
+
+    <div id="floating-video-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90" role="dialog" aria-modal="true" aria-label="IKEA 소개 영상">
+      <video id="floating-video-full" class="h-4/5 w-4/5 object-contain" controls playsinline></video>
+      <button type="button" id="floating-video-close-btn" class="absolute top-6 right-6 cursor-pointer rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">닫기</button>
+    </div>
+    <script>
+      (function () {
+        const widget = document.getElementById("floating-video-widget");
+        const deleteBtn = document.getElementById("floating-video-delete-btn");
+        const playBtn = document.getElementById("floating-video-play-btn");
+        const preview = document.getElementById("floating-video-preview");
+        const overlay = document.getElementById("floating-video-overlay");
+        const fullVideo = document.getElementById("floating-video-full");
+        const closeBtn = document.getElementById("floating-video-close-btn");
+        if (!widget || !overlay) return;
+
+        function openVideo() {
+          overlay.classList.remove("hidden");
+          overlay.classList.add("flex");
+          fullVideo.src = "assets/video/ikea.mp4";
+          fullVideo.currentTime = 0;
+          fullVideo.play().catch(function () {});
+          preview.pause();
+        }
+
+        function closeVideo() {
+          overlay.classList.add("hidden");
+          overlay.classList.remove("flex");
+          fullVideo.pause();
+          fullVideo.removeAttribute("src");
+          fullVideo.load();
+          preview.play().catch(function () {});
+        }
+
+        playBtn.addEventListener("click", openVideo);
+        closeBtn.addEventListener("click", closeVideo);
+        overlay.addEventListener("click", function (e) {
+          if (e.target === overlay) closeVideo();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && !overlay.classList.contains("hidden")) closeVideo();
+        });
+        deleteBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          closeVideo();
+          widget.remove();
+          overlay.remove();
+        });
+      })();
+    </script>
+    <!-- /SEGMENT: FloatingIntroVideo -->
 </body>
 </html>
