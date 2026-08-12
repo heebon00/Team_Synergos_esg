@@ -218,22 +218,29 @@
 
     <!-- 최초 접속 인트로 영상: localStorage에 마지막 재생 시각을 남겨, 24시간 이내 재방문/다른 페이지에서
        메인으로 돌아올 때는 뜨지 않고 24시간이 지나면 다시 재생된다 -->
-    <div id="intro-video-overlay" class="intro-video-overlay fixed inset-0 z-50 items-center justify-center bg-black" role="region" aria-label="IKEA 인트로 영상">
-      <video id="intro-video" class="h-4/5 w-4/5 object-contain" muted playsinline aria-hidden="true"></video>
-      <button type="button" id="intro-skip-btn" class="absolute bottom-6 right-6 rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">건너뛰기</button>
-    </div>
-    <script>
-          (function () {
-            var KEY = 'ikeaIntroSeen';
-            var DAY_MS = 24 * 60 * 60 * 1000;
-            var overlay = document.getElementById('intro-video-overlay');
-            var seen = false, reduceMotion = false;
-            try {
-              var last = parseInt(localStorage.getItem(KEY), 10);
-              seen = !isNaN(last) && (Date.now() - last) < DAY_MS;
-            } catch (e) {}
-            try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
-            if (!overlay || seen || reduceMotion) return;
+  <div id="intro-video-overlay" class="intro-video-overlay fixed inset-0 z-50 items-center justify-center bg-black" role="region" aria-label="IKEA 인트로 영상">
+    <video id="intro-video" class="h-4/5 w-4/5 object-contain" muted playsinline aria-hidden="true"></video>
+    <button type="button" id="intro-skip-btn" class="absolute bottom-6 right-6 rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">건너뛰기</button>
+  </div>
+  <script>
+    (function () {
+<<<<<<< HEAD
+      var KEY = 'ikeaIntroSeen';
+      var DAY_MS = 24 * 60 * 60 * 1000;
+      var overlay = document.getElementById('intro-video-overlay');
+      var seen = false, reduceMotion = false;
+      try {
+        var last = parseInt(localStorage.getItem(KEY), 10);
+        seen = !isNaN(last) && (Date.now() - last) < DAY_MS;
+      } catch (e) {}
+=======
+      const KEY = 'ikeaIntroSeen';
+      const overlay = document.getElementById('intro-video-overlay');
+      let seen = false, reduceMotion = false;
+      try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
+>>>>>>> 3a2289f1510434e2c5eec0f946b2048b0ff8d588
+      try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      if (!overlay || seen || reduceMotion) return;
 
             const video = document.getElementById('intro-video');
             const skipBtn = document.getElementById('intro-skip-btn');
