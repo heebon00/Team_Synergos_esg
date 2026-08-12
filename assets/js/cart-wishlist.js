@@ -606,4 +606,16 @@
       document.head.appendChild(scriptTag);
     }
   } catch (e) {}
+
+  // 헤더 검색창(제품/메뉴 자동완성) 자동 로드
+  try {
+    if (!window.__IKEA_SEARCH_INITIALIZED__) {
+      var isInsideCommonForSearch = window.location.pathname.indexOf('/common/') !== -1;
+      var searchScriptPath = isInsideCommonForSearch ? '../assets/js/search.js' : 'assets/js/search.js';
+      var searchScriptTag = document.createElement('script');
+      searchScriptTag.src = searchScriptPath;
+      searchScriptTag.defer = true;
+      document.head.appendChild(searchScriptTag);
+    }
+  } catch (e) {}
 })();
