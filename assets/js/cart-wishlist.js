@@ -219,15 +219,16 @@
       }
     }
 
-    // 3. 가격 추출 (.text-price, [data-price], p.font-bold, p.font-extrabold, p.text-lg, p.text-xl, span.font-bold)
+    // 3. 가격 추출 — 할인가(.text-discount)가 있으면 정가(line-through)보다 우선한다
     var price = '';
-    var priceEl = card.querySelector('.text-price, [data-price], p.text-xl.font-bold, p.text-lg.font-bold, p.text-lg.font-extrabold, p.font-extrabold, p.font-bold, span.font-bold, .price');
+    var priceEl = card.querySelector('.text-discount, .text-price, [data-price], p.text-xl.font-bold, p.text-lg.font-bold, p.text-lg.font-extrabold, p.font-extrabold, p.font-bold, span.font-bold, .price');
     if (priceEl) {
       price = priceEl.textContent.trim().replace(/[^0-9,]/g, '');
     }
     if (!price) {
       var allP = card.querySelectorAll('p, span');
       for (var j = 0; j < allP.length; j++) {
+        if (allP[j].classList.contains('line-through')) continue; // 취소선 정가는 건너뛴다
         var t = allP[j].textContent.trim();
         if (t.includes('₩') || (/[0-9]{1,3}(,[0-9]{3})+/.test(t) && !t.includes('('))) {
           var matched = t.replace(/[^0-9,]/g, '');
