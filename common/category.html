@@ -202,12 +202,10 @@
   section[aria-labelledby="cat-h"] .swiper-slide {
     width: 80px !important;
     flex-shrink: 0 !important;
-    margin-right: clamp(14px, 3.2vw, 40px) !important;
   }
-  section[aria-labelledby="cat-h"] .swiper-slide:last-child,
-  .cat-sw .swiper-slide:last-child {
-    margin-right: 0 !important;
-  }
+  /* margin-right(간격)는 Swiper가 spaceBetween으로 직접 관리한다.
+     여기서 !important로 강제하면 Swiper 내부 계산과 실제 레이아웃이 어긋나서
+     overflow 판정이 틀어지고 화살표가 숨어버린다. */
   /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
   .prod-sw { padding: 10px 2px 26px; }
   .nav-btn[aria-disabled="true"] { opacity: .3; }
@@ -2084,13 +2082,68 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var swipers = [];
 
+  // index.html의 카테고리 캐러셀과 동일한 로직: 화면 폭에 맞춰 간격(gap)을 가변 계산하고,
+  // 전체 아이템(10개)이 컨테이너보다 좁게 들어가는 폭에서는 왼쪽에 붙지 않도록
+  // 남는 폭을 양쪽에 똑같이 나눠 가운데 정렬한다. Swiper의 centerInsufficientSlides는
+  // "슬라이드 개수 < slidesPerView"만 보고 실제 픽셀 폭은 보지 않아서, 개수가 딱
+  // 맞아떨어지는 경우(예: 1180px 이상에서 10개 전부 slidesPerView:10) 동작하지 않는다.
+  var CAT_SLIDE_WIDTH = 80;
+  var CAT_EDGE_OFFSET = 40; // 스크롤이 필요할 때 화살표를 위해 남기는 최소 여백
+  var CAT_GAP_MIN = 14;
+  var CAT_GAP_MAX = 48;
+  function syncCatLayout(swiper) {
+    if (!swiper || !swiper.el) return;
+    var containerWidth = swiper.el.clientWidth;
+    var n = swiper.params.slidesPerView;
+    var usable = containerWidth - CAT_EDGE_OFFSET * 2;
+    var gap;
+    if (typeof n === 'number' && n > 1) {
+      gap = (usable - n * CAT_SLIDE_WIDTH) / (n - 1);
+    } else {
+      gap = usable * 0.045;
+    }
+    gap = Math.max(CAT_GAP_MIN, Math.min(CAT_GAP_MAX, gap));
+
+    var total = swiper.slides ? swiper.slides.length : 0;
+    var contentWidth = total * CAT_SLIDE_WIDTH + Math.max(0, total - 1) * gap;
+    var offsetBefore = CAT_EDGE_OFFSET;
+    var offsetAfter = CAT_EDGE_OFFSET;
+    if (total > 0 && contentWidth + CAT_EDGE_OFFSET * 2 <= containerWidth) {
+      var extra = (containerWidth - contentWidth) / 2;
+      offsetBefore = extra;
+      offsetAfter = extra;
+    }
+
+    var changed = false;
+    if (Math.abs((swiper.params.spaceBetween || 0) - gap) > 0.5) {
+      swiper.params.spaceBetween = gap;
+      changed = true;
+    }
+    if (
+      Math.abs((swiper.params.slidesOffsetBefore || 0) - offsetBefore) > 0.5 ||
+      Math.abs((swiper.params.slidesOffsetAfter || 0) - offsetAfter) > 0.5
+    ) {
+      swiper.params.slidesOffsetBefore = offsetBefore;
+      swiper.params.slidesOffsetAfter = offsetAfter;
+      changed = true;
+    }
+    if (changed) {
+      swiper.update();
+      // update()는 기존 스크롤 위치(translate)를 그대로 유지하려고 해서,
+      // 스크롤해둔 상태에서 화면을 다시 키우면(예: 넘침 → 안 넘침으로 전환)
+      // 새로 계산된 offset과 옛 위치가 어긋나 카테고리가 한쪽으로 쏠려 보인다.
+      // 레이아웃이 바뀔 때마다 항상 처음 위치로 되돌려 어긋남을 막는다.
+      swiper.slideTo(0, 0, false);
+    }
+  }
+
   swipers.push(new Swiper('.cat-sw', {
     a11y: a11y,
     speed: calm ? 0 : 420,
     slidesPerView: 'auto',
     spaceBetween: 16,
-    slidesOffsetBefore: 36,
-    slidesOffsetAfter: 36,
+    slidesOffsetBefore: CAT_EDGE_OFFSET,
+    slidesOffsetAfter: CAT_EDGE_OFFSET,
     slidesPerGroupAuto: true,
     watchOverflow: true,
     observer: true,
@@ -2103,9 +2156,20 @@ document.addEventListener('DOMContentLoaded', function () {
       disabledClass: 'is-off',
       lockClass: 'is-locked'
     },
+    // index.html 카테고리 캐러셀과 동일한 브레이크포인트를 사용해,
+    // 어느 화면 폭에서든 보이는 카테고리 개수가 항상 같도록 맞춘다.
     breakpoints: {
-      640:  { slidesPerView: 6,  spaceBetween: 20 },
-      1024: { slidesPerView: 10, spaceBetween: 35.5 }
+      480:  { slidesPerView: 4 },
+      640:  { slidesPerView: 5 },
+      768:  { slidesPerView: 6 },
+      900:  { slidesPerView: 7 },
+      1024: { slidesPerView: 9 },
+      1180: { slidesPerView: 10 }
+    },
+    on: {
+      init: function () { syncCatLayout(this); },
+      resize: function () { syncCatLayout(this); },
+      breakpoint: function () { syncCatLayout(this); }
     }
   }));
 

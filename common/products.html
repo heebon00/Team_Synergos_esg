@@ -120,8 +120,8 @@
     -ms-overflow-style: none;
     padding-top: 14px;
     padding-bottom: 4px;
-    padding-left: 36px;
-    padding-right: 36px;
+    padding-left: 40px;
+    padding-right: 40px;
     overscroll-behavior-x: none;
   }
   .cat-scroll::-webkit-scrollbar { display: none; }
@@ -1652,6 +1652,25 @@ document.addEventListener('DOMContentLoaded', function () {
   (function () {
     var scrollEl = document.querySelector('.cat-scroll');
     if (!scrollEl) return;
+
+    // ── 카테고리 간격(gap-x)을 화면 폭에 맞춰 가변 계산 ──
+    // index.html/category.html의 캐러셀과 동일한 방식(컨테이너 실제 폭 기반 계산).
+    // .cat-scroll의 좌우 padding(40px)이 첫 번째/마지막 카테고리 위치를 그대로 고정해주므로,
+    // 여기서는 아이템 사이 간격(column-gap)만 바꾸고 위치 앵커는 건드리지 않는다.
+    // 2줄 그리드(grid-template-rows: repeat(2, auto))도 그대로 유지된다.
+    (function () {
+      var gridEl = document.querySelector('.cat-grid-2row');
+      if (!gridEl) return;
+      var GAP_MIN = 14;
+      var GAP_MAX = 48;
+      function syncCatGridGap() {
+        var usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
+        var gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
+        gridEl.style.columnGap = gap + 'px';
+      }
+      syncCatGridGap();
+      window.addEventListener('resize', syncCatGridGap);
+    })();
 
     // ── 좌우 반투명 화살표: 스크롤 가능 여부에 따라 표시/숨김 ──
     var prevBtn = document.querySelector('.cat-nav-prev');
