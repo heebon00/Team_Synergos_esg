@@ -15,13 +15,17 @@
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           rootEl.classList.add("no-motion");
         }
-      } catch { /* matchMedia 미지원 브라우저는 무시 */ }
+      } catch {
+        /* matchMedia 미지원 브라우저는 무시 */
+      }
       try {
         const introLastSeen = parseInt(localStorage.getItem("ikeaIntroSeen"), 10);
         if (!isNaN(introLastSeen) && Date.now() - introLastSeen < 24 * 60 * 60 * 1000) {
           rootEl.classList.add("intro-seen");
         }
-      } catch { /* localStorage 미지원 브라우저는 무시 */ }
+      } catch {
+        /* localStorage 미지원 브라우저는 무시 */
+      }
 
       // 이미지 에러 발생 시 동적 접두사 및 폴더 Fallback 핸들러
       window.addEventListener(
@@ -74,9 +78,11 @@
         --color-ink-muted: #6b7280;
         --color-muted: #666666;
         --color-price: #1a1a1a;
+        --color-slate-ink: #111827;
 
         --color-line: #c5ccd6;
         --color-line-light: #e6e6e6;
+        --color-line-2: #d1d5db;
         --color-hairline: #f0f0f0;
         --color-bg-light: #f8f9fa;
 
@@ -162,9 +168,22 @@
         top: 16px;
       }
 
-      /* Swiper customization */
-      .cat-swiper .swiper-slide {
-        width: 80px;
+      /* 카테고리 아이콘 (모든 제품 페이지와 동일한 원형·풀블리드 스타일, 2줄 그리드 배치) */
+      .cat {
+        transition:
+          transform 0.2s ease,
+          color 0.2s ease;
+      }
+      .cat:hover {
+        transform: translateY(-3px);
+      }
+      .cat,
+      .cat:focus,
+      .cat:focus-visible,
+      .cat:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
       }
       .prod-swiper {
         overflow: visible !important;
@@ -219,47 +238,58 @@
 
     <!-- 최초 접속 인트로 영상: localStorage에 마지막 재생 시각을 남겨, 24시간 이내 재방문/다른 페이지에서
        메인으로 돌아올 때는 뜨지 않고 24시간이 지나면 다시 재생된다 -->
-  <div id="intro-video-overlay" class="intro-video-overlay fixed inset-0 z-50 items-center justify-center bg-black" role="region" aria-label="IKEA 인트로 영상">
-    <video id="intro-video" class="h-4/5 w-4/5 object-contain" muted playsinline aria-hidden="true"></video>
-    <button type="button" id="intro-skip-btn" class="absolute bottom-6 right-6 rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">건너뛰기</button>
-  </div>
-  <script>
-    (function () {
-      const KEY = 'ikeaIntroSeen';
-      const DAY_MS = 24 * 60 * 60 * 1000;
-      const overlay = document.getElementById('intro-video-overlay');
-      let seen = false, reduceMotion = false;
-      try {
-        const last = parseInt(localStorage.getItem(KEY), 10);
-        seen = !isNaN(last) && (Date.now() - last) < DAY_MS;
-      } catch { /* localStorage 미지원 브라우저는 무시 */ }
-      try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { /* matchMedia 미지원 브라우저는 무시 */ }
-      if (!overlay || seen || reduceMotion) return;
+    <div id="intro-video-overlay" class="intro-video-overlay fixed inset-0 z-50 items-center justify-center bg-black" role="region" aria-label="IKEA 인트로 영상">
+      <video id="intro-video" class="h-4/5 w-4/5 object-contain" muted playsinline aria-hidden="true"></video>
+      <button type="button" id="intro-skip-btn" class="absolute bottom-6 right-6 rounded-pill border border-white/70 bg-black/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-black/60">건너뛰기</button>
+    </div>
+    <script>
+      (function () {
+        const KEY = "ikeaIntroSeen";
+        const DAY_MS = 24 * 60 * 60 * 1000;
+        const overlay = document.getElementById("intro-video-overlay");
+        let seen = false,
+          reduceMotion = false;
+        try {
+          const last = parseInt(localStorage.getItem(KEY), 10);
+          seen = !isNaN(last) && Date.now() - last < DAY_MS;
+        } catch {
+          /* localStorage 미지원 브라우저는 무시 */
+        }
+        try {
+          reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        } catch {
+          /* matchMedia 미지원 브라우저는 무시 */
+        }
+        if (!overlay || seen || reduceMotion) return;
 
-            const video = document.getElementById('intro-video');
-            const skipBtn = document.getElementById('intro-skip-btn');
-            let closed = false;
+        const video = document.getElementById("intro-video");
+        const skipBtn = document.getElementById("intro-skip-btn");
+        let closed = false;
 
-            function closeIntro() {
-              if (closed) return;
-              closed = true;
-              try { localStorage.setItem(KEY, String(Date.now())); } catch { /* localStorage 미지원 브라우저는 무시 */ }
-              overlay.classList.add('intro-fade-out');
-              overlay.addEventListener('transitionend', function onEnd() {
-                overlay.removeEventListener('transitionend', onEnd);
-                overlay.style.display = 'none';
-                video.pause();
-                video.removeAttribute('src');
-                video.load();
-              });
-            }
+        function closeIntro() {
+          if (closed) return;
+          closed = true;
+          try {
+            localStorage.setItem(KEY, String(Date.now()));
+          } catch {
+            /* localStorage 미지원 브라우저는 무시 */
+          }
+          overlay.classList.add("intro-fade-out");
+          overlay.addEventListener("transitionend", function onEnd() {
+            overlay.removeEventListener("transitionend", onEnd);
+            overlay.style.display = "none";
+            video.pause();
+            video.removeAttribute("src");
+            video.load();
+          });
+        }
 
-            video.addEventListener('ended', closeIntro);
-            video.addEventListener('error', closeIntro);
-            skipBtn.addEventListener('click', closeIntro);
-            video.src = 'assets/video/ikea.mp4';
-            video.play().catch(closeIntro);
-          })();
+        video.addEventListener("ended", closeIntro);
+        video.addEventListener("error", closeIntro);
+        skipBtn.addEventListener("click", closeIntro);
+        video.src = "assets/video/ikea.mp4";
+        video.play().catch(closeIntro);
+      })();
     </script>
 
     <!-- 페이지 전체 래퍼 -->
@@ -284,8 +314,10 @@
         <!-- 2. Main Navigation Bar -->
         <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
           <!-- Logo -->
-          <a href="index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동"> <!-- token-exempt -->
-            <img src="assets/logos/ikea_logo.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-[98px] object-contain" /> <!-- token-exempt -->
+          <a href="index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">
+            <!-- token-exempt -->
+            <img src="assets/logos/ikea_logo.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-[98px] object-contain" />
+            <!-- token-exempt -->
           </a>
 
           <!-- Desktop Navigation Menu -->
@@ -593,120 +625,124 @@
       <!-- Main Content Body -->
       <main id="main-content" class="flex-1">
         <!-- SECTION: Category Icon Row (2 Rows of 7 Items matching Figma HIFI Frame) -->
-        <section class="py-8 bg-white border-b border-line-light/50 overflow-hidden" aria-label="카테고리 탐색">
+        <section aria-labelledby="cat-h" class="py-8 bg-white border-b border-line-light/50 overflow-hidden">
           <div class="mx-auto max-w-[1280px] px-5 lg:px-10">
-            <div class="grid grid-cols-4 sm:grid-cols-7 gap-y-6 gap-x-4 items-center justify-items-center">
-              <!-- Row 1: Item 1 - 모든제품 -->
-              <a href="common/products.html" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/cat-all.png" alt="모든제품" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">모든제품</span>
+            <h2 id="cat-h" class="sr-only-hide">카테고리 탐색</h2>
+
+            <div class="cat-grid grid grid-cols-4 sm:grid-cols-7 gap-y-6 gap-x-4 justify-items-center">
+
+              <!-- 1. 신제품 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-new.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">신제품</span>
               </a>
 
-              <!-- Row 1: Item 2 - 침대 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/cat-bed.png" alt="침대" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">침대</span>
+              <!-- 2. 수납가구 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-storage.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">수납가구</span>
               </a>
 
-              <!-- Row 1: Item 3 - 책상 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/cat-desk.png" alt="책상" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">책상</span>
+              <!-- 3. 침구/러그 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-bedding.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">침구/러그</span>
               </a>
 
-              <!-- Row 1: Item 4 - 의자 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/cat-chair.png" alt="의자" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">의자</span>
+              <!-- 4. 소파/의자 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-sofa.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">소파/의자</span>
               </a>
 
-              <!-- Row 1: Item 5 - 수납장 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/cat-storage.png" alt="수납장" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">수납장</span>
+              <!-- 5. 주방가구 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-kitchen.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">주방가구</span>
               </a>
 
-              <!-- Row 1: Item 6 - 식탁 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/cat-table.png" alt="식탁" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">식탁</span>
+              <!-- 6. 욕실가구 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-bath.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">욕실가구</span>
               </a>
 
-              <!-- Row 1: Item 7 - 서랍장 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/images/products/nordli.png" alt="서랍장" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">서랍장</span>
+              <!-- 7. 세탁/청소가구 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-laundry.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">세탁/청소가구</span>
               </a>
 
-              <!-- Row 2: Item 8 - 선반 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/p-billy.png" alt="선반" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">선반</span>
+              <!-- 8. 가전제품 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-appliance.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">가전제품</span>
               </a>
 
-              <!-- Row 2: Item 9 - TV장 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/images/products/stockholm.png" alt="TV장" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">TV장</span>
+              <!-- 9. 타일/벽지 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-deco.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">타일/벽지</span>
               </a>
 
-              <!-- Row 2: Item 10 - 소파 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/images/products/kivik.png" alt="소파" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">소파</span>
+              <!-- 10. 식품 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-food.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">식품</span>
               </a>
 
-              <!-- Row 2: Item 11 - 화분 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/seungwoon/images/gallery-home-garden.png" alt="화분" width="56" height="56" class="h-14 w-14 object-cover rounded-xl" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">화분</span>
+              <!-- 11. 키즈 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-kids.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">키즈</span>
               </a>
 
-              <!-- Row 2: Item 12 - 조명 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/images/products/ostano.png" alt="조명" width="56" height="56" class="h-14 w-14 object-contain" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">조명</span>
+              <!-- 12. 아웃도어 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-outdoor.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">아웃도어</span>
               </a>
 
-              <!-- Row 2: Item 13 - 러그 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/p-showcase-2.png" alt="러그" width="56" height="56" class="h-14 w-14 object-cover rounded-xl" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">러그</span>
+              <!-- 13. 가드닝/조경 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-gardening.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">가드닝/조경</span>
               </a>
 
-              <!-- Row 2: Item 14 - 커튼 -->
-              <a href="#" class="flex flex-col items-center text-center group cursor-pointer w-[80px]">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl border border-line-light bg-bg-light p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand group-hover:shadow-md">
-                  <img src="assets/seungwoon/images/gallery-kids-room.png" alt="커튼" width="56" height="56" class="h-14 w-14 object-cover rounded-xl" />
-                </div>
-                <span class="mt-2 block text-xs font-medium text-ink group-hover:text-brand group-hover:font-bold transition-colors">커튼</span>
+              <!-- 14. 기타 -->
+              <a href="common/products.html" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+                <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
+                  <img src="assets/cat-etc.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true" />
+                </span>
+                <span class="text-center text-xs text-slate-ink">기타</span>
               </a>
+
             </div>
           </div>
         </section>
@@ -1473,6 +1509,23 @@
               1024: { slidesPerView: 4, spaceBetween: 24 },
             },
           });
+        }
+
+        // 카테고리 아이콘이 순차적으로 떠오르며 등장 (공간별 쇼핑 페이지와 동일한 로딩 애니메이션)
+        if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && !rootEl.classList.contains("no-motion")) {
+          gsap.registerPlugin(ScrollTrigger);
+          gsap.fromTo(
+            ".cat-grid .cat",
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+              stagger: 0.05,
+              scrollTrigger: { trigger: ".cat-grid", start: "top 90%", once: true },
+            },
+          );
         }
 
         // Header & Mega Menu Logic
