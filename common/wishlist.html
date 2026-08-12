@@ -537,50 +537,8 @@
         <span class="text-sm font-medium text-ink-muted">총 <span id="wishlist-count-label" class="text-brand font-bold">0</span>개 상품</span>
       </div>
 
-      <!-- Wishlist Grid (JS로 실제 담긴 상품을 렌더링, 최초 방문 기본값은 레이아웃 점프 방지를 위해 미리 렌더링해둔다) -->
-      <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <article class="card flex flex-col overflow-hidden rounded-card border border-line-light bg-white shadow-sm hover:shadow-card-hover transition-all duration-300">
-          <div class="relative h-48 w-full overflow-hidden bg-shell flex items-center justify-center p-4">
-            <img src="../assets/images/products/kivik.png" alt="POÄNG 포엔 암체어" width="200" height="160" class="max-h-full w-auto object-contain">
-            <button type="button" data-index="0" class="delete-wish-btn group absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white shadow-sm border border-line text-sale hover:bg-hairline transition-all" aria-label="위시리스트에서 삭제">
-              <svg class="h-4 w-4 fill-sale stroke-sale" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            </button>
-          </div>
-          <div class="flex flex-1 flex-col justify-between p-5">
-            <div>
-              <h3 class="text-sm font-bold text-ink">POÄNG 포엔 암체어</h3>
-              <p class="mt-1 text-xs text-ink-muted">군세레드 베이지 / 자작나무 베니어</p>
-              <p class="mt-3 text-lg font-bold text-price">₩119,000</p>
-            </div>
-            <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
-              <a href="#" class="text-xs font-medium text-ink-sub underline hover:text-brand">상세보기</a>
-              <button type="button" class="rounded-full bg-brand hover:bg-brand-dark px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
-                장바구니 담기
-              </button>
-            </div>
-          </div>
-        </article>
-        <article class="card flex flex-col overflow-hidden rounded-card border border-line-light bg-white shadow-sm hover:shadow-card-hover transition-all duration-300">
-          <div class="relative h-48 w-full overflow-hidden bg-shell flex items-center justify-center p-4">
-            <img src="../assets/images/products/strandmon.png" alt="STRANDMON 스트란드몬 윙체어" width="200" height="160" class="max-h-full w-auto object-contain">
-            <button type="button" data-index="1" class="delete-wish-btn group absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white shadow-sm border border-line text-sale hover:bg-hairline transition-all" aria-label="위시리스트에서 삭제">
-              <svg class="h-4 w-4 fill-sale stroke-sale" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            </button>
-          </div>
-          <div class="flex flex-1 flex-col justify-between p-5">
-            <div>
-              <h3 class="text-sm font-bold text-ink">STRANDMON 스트란드몬 윙체어</h3>
-              <p class="mt-1 text-xs text-ink-muted">노르드발라 다크그레이</p>
-              <p class="mt-3 text-lg font-bold text-price">₩299,000</p>
-            </div>
-            <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
-              <a href="#" class="text-xs font-medium text-ink-sub underline hover:text-brand">상세보기</a>
-              <button type="button" class="rounded-full bg-brand hover:bg-brand-dark px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
-                장바구니 담기
-              </button>
-            </div>
-          </div>
-        </article>
+      <!-- Wishlist Grid (JS로 동적 렌더링하여 초기 렌더링 잔상 및 레이아웃 점프를 완전 차단) -->
+      <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 opacity-0 transition-opacity duration-300">
       </div>
 
       <!-- Empty State (위시리스트 비었을 때 노출 안내 카드) -->
@@ -911,6 +869,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (items.length === 0) {
       grid.innerHTML = '';
+      grid.classList.remove('opacity-0');
+      grid.classList.add('opacity-100');
       emptyState.classList.remove('hidden');
       emptyState.classList.add('flex');
       return;
@@ -973,6 +933,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }).join('');
 
     attachCardListeners();
+    grid.classList.remove('opacity-0');
+    grid.classList.add('opacity-100');
   }
 
   renderWishlist();
