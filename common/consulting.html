@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="../assets/js/cart-wishlist.js"></script>
+<script src="../assets/js/chatbot.js"></script>
 
 <link rel="stylesheet" href="../assets/css/tokens.css">
 <style type="text/tailwindcss">
@@ -721,10 +722,19 @@
       <div class="space-y-3">
         <h3 class="text-sm font-bold text-ink">고객문의</h3>
         <ul class="space-y-2 text-xs text-ink-3">
+          <li><button type="button" data-open-chatbot="true" class="hover:text-brand hover:underline text-left cursor-pointer flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>AI 챗봇 상담 (24시간)</button></li>
           <li><a href="#" class="hover:text-brand hover:underline transition-colors">자주 묻는 질문</a></li>
           <li><a href="#" class="hover:text-brand hover:underline transition-colors">문의하기</a></li>
           <li><a href="delivery.html" class="hover:text-brand hover:underline transition-colors">배송 서비스 안내</a></li>
         </ul>
+        <div class="pt-1">
+          <button type="button" data-open-chatbot="true" class="w-full flex items-center justify-center gap-2 rounded-full bg-accent hover:bg-yellow-400 text-ink font-bold text-xs py-2 px-3 shadow-xs transition-all duration-200 cursor-pointer">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.03 2 11c0 2.274 0.942 4.354 2.518 5.892L3.5 21.5l5.084-1.695C9.722 20.082 10.838 20.2 12 20.2c5.523 0 10-4.03 10-9.2S17.523 2 12 2zm-3.5 8.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3.5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3.5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+            </svg>
+            <span>24시간 AI 챗봇 상담</span>
+          </button>
+        </div>
       </div>
 
       <!-- Col 2: 쇼핑하기 -->
@@ -796,6 +806,7 @@
         <label class="block text-xs font-bold text-ink mb-1">희망 상담 매장 / 플랫폼</label>
         <select class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none bg-white">
           <option>온라인 화상회의 (비대면)</option>
+          <option>IKEA 강동점</option>
           <option>IKEA 광명점</option>
           <option>IKEA 고양점</option>
           <option>IKEA 기흥점</option>

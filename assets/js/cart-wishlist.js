@@ -552,4 +552,16 @@
   };
 
   window.CartWishlist = window.WishlistCart;
+
+  // 사이트 전역 AI 챗봇 시스템 자동 로드
+  try {
+    if (!window.__IKEA_CHATBOT_INITIALIZED__) {
+      var isInsideCommon = window.location.pathname.indexOf('/common/') !== -1;
+      var chatbotScriptPath = isInsideCommon ? '../assets/js/chatbot.js' : 'assets/js/chatbot.js';
+      var scriptTag = document.createElement('script');
+      scriptTag.src = chatbotScriptPath;
+      scriptTag.defer = true;
+      document.head.appendChild(scriptTag);
+    }
+  } catch (e) {}
 })();
