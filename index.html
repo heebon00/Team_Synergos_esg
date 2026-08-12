@@ -8,7 +8,7 @@
 
   <!-- 접근성: 감선 운동 모드 감지 -->
   <script>
-    var rootEl = document.documentElement;
+    const rootEl = document.documentElement;
     rootEl.classList.add('js');
     try {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -25,15 +25,15 @@
     // 이미지 에러 발생 시 동적 접두사 및 폴더 Fallback 핸들러
     window.addEventListener('error', function(e) {
       if (e.target && e.target.tagName === 'IMG') {
-        var img = e.target;
-        var src = img.getAttribute('src');
+        const img = e.target;
+        const src = img.getAttribute('src');
         if (!src) return;
-        var step = parseInt(img.dataset.fallbackStep || '0', 10);
-        var filename = src.split('/').pop().split('?')[0];
-        
-        var pFilename = filename.startsWith('p-') ? filename : 'p-' + filename;
-        
-        var candidates = [
+        const step = parseInt(img.dataset.fallbackStep || '0', 10);
+        const filename = src.split('/').pop().split('?')[0];
+
+        const pFilename = filename.startsWith('p-') ? filename : 'p-' + filename;
+
+        const candidates = [
           '../assets/' + filename,
           '../assets/' + pFilename,
           '../assets/images/products/' + filename,
@@ -225,6 +225,7 @@
   </div>
   <script>
     (function () {
+<<<<<<< HEAD
       var KEY = 'ikeaIntroSeen';
       var DAY_MS = 24 * 60 * 60 * 1000;
       var overlay = document.getElementById('intro-video-overlay');
@@ -233,12 +234,18 @@
         var last = parseInt(localStorage.getItem(KEY), 10);
         seen = !isNaN(last) && (Date.now() - last) < DAY_MS;
       } catch (e) {}
+=======
+      const KEY = 'ikeaIntroSeen';
+      const overlay = document.getElementById('intro-video-overlay');
+      let seen = false, reduceMotion = false;
+      try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
+>>>>>>> 3a2289f1510434e2c5eec0f946b2048b0ff8d588
       try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
       if (!overlay || seen || reduceMotion) return;
 
-      var video = document.getElementById('intro-video');
-      var skipBtn = document.getElementById('intro-skip-btn');
-      var closed = false;
+      const video = document.getElementById('intro-video');
+      const skipBtn = document.getElementById('intro-skip-btn');
+      let closed = false;
 
       function closeIntro() {
         if (closed) return;
@@ -783,7 +790,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">KALLAX 칼락스 선반유닛</h3>
                       <p class="text-xs text-ink-muted">화이트, 77x147 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -817,7 +824,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">MALM 말름 침대 프레임</h3>
                       <p class="text-xs text-ink-muted">화이트 오크무늬, 150x200 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -851,7 +858,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">POÄNG 포엥 암체어</h3>
                       <p class="text-xs text-ink-muted">자작나무무늬/크니사 라이트베이지</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -885,7 +892,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">HEMNES 헴네스 서랍장</h3>
                       <p class="text-xs text-ink-muted">화이트 스테인, 108x96 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -919,7 +926,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">MARKUS 마르쿠스 의자</h3>
                       <p class="text-xs text-ink-muted">블랙 글로세, 사무용 인체공학</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -993,7 +1000,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">BILLY 빌리 책장</h3>
                       <p class="text-xs text-ink-muted">화이트, 80x28x202 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -1027,7 +1034,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">LACK 라크 사이드테이블</h3>
                       <p class="text-xs text-ink-muted">블랙브라운, 55x55 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -1061,7 +1068,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">ALEX 알렉스 서랍유닛</h3>
                       <p class="text-xs text-ink-muted">화이트, 36x70 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -1095,7 +1102,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">NORDLI 노르들리 수납콤비네이션</h3>
                       <p class="text-xs text-ink-muted">화이트, 160x99 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -1129,7 +1136,7 @@
                     <div class="flex flex-col gap-1">
                       <h3 class="text-base font-bold text-ink group-hover:text-brand transition-colors">EKEDALEN 에케달렌 확장식탁</h3>
                       <p class="text-xs text-ink-muted">화이트, 120/180x80 cm</p>
-                      <div class="flex items-center gap-1 text-sm text-accent" aria-label="5점 만점에 4점">
+                      <div class="flex items-center gap-1 text-sm text-accent" role="img" aria-label="5점 만점에 4점">
                         <span aria-hidden="true">★★★★☆</span>
                         <span class="text-xs text-ink-muted">(128)</span>
                       </div>
@@ -1381,7 +1388,7 @@
           <article class="flex flex-col justify-between rounded-2xl border border-line-light bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300">
             <div>
               <!-- Stars -->
-              <div class="flex items-center gap-1 text-accent" aria-label="5점 만점에 5점">
+              <div class="flex items-center gap-1 text-accent" role="img" aria-label="5점 만점에 5점">
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -1407,7 +1414,7 @@
           <article class="flex flex-col justify-between rounded-2xl border border-line-light bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300">
             <div>
               <!-- Stars -->
-              <div class="flex items-center gap-1 text-accent" aria-label="5점 만점에 5점">
+              <div class="flex items-center gap-1 text-accent" role="img" aria-label="5점 만점에 5점">
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
@@ -1433,7 +1440,7 @@
           <article class="flex flex-col justify-between rounded-2xl border border-line-light bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300">
             <div>
               <!-- Stars -->
-              <div class="flex items-center gap-1 text-accent" aria-label="5점 만점에 5점">
+              <div class="flex items-center gap-1 text-accent" role="img" aria-label="5점 만점에 5점">
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
