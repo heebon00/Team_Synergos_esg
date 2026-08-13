@@ -461,26 +461,22 @@
 </header>
 <!-- /SEGMENT: Header -->
 
-<!-- SEGMENT: MainContent -->
-<main id="main" class="mx-auto w-full max-w-container px-body-px py-body-py flex-1">
-  
-  <!-- Breadcrumbs -->
-  <nav aria-label="현재 위치 브레드크럼" class="flex items-center gap-2 mb-8 text-xs text-ink-muted">
-    <a href="../index.html" class="hover:text-brand hover:underline transition-colors">홈</a>
-    <svg class="w-3 h-3 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-    </svg>
-    <a href="account.html" class="hover:text-brand hover:underline transition-colors">마이페이지</a>
-    <svg class="w-3 h-3 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-    </svg>
-    <a href="orders.html" class="hover:text-brand hover:underline transition-colors">구매내역 및 주문현황</a>
-    <svg class="w-3 h-3 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-    </svg>
-    <span class="text-ink font-semibold" aria-current="page">교환/반품 신청</span>
-  </nav>
+<!-- SEGMENT: Breadcrumbs -->
+<nav aria-label="브레드크럼" class="w-full bg-white">
+  <div class="mx-auto flex max-w-container items-center gap-2 px-5 py-3 text-xs text-ink-muted lg:px-10">
+    <a href="../index.html" class="hover:text-brand hover:underline">홈</a>
+    <span class="text-line-2" aria-hidden="true">&gt;</span>
+    <a href="account.html" class="hover:text-brand hover:underline">마이페이지</a>
+    <span class="text-line-2" aria-hidden="true">&gt;</span>
+    <a href="orders.html" class="hover:text-brand hover:underline">구매내역 및 주문현황</a>
+    <span class="text-line-2" aria-hidden="true">&gt;</span>
+    <span class="font-medium text-ink" aria-current="page">교환/반품 신청</span>
+  </div>
+</nav>
+<!-- /SEGMENT: Breadcrumbs -->
 
+<!-- SEGMENT: MainContent -->
+<main id="main" class="mx-auto w-full max-w-container px-5 py-6 lg:px-10 flex-1">
   <div class="flex flex-col lg:flex-row gap-10">
     
     <!-- LeftSidebar (사이드바) -->
