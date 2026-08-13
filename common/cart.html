@@ -879,13 +879,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>' +
               '</button>' +
             '</div>' +
-            '<div class="flex items-end justify-between gap-3 mt-3">' +
-              '<div class="flex items-center rounded-full border border-line" role="group" aria-label="수량 조절">' +
+            '<div class="flex items-center sm:items-end justify-between flex-wrap sm:flex-nowrap gap-2.5 mt-3">' +
+              '<div class="flex items-center rounded-full border border-line shrink-0" role="group" aria-label="수량 조절">' +
                 '<button type="button" data-index="' + index + '" data-delta="-1" class="qty-btn h-8 w-8 grid place-items-center text-ink hover:text-brand transition-colors" aria-label="수량 감소"' + (item.qty <= 1 ? ' disabled' : '') + '>−</button>' +
                 '<span class="w-8 text-center text-sm font-semibold text-ink" aria-live="polite">' + item.qty + '</span>' +
                 '<button type="button" data-index="' + index + '" data-delta="1" class="qty-btn h-8 w-8 grid place-items-center text-ink hover:text-brand transition-colors" aria-label="수량 증가">+</button>' +
               '</div>' +
-              '<p class="text-base font-bold text-price">' + formatWon(lineTotal) + '</p>' +
+              '<p class="text-base font-bold text-price ml-auto whitespace-nowrap shrink-0">' + formatWon(lineTotal) + '</p>' +
             '</div>' +
           '</div>' +
         '</article>'
