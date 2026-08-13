@@ -1935,6 +1935,17 @@
         const megaTabs = document.querySelectorAll(".mega-tab-content[data-mega-tab]");
         let megaTimer = null;
 
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const mobileNav = document.getElementById("mobile-nav");
+        if (mobileMenuBtn && mobileNav) {
+          mobileMenuBtn.addEventListener("click", function () {
+            const isExpanded = mobileMenuBtn.getAttribute("aria-expanded") === "true";
+            mobileNav.hidden = isExpanded;
+            mobileMenuBtn.setAttribute("aria-expanded", !isExpanded);
+          });
+        }
+
         function openMegaTab(tabName) {
           let hasActiveContent = false;
           megaTabs.forEach((tab) => {

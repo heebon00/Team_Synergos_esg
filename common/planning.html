@@ -841,6 +841,12 @@ function toggleMobileNav() {
   
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Mobile Navigation Toggle
+  const mbtn = document.getElementById('mobile-menu-btn');
+  if (mbtn) {
+    mbtn.addEventListener('click', toggleMobileNav);
+  }
+
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');
   const megaTabs = document.querySelectorAll('.mega-tab-content[data-mega-tab]');
