@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="IKEA 선물/위시리스트 – 찜한 상품을 한눈에 확인하고 장바구니에 담아보세요.">
+<meta name="description" content="IKEA 선물/위시리스트 – 찜한 상품을 한눈에 확인하고 카트에 담아보세요.">
 <title>선물/위시리스트 | IKEA</title>
 
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
@@ -277,21 +277,21 @@
         </a>
       </li>
       <li class="shrink-0 whitespace-nowrap">
-        <a href="cart.html" id="header-cart-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="장바구니">
+        <a href="cart.html" id="header-cart-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="카트">
           <div class="relative shrink-0">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
             <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
           </div>
-          <span class="whitespace-nowrap shrink-0">장바구니</span>
+          <span class="whitespace-nowrap shrink-0">카트</span>
         </a>
       </li>
     </ul>
 
     <!-- Mobile Menu Controls -->
     <div class="ml-auto flex items-center gap-2 lg:hidden">
-      <a href="cart.html" class="p-2 text-ink hover:text-brand" aria-label="장바구니">
+      <a href="cart.html" class="p-2 text-ink hover:text-brand" aria-label="카트">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
         </svg>
@@ -852,6 +852,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelectorAll('.add-cart-btn').forEach(btn => {
+      const btnId = btn.getAttribute('data-id');
+      const inCart = window.WishlistCart && typeof window.WishlistCart.isInList === 'function'
+        ? window.WishlistCart.isInList(CART_KEY, btnId)
+        : false;
+      setAddCartBtnState(btn, inCart);
+
       btn.addEventListener('click', function(e) {
         e.preventDefault();
         const idx = parseInt(this.getAttribute('data-index'), 10);
@@ -868,22 +874,30 @@ document.addEventListener('DOMContentLoaded', function() {
           href: item.href || 'product-detail.html'
         };
 
-        if (window.WishlistCart && typeof window.WishlistCart.addItem === 'function') {
-          window.WishlistCart.addItem(CART_KEY, product);
-          window.WishlistCart.refreshBadges();
-        }
+        if (!window.WishlistCart) return;
 
-        const origText = this.textContent;
-        this.textContent = '담김 ✓';
-        this.classList.remove('bg-brand', 'hover:bg-brand-dark');
-        this.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
-        setTimeout(() => {
-          this.textContent = origText;
-          this.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
-          this.classList.add('bg-brand', 'hover:bg-brand-dark');
-        }, 1500);
+        const alreadyInCart = window.WishlistCart.isInList(CART_KEY, product.id);
+        if (alreadyInCart) {
+          window.WishlistCart.removeItem(CART_KEY, product.id);
+        } else {
+          window.WishlistCart.addItem(CART_KEY, product);
+        }
+        window.WishlistCart.refreshBadges();
+        setAddCartBtnState(this, !alreadyInCart);
       });
     });
+  }
+
+  function setAddCartBtnState(btn, inCart) {
+    if (inCart) {
+      btn.textContent = '담김';
+      btn.classList.remove('bg-brand', 'hover:bg-brand-dark');
+      btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+    } else {
+      btn.textContent = '카트';
+      btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+      btn.classList.add('bg-brand', 'hover:bg-brand-dark');
+    }
   }
 
   // forceRebuild가 없고 최초 방문(INIT_FLAG_KEY 없음)이면, HTML에 이미 그려둔
@@ -961,8 +975,8 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="mt-4 flex items-center justify-between pt-3 border-t border-line-light">
             <a href="${detailUrl}" class="text-base font-medium text-ink-sub underline hover:text-brand transition-colors">상세페이지</a>
-            <button type="button" data-index="${index}" class="add-cart-btn rounded-full bg-brand hover:bg-[#003D8F] px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
-              장바구니 담기
+            <button type="button" data-index="${index}" data-id="${itemId}" class="add-cart-btn rounded-full bg-brand hover:bg-brand-dark px-4 py-2 text-xs font-bold text-white transition-all shadow-sm">
+              카트
             </button>
           </div>
         </div>
