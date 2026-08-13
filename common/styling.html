@@ -24,7 +24,7 @@
 
 <style type="text/tailwindcss">
 
-/* 640px 모바일 기준 카테고리 레일 왼쪽 여백 0 제거 */
+/* 640px 모바일 기준 카테고리 레일 (1줄 / 2줄 분리 최적화) */
 @media (max-width: 640px) {
   .cat-scroll {
     padding-left: 0px !important;
@@ -36,10 +36,21 @@
   .cat-scroll::-webkit-scrollbar {
     display: none !important;
   }
-  .cat-grid-1row, .cat-grid-2row {
+  .cat-grid-1row {
     display: flex !important;
     flex-wrap: nowrap !important;
     align-items: flex-start !important;
+    gap: 0.75rem !important;
+    margin-left: 0px !important;
+    margin-right: auto !important;
+    padding-left: 0px !important;
+    width: max-content !important;
+  }
+  .cat-grid-2row {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-template-rows: repeat(2, auto) !important;
+    grid-auto-columns: 80px !important;
     gap: 0.75rem !important;
     margin-left: 0px !important;
     margin-right: auto !important;
@@ -1433,8 +1444,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- /SEGMENT: BookingModal -->
 
 <script>
-// 모바일 햄버거 서브 메뉴 아코디언 토글 이벤트
+// 모바일 햄버거 서브 메뉴 아코디언 토글 이벤트 (주메뉴 a 링크 클릭 시 서브메뉴 토글 미발동)
 document.addEventListener('click', function(e) {
+  if (e.target.closest('a')) {
+    return;
+  }
   var toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
     var targetId = toggle.getAttribute('data-target');
