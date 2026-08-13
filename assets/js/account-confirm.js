@@ -45,8 +45,8 @@
   function openModal() {
     var wrap = document.getElementById('account-confirm-modal');
     var card = document.getElementById('account-confirm-card');
+    if (!wrap || !card) return;
     wrap.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
     setTimeout(function () {
       card.classList.remove('scale-95', 'opacity-0');
       card.classList.add('scale-100', 'opacity-100');
@@ -56,26 +56,29 @@
   function closeModal() {
     var wrap = document.getElementById('account-confirm-modal');
     var card = document.getElementById('account-confirm-card');
+    if (!wrap || !card) return;
     card.classList.remove('scale-100', 'opacity-100');
     card.classList.add('scale-95', 'opacity-0');
     setTimeout(function () {
       wrap.classList.add('hidden');
-      document.body.style.overflow = '';
     }, 200);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    var link = document.querySelector('a[aria-label="마이페이지"]');
-    if (!link) return;
+    var links = document.querySelectorAll('a[aria-label="마이페이지"]');
+    if (!links.length) return;
 
-    accountHref = link.getAttribute('href');
+    var firstLink = links[0];
+    accountHref = firstLink.getAttribute('href');
     signupHref = accountHref.replace('account.html', 'signup.html');
 
     buildModal();
 
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      openModal();
+    links.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal();
+      });
     });
   });
 })();
