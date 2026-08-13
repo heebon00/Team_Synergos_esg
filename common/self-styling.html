@@ -129,18 +129,19 @@
 <div id="wrap">
 
 <!-- ================= 헤더 ================= -->
+<!-- SEGMENT: Header -->
 <header id="main-header" class="w-full bg-white border-b border-line-light sticky top-0 z-40">
 
   <!-- 1. Utility Navigation -->
   <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
     <div class="mx-auto flex max-w-container items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
       <ul class="flex items-center gap-6">
-        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
-        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
-        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">고객지원</a></li>
+        <li class="whitespace-nowrap shrink-0"><span class="cursor-default">KR | 한국어</span></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="order.html#section-store">매장 찾기</a></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#footer">고객지원</a></li>
       </ul>
       <ul class="flex items-center gap-6">
-        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors font-medium" href="family.html">IKEA Family 멤버십</a></li>
         <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="orders.html">주문 배송 조회</a></li>
       </ul>
     </div>
@@ -457,6 +458,7 @@
     </ul>
   </nav>
 </header>
+<!-- /SEGMENT: Header -->
 <!-- /헤더 -->
 
 <!-- ================= 본문 ================= -->
@@ -576,7 +578,8 @@
 </main>
 
 <!-- ================= 푸터 ================= -->
-<footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
+<!-- SEGMENT: Footer -->
+<footer id="footer" class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
   <div class="mx-auto max-w-container px-5 py-12 lg:px-10">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
 
@@ -605,11 +608,11 @@
       <div>
         <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
         <ul class="space-y-2 text-xs">
-          <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+          <li><a href="family.html" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
           <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
           <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
           <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
-          <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+          <li><a href="order.html#section-store" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
         </ul>
       </div>
 
@@ -667,6 +670,7 @@
     </div>
   </div>
 </footer>
+<!-- /SEGMENT: Footer -->
 
 </div><!-- /#wrap -->
 
