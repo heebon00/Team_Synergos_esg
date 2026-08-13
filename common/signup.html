@@ -23,6 +23,26 @@
 
 <link rel="stylesheet" href="../assets/css/tokens.css">
 <style type="text/tailwindcss">
+
+/* Figma 771:11380 Mobile-Header 640px 통일 규격 */
+@media (max-width: 640px) {
+  header {
+    width: 100% !important;
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  header .max-w-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  #mobile-nav {
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
   @theme {
     /* Font size updates */
     --font-size-xs: 1rem;
