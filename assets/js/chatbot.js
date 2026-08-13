@@ -132,16 +132,22 @@
     var container = document.createElement('div');
     container.id = 'ikea-chatbot-container';
     container.className = 'ikea-chatbot-root';
-    container.innerHTML = `
-      <!-- 플로팅 트리거 버튼 (FAB) -->
-      <aside aria-label="IKEA AI 실시간 상담" class="fixed bottom-24 right-5 sm:bottom-28 sm:right-6 z-[9990] flex flex-col items-end gap-2 font-sans select-none">
-        
+
+    var isTooltipDismissed = sessionStorage.getItem('ikea_chatbot_tooltip_dismissed') === 'true';
+    var tooltipHtml = isTooltipDismissed ? '' : `
         <!-- 말풍선 안내 툴팁 (첫 방문 시 주목도 UP) -->
         <div id="ikea-chat-tooltip" class="hidden sm:flex items-center gap-2 bg-ink text-white text-xs font-semibold px-3.5 py-2 rounded-full shadow-lg border border-white/20 animate-bounce cursor-pointer hover:bg-brand transition-colors duration-200">
           <span class="inline-block w-2 h-2 rounded-full bg-accent animate-ping"></span>
           <span>Hej! 궁금한 점을 AI에게 물어보세요</span>
           <button type="button" id="ikea-tooltip-close" class="text-white/60 hover:text-white ml-1 text-sm font-bold leading-none" aria-label="안내 닫기">&times;</button>
         </div>
+    `;
+
+    container.innerHTML = `
+      <!-- 플로팅 트리거 버튼 (FAB) -->
+      <aside aria-label="IKEA AI 실시간 상담" class="fixed bottom-24 right-5 sm:bottom-28 sm:right-6 z-[9990] flex flex-col items-end gap-2 font-sans select-none">
+        
+        ${tooltipHtml}
 
         <!-- 메인 토글 버튼 -->
         <button
@@ -320,6 +326,7 @@
       tooltipClose.addEventListener('click', function (e) {
         e.stopPropagation();
         tooltip.remove();
+        sessionStorage.setItem('ikea_chatbot_tooltip_dismissed', 'true');
       });
     }
 
@@ -345,7 +352,10 @@
       toggleBtn.setAttribute('aria-expanded', 'true');
       openIcon.classList.add('hidden');
       closeIcon.classList.remove('hidden');
-      if (tooltip) tooltip.remove();
+      if (tooltip) {
+        tooltip.remove();
+        sessionStorage.setItem('ikea_chatbot_tooltip_dismissed', 'true');
+      }
 
       // 포커스 이동 및 인풋 활성화
       setTimeout(function () {
