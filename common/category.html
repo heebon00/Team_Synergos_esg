@@ -205,61 +205,49 @@
   /* 스크롤 등장 요소: JS가 살아있고 모션 허용일 때만 감춘다 */
   .rv { opacity: 1 !important; transform: none !important; }
 
-  /* 제목/카테고리 아이콘: GSAP가 로드되기 전까지 완전히 보이는 상태로 그려졌다가
-     스크립트 실행 시점에 갑자기 사라졌다 다시 나타나는 점프를 막기 위해
-     GSAP fromTo의 시작 상태(opacity 0, y 이동)를 CSS로 미리 맞춰 둔다.
-     GSAP 로드에 실패하면 no-motion이 추가되어 즉시 원래대로 보인다. */
-  .js:not(.no-motion) h1 {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  /* 순수 CSS GPU 가속 순차 등장 애니메이션 (자바스크립트 대기 지연/빈 화면 100% 해결) */
-  @keyframes catEntrance {
+  /* 공간별 쇼핑 제목 즉시 등장 애니메이션 (JS 지연 0ms, 페이지 열자마자 즉시 렌더링) */
+  @keyframes h1Entrance {
     0% {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(12px);
     }
     100% {
       opacity: 1;
       transform: translateY(0);
     }
   }
-  .cat-sw .swiper-slide .cat {
-    animation: catEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  h1 {
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: h1Entrance 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  .cat-sw .swiper-slide:nth-child(1) .cat { animation-delay: 0s; }
-  .cat-sw .swiper-slide:nth-child(2) .cat { animation-delay: 0.04s; }
-  .cat-sw .swiper-slide:nth-child(3) .cat { animation-delay: 0.08s; }
-  .cat-sw .swiper-slide:nth-child(4) .cat { animation-delay: 0.12s; }
-  .cat-sw .swiper-slide:nth-child(5) .cat { animation-delay: 0.16s; }
-  .cat-sw .swiper-slide:nth-child(6) .cat { animation-delay: 0.20s; }
-  .cat-sw .swiper-slide:nth-child(7) .cat { animation-delay: 0.24s; }
-  .cat-sw .swiper-slide:nth-child(8) .cat { animation-delay: 0.28s; }
-  .cat-sw .swiper-slide:nth-child(9) .cat { animation-delay: 0.32s; }
-  .cat-sw .swiper-slide:nth-child(10) .cat { animation-delay: 0.36s; }
+
+  /* 카테고리 아이콘 진입 애니메이션은 JS(Web Animations API)의 revealCatSlides() 가 재생한다.
+     CSS @keyframes 로 넣으면 안 된다: Tailwind CDN 의 JIT 가 DOM 변경마다 스타일시트를
+     다시 만들어 내고, Swiper 의 observer 가 그 변경에 반응해 또 DOM 을 건드리는 탓에
+     CSS 애니메이션이 매 프레임 0 프레임으로 되돌아가 영영 끝나지 않는다(아이콘이 흐린 채 멈춤).
+     WAAPI 애니메이션은 스타일시트 재생성에 영향을 받지 않아 안전하다.
+     또 애니메이션을 .cat 이 아니라 슬라이드(li)에 걸어야
+     .cat:hover 의 translateY(-3px) 가 살아남는다. */
+  .cat-sw:not(.cat-ready) .swiper-slide {
+    opacity: 0;
+  }
 
   /* Swiper 커스텀 및 초기화 전/후 위치 고정 (Layout Shift 방지) */
   .swiper-slide { height: auto; }
-  .cat-sw:not(.swiper-initialized) .swiper-wrapper {
+  /* 양끝 여백(slidesOffsetBefore/After)과 슬라이드 간격(spaceBetween)은
+     Swiper 가 계산해 인라인으로 넣는다. 여기서 padding·margin 으로 또 주면
+     여백이 두 번 적용되고 마지막 슬라이드 스냅(isEnd) 판정이 어긋난다. */
+  .cat-sw .swiper-wrapper {
     display: flex !important;
     flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important;
-    padding-left: 36px !important;
-    padding-right: 36px !important;
-  }
-  .cat-sw:not(.swiper-initialized) .swiper-wrapper::-webkit-scrollbar {
-    display: none !important;
+    box-sizing: border-box !important;
   }
   .cat-sw .swiper-slide,
   section[aria-labelledby="cat-h"] .swiper-slide {
     width: 80px !important;
     flex-shrink: 0 !important;
   }
-  /* margin-right(간격)는 Swiper가 spaceBetween으로 직접 관리한다.
-     여기서 !important로 강제하면 Swiper 내부 계산과 실제 레이아웃이 어긋나서
-     overflow 판정이 틀어지고 화살표가 숨어버린다. */
   /* 카드가 떠오를 때 그림자가 잘리지 않도록 여백 확보 */
   .prod-sw { padding: 10px 2px 26px; }
   .nav-btn[aria-disabled="true"] { opacity: .3; }
@@ -285,10 +273,16 @@
   .cat-nav:hover { background: var(--color-nav-bg-hover); }
   .cat-nav-prev { left: 6px; }
   .cat-nav-next { right: 6px; }
+  .cat-nav,
+  .cat-sw:not(.swiper-initialized) .cat-nav,
   .cat-nav.is-off,
   .cat-nav.is-locked {
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .cat-sw.swiper-initialized .cat-nav:not(.is-off):not(.is-locked) {
+    opacity: 1 !important;
+    pointer-events: auto !important;
   }
 
   /* 건너뛰기 링크 */
@@ -353,8 +347,10 @@
     padding-top: 14px !important;
     padding-bottom: 14px !important;
   }
+  /* 위 .cat-sw .swiper-wrapper 블록에서 overflow 를 더 이상 건드리지 않으므로
+     여기서는 hover 상승분 여백만 남긴다. (예전에는 이 규칙의 overflow:visible 이
+     위 블록의 overflow-x:hidden 을 통째로 무력화시키는 죽은 코드를 만들었다) */
   .cat-sw .swiper-wrapper {
-    overflow: visible !important;
     padding-top: 4px !important;
   }
 
@@ -878,7 +874,7 @@
     <div class="cat-sw swiper">
             <ul id="w0" class="swiper-wrapper items-start">
         <li class="swiper-slide">
-          <a href="#s-living" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-living" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/living.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -886,7 +882,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-dining" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-dining" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/dining.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -894,7 +890,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-kitchen" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-kitchen" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/kitchen.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -902,7 +898,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-bedroom" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-bedroom" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/bedroom.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -910,7 +906,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-bath" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-bath" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/bath.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -918,7 +914,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-kids" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-kids" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/kids.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -926,7 +922,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-office" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-office" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/office.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -934,7 +930,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-entry" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-entry" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/entry.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -942,7 +938,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-balcony" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-balcony" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/balcony.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -950,7 +946,7 @@
           </a>
         </li>
         <li class="swiper-slide">
-          <a href="#s-laundry" class="cat flex flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
+          <a href="#s-laundry" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
             <span class="block size-20 overflow-hidden rounded-pill border border-line-2">
               <img src="../assets/images/categories/laundry.png" alt="" width="80" height="80" class="h-full w-full object-cover" aria-hidden="true">
             </span>
@@ -2197,57 +2193,26 @@ document.addEventListener('DOMContentLoaded', function () {
   // index.html의 카테고리 캐러셀과 동일한 로직: 화면 폭에 맞춰 간격(gap)을 가변 계산하고,
   // 전체 아이템(10개)이 컨테이너보다 좁게 들어가는 폭에서는 왼쪽에 붙지 않도록
   // 남는 폭을 양쪽에 똑같이 나눠 가운데 정렬한다.
-  var CAT_SLIDE_WIDTH = 80;
-  var CAT_EDGE_OFFSET = 40; // 스크롤이 필요할 때 화살표를 위해 남기는 최소 여백
-  var CAT_GAP_MIN = 14;
-  var CAT_GAP_MAX = 48;
-  function syncCatLayout(swiper) {
-    if (!swiper || !swiper.el) return;
-    var containerWidth = swiper.el.clientWidth;
-    var n = swiper.params.slidesPerView;
-    var usable = containerWidth - CAT_EDGE_OFFSET * 2;
-    var gap;
-    if (typeof n === 'number' && n > 1) {
-      gap = (usable - n * CAT_SLIDE_WIDTH) / (n - 1);
-    } else {
-      gap = usable * 0.045;
-    }
-    gap = Math.max(CAT_GAP_MIN, Math.min(CAT_GAP_MAX, gap));
+  // Swiper 초기화가 어떤 이유로든 실패해도 아이콘이 opacity:0 인 채 남지 않도록 하는 안전장치.
+  // 타이머를 초기화보다 먼저 걸어 둬야 초기화가 예외로 끊겨도 살아남는다.
+  setTimeout(function () {
+    $$('.cat-sw').forEach(function (el) { el.classList.add('cat-ready'); });
+  }, 1500);
 
-    var total = swiper.slides ? swiper.slides.length : 0;
-    var contentWidth = total * CAT_SLIDE_WIDTH + Math.max(0, total - 1) * gap;
-    var offsetBefore = CAT_EDGE_OFFSET;
-    var offsetAfter = CAT_EDGE_OFFSET;
-    if (total > 0 && contentWidth + CAT_EDGE_OFFSET * 2 <= containerWidth) {
-      var extra = (containerWidth - contentWidth) / 2;
-      offsetBefore = extra;
-      offsetAfter = extra;
-    }
-
-    var changed = false;
-    if (Math.abs((swiper.params.spaceBetween || 0) - gap) > 0.5) {
-      swiper.params.spaceBetween = gap;
-      changed = true;
-    }
-    if (
-      Math.abs((swiper.params.slidesOffsetBefore || 0) - offsetBefore) > 0.5 ||
-      Math.abs((swiper.params.slidesOffsetAfter || 0) - offsetAfter) > 0.5
-    ) {
-      swiper.params.slidesOffsetBefore = offsetBefore;
-      swiper.params.slidesOffsetAfter = offsetAfter;
-      changed = true;
-    }
-    if (changed) {
-      swiper.update();
-      swiper.slideTo(0, 0, false);
-    }
+  // 양끝 여백은 products.html 의 .cat-scroll 좌우 padding(40px)과 맞춘다.
+  var CAT_EDGE_OFFSET = 40;
+  var catSwEl = $('.cat-sw');
+  // 아이콘 사이 간격은 products.html 의 syncCatGridGap() 과 완전히 같은 공식으로 계산해
+  // 두 페이지의 카테고리 줄이 같은 간격으로 보이게 한다. (컨테이너 실제 폭 기반, 14~36px)
+  function calcCatGap() {
+    var usable = catSwEl.clientWidth - CAT_EDGE_OFFSET * 2;
+    return Math.max(14, Math.min(36, usable * 0.045));
   }
-
-  swipers.push(new Swiper('.cat-sw', {
+  var catSwiper = new Swiper(catSwEl, {
     a11y: a11y,
     speed: calm ? 0 : 420,
     slidesPerView: 'auto',
-    spaceBetween: 16,
+    spaceBetween: calcCatGap(),
     slidesOffsetBefore: CAT_EDGE_OFFSET,
     slidesOffsetAfter: CAT_EDGE_OFFSET,
     slidesPerGroupAuto: true,
@@ -2261,21 +2226,36 @@ document.addEventListener('DOMContentLoaded', function () {
       nextEl: '.cat-sw .cat-nav-next',
       disabledClass: 'is-off',
       lockClass: 'is-locked'
-    },
-    breakpoints: {
-      480:  { slidesPerView: 4 },
-      640:  { slidesPerView: 5 },
-      768:  { slidesPerView: 6 },
-      900:  { slidesPerView: 7 },
-      1024: { slidesPerView: 9 },
-      1180: { slidesPerView: 10 }
-    },
-    on: {
-      init: function () { syncCatLayout(this); },
-      resize: function () { syncCatLayout(this); },
-      breakpoint: function () { syncCatLayout(this); }
     }
-  }));
+  });
+  swipers.push(catSwiper);
+  // 화면 폭이 바뀌면 products.html 과 같은 공식으로 간격을 다시 맞춘다.
+  window.addEventListener('resize', function () {
+    catSwiper.params.spaceBetween = calcCatGap();
+    catSwiper.update();
+  });
+  // 아이콘이 제자리에서(이동 없이) 한두 개씩 떠오르게 한다.
+  // fill:'backwards' 라서 자기 차례가 오기 전까지는 0 프레임(투명) 상태로 대기하고,
+  // 끝난 뒤에는 인라인 흔적 없이 원래 스타일(.cat-ready → opacity 1)로 돌아간다.
+  function revealCatSlides(swiperEl) {
+    swiperEl.classList.add('cat-ready');
+    var slides = swiperEl.querySelectorAll('.swiper-slide');
+    if (calm || !slides.length || typeof slides[0].animate !== 'function') return;
+    slides.forEach(function (slide, i) {
+      slide.animate(
+        [
+          { opacity: 0, transform: 'scale(0.92)' },
+          { opacity: 1, transform: 'scale(1)' }
+        ],
+        { duration: 250, delay: i * 70, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'backwards' }
+      );
+    });
+  }
+
+  // 간격·양끝 여백이 다 반영된 다음 프레임부터 진입 애니메이션을 시작한다.
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () { revealCatSlides(catSwEl); });
+  });
 
   $$('.prod-sw').forEach(function (el) {
     var box = el.closest('.rv') || el.parentNode;
