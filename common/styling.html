@@ -942,6 +942,17 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Mobile Navigation Toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  if (mobileMenuBtn && mobileNav) {
+    mobileMenuBtn.addEventListener('click', function() {
+      const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+      mobileNav.hidden = isExpanded;
+      mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+    });
+  }
+
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');
   const megaTabs = document.querySelectorAll('.mega-tab-content[data-mega-tab]');
