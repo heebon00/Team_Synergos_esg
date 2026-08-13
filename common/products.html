@@ -15,6 +15,15 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
   } catch (e) {}
 
+  // 카테고리 아이콘 줄: 스크립트가 붙기 전에 한 번 전부 보였다가 GSAP 이 다시
+  // opacity:0 으로 되돌려 페이드인하면 "떴다가 다시 나오는" 깜빡임이 생긴다.
+  // 첫 페인트부터 숨겨두고, GSAP 이 시작 상태를 인계받는 순간 이 클래스를 뗀다.
+  if (!d.classList.contains('no-motion')) {
+    d.classList.add('cat-preanim');
+    // GSAP CDN 차단 등으로 스크립트가 못 돌아도 영영 숨은 채 남지 않도록 하는 안전장치
+    setTimeout(function () { d.classList.remove('cat-preanim'); }, 2000);
+  }
+
   // 글로벌 이미지 안전 fallback 핸들러 (어떤 서버/로컬 환경에서도 100% 이미지 노출 보장)
   window.addEventListener('error', function(e) {
     if (e.target && e.target.tagName === 'IMG') {
@@ -32,6 +41,11 @@
   }, true);
 </script>
 
+<!-- 임계 스타일: Tailwind CDN(JIT) 처리 전에도 즉시 적용되어야 하는 최소 규칙 -->
+<style>
+  html.cat-preanim .cat-grid-2row .cat { opacity: 0; }
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
@@ -45,6 +59,26 @@
 <script src="../assets/js/account-confirm.js"></script>
 
 <style type="text/tailwindcss">
+
+/* Figma 771:11380 Mobile-Header 640px 통일 규격 */
+@media (max-width: 640px) {
+  header {
+    width: 100% !important;
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  header .max-w-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  #mobile-nav {
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
   @theme {
     /* Font size updates */
     --font-size-xs: 1rem;
@@ -83,6 +117,11 @@
     --color-nav-bg-hover: rgba(255, 255, 255, 0.78); /* token-exempt: 반투명 배경 토큰 */
     --color-nav-border: rgba(0, 0, 0, 0.05); /* token-exempt: 반투명 테두리 토큰 */
     --shadow-nav: 0 2px 6px rgba(0, 0, 0, 0.08); /* token-exempt: 그림자 토큰 */
+  }
+
+  html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
   }
 
   @layer base {
@@ -294,7 +333,7 @@
           <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
           </svg>
-          <span class="whitespace-nowrap shrink-0">사용자</span>
+          <span class="whitespace-nowrap shrink-0">유저</span>
         </a>
       </li>
       <li class="shrink-0 whitespace-nowrap">
@@ -303,9 +342,9 @@
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>
-            <span id="wishlist-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
+            <span id="wishlist-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
           </div>
-          <span class="whitespace-nowrap shrink-0">위시리스트</span>
+          <span class="whitespace-nowrap shrink-0">찜</span>
         </a>
       </li>
       <li class="shrink-0 whitespace-nowrap">
@@ -314,9 +353,9 @@
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
-            <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
+            <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
           </div>
-          <span class="whitespace-nowrap shrink-0">장바구니</span>
+          <span class="whitespace-nowrap shrink-0">카트</span>
         </a>
       </li>
     </ul>
@@ -788,12 +827,12 @@
       </div>
 
       <button type="button" class="cat-nav cat-nav-prev" aria-label="이전 카테고리 보기" hidden>
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
         </svg>
       </button>
       <button type="button" class="cat-nav cat-nav-next" aria-label="다음 카테고리 보기" hidden>
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
         </svg>
       </button>
@@ -803,49 +842,373 @@
 
   <!-- SEGMENT: Filter Bar -->
   <section class="w-full border-t border-b border-line-light bg-white py-3">
-    <div class="mx-auto flex max-w-container items-center justify-between px-5 lg:px-10">
+    <div class="mx-auto max-w-container px-5 lg:px-10">
+      <div class="flex items-center justify-between">
 
-      <!-- Left Filter Chips -->
-      <div class="flex items-center gap-2 overflow-x-auto py-1">
-        <button type="button" class="filter-chip rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all">
-          정렬
+        <!-- Left Filter Chips -->
+        <div class="flex items-center gap-2 overflow-x-auto py-1">
+          <button type="button" id="sort-toggle-btn" data-order="new" class="filter-chip shrink-0 whitespace-nowrap rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all">
+            신상품순 <span id="sort-toggle-icon" aria-hidden="true">↓</span>
+          </button>
+          <button type="button" id="price-filter-btn" class="filter-chip shrink-0 whitespace-nowrap rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all" aria-expanded="false">
+            가격
+          </button>
+          <button type="button" id="color-filter-btn" class="filter-chip shrink-0 whitespace-nowrap rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all" aria-expanded="false">
+            색상
+          </button>
+          <button type="button" id="size-filter-btn" class="filter-chip shrink-0 whitespace-nowrap rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all" aria-expanded="false">
+            크기
+          </button>
+          <button type="button" id="material-filter-btn" class="filter-chip shrink-0 whitespace-nowrap rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all" aria-expanded="false">
+            재질
+          </button>
+        </div>
+
+        <!-- Right Action: 모든 필터를 한 번에 중첩 적용하는 통합 필터 모달 트리거 -->
+        <button type="button" id="all-filter-btn" class="flex items-center gap-2 pl-3 sm:pl-0 text-xs font-bold text-ink hover:text-brand shrink-0">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+          <span class="hidden sm:inline">필터 및 정렬</span>
         </button>
-        <button type="button" class="filter-chip rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all">
-          가격
+
+      </div>
+
+      <!-- 개별 필터 패널을 담아두는 슬롯. "필터 및 정렬" 모달이 열리면 이 슬롯의 패널들을 모달로 옮겨 한번에 보여주고, 닫히면 다시 이 자리로 되돌린다 -->
+      <div id="filter-panels-slot">
+
+      <!-- Price Filter Panel -->
+      <div id="price-filter-panel" class="hidden mt-3 flex-wrap gap-2 rounded-card border border-line-light bg-shell p-4">
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="price-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="under5">
+          5만원 미만
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="price-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="5to10">
+          5만원 ~ 10만원
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="price-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="10to20">
+          10만원 ~ 20만원
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="price-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="20to30">
+          20만원 ~ 30만원
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="price-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="over30">
+          30만원 이상
+        </label>
+      </div>
+
+      <!-- Color Filter Panel -->
+      <div id="color-filter-panel" class="hidden mt-3 flex-wrap gap-2 rounded-card border border-line-light bg-shell p-4">
+        <button type="button" class="color-filter-option flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 hover:border-brand transition-colors" data-color-option="white" aria-pressed="false">
+          <span class="h-4 w-4 rounded-full border border-line bg-white"></span> 화이트
         </button>
-        <button type="button" class="filter-chip rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all">
-          색상
+        <button type="button" class="color-filter-option flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 hover:border-brand transition-colors" data-color-option="beige" aria-pressed="false">
+          <span class="h-4 w-4 rounded-full bg-stone-300"></span> 베이지
         </button>
-        <button type="button" class="filter-chip rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all">
-          크기
+        <button type="button" class="color-filter-option flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 hover:border-brand transition-colors" data-color-option="black" aria-pressed="false">
+          <span class="h-4 w-4 rounded-full bg-black"></span> 블랙
         </button>
-        <button type="button" class="filter-chip rounded-full border border-line bg-white px-5 py-2 text-xs font-medium text-ink hover:border-brand transition-all">
-          재질
+        <button type="button" class="color-filter-option flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 hover:border-brand transition-colors" data-color-option="wood" aria-pressed="false">
+          <span class="h-4 w-4 rounded-full bg-amber-700"></span> 우드
+        </button>
+        <button type="button" class="color-filter-option flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 hover:border-brand transition-colors" data-color-option="turquoise" aria-pressed="false">
+          <span class="h-4 w-4 rounded-full bg-teal-400"></span> 터쿼이즈
         </button>
       </div>
 
-      <!-- Right Action -->
-      <button type="button" class="flex items-center gap-2 text-xs font-bold text-ink hover:text-brand shrink-0">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
-        </svg>
-        <span>필터 및 정렬</span>
-      </button>
+      <!-- Size Filter Panel -->
+      <div id="size-filter-panel" class="hidden mt-3 flex-wrap gap-2 rounded-card border border-line-light bg-shell p-4">
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="size-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="small">
+          소형
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="size-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="medium">
+          중형
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="size-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="large">
+          대형
+        </label>
+      </div>
+
+      <!-- Material Filter Panel -->
+      <div id="material-filter-panel" class="hidden mt-3 flex-wrap gap-2 rounded-card border border-line-light bg-shell p-4">
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="material-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="wood">
+          우드
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="material-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="fabric">
+          패브릭
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="material-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="metal_glass">
+          메탈/글라스
+        </label>
+        <label class="flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs text-ink-2 cursor-pointer">
+          <input type="checkbox" class="material-filter-option h-4 w-4 rounded border-line-2 accent-brand" value="board">
+          합성보드
+        </label>
+      </div>
+
+      </div>
+      <!-- /filter-panels-slot -->
 
     </div>
   </section>
   <!-- /SEGMENT: Filter Bar -->
 
+  <!-- SEGMENT: AllFilterModal -->
+  <div id="all-filter-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="all-filter-modal-title">
+    <div id="all-filter-modal-card" class="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300 ease-out">
+      <div class="flex items-center justify-between border-b border-line-light px-6 py-4 bg-bg-light">
+        <h2 id="all-filter-modal-title" class="text-base font-extrabold text-ink">필터</h2>
+        <button type="button" id="all-filter-modal-close" class="text-ink-muted hover:text-brand focus:outline-none p-1 transition-colors" aria-label="닫기">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="all-filter-modal-body" class="flex-1 overflow-y-auto p-6 flex flex-col gap-5">
+        <p class="text-xs text-ink-muted">가격·색상·크기·재질 필터를 한 화면에서 함께 조합해 적용할 수 있습니다. 체크하는 즉시 상품 목록에 바로 반영됩니다.</p>
+      </div>
+      <div class="border-t border-line-light px-6 py-4">
+        <button type="button" id="all-filter-modal-done" class="w-full h-10 rounded-lg bg-brand text-white hover:bg-brand-dark transition-colors text-sm font-bold">결과 보기</button>
+      </div>
+    </div>
+  </div>
+  <!-- /SEGMENT: AllFilterModal -->
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var sortBtn = document.getElementById('sort-toggle-btn');
+    var sortIcon = document.getElementById('sort-toggle-icon');
+    var grid1 = document.getElementById('product-grid-1');
+    var grid2 = document.getElementById('product-grid-2');
+    if (!sortBtn || !grid1 || !grid2) return;
+
+    function getPrice(card) {
+      var priceEl = Array.prototype.find.call(card.querySelectorAll('p'), function (p) {
+        return p.textContent.trim().indexOf('₩') === 0;
+      });
+      if (!priceEl) return 0;
+      var num = priceEl.textContent.replace(/[^\d]/g, '');
+      return num ? parseInt(num, 10) : 0;
+    }
+
+    // 신상품순 정렬: 최초 문서 순서를 "추가된 순서"로 간주해 랭크를 매긴다 (마지막 카드가 최신)
+    var allCards = Array.prototype.slice.call(grid1.children).concat(Array.prototype.slice.call(grid2.children));
+    var rankMap = new WeakMap();
+    allCards.forEach(function (card, index) { rankMap.set(card, index); });
+
+    sortBtn.addEventListener('click', function () {
+      var next = sortBtn.getAttribute('data-order') === 'new' ? 'old' : 'new';
+
+      var grid1Count = grid1.children.length;
+      var cards = Array.prototype.slice.call(grid1.children).concat(Array.prototype.slice.call(grid2.children));
+
+      cards.sort(function (a, b) {
+        var diff = rankMap.get(a) - rankMap.get(b);
+        return next === 'new' ? -diff : diff;
+      });
+
+      cards.forEach(function (card, index) {
+        (index < grid1Count ? grid1 : grid2).appendChild(card);
+      });
+
+      sortBtn.setAttribute('data-order', next);
+      sortIcon.textContent = next === 'new' ? '↓' : '↑';
+
+      if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) {
+        ScrollTrigger.refresh();
+      }
+    });
+
+    // 가격 / 색상 / 크기 / 재질 필터
+    var priceBtn = document.getElementById('price-filter-btn');
+    var pricePanel = document.getElementById('price-filter-panel');
+    var colorBtn = document.getElementById('color-filter-btn');
+    var colorPanel = document.getElementById('color-filter-panel');
+    var sizeBtn = document.getElementById('size-filter-btn');
+    var sizePanel = document.getElementById('size-filter-panel');
+    var materialBtn = document.getElementById('material-filter-btn');
+    var materialPanel = document.getElementById('material-filter-panel');
+    var priceOptions = document.querySelectorAll('.price-filter-option');
+    var colorOptions = document.querySelectorAll('.color-filter-option');
+    var sizeOptions = document.querySelectorAll('.size-filter-option');
+    var materialOptions = document.querySelectorAll('.material-filter-option');
+
+    var priceRanges = {
+      under5: [0, 50000],
+      '5to10': [50000, 100000],
+      '10to20': [100000, 200000],
+      '20to30': [200000, 300000],
+      over30: [300000, Infinity]
+    };
+
+    var panelPairs = [
+      [pricePanel, priceBtn],
+      [colorPanel, colorBtn],
+      [sizePanel, sizeBtn],
+      [materialPanel, materialBtn]
+    ];
+
+    function togglePanel(panel, btn, show) {
+      panel.classList.toggle('hidden', !show);
+      panel.classList.toggle('flex', show);
+      btn.setAttribute('aria-expanded', String(show));
+    }
+
+    function closeAllPanels() {
+      panelPairs.forEach(function (pair) { togglePanel(pair[0], pair[1], false); });
+    }
+
+    panelPairs.forEach(function (pair) {
+      var panel = pair[0];
+      var btn = pair[1];
+      if (!panel || !btn) return;
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var willShow = panel.classList.contains('hidden');
+        closeAllPanels();
+        togglePanel(panel, btn, willShow);
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      var insideAnyPanel = panelPairs.some(function (pair) { return pair[0] && pair[0].contains(e.target); });
+      if (!insideAnyPanel) closeAllPanels();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAllPanels();
+    });
+
+    function applyFilters() {
+      var selectedRanges = Array.prototype.filter.call(priceOptions, function (o) { return o.checked; })
+        .map(function (o) { return priceRanges[o.value]; });
+      var selectedColors = Array.prototype.filter.call(colorOptions, function (o) { return o.getAttribute('aria-pressed') === 'true'; })
+        .map(function (o) { return o.getAttribute('data-color-option'); });
+      var selectedSizes = Array.prototype.filter.call(sizeOptions, function (o) { return o.checked; })
+        .map(function (o) { return o.value; });
+      var selectedMaterials = Array.prototype.filter.call(materialOptions, function (o) { return o.checked; })
+        .map(function (o) { return o.value; });
+
+      priceBtn.classList.toggle('border-brand', selectedRanges.length > 0);
+      priceBtn.classList.toggle('text-brand', selectedRanges.length > 0);
+      colorBtn.classList.toggle('border-brand', selectedColors.length > 0);
+      colorBtn.classList.toggle('text-brand', selectedColors.length > 0);
+      sizeBtn.classList.toggle('border-brand', selectedSizes.length > 0);
+      sizeBtn.classList.toggle('text-brand', selectedSizes.length > 0);
+      materialBtn.classList.toggle('border-brand', selectedMaterials.length > 0);
+      materialBtn.classList.toggle('text-brand', selectedMaterials.length > 0);
+
+      allCards.forEach(function (card) {
+        var price = getPrice(card);
+        var color = card.getAttribute('data-color');
+        var size = card.getAttribute('data-size');
+        var material = card.getAttribute('data-material');
+
+        var matchesPrice = selectedRanges.length === 0 || selectedRanges.some(function (range) {
+          return price >= range[0] && price < range[1];
+        });
+        var matchesColor = selectedColors.length === 0 || selectedColors.indexOf(color) !== -1;
+        var matchesSize = selectedSizes.length === 0 || selectedSizes.indexOf(size) !== -1;
+        var matchesMaterial = selectedMaterials.length === 0 || selectedMaterials.indexOf(material) !== -1;
+
+        card.hidden = !(matchesPrice && matchesColor && matchesSize && matchesMaterial);
+      });
+    }
+
+    priceOptions.forEach(function (option) {
+      option.addEventListener('change', applyFilters);
+    });
+    sizeOptions.forEach(function (option) {
+      option.addEventListener('change', applyFilters);
+    });
+    materialOptions.forEach(function (option) {
+      option.addEventListener('change', applyFilters);
+    });
+    colorOptions.forEach(function (option) {
+      option.addEventListener('click', function () {
+        var pressed = option.getAttribute('aria-pressed') === 'true';
+        option.setAttribute('aria-pressed', String(!pressed));
+        option.classList.toggle('border-brand', !pressed);
+        option.classList.toggle('bg-brand/10', !pressed);
+        applyFilters();
+      });
+    });
+
+    // "필터 및 정렬" 버튼: 정렬 + 4개 필터를 한 모달에 모아서 중첩 적용할 수 있게 한다
+    var allFilterBtn = document.getElementById('all-filter-btn');
+    var allFilterModal = document.getElementById('all-filter-modal');
+    var allFilterCard = document.getElementById('all-filter-modal-card');
+    var allFilterBody = document.getElementById('all-filter-modal-body');
+    var allFilterClose = document.getElementById('all-filter-modal-close');
+    var allFilterDone = document.getElementById('all-filter-modal-done');
+    var filterPanelsSlot = document.getElementById('filter-panels-slot');
+
+    if (allFilterBtn && allFilterModal && filterPanelsSlot) {
+      function openAllFilterModal(e) {
+        if (e) e.stopPropagation();
+        closeAllPanels();
+
+        panelPairs.forEach(function (pair) {
+          var panel = pair[0];
+          allFilterBody.appendChild(panel);
+          panel.classList.remove('hidden');
+          panel.classList.add('flex');
+        });
+
+        allFilterModal.classList.remove('hidden');
+        document.documentElement.style.overflow = 'hidden';
+        setTimeout(function () {
+          allFilterCard.classList.remove('scale-95', 'opacity-0');
+          allFilterCard.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      }
+
+      function closeAllFilterModal() {
+        allFilterCard.classList.remove('scale-100', 'opacity-100');
+        allFilterCard.classList.add('scale-95', 'opacity-0');
+        setTimeout(function () {
+          allFilterModal.classList.add('hidden');
+          document.documentElement.style.overflow = '';
+
+          panelPairs.forEach(function (pair) {
+            var panel = pair[0];
+            panel.classList.add('hidden');
+            panel.classList.remove('flex');
+            filterPanelsSlot.appendChild(panel);
+          });
+        }, 200);
+      }
+
+      allFilterBtn.addEventListener('click', openAllFilterModal);
+      allFilterClose.addEventListener('click', closeAllFilterModal);
+      allFilterDone.addEventListener('click', closeAllFilterModal);
+      allFilterModal.addEventListener('click', function (e) {
+        if (e.target === allFilterModal) closeAllFilterModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !allFilterModal.classList.contains('hidden')) closeAllFilterModal();
+      });
+    }
+  });
+  </script>
+
   <!-- SEGMENT: Product Grid 1 (Rows 1 & 2: 8 Items) -->
   <section class="w-full bg-white py-6">
     <div class="mx-auto max-w-container px-5 lg:px-20">
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+      <div id="product-grid-1" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
 
         <!-- Card 1: LANGFJÄLL 랑피엘 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="beige" data-size="medium" data-material="fabric" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -873,9 +1236,9 @@
         </article>
 
         <!-- Card 2: KALLAX 칼락스 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="medium" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -903,9 +1266,9 @@
         </article>
 
         <!-- Card 3: BILLY 빌리 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="large" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -933,9 +1296,9 @@
         </article>
 
         <!-- Card 4: MALM 말름 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="medium" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -963,9 +1326,9 @@
         </article>
 
         <!-- Card 5: POÄNG 포엥 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="wood" data-size="medium" data-material="wood" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -993,9 +1356,9 @@
         </article>
 
         <!-- Card 6: ALEX 알렉스 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="small" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1023,9 +1386,9 @@
         </article>
 
         <!-- Card 7: LACK 라크 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="small" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1053,9 +1416,9 @@
         </article>
 
         <!-- Card 8: HEMNES 헴네스 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="large" data-material="wood" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1133,12 +1496,12 @@
   <section class="w-full bg-white pb-16">
     <div class="mx-auto max-w-container px-5 lg:px-20">
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+      <div id="product-grid-2" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
 
         <!-- Card 9: BESTÅ 베스토 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="large" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1166,9 +1529,9 @@
         </article>
 
         <!-- Card 10: NORDLI 노르들리 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="large" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1196,9 +1559,9 @@
         </article>
 
         <!-- Card 11: EKET 에케트 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="medium" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1226,9 +1589,9 @@
         </article>
 
         <!-- Card 12: BRIMNES 브림네스 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="white" data-size="large" data-material="board" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1256,9 +1619,9 @@
         </article>
 
         <!-- Card 13: SÖDERHAMN 쇠데르함 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="turquoise" data-size="large" data-material="fabric" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1286,9 +1649,9 @@
         </article>
 
         <!-- Card 14: VITTSJÖ 빗셰 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="black" data-size="small" data-material="metal_glass" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1316,9 +1679,9 @@
         </article>
 
         <!-- Card 15: FJÄLLBO 피엘보 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="black" data-size="medium" data-material="metal_glass" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1346,9 +1709,9 @@
         </article>
 
         <!-- Card 16: LISABO 리사보 -->
-        <article class="prod-card w-full max-w-[260px] flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
+        <article data-color="wood" data-size="medium" data-material="wood" class="prod-card w-full max-w-full sm:max-w-3xs flex flex-col justify-between rounded-xl border border-card-border bg-white p-5 prod-card-shadow transition-all">
           <div>
-            <div class="relative w-full h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
+            <div class="relative w-full h-56 sm:h-44 flex items-center justify-center overflow-hidden rounded-lg mb-3">
               <button type="button" class="wish-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
@@ -1438,10 +1801,10 @@
         </div>
         <div class="mt-4 flex items-center gap-3">
           <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
-            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
           </a>
           <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
-            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           </a>
         </div>
       </div>
@@ -1592,11 +1955,14 @@ document.addEventListener('DOMContentLoaded', function () {
       gsap.fromTo('.cat-grid-2row .cat', { opacity: 0, y: 16 }, {
         opacity: 1, y: 0, duration: .45, ease: 'power2.out', stagger: .05,
         clearProps: 'transform,willChange',
+        immediateRender: true,
         scrollTrigger: { trigger: '.cat-grid-2row', start: 'top 90%', once: true }
       });
     } else {
       document.querySelectorAll('.cat-grid-2row .cat').forEach(function (c) { c.style.opacity = '1'; });
     }
+    // 시작 상태(opacity:0)가 인라인에 박혔으므로 임계 CSS 의 선(先)숨김을 해제한다.
+    document.documentElement.classList.remove('cat-preanim');
 
     // 각 상품 카드가 부드럽게 등장하도록 개별 트리거 적용 (초기 가시성 100% 보장)
     document.querySelectorAll('.prod-card').forEach((card, idx) => {
@@ -1619,6 +1985,9 @@ document.addEventListener('DOMContentLoaded', function () {
         card.style.opacity = '1';
       }
     });
+  } else {
+    // GSAP 이 없으면 진입 애니메이션도 없으므로 즉시 선(先)숨김을 해제한다.
+    document.documentElement.classList.remove('cat-preanim');
   }
 
   // 상세페이지 이동 로직 (이미지, 이미지 영역, 상품명, 상세보기 링크 클릭 시 동적 파라미터 전달)
@@ -1702,12 +2071,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var prevBtn = document.querySelector('.cat-nav-prev');
     var nextBtn = document.querySelector('.cat-nav-next');
     var EDGE = 2; // 경계 판정 여유(px)
+    // 몇 px 차이로 간신히 넘칠 때는 눌러도 움직일 게 없으므로 화살표를 띄우지 않는다.
+    var MIN_OVERFLOW = 12;
 
     function updateNav() {
       if (!prevBtn || !nextBtn) return;
       var scrollW = scrollEl.scrollWidth;
       var clientW = scrollEl.clientWidth;
-      if (scrollW <= clientW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
+      if (scrollW - clientW <= MIN_OVERFLOW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
       prevBtn.hidden = false;
       nextBtn.hidden = false;
       var maxScroll = scrollW - clientW;

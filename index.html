@@ -18,6 +18,18 @@
       } catch {
         /* matchMedia 미지원 브라우저는 무시 */
       }
+
+      // 카테고리 아이콘 줄: 스크립트가 붙기 전에 한 번 전부 보였다가 GSAP 이 다시
+      // opacity:0 으로 되돌려 페이드인하면 "떴다가 다시 나오는" 깜빡임이 생긴다.
+      // 첫 페인트부터 숨겨두고, GSAP 이 시작 상태를 인계받는 순간 이 클래스를 뗀다.
+      if (!rootEl.classList.contains("no-motion")) {
+        rootEl.classList.add("cat-preanim");
+        // GSAP CDN 차단 등으로 스크립트가 못 돌아도 영영 숨은 채 남지 않도록 하는 안전장치
+        setTimeout(function () {
+          rootEl.classList.remove("cat-preanim");
+        }, 2000);
+      }
+
       // 이미지 에러 발생 시 동적 접두사 및 폴더 Fallback 핸들러
       window.addEventListener(
         "error",
@@ -43,6 +55,13 @@
       );
     </script>
 
+    <!-- 임계 스타일: Tailwind CDN(JIT) 처리 전에도 즉시 적용되어야 하는 최소 규칙 -->
+    <style>
+      html.cat-preanim .cat-rail .cat {
+        opacity: 0;
+      }
+    </style>
+
     <!-- Tailwind CSS v4 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
@@ -60,6 +79,26 @@
 
     <!-- Custom Theme Tokens & Base Styling -->
     <style type="text/tailwindcss">
+
+/* Figma 771:11380 Mobile-Header 640px 통일 규격 */
+@media (max-width: 640px) {
+  header {
+    width: 100% !important;
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  header .max-w-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  #mobile-nav {
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
       @theme {
     /* Font size updates */
     --font-size-xs: 1rem;
@@ -122,31 +161,6 @@
         }
       }
 
-      /* 카테고리 아이콘 진입 애니메이션은 JS(Web Animations API)의 revealCatSlides() 가 재생한다.
-         CSS @keyframes 로 넣으면 안 된다: Tailwind CDN 의 JIT 가 DOM 변경마다 스타일시트를
-         다시 만들어 내고, Swiper 의 observer 가 그 변경에 반응해 또 DOM 을 건드리는 탓에
-         CSS 애니메이션이 매 프레임 0 프레임으로 되돌아가 영영 끝나지 않는다(아이콘이 흐린 채 멈춤).
-         WAAPI 애니메이션은 스타일시트 재생성에 영향을 받지 않아 안전하다.
-         또 애니메이션을 .cat 이 아니라 슬라이드(li)에 걸어야
-         .cat:hover 의 translateY(-3px) 가 살아남는다. */
-      .cat-sw:not(.cat-ready) .swiper-slide {
-        opacity: 0;
-      }
-
-      /* 양끝 여백(slidesOffsetBefore/After)과 슬라이드 간격(spaceBetween)은
-         Swiper 가 계산해 인라인으로 넣는다. 여기서 padding·margin 으로 또 주면
-         여백이 두 번 적용되고 마지막 슬라이드 스냅(isEnd) 판정이 어긋난다. */
-      .cat-sw .swiper-wrapper {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        box-sizing: border-box !important;
-      }
-      .cat-sw .swiper-slide,
-      section[aria-labelledby="cat-h"] .swiper-slide {
-        width: 80px !important;
-        flex-shrink: 0 !important;
-      }
-
       /* Screen Reader Only / Hide utility */
       .sr-only-hide {
         position: absolute;
@@ -184,19 +198,30 @@
         top: 16px;
       }
 
-      /* 카테고리 아이콘 캐러셀 (한 줄, 화면이 좁아지면 스크롤로 전환, 각 줄이 독립적으로 스크롤된다) */
+      /* 카테고리 아이콘 줄 (common/products.html 의 .cat-scroll 과 동일한 방식:
+         Swiper 대신 네이티브 가로 스크롤 + 마우스 드래그 + 관성 감속을 쓴다.
+         각 줄은 독립적으로 스크롤되고, 화면이 좁아지면 그대로 가로 스크롤로 전환된다) */
       .swiper-slide { height: auto; }
-      .cat-sw {
-        position: relative;
-        overflow-x: hidden !important;
-        overflow-y: visible;
-        padding-top: 14px !important;
-        padding-bottom: 14px !important;
+      .cat-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+        /* 네이티브 스크롤바 완전히 숨김 (좌우 화살표로 대체) */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-top: 14px;
+        padding-bottom: 4px;
+        padding-left: 40px;
+        padding-right: 40px;
+        overscroll-behavior-x: none;
       }
-      .cat-sw .swiper-wrapper {
-        padding-top: 4px !important;
+      .cat-scroll::-webkit-scrollbar { display: none; }
+      .cat-grid-1row {
+        grid-auto-flow: column;
+        grid-template-rows: auto;
+        grid-auto-columns: 80px;
+        width: max-content;
+        padding-top: 4px;
       }
-      .cat-sw .swiper-slide { width: 80px; }
       .cat {
         transition:
           transform 0.2s ease,
@@ -234,16 +259,9 @@
       .cat-nav:hover { background: var(--color-nav-bg-hover); }
       .cat-nav-prev { left: 6px; }
       .cat-nav-next { right: 6px; }
-      .cat-nav,
-      .cat-sw:not(.swiper-initialized) .cat-nav,
       .cat-nav.is-off,
-      .cat-nav.is-locked {
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
-      .cat-sw.swiper-initialized .cat-nav:not(.is-off):not(.is-locked) {
-        opacity: 1 !important;
-        pointer-events: auto !important;
+      .cat-nav[hidden] {
+        display: none;
       }
       .prod-swiper {
         overflow: visible !important;
@@ -395,7 +413,7 @@
                 <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <span class="whitespace-nowrap shrink-0">사용자</span>
+                <span class="whitespace-nowrap shrink-0">유저</span>
               </a>
             </li>
             <li class="shrink-0 whitespace-nowrap">
@@ -404,9 +422,9 @@
                   <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
-                  <span id="wishlist-badge" style="display: none" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
+                  <span id="wishlist-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
                 </div>
-                <span class="whitespace-nowrap shrink-0">위시리스트</span>
+                <span class="whitespace-nowrap shrink-0">찜</span>
               </a>
             </li>
             <li class="shrink-0 whitespace-nowrap">
@@ -415,9 +433,9 @@
                   <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                   </svg>
-                  <span id="cart-badge" style="display: none" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
+                  <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 inline-flex items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
                 </div>
-                <span class="whitespace-nowrap shrink-0">장바구니</span>
+                <span class="whitespace-nowrap shrink-0">카트</span>
               </a>
             </li>
           </ul>
@@ -736,7 +754,7 @@
           <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
             <li><a class="block py-3 text-ink hover:text-brand" href="common/products.html">모든 제품</a></li>
             <li><a class="block py-3 text-ink hover:text-brand" href="common/category.html">공간별 쇼핑하기</a></li>
-            <li><a class="block py-3 text-ink hover:text-brand" href="common/styling.html">플래닝 &amp; 아이디어</a></li>
+            <li><a class="block py-3 text-ink hover:text-brand" href="common/planning.html">플래닝 &amp; 아이디어</a></li>
             <li><a class="block py-3 text-ink hover:text-brand" href="common/service.html">서비스</a></li>
             <li><a class="block py-3 text-red-600" href="common/sale.html">세일</a></li>
           </ul>
@@ -751,11 +769,12 @@
           <div class="mx-auto max-w-[1280px] px-5 lg:px-10">
             <h2 id="cat-h" class="sr-only-hide">카테고리 탐색</h2>
 
-            <div class="cat-sw cat-sw-products swiper">
-              <ul class="swiper-wrapper items-start">
+            <div class="cat-rail cat-rail-products relative">
+              <div class="cat-scroll">
+              <ul class="cat-grid-1row mx-auto grid items-start gap-y-4 gap-x-4 sm:gap-x-5 lg:gap-x-9 justify-items-center">
 
                 <!-- 1. 신제품 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-new.png" alt="신제품 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -765,7 +784,7 @@
                 </li>
 
                 <!-- 2. 수납가구 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-storage.png" alt="수납가구 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -775,7 +794,7 @@
                 </li>
 
                 <!-- 3. 침구/러그 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-bedding.png" alt="침구 및 러그 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -785,7 +804,7 @@
                 </li>
 
                 <!-- 4. 소파/의자 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-sofa.png" alt="소파 및 의자 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -795,7 +814,7 @@
                 </li>
 
                 <!-- 5. 주방가구 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-kitchen.png" alt="주방가구 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -805,7 +824,7 @@
                 </li>
 
                 <!-- 6. 욕실가구 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-bath.png" alt="욕실가구 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -815,7 +834,7 @@
                 </li>
 
                 <!-- 7. 세탁/청소가구 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-laundry.png" alt="세탁 및 청소가구 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -825,7 +844,7 @@
                 </li>
 
                 <!-- 8. 가전제품 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-appliance.png" alt="가전제품 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -835,7 +854,7 @@
                 </li>
 
                 <!-- 9. 타일/벽지 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-deco.png" alt="타일 및 벽지 데코 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -845,7 +864,7 @@
                 </li>
 
                 <!-- 10. 식품 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-food.png" alt="식품 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -855,7 +874,7 @@
                 </li>
 
                 <!-- 11. 키즈 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-kids.png" alt="키즈 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -865,7 +884,7 @@
                 </li>
 
                 <!-- 12. 아웃도어 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-outdoor.png" alt="아웃도어 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -875,7 +894,7 @@
                 </li>
 
                 <!-- 13. 가드닝/조경 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-gardening.png" alt="가드닝 및 조경 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -885,7 +904,7 @@
                 </li>
 
                 <!-- 14. 기타 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/products.html" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-pill">
                       <img src="assets/cat-etc.png" alt="기타 카테고리 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -895,12 +914,13 @@
                 </li>
 
               </ul>
-              <button type="button" class="cat-nav cat-nav-prev cat-nav-products-prev" aria-label="이전 카테고리 보기">
+              </div>
+              <button type="button" class="cat-nav cat-nav-prev cat-nav-products-prev" aria-label="이전 카테고리 보기" hidden>
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
                 </svg>
               </button>
-              <button type="button" class="cat-nav cat-nav-next cat-nav-products-next" aria-label="다음 카테고리 보기">
+              <button type="button" class="cat-nav cat-nav-next cat-nav-products-next" aria-label="다음 카테고리 보기" hidden>
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -908,11 +928,12 @@
             </div>
 
             <!-- 공간별 카테고리 (공간별 쇼핑 페이지와 동일한 목록) -->
-            <div class="cat-sw cat-sw-spaces swiper mt-2">
-              <ul class="swiper-wrapper items-start">
+            <div class="cat-rail cat-rail-spaces relative mt-2">
+              <div class="cat-scroll">
+              <ul class="cat-grid-1row mx-auto grid items-start gap-y-4 gap-x-4 sm:gap-x-5 lg:gap-x-9 justify-items-center">
 
                 <!-- 1. 거실 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-living" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/living.png" alt="거실 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -922,7 +943,7 @@
                 </li>
 
                 <!-- 2. 다이닝 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-dining" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/dining.png" alt="다이닝 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -932,7 +953,7 @@
                 </li>
 
                 <!-- 3. 주방 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-kitchen" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/kitchen.png" alt="주방 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -942,7 +963,7 @@
                 </li>
 
                 <!-- 4. 침실 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-bedroom" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/bedroom.png" alt="침실 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -952,7 +973,7 @@
                 </li>
 
                 <!-- 5. 욕실 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-bath" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/bath.png" alt="욕실 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -962,7 +983,7 @@
                 </li>
 
                 <!-- 6. 아이방 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-kids" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/kids.png" alt="어린이 IKEA 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -972,7 +993,7 @@
                 </li>
 
                 <!-- 7. 홈오피스 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-office" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/office.png" alt="홈오피스 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -982,7 +1003,7 @@
                 </li>
 
                 <!-- 8. 현관 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-entry" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/entry.png" alt="현관 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -992,7 +1013,7 @@
                 </li>
 
                 <!-- 9. 베란다 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-balcony" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/balcony.png" alt="발코니 및 야외 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -1002,7 +1023,7 @@
                 </li>
 
                 <!-- 10. 세탁실 -->
-                <li class="swiper-slide">
+                <li>
                   <a href="common/category.html#s-laundry" class="cat flex w-20 flex-col items-center gap-2 focus:outline-none focus-visible:outline-none">
                     <span class="block size-20 overflow-hidden rounded-full">
                       <img src="assets/images/categories/laundry.png" alt="다용도실 및 세탁실 공간별 쇼핑 썸네일" width="80" height="80" class="h-full w-full object-cover" />
@@ -1012,12 +1033,13 @@
                 </li>
 
               </ul>
-              <button type="button" class="cat-nav cat-nav-prev cat-nav-spaces-prev" aria-label="이전 카테고리 보기">
+              </div>
+              <button type="button" class="cat-nav cat-nav-prev cat-nav-spaces-prev" aria-label="이전 카테고리 보기" hidden>
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
                 </svg>
               </button>
-              <button type="button" class="cat-nav cat-nav-next cat-nav-spaces-next" aria-label="다음 카테고리 보기">
+              <button type="button" class="cat-nav cat-nav-next cat-nav-spaces-next" aria-label="다음 카테고리 보기" hidden>
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -1050,7 +1072,7 @@
               <h2 id="heading-recommend" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">지금 주목해야 할 추천 제품</h2>
               <p class="mt-1 text-sm text-ink-sub">인기 베스트셀러 추천 영역입니다.</p>
             </div>
-            <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <a href="#" class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-bold text-ink hover:text-brand transition-colors group">
               <span>전체 보기</span>
               <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -1243,7 +1265,7 @@
               <h2 id="heading-new" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">신제품</h2>
               <p class="mt-1 text-sm text-ink-sub">이번 달 출시된 신제품 추천 영역입니다.</p>
             </div>
-            <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <a href="#" class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-bold text-ink hover:text-brand transition-colors group">
               <span>전체 보기</span>
               <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -1436,7 +1458,7 @@
               <h2 id="heading-ideas" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">도움이 될 만한 인테리어 아이디어</h2>
               <p class="mt-1 text-sm text-ink-sub">콘텐츠 기반 쇼핑경험 페이지입니다.</p>
             </div>
-            <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <a href="#" class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-bold text-ink hover:text-brand transition-colors group">
               <span>전체 보기</span>
               <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -1480,7 +1502,7 @@
               <h2 id="heading-showroom" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">이케아 쇼룸 둘러보기</h2>
               <p class="mt-1 text-sm text-ink-sub">실제 매장에서 만나볼 수 있는 쇼룸을 온라인으로 미리 체험해보세요.</p>
             </div>
-            <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <a href="#" class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-bold text-ink hover:text-brand transition-colors group">
               <span>전체 보기</span>
               <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -1533,7 +1555,7 @@
               <h2 id="heading-insta" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">이케아 코리아 인스타그램</h2>
               <p class="mt-1 text-sm text-ink-sub font-medium"><span class="text-brand font-bold">@ikeakr</span>의 최신 인스타그램 게시물</p>
             </div>
-            <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <a href="#" class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-bold text-ink hover:text-brand transition-colors group">
               <span>전체 보기</span>
               <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -1613,7 +1635,7 @@
               <h2 id="heading-reviews" class="text-2xl lg:text-3xl font-extrabold text-ink tracking-tight">실제 고객들의 후기</h2>
               <p class="mt-1 text-sm text-ink-sub">이케아 제품을 사용하는 고객님들의 생생한 후기를 확인하세요.</p>
             </div>
-            <a href="#" class="inline-flex items-center gap-1 text-sm font-bold text-ink hover:text-brand transition-colors group">
+            <a href="#" class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-bold text-ink hover:text-brand transition-colors group">
               <span>전체 보기</span>
               <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -1791,81 +1813,196 @@
     <!-- JavaScript Interaction Logic -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Swiper 초기화가 어떤 이유로든 실패해도 아이콘이 opacity:0 인 채 남지 않도록 하는 안전장치.
-        // 타이머를 초기화보다 먼저 걸어 둬야 초기화가 예외로 끊겨도 살아남는다.
-        setTimeout(function () {
-          document.querySelectorAll(".cat-sw").forEach(function (el) {
-            el.classList.add("cat-ready");
+        // 카테고리 아이콘 줄: common/products.html 의 .cat-scroll 과 완전히 같은 동작.
+        // Swiper 를 쓰지 않고 네이티브 가로 스크롤 + 마우스 드래그 + 관성 감속으로 움직이며,
+        // 좌우 반투명 화살표가 스크롤 가능 여부에 따라 나타난다.
+        // 각 줄(.cat-rail)은 서로 독립적으로 스크롤된다.
+        document.querySelectorAll(".cat-rail").forEach(function (railEl) {
+          var scrollEl = railEl.querySelector(".cat-scroll");
+          if (!scrollEl) return;
+
+          // ── 카테고리 간격(column-gap)을 화면 폭에 맞춰 가변 계산 ──
+          // products.html 의 syncCatGridGap() 과 완전히 같은 공식(컨테이너 실제 폭 기반, 14~36px).
+          // .cat-scroll 의 좌우 padding(40px)이 첫/마지막 아이콘 위치를 고정하므로
+          // 여기서는 아이템 사이 간격만 바꾸고 위치 앵커는 건드리지 않는다.
+          var gridEl = railEl.querySelector(".cat-grid-1row");
+          if (gridEl) {
+            var GAP_MIN = 14;
+            var GAP_MAX = 36;
+            var syncCatGridGap = function () {
+              var usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
+              var gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
+              gridEl.style.columnGap = gap + "px";
+            };
+            syncCatGridGap();
+            window.addEventListener("resize", syncCatGridGap);
+          }
+
+          // ── 좌우 반투명 화살표: 스크롤 가능 여부에 따라 표시/숨김 ──
+          var prevBtn = railEl.querySelector(".cat-nav-prev");
+          var nextBtn = railEl.querySelector(".cat-nav-next");
+          var EDGE = 2; // 경계 판정 여유(px)
+          // 몇 px 차이로 간신히 넘칠 때는 눌러도 움직일 게 없으므로 화살표를 띄우지 않는다.
+          var MIN_OVERFLOW = 12;
+
+          function updateNav() {
+            if (!prevBtn || !nextBtn) return;
+            var scrollW = scrollEl.scrollWidth;
+            var clientW = scrollEl.clientWidth;
+            if (scrollW - clientW <= MIN_OVERFLOW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
+            prevBtn.hidden = false;
+            nextBtn.hidden = false;
+            var maxScroll = scrollW - clientW;
+            prevBtn.classList.toggle("is-off", scrollEl.scrollLeft <= EDGE);
+            nextBtn.classList.toggle("is-off", scrollEl.scrollLeft >= maxScroll - EDGE);
+          }
+
+          function scrollByPage(dir) {
+            var step = Math.round(scrollEl.clientWidth * 0.9) * dir;
+            var calm = document.documentElement.classList.contains("no-motion");
+            scrollEl.scrollBy({ left: step, behavior: calm ? "auto" : "smooth" });
+          }
+
+          if (prevBtn) prevBtn.addEventListener("click", function () { scrollByPage(-1); });
+          if (nextBtn) nextBtn.addEventListener("click", function () { scrollByPage(1); });
+
+          scrollEl.addEventListener("scroll", updateNav, { passive: true });
+          window.addEventListener("resize", updateNav);
+          updateNav();
+
+          // ── 마우스 드래그 스크롤 (products.html 과 동일한 감속) ──
+          var isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
+          var velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
+          scrollEl.style.cursor = "grab";
+
+          scrollEl.addEventListener("mousedown", function (e) {
+            if (e.button !== 0) return;
+            e.preventDefault();
+            // 진행 중인 감속 애니메이션 취소
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            isMouseDown = true;
+            mouseDragged = false;
+            velocity = 0;
+            startMouseX = e.pageX;
+            lastMoveX = e.pageX;
+            lastMoveTime = Date.now();
+            startScrollLeft = scrollEl.scrollLeft;
+            scrollEl.style.cursor = "grabbing";
+            scrollEl.style.userSelect = "none";
           });
-        }, 1500);
+
+          document.addEventListener("mousemove", function (e) {
+            if (!isMouseDown) return;
+            var dx = e.pageX - startMouseX;
+            if (Math.abs(dx) > 4) mouseDragged = true;
+            // 속도 추적 (px/ms → px/frame 환산, 60fps 기준)
+            var now = Date.now();
+            var dt = now - lastMoveTime;
+            if (dt > 0) velocity = ((lastMoveX - e.pageX) / dt) * 16;
+            lastMoveX = e.pageX;
+            lastMoveTime = now;
+            scrollEl.scrollLeft = startScrollLeft - dx;
+          });
+
+          document.addEventListener("mouseup", function () {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            scrollEl.style.cursor = "grab";
+            scrollEl.style.userSelect = "";
+
+            // 손 뗀 시점 속도가 없으면 즉시 정지
+            if (Math.abs(velocity) < 0.5) return;
+
+            // 모션 감소 설정 시 관성 스크롤 생략
+            if (document.documentElement.classList.contains("no-motion")) { velocity = 0; updateNav(); return; }
+
+            // ease-out 감속 (마찰 0.92/frame, 최대 420ms)
+            var friction = 0.92;
+            var maxFrames = Math.round(420 / 16); // ~26프레임
+            var frame = 0;
+
+            function decelerate() {
+              if (frame >= maxFrames || Math.abs(velocity) < 0.3) {
+                velocity = 0;
+                updateNav();
+                return;
+              }
+              velocity *= friction;
+              var next = scrollEl.scrollLeft + velocity;
+              // 경계 클램프
+              next = Math.max(0, Math.min(next, scrollEl.scrollWidth - scrollEl.clientWidth));
+              scrollEl.scrollLeft = next;
+              frame++;
+              updateNav();
+              rafId = requestAnimationFrame(decelerate);
+            }
+            rafId = requestAnimationFrame(decelerate);
+          });
+
+          // 드래그였으면 클릭 이벤트 차단 (링크 이동 방지)
+          scrollEl.addEventListener("click", function (e) {
+            if (mouseDragged) {
+              e.preventDefault();
+              e.stopPropagation();
+              mouseDragged = false;
+            }
+          }, true);
+
+          // ── 터치 tap vs drag 구분 ──
+          var startTX = 0, startTY = 0, touchDragged = false;
+          scrollEl.addEventListener("touchstart", function (e) {
+            startTX = e.touches[0].clientX;
+            startTY = e.touches[0].clientY;
+            touchDragged = false;
+          }, { passive: true });
+          scrollEl.addEventListener("touchmove", function (e) {
+            if (Math.abs(e.touches[0].clientX - startTX) > 8 ||
+                Math.abs(e.touches[0].clientY - startTY) > 8) touchDragged = true;
+          }, { passive: true });
+          scrollEl.addEventListener("click", function (e) {
+            if (touchDragged) {
+              e.preventDefault();
+              e.stopPropagation();
+              touchDragged = false;
+            }
+          }, true);
+        });
+
+        // 카테고리 아이콘 진입 애니메이션: products.html 과 동일하게 GSAP 으로
+        // 아래에서 위로 순차적으로 떠오르게 한다.
+        // clearProps 로 끝나고 인라인 transform 을 지운다. 남겨두면 인라인 스타일이
+        // .cat:hover { transform: translateY(-3px) } 를 이겨서 hover 상승이 죽는다.
+        (function () {
+          // .cat-preanim 은 첫 페인트부터 아이콘을 숨겨두는 임계 CSS 클래스다.
+          // 어느 경로로 빠지든 반드시 떼서 아이콘이 계속 숨은 채 남지 않게 한다.
+          var unhide = function () { rootEl.classList.remove("cat-preanim"); };
+          var cats = document.querySelectorAll(".cat-rail .cat");
+          if (!cats.length) { unhide(); return; }
+          if (typeof gsap === "undefined" || rootEl.classList.contains("no-motion")) { unhide(); return; }
+          document.querySelectorAll(".cat-rail").forEach(function (railEl) {
+            if (typeof ScrollTrigger !== "undefined") {
+              gsap.registerPlugin(ScrollTrigger);
+              gsap.fromTo(railEl.querySelectorAll(".cat"), { opacity: 0, y: 16 }, {
+                opacity: 1, y: 0, duration: 0.45, ease: "power2.out", stagger: 0.05,
+                clearProps: "transform,willChange",
+                immediateRender: true,
+                scrollTrigger: { trigger: railEl, start: "top 90%", once: true }
+              });
+            } else {
+              gsap.fromTo(railEl.querySelectorAll(".cat"), { opacity: 0, y: 16 }, {
+                opacity: 1, y: 0, duration: 0.45, ease: "power2.out", stagger: 0.05,
+                clearProps: "transform,willChange",
+                immediateRender: true
+              });
+            }
+          });
+          // immediateRender 로 시작 상태(opacity:0)가 인라인에 이미 박혔으므로,
+          // 여기서 클래스를 떼도 아이콘이 다시 번쩍이지 않는다.
+          unhide();
+        })();
 
         // Swiper Carousels Initialization
         if (typeof Swiper !== "undefined") {
-          // 카테고리 아이콘 캐러셀 2줄 (각자 독립적인 스크롤 + 좌우 반투명 화살표, 화면이 좁아지면 스크롤로 전환)
-          // 양끝 여백은 common/products.html 의 .cat-scroll 좌우 padding(40px)과 맞춘다.
-          var CAT_EDGE_OFFSET = 40;
-          // 아이콘 사이 간격은 common/products.html 의 syncCatGridGap() 과 완전히 같은 공식으로 계산해
-          // 두 페이지의 카테고리 줄이 같은 간격으로 보이게 한다. (컨테이너 실제 폭 기반, 14~36px)
-          function calcCatGap(el) {
-            var usable = el.clientWidth - CAT_EDGE_OFFSET * 2;
-            return Math.max(14, Math.min(36, usable * 0.045));
-          }
-          // 아이콘이 제자리에서(이동 없이) 한두 개씩 떠오르게 한다.
-          // fill:"backwards" 라서 자기 차례가 오기 전까지는 0 프레임(투명) 상태로 대기하고,
-          // 끝난 뒤에는 인라인 흔적 없이 원래 스타일(.cat-ready → opacity 1)로 돌아간다.
-          function revealCatSlides(swiperEl) {
-            swiperEl.classList.add("cat-ready");
-            var slides = swiperEl.querySelectorAll(".swiper-slide");
-            if (rootEl.classList.contains("no-motion") || typeof slides[0].animate !== "function") return;
-            slides.forEach(function (slide, i) {
-              slide.animate(
-                [
-                  { opacity: 0, transform: "scale(0.92)" },
-                  { opacity: 1, transform: "scale(1)" }
-                ],
-                { duration: 250, delay: i * 70, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
-              );
-            });
-          }
-          function initCatSwiper(swiperSelector, prevSelector, nextSelector) {
-            var swiperEl = document.querySelector(swiperSelector);
-            if (!swiperEl) return;
-            var prevEl = swiperEl.querySelector(prevSelector);
-            var nextEl = swiperEl.querySelector(nextSelector);
-            var sw = new Swiper(swiperEl, {
-              speed: 420,
-              slidesPerView: "auto",
-              spaceBetween: calcCatGap(swiperEl),
-              slidesOffsetBefore: CAT_EDGE_OFFSET,
-              slidesOffsetAfter: CAT_EDGE_OFFSET,
-              slidesPerGroupAuto: true,
-              watchOverflow: true,
-              observer: true,
-              observeParents: true,
-              resizeObserver: true,
-              keyboard: { enabled: true, onlyInViewport: true },
-              navigation: {
-                prevEl: prevEl,
-                nextEl: nextEl,
-                disabledClass: "is-off",
-                lockClass: "is-locked",
-              }
-            });
-            // 화면 폭이 바뀌면 products.html 과 같은 공식으로 간격을 다시 맞춘다.
-            window.addEventListener("resize", function () {
-              sw.params.spaceBetween = calcCatGap(swiperEl);
-              sw.update();
-            });
-            // 간격·양끝 여백이 다 반영된 다음 프레임부터 진입 애니메이션을 시작한다.
-            requestAnimationFrame(function () {
-              requestAnimationFrame(function () {
-                revealCatSlides(swiperEl);
-              });
-            });
-          }
-          initCatSwiper(".cat-sw-products", ".cat-nav-products-prev", ".cat-nav-products-next");
-          initCatSwiper(".cat-sw-spaces", ".cat-nav-spaces-prev", ".cat-nav-spaces-next");
-
           new Swiper(".prod-swiper-1", {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -1891,17 +2028,7 @@
               1024: { slidesPerView: 4, spaceBetween: 24 },
             },
           });
-        } else {
-          // Swiper CDN 로드 실패 시에도 아이콘이 감춰진 채 남지 않도록 바로 보여 준다.
-          document.querySelectorAll(".cat-sw").forEach(function (el) {
-            el.classList.add("cat-ready");
-          });
         }
-
-        // 카테고리 아이콘 순차 등장은 CSS @keyframes catEntrance 가 전담한다.
-        // 예전에는 여기서 gsap.fromTo(".cat", {opacity:0,y:16}, ...) 도 함께 돌렸는데,
-        // CSS 애니메이션이 캐스케이드상 인라인 스타일보다 우선해 GSAP 결과가 그대로 덮여
-        // 화면에 아무 효과도 나타나지 않았다. 중복 제어를 없애고 CSS 한쪽으로 일원화한다.
 
         // Header & Mega Menu Logic
         const navLinks = document.querySelectorAll(".nav-link[data-tab]");
@@ -2004,10 +2131,9 @@
 
           const card = e.target.closest("article, .swiper-slide");
           if (!card) return;
-          // 카테고리 아이콘 캐러셀(.cat-sw)도 <li class="swiper-slide">를 쓰기 때문에
-          // 이 상품 상세페이지 이동 로직이 카테고리 클릭까지 가로채고 있었다.
-          // 카테고리는 자기 자신의 <a href>로 이동해야 하므로 여기서 제외한다.
-          if (card.closest(".cat-sw")) return;
+          // 카테고리 아이콘 줄(.cat-rail)의 항목이 이 상품 상세페이지 이동 로직에
+          // 걸리지 않도록 제외한다. 카테고리는 자기 자신의 <a href>로 이동해야 한다.
+          if (card.closest(".cat-rail")) return;
 
           const isImage = e.target.tagName === "IMG" || e.target.closest(".relative");
           const isTitle = e.target.tagName === "H3" || e.target.closest("h3");
@@ -2081,7 +2207,7 @@
     <!-- 우측 여백에 떠 있는 소개 영상 위젯: 클릭하면 기존 인트로 영상 크기로 재생되고, 삭제 버튼으로 완전히 없앨 수 있다 -->
     <div id="floating-video-widget" class="fixed right-5 top-1/2 z-40 -translate-y-1/2 group flex flex-col items-center gap-2">
       <button type="button" id="floating-video-hide-today-btn" class="rounded-pill bg-ink/85 px-3 py-1.5 text-xs font-medium text-white shadow-md transition-colors hover:bg-ink cursor-pointer focus:outline-none focus:ring-2 focus:ring-white">
-        오늘 하루 더 안보기
+        더 안보기
       </button>
       <div class="relative">
         <button type="button" id="floating-video-delete-btn" class="absolute -top-2 -right-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-ink text-white shadow-md transition-colors hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-white" aria-label="소개 영상 위젯 닫기">
