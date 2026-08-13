@@ -9,8 +9,17 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
   var d = document.documentElement;
   d.classList.add('js');
+  if (window.location.hash && window.location.hash.startsWith('#s-') && window.location.hash !== '#s-living') {
+    d.classList.add('hash-loading');
+    setTimeout(function () {
+      d.classList.remove('hash-loading');
+    }, 600);
+  }
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
   } catch (e) {}
@@ -18,12 +27,14 @@
 
 <!-- Tailwind CDN이 유틸리티 클래스를 브라우저에서 실시간으로 생성하는 동안(JIT),
      그 처리가 끝나기 전까지 스타일 없는 원본 HTML이 잠깐 그대로 보이는 FOUC를 줄이기 위한
-     최소한의 임계 스타일. Tailwind 처리를 기다리지 않고 즉시 적용된다.
-     특히 카드 이미지 박스 높이(h-[...]) 값은 Tailwind가 처리하기 전엔 존재하지 않아서
-     "매칭 추천 제품" 캐러셀이 원래 크기보다 커졌다가 줄어드는 것처럼 보였다.
-     자주 쓰이는 크기 클래스를 그대로 복제해 두면, Tailwind가 나중에 같은 값으로
-     덮어써도 화면상 변화가 없어 점프가 사라진다. -->
+     최소한의 임계 스타일. Tailwind 처리를 기다리지 않고 즉시 적용된다. -->
 <style>
+  html.hash-loading body {
+    opacity: 0 !important;
+  }
+  body {
+    transition: opacity 0.15s ease-out;
+  }
   html {
     overflow-y: scroll !important;
     scrollbar-gutter: stable !important;
@@ -1067,6 +1078,7 @@
     <!-- SECTION: bedroom (owner: 미배정) -->
     <!-- 침실 -->
     <section id="s-bedroom" aria-labelledby="h-bedroom" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-bedroom') { window.scrollTo(0, document.getElementById('s-bedroom').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-bedroom" class="text-2xl font-extrabold text-ink lg:text-3xl">침실 (BEDROOM)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">숙면과 충전을 보장하는 아늑하고 정갈한 개인 휴식 공간</p>
@@ -1173,6 +1185,7 @@
     <!-- SECTION: dining (owner: 미배정) -->
     <!-- 다이닝 -->
     <section id="s-dining" aria-labelledby="h-dining" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-dining') { window.scrollTo(0, document.getElementById('s-dining').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-dining" class="text-2xl font-extrabold text-ink lg:text-3xl">다이닝 (DINING)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">체계적인 수납과 감각적인 주방 가전 매칭으로 머물고 싶은 요리 공간</p>
@@ -1279,6 +1292,7 @@
     <!-- SECTION: kids (owner: 미배정) -->
     <!-- 어린이 IKEA -->
     <section id="s-kids" aria-labelledby="h-kids" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-kids') { window.scrollTo(0, document.getElementById('s-kids').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-kids" class="text-2xl font-extrabold text-ink lg:text-3xl">어린이 IKEA (KIDZ IKEA)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">창의력과 호기심을 무한히 자극하는 친환경 키즈 가구 라인업</p>
@@ -1385,6 +1399,7 @@
     <!-- SECTION: office (owner: 미배정) -->
     <!-- 홈오피스 -->
     <section id="s-office" aria-labelledby="h-office" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-office') { window.scrollTo(0, document.getElementById('s-office').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-office" class="text-2xl font-extrabold text-ink lg:text-3xl">홈오피스 (HOME OFFICE)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">집중력을 극대화할 수 있는 깔끔한 데스크와 완벽한 책장 레이아웃</p>
@@ -1488,6 +1503,7 @@
 
                 <!-- SECTION: s-kitchen -->
     <section id="s-kitchen" aria-labelledby="h-s-kitchen" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-kitchen') { window.scrollTo(0, document.getElementById('s-kitchen').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-s-kitchen" class="text-2xl font-extrabold text-ink lg:text-3xl">주방 (KITCHEN)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">요리하는 즐거움과 효율적인 수납으로 깔끔하게 정리되는 키친 공간</p>
@@ -1589,6 +1605,7 @@
 
     <!-- SECTION: s-bath -->
     <section id="s-bath" aria-labelledby="h-s-bath" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-bath') { window.scrollTo(0, document.getElementById('s-bath').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-s-bath" class="text-2xl font-extrabold text-ink lg:text-3xl">욕실 (BATHROOM)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">매일을 상쾌하게 시작하고 마무리하는 위생적이고 쾌적한 바스룸</p>
@@ -1690,6 +1707,7 @@
 
     <!-- SECTION: s-entry -->
     <section id="s-entry" aria-labelledby="h-s-entry" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-entry') { window.scrollTo(0, document.getElementById('s-entry').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-s-entry" class="text-2xl font-extrabold text-ink lg:text-3xl">현관 (ENTRYWAY)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">우리 집의 첫인상을 결정하는 정돈되고 스마트한 현관 공간</p>
@@ -1791,6 +1809,7 @@
 
     <!-- SECTION: s-balcony -->
     <section id="s-balcony" aria-labelledby="h-s-balcony" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-balcony') { window.scrollTo(0, document.getElementById('s-balcony').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-s-balcony" class="text-2xl font-extrabold text-ink lg:text-3xl">베란다 (BALCONY)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">도심 속 미니 가드닝과 휴식의 여유를 만드는 힐링 테라스 공간</p>
@@ -1892,6 +1911,7 @@
 
     <!-- SECTION: s-laundry -->
     <section id="s-laundry" aria-labelledby="h-s-laundry" class="scroll-mt-28 pt-6 mb-16">
+      <script>if (window.location.hash === '#s-laundry') { window.scrollTo(0, document.getElementById('s-laundry').offsetTop - 90); }</script>
       <header class="rv mb-6 lg:mb-8">
         <h2 id="h-s-laundry" class="text-2xl font-extrabold text-ink lg:text-3xl">세탁실 (LAUNDRY ROOM)</h2>
         <p class="mt-1 text-sm lg:text-base text-ink-sub">빨래부터 건조, 다림질까지 동선을 최적화한 실용적인 수납 솔루션</p>
@@ -2105,12 +2125,6 @@
 </div><!-- /#cont -->
 </div><!-- /#wrap -->
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-
 <script>
 /* 인라인 스크립트는 defer가 적용되지 않으므로, 위 defer 스크립트들이 실행을 마치는
    DOMContentLoaded 시점까지 직접 대기시켜 순서를 맞춘다. */
@@ -2121,6 +2135,43 @@ document.addEventListener('DOMContentLoaded', function () {
   var calm  = root.classList.contains('no-motion');
   var $     = function (s, c) { return (c || document).querySelector(s); };
   var $$    = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ---------- 스크롤 타깃 이동 유틸리티 ---------- */
+  function scrollToTarget(target, isSmooth) {
+    if (!target) return;
+    var headerOffset = 90;
+    var rect = target.getBoundingClientRect();
+    var targetTop = rect.top + window.pageYOffset - headerOffset;
+    targetTop = Math.max(0, targetTop);
+
+    if (isSmooth && typeof gsap !== 'undefined' && window.ScrollToPlugin && !calm) {
+      gsap.to(window, { duration: 0.45, ease: 'power2.out', scrollTo: { y: targetTop, autoKill: false } });
+    } else {
+      window.scrollTo({ top: targetTop, behavior: isSmooth ? 'smooth' : 'instant' });
+    }
+  }
+
+  // 외부 링크(#s-...)를 통해 들어왔을 때 최상단(거실) 깜빡임 없이 해당 위치로 즉각 안착
+  function handleInitialHash() {
+    var hash = window.location.hash;
+    if (hash && hash.startsWith('#s-')) {
+      var target = document.querySelector(hash);
+      if (target) {
+        scrollToTarget(target, false);
+        requestAnimationFrame(function () {
+          scrollToTarget(target, false);
+          root.classList.remove('hash-loading');
+        });
+      } else {
+        root.classList.remove('hash-loading');
+      }
+    } else {
+      root.classList.remove('hash-loading');
+    }
+  }
+
+  // DOMContentLoaded 즉시 1차 해시 이동
+  handleInitialHash();
 
   /* ---------- 1. 캐로셀 (Swiper) ---------- */
 
@@ -2138,9 +2189,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // index.html의 카테고리 캐러셀과 동일한 로직: 화면 폭에 맞춰 간격(gap)을 가변 계산하고,
   // 전체 아이템(10개)이 컨테이너보다 좁게 들어가는 폭에서는 왼쪽에 붙지 않도록
-  // 남는 폭을 양쪽에 똑같이 나눠 가운데 정렬한다. Swiper의 centerInsufficientSlides는
-  // "슬라이드 개수 < slidesPerView"만 보고 실제 픽셀 폭은 보지 않아서, 개수가 딱
-  // 맞아떨어지는 경우(예: 1180px 이상에서 10개 전부 slidesPerView:10) 동작하지 않는다.
+  // 남는 폭을 양쪽에 똑같이 나눠 가운데 정렬한다.
   var CAT_SLIDE_WIDTH = 80;
   var CAT_EDGE_OFFSET = 40; // 스크롤이 필요할 때 화살표를 위해 남기는 최소 여백
   var CAT_GAP_MIN = 14;
@@ -2183,10 +2232,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (changed) {
       swiper.update();
-      // update()는 기존 스크롤 위치(translate)를 그대로 유지하려고 해서,
-      // 스크롤해둔 상태에서 화면을 다시 키우면(예: 넘침 → 안 넘침으로 전환)
-      // 새로 계산된 offset과 옛 위치가 어긋나 카테고리가 한쪽으로 쏠려 보인다.
-      // 레이아웃이 바뀔 때마다 항상 처음 위치로 되돌려 어긋남을 막는다.
       swiper.slideTo(0, 0, false);
     }
   }
@@ -2210,8 +2255,6 @@ document.addEventListener('DOMContentLoaded', function () {
       disabledClass: 'is-off',
       lockClass: 'is-locked'
     },
-    // index.html 카테고리 캐러셀과 동일한 브레이크포인트를 사용해,
-    // 어느 화면 폭에서든 보이는 카테고리 개수가 항상 같도록 맞춘다.
     breakpoints: {
       480:  { slidesPerView: 4 },
       640:  { slidesPerView: 5 },
@@ -2267,10 +2310,11 @@ document.addEventListener('DOMContentLoaded', function () {
   function resync() {
     swipers.forEach(function (s) { if (s && !s.destroyed) s.update(); });
     if (window.ScrollTrigger) ScrollTrigger.refresh();
+    handleInitialHash();
   }
   window.addEventListener('load', resync);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(resync);
-  [120, 400, 1000].forEach(function (t) { setTimeout(resync, t); });
+  [50, 150, 400, 800].forEach(function (t) { setTimeout(resync, t); });
 
   /* ---------- 2. 모바일 메뉴 & 메가 메뉴 ---------- */
 
@@ -2364,7 +2408,7 @@ document.addEventListener('DOMContentLoaded', function () {
     megaPanel.addEventListener('mouseleave', closeMegaMenu);
   }
 
-  /* ---------- 3. GSAP 스크롤 인터랙션 ---------- */
+  /* ---------- 3. GSAP 스크롤 인터랙션 & 앵커 이동 ---------- */
 
   if (typeof gsap === 'undefined') root.classList.add('no-motion');
   if (calm || typeof gsap === 'undefined') return;
@@ -2400,11 +2444,15 @@ document.addEventListener('DOMContentLoaded', function () {
       var path = href.slice(0, hashPos);
       /* "category.html#s-xxx"는 메가 메뉴처럼 다른 페이지에도 재사용되는 링크다.
          현재 문서가 category.html일 때만 같은 페이지 스크롤로 가로채고, 아니면 기본 페이지 이동에 맡긴다. */
-      if (path && path !== location.pathname.split('/').pop()) return;
+      var currentFile = location.pathname.split('/').pop() || 'category.html';
+      if (path && path !== currentFile && !location.pathname.endsWith(path)) return;
       var t = document.querySelector(hash);
       if (!t) return;
       e.preventDefault();
-      goto(t);
+      if (history.pushState) {
+        history.pushState(null, '', hash);
+      }
+      scrollToTarget(t, true);
       t.setAttribute('tabindex', '-1');
       t.focus({ preventScroll: true });
       t.addEventListener('blur', function onBlur() {
@@ -2414,12 +2462,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  var smoother = null;
   if (smoother) {
     document.addEventListener('focusin', function (e) {
       var el = e.target;
-      /* tabindex="-1" 요소(카테고리 스크롤 이동 타깃 등)는 키보드 탭 이동 대상이 아니므로 재센터링 대상에서 제외한다.
-         제외하지 않으면, 방문했던 섹션 안의 아무 곳(예: Hero Style Card)을 클릭할 때마다
-         브라우저가 그 섹션(가장 가까운 포커스 가능 조상)에 포커스를 넘기며 스크롤이 불규칙하게 튀었다. */
+      /* tabindex="-1" 요소(카테고리 스크롤 이동 타깃 등)는 키보드 탭 이동 대상이 아니므로 재센터링 대상에서 제외한다. */
       if (el.getAttribute('tabindex') === '-1') return;
       if (!el.closest || !el.closest('#cont')) return;
       var r = el.getBoundingClientRect();
