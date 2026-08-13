@@ -1587,8 +1587,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 카테고리 아이콘이 순차적으로 떠오르며 등장 (공간별 쇼핑 페이지와 동일한 로딩 애니메이션)
     if (typeof ScrollTrigger !== 'undefined') {
+      // clearProps 로 끝나고 인라인 transform 을 지운다. 남겨두면 인라인 스타일이
+      // .cat:hover { transform: translateY(-3px) } 를 이겨서 hover 상승이 죽는다.
       gsap.fromTo('.cat-grid-2row .cat', { opacity: 0, y: 16 }, {
         opacity: 1, y: 0, duration: .45, ease: 'power2.out', stagger: .05,
+        clearProps: 'transform,willChange',
         scrollTrigger: { trigger: '.cat-grid-2row', start: 'top 90%', once: true }
       });
     } else {
@@ -1685,7 +1688,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var gridEl = document.querySelector('.cat-grid-2row');
       if (!gridEl) return;
       var GAP_MIN = 14;
-      var GAP_MAX = 48;
+      var GAP_MAX = 36;
       function syncCatGridGap() {
         var usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
         var gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
