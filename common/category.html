@@ -2375,12 +2375,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var smoother = null;
 
+  function headerOffset() {
+    var header = document.getElementById('main-header');
+    return (header ? header.offsetHeight : 80) + 8;
+  }
+
   function goto(target) {
+    var offset = headerOffset();
     if (typeof gsap !== 'undefined' && window.ScrollToPlugin) {
-      gsap.to(window, { duration: .5, ease: 'power2.out', scrollTo: { y: target, offsetY: 80, autoKill: false } });
+      gsap.to(window, { duration: .5, ease: 'power2.out', scrollTo: { y: target, offsetY: offset, autoKill: false } });
     } else {
       var rect = target.getBoundingClientRect();
-      var top = window.pageYOffset + rect.top - 80;
+      var top = window.pageYOffset + rect.top - offset;
       window.scrollTo({ top: top, behavior: 'smooth' });
     }
   }
