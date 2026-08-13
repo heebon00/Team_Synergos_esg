@@ -15,6 +15,15 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
   } catch (e) {}
 
+  // 카테고리 아이콘 줄: 스크립트가 붙기 전에 한 번 전부 보였다가 GSAP 이 다시
+  // opacity:0 으로 되돌려 페이드인하면 "떴다가 다시 나오는" 깜빡임이 생긴다.
+  // 첫 페인트부터 숨겨두고, GSAP 이 시작 상태를 인계받는 순간 이 클래스를 뗀다.
+  if (!d.classList.contains('no-motion')) {
+    d.classList.add('cat-preanim');
+    // GSAP CDN 차단 등으로 스크립트가 못 돌아도 영영 숨은 채 남지 않도록 하는 안전장치
+    setTimeout(function () { d.classList.remove('cat-preanim'); }, 2000);
+  }
+
   // 글로벌 이미지 안전 fallback 핸들러 (어떤 서버/로컬 환경에서도 100% 이미지 노출 보장)
   window.addEventListener('error', function(e) {
     if (e.target && e.target.tagName === 'IMG') {
@@ -31,6 +40,11 @@
     }
   }, true);
 </script>
+
+<!-- 임계 스타일: Tailwind CDN(JIT) 처리 전에도 즉시 적용되어야 하는 최소 규칙 -->
+<style>
+  html.cat-preanim .cat-grid-2row .cat { opacity: 0; }
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
@@ -1592,11 +1606,14 @@ document.addEventListener('DOMContentLoaded', function () {
       gsap.fromTo('.cat-grid-2row .cat', { opacity: 0, y: 16 }, {
         opacity: 1, y: 0, duration: .45, ease: 'power2.out', stagger: .05,
         clearProps: 'transform,willChange',
+        immediateRender: true,
         scrollTrigger: { trigger: '.cat-grid-2row', start: 'top 90%', once: true }
       });
     } else {
       document.querySelectorAll('.cat-grid-2row .cat').forEach(function (c) { c.style.opacity = '1'; });
     }
+    // 시작 상태(opacity:0)가 인라인에 박혔으므로 임계 CSS 의 선(先)숨김을 해제한다.
+    document.documentElement.classList.remove('cat-preanim');
 
     // 각 상품 카드가 부드럽게 등장하도록 개별 트리거 적용 (초기 가시성 100% 보장)
     document.querySelectorAll('.prod-card').forEach((card, idx) => {
@@ -1619,6 +1636,9 @@ document.addEventListener('DOMContentLoaded', function () {
         card.style.opacity = '1';
       }
     });
+  } else {
+    // GSAP 이 없으면 진입 애니메이션도 없으므로 즉시 선(先)숨김을 해제한다.
+    document.documentElement.classList.remove('cat-preanim');
   }
 
   // 상세페이지 이동 로직 (이미지, 이미지 영역, 상품명, 상세보기 링크 클릭 시 동적 파라미터 전달)
@@ -1702,12 +1722,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var prevBtn = document.querySelector('.cat-nav-prev');
     var nextBtn = document.querySelector('.cat-nav-next');
     var EDGE = 2; // 경계 판정 여유(px)
+    // 몇 px 차이로 간신히 넘칠 때는 눌러도 움직일 게 없으므로 화살표를 띄우지 않는다.
+    var MIN_OVERFLOW = 12;
 
     function updateNav() {
       if (!prevBtn || !nextBtn) return;
       var scrollW = scrollEl.scrollWidth;
       var clientW = scrollEl.clientWidth;
-      if (scrollW <= clientW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
+      if (scrollW - clientW <= MIN_OVERFLOW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
       prevBtn.hidden = false;
       nextBtn.hidden = false;
       var maxScroll = scrollW - clientW;
