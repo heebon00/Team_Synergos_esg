@@ -652,7 +652,7 @@
               <span>|</span>
               <span>주문번호: IKEA-9403841</span>
             </div>
-            <a href="#" class="text-brand font-semibold hover:underline">주문상세 보기 &gt;</a>
+            <button type="button" onclick="openOrderDetailModal('order1')" class="text-brand font-semibold hover:underline cursor-pointer bg-none border-none p-0">주문상세 보기 &gt;</button>
           </div>
 
           <!-- Order Item Card -->
@@ -664,7 +664,7 @@
                 <span class="bg-brand text-white text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase">배송중</span>
                 <strong class="text-ink font-semibold">6/20 (토) 이케아 헬퍼 방문예정</strong>
               </div>
-              <a href="#" class="text-ink font-semibold hover:underline">배송조회 &gt;</a>
+              <button type="button" onclick="openShippingTrackingModal()" class="text-ink font-semibold hover:underline cursor-pointer bg-none border-none p-0">배송조회 &gt;</button>
             </div>
 
             <!-- Card Item Body -->
@@ -699,7 +699,7 @@
               <span>|</span>
               <span>주문번호: IKEA-4112048</span>
             </div>
-            <a href="#" class="text-brand font-semibold hover:underline">주문상세 보기 &gt;</a>
+            <button type="button" onclick="openOrderDetailModal('order2')" class="text-brand font-semibold hover:underline cursor-pointer bg-none border-none p-0">주문상세 보기 &gt;</button>
           </div>
 
           <!-- Order Item Card -->
@@ -739,6 +739,203 @@
     </section>
 
   </div>
+
+  <!-- MODAL: OrderDetailModal -->
+  <div id="order-detail-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="order-detail-title">
+    <div class="relative w-full max-w-2xl bg-white rounded-lg shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300 ease-out" id="order-detail-card">
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-line-light px-6 py-4 bg-bg-light">
+        <h2 id="order-detail-title" class="text-base font-extrabold text-ink">주문 상세보기</h2>
+        <button type="button" onclick="closeOrderDetailModal()" class="text-ink-muted hover:text-brand focus:outline-none p-1 transition-colors" aria-label="닫기">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <!-- Body -->
+      <div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+        <!-- Order Info Section -->
+        <div class="flex flex-col gap-3">
+          <h3 class="text-sm font-bold text-ink">주문정보</h3>
+          <div class="grid grid-cols-2 gap-4 bg-bg-light p-4 rounded-lg">
+            <div>
+              <p class="text-xs text-ink-muted mb-1">주문번호</p>
+              <p class="text-sm font-bold text-ink">IKEA-9403841</p>
+            </div>
+            <div>
+              <p class="text-xs text-ink-muted mb-1">주문일시</p>
+              <p class="text-sm font-bold text-ink">2026.06.18 14:32</p>
+            </div>
+            <div>
+              <p class="text-xs text-ink-muted mb-1">배송상태</p>
+              <p class="text-sm font-bold text-brand">배송중</p>
+            </div>
+            <div>
+              <p class="text-xs text-ink-muted mb-1">배송예정일</p>
+              <p class="text-sm font-bold text-ink">2026.06.20 (토)</p>
+            </div>
+          </div>
+        </div>
+        <!-- Product Section -->
+        <div class="flex flex-col gap-3">
+          <h3 class="text-sm font-bold text-ink">주문상품</h3>
+          <div class="border border-line-light rounded-lg p-4">
+            <div class="flex gap-4">
+              <div class="w-24 h-24 bg-bg-light rounded overflow-hidden shrink-0 border border-line-light">
+                <img src="../assets/p-poang.png" alt="POÄNG 포엥 암체어" class="w-full h-full object-cover">
+              </div>
+              <div class="flex flex-col flex-1 justify-center">
+                <h4 class="text-sm font-bold text-ink">POÄNG 포엥 암체어</h4>
+                <p class="text-xs text-ink-muted mt-1">색상: 군세레드 베이지, 프레임: 자작나무 베니어</p>
+                <p class="text-xs text-ink-muted mt-1">수량: 2개</p>
+                <p class="text-sm font-extrabold text-ink mt-3">₩ 129,000 × 2 = ₩ 258,000</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Payment Section -->
+        <div class="flex flex-col gap-3">
+          <h3 class="text-sm font-bold text-ink">결제정보</h3>
+          <div class="bg-bg-light p-4 rounded-lg space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-muted">상품금액</span>
+              <span class="font-bold text-ink">₩ 258,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-muted">배송비</span>
+              <span class="font-bold text-ink">₩ 49,000</span>
+            </div>
+            <div class="border-t border-line-light pt-2 flex justify-between text-sm font-bold">
+              <span class="text-ink">총액</span>
+              <span class="text-brand text-base">₩ 307,000</span>
+            </div>
+          </div>
+        </div>
+        <!-- Shipping Address -->
+        <div class="flex flex-col gap-3">
+          <h3 class="text-sm font-bold text-ink">배송지</h3>
+          <div class="bg-bg-light p-4 rounded-lg">
+            <p class="text-xs text-ink-muted mb-1">받는 사람: 홍길동</p>
+            <p class="text-sm text-ink">서울특별시 마포구 가상로 123 (우편번호: 00000)</p>
+            <p class="text-xs text-ink-muted mt-2">연락처: 010-1234-5678</p>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div class="border-t border-line-light px-6 py-4 bg-bg-light">
+        <button type="button" onclick="closeOrderDetailModal()" class="w-full h-10 rounded-lg bg-brand text-white hover:bg-brand-dark transition-colors text-sm font-bold">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ShippingTrackingModal -->
+  <div id="shipping-tracking-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="shipping-tracking-title">
+    <div class="relative w-full max-w-2xl bg-white rounded-lg shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300 ease-out" id="shipping-tracking-card">
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-line-light px-6 py-4 bg-bg-light">
+        <h2 id="shipping-tracking-title" class="text-base font-extrabold text-ink">배송 조회</h2>
+        <button type="button" onclick="closeShippingTrackingModal()" class="text-ink-muted hover:text-brand focus:outline-none p-1 transition-colors" aria-label="닫기">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <!-- Body -->
+      <div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+        <!-- Shipping Status Header -->
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-xs text-ink-muted mb-1">배송상태</p>
+            <p class="text-base font-extrabold text-brand">배송중</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-ink-muted mb-1">배송예정일</p>
+            <p class="text-base font-extrabold text-ink">2026.06.20 (토)</p>
+          </div>
+        </div>
+        <!-- Shipping Timeline -->
+        <div class="flex flex-col gap-4">
+          <h3 class="text-sm font-bold text-ink">배송진행 상황</h3>
+          <div class="space-y-4">
+            <!-- Step 1: 접수 -->
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-sm font-bold">✓</div>
+                <div class="w-px h-12 bg-line-light"></div>
+              </div>
+              <div class="pb-4">
+                <p class="text-sm font-bold text-ink">주문 접수</p>
+                <p class="text-xs text-ink-muted mt-1">2026.06.18 14:32</p>
+              </div>
+            </div>
+            <!-- Step 2: 준비중 -->
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-sm font-bold">✓</div>
+                <div class="w-px h-12 bg-line-light"></div>
+              </div>
+              <div class="pb-4">
+                <p class="text-sm font-bold text-ink">배송준비중</p>
+                <p class="text-xs text-ink-muted mt-1">2026.06.18 16:45</p>
+              </div>
+            </div>
+            <!-- Step 3: 출발 -->
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-sm font-bold">✓</div>
+                <div class="w-px h-12 bg-line-light"></div>
+              </div>
+              <div class="pb-4">
+                <p class="text-sm font-bold text-ink">배송출발</p>
+                <p class="text-xs text-ink-muted mt-1">2026.06.19 09:00</p>
+              </div>
+            </div>
+            <!-- Step 4: 배송중 -->
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-sm font-bold animate-pulse">📍</div>
+                <div class="w-px h-12 bg-line-light"></div>
+              </div>
+              <div class="pb-4">
+                <p class="text-sm font-bold text-brand">배송중</p>
+                <p class="text-xs text-ink-muted mt-1">2026.06.20 10:30</p>
+                <p class="text-xs text-ink mt-2">현재 위치: 서울 마포구 인근</p>
+              </div>
+            </div>
+            <!-- Step 5: 예정 -->
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                <div class="w-8 h-8 rounded-full bg-line-light text-ink-muted flex items-center justify-center text-sm font-bold">5</div>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-ink-muted">배송완료 예정</p>
+                <p class="text-xs text-ink-muted mt-1">2026.06.20 14:00 ~ 16:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Delivery Info -->
+        <div class="flex flex-col gap-3 bg-bg-light p-4 rounded-lg">
+          <h3 class="text-sm font-bold text-ink">배송사정보</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-muted">배송사</span>
+              <span class="font-bold text-ink">IKEA 배송 파트너</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-muted">배송기사</span>
+              <span class="font-bold text-ink">김철수 기사님</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-muted">연락처</span>
+              <span class="font-bold text-brand">010-xxxx-xxxx</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div class="border-t border-line-light px-6 py-4 bg-bg-light">
+        <button type="button" onclick="closeShippingTrackingModal()" class="w-full h-10 rounded-lg bg-brand text-white hover:bg-brand-dark transition-colors text-sm font-bold">닫기</button>
+      </div>
+    </div>
+  </div>
+
 </main>
 <!-- /SEGMENT: MainContent -->
 
@@ -959,6 +1156,134 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     megaPanel.addEventListener('mouseleave', closeMegaMenu);
   }
+
+  // Order Data
+  var orderData = {
+    'order1': {
+      orderNo: 'IKEA-9403841',
+      orderDate: '2026.06.18 14:32',
+      status: '배송중',
+      statusColor: 'text-brand',
+      deliveryDate: '2026.06.20 (토)',
+      productName: 'POÄNG 포엥 암체어',
+      productImage: '../assets/p-poang.png',
+      productSpec: '색상: 군세레드 베이지, 프레임: 자작나무 베니어',
+      quantity: 2,
+      unitPrice: 129000,
+      shippingFee: 49000,
+      address: '서울특별시 마포구 가상로 123 (우편번호: 00000)'
+    },
+    'order2': {
+      orderNo: 'IKEA-4112048',
+      orderDate: '2026.04.10 09:15',
+      status: '배송완료',
+      statusColor: 'text-ink-muted',
+      deliveryDate: '2026.04.13 (월)',
+      productName: 'BILLY 빌리 책장',
+      productImage: '../assets/p-billy.png',
+      productSpec: '크기: 80x28x202 cm, 화이트',
+      quantity: 1,
+      unitPrice: 79900,
+      shippingFee: 39000,
+      address: '서울특별시 마포구 가상로 123 (우편번호: 00000)'
+    }
+  };
+
+  // Modal Functions
+  window.openOrderDetailModal = function(orderId) {
+    var data = orderData[orderId || 'order1'];
+    var totalPrice = (data.unitPrice * data.quantity) + data.shippingFee;
+
+    // Update modal content
+    document.querySelector('#order-detail-modal .bg-bg-light img').src = data.productImage;
+    document.querySelectorAll('#order-detail-modal .grid.grid-cols-2')[0].innerHTML =
+      '<div><p class="text-xs text-ink-muted mb-1">주문번호</p><p class="text-sm font-bold text-ink">' + data.orderNo + '</p></div>' +
+      '<div><p class="text-xs text-ink-muted mb-1">주문일시</p><p class="text-sm font-bold text-ink">' + data.orderDate + '</p></div>' +
+      '<div><p class="text-xs text-ink-muted mb-1">배송상태</p><p class="text-sm font-bold ' + data.statusColor + '">' + data.status + '</p></div>' +
+      '<div><p class="text-xs text-ink-muted mb-1">배송예정일</p><p class="text-sm font-bold text-ink">' + data.deliveryDate + '</p></div>';
+
+    var productHTML = '<div class="flex gap-4"><div class="w-24 h-24 bg-bg-light rounded overflow-hidden shrink-0 border border-line-light">' +
+      '<img src="' + data.productImage + '" alt="' + data.productName + '" class="w-full h-full object-cover"></div>' +
+      '<div class="flex flex-col flex-1 justify-center"><h4 class="text-sm font-bold text-ink">' + data.productName + '</h4>' +
+      '<p class="text-xs text-ink-muted mt-1">' + data.productSpec + '</p>' +
+      '<p class="text-xs text-ink-muted mt-1">수량: ' + data.quantity + '개</p>' +
+      '<p class="text-sm font-extrabold text-ink mt-3">₩ ' + data.unitPrice.toLocaleString() + ' × ' + data.quantity + ' = ₩ ' + (data.unitPrice * data.quantity).toLocaleString() + '</p></div></div>';
+
+    document.querySelectorAll('#order-detail-modal .border.border-line-light.rounded-lg.p-4')[0].innerHTML = productHTML;
+
+    var paymentHTML = '<div class="flex justify-between text-sm"><span class="text-ink-muted">상품금액</span>' +
+      '<span class="font-bold text-ink">₩ ' + (data.unitPrice * data.quantity).toLocaleString() + '</span></div>' +
+      '<div class="flex justify-between text-sm"><span class="text-ink-muted">배송비</span>' +
+      '<span class="font-bold text-ink">₩ ' + data.shippingFee.toLocaleString() + '</span></div>' +
+      '<div class="border-t border-line-light pt-2 flex justify-between text-sm font-bold">' +
+      '<span class="text-ink">총액</span><span class="text-brand text-base">₩ ' + totalPrice.toLocaleString() + '</span></div>';
+
+    document.querySelectorAll('#order-detail-modal .bg-bg-light.p-4.rounded-lg')[0].innerHTML = paymentHTML;
+
+    var addressHTML = '<p class="text-xs text-ink-muted mb-1">받는 사람: 홍길동</p>' +
+      '<p class="text-sm text-ink">' + data.address + '</p>' +
+      '<p class="text-xs text-ink-muted mt-2">연락처: 010-1234-5678</p>';
+
+    document.querySelectorAll('#order-detail-modal .bg-bg-light.p-4.rounded-lg')[1].innerHTML = addressHTML;
+
+    var modal = document.getElementById('order-detail-modal');
+    var card = document.getElementById('order-detail-card');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      card.classList.remove('scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  };
+
+  window.closeOrderDetailModal = function() {
+    var modal = document.getElementById('order-detail-modal');
+    var card = document.getElementById('order-detail-card');
+    card.classList.remove('scale-100', 'opacity-100');
+    card.classList.add('scale-95', 'opacity-0');
+    setTimeout(function() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 200);
+  };
+
+  window.openShippingTrackingModal = function() {
+    var modal = document.getElementById('shipping-tracking-modal');
+    var card = document.getElementById('shipping-tracking-card');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      card.classList.remove('scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  };
+
+  window.closeShippingTrackingModal = function() {
+    var modal = document.getElementById('shipping-tracking-modal');
+    var card = document.getElementById('shipping-tracking-card');
+    card.classList.remove('scale-100', 'opacity-100');
+    card.classList.add('scale-95', 'opacity-0');
+    setTimeout(function() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 200);
+  };
+
+  // Modal Background Close
+  document.getElementById('order-detail-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeOrderDetailModal();
+  });
+  document.getElementById('shipping-tracking-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeShippingTrackingModal();
+  });
+
+  // Escape Key Close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeOrderDetailModal();
+      closeShippingTrackingModal();
+    }
+  });
 });
 </script>
 
