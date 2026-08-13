@@ -128,6 +128,8 @@
     if (count > 0) {
       badge.textContent = String(count);
       badge.style.display = 'inline-flex';
+      badge.style.fontSize = '9px';
+      badge.style.lineHeight = '1';
       badge.classList.remove('hidden');
     } else {
       badge.textContent = '';
