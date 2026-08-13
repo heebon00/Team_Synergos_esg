@@ -550,7 +550,6 @@
 
     <!-- MainWorkspace (메인 작업 영역) -->
     <section class="flex-1 flex flex-col gap-8">
-      <h1 class="text-title font-extrabold text-ink tracking-tight">계정 관리</h1>
 
       <!-- Tabs -->
       <nav aria-label="계정 관리 하위 메뉴" class="border-b border-line-light">
@@ -594,23 +593,23 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">개인 정보</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="profile">
                 수정하기
               </button>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div class="flex flex-col gap-1">
                 <span class="text-xs text-ink-muted">이름</span>
-                <strong class="text-sm font-semibold text-ink-2">김이케 (KIM IKEA)</strong>
+                <strong id="pf-name" class="text-sm font-semibold text-ink-2">김이케 (KIM IKEA)</strong>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-xs text-ink-muted">생년월일</span>
-                <strong class="text-sm font-semibold text-ink-2">1992년 11월 18일</strong>
+                <strong id="pf-birth" class="text-sm font-semibold text-ink-2">1992년 11월 18일</strong>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-xs text-ink-muted">성별</span>
-                <strong class="text-sm font-semibold text-ink-2">선택 안함</strong>
+                <strong id="pf-gender" class="text-sm font-semibold text-ink-2">선택 안함</strong>
               </div>
             </div>
           </article>
@@ -626,14 +625,14 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">이메일 주소</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="email">
                 변경하기
               </button>
             </div>
-            
+
             <div class="flex flex-col gap-1">
               <span class="text-xs text-ink-muted">기본 이메일 주소</span>
-              <strong class="text-sm font-semibold text-ink-2">ikeafamily_korea@gmail.com</strong>
+              <strong id="pf-email" class="text-sm font-semibold text-ink-2">ikeafamily_korea@gmail.com</strong>
             </div>
           </article>
 
@@ -648,14 +647,14 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">휴대폰 번호</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="phone">
                 변경하기
               </button>
             </div>
-            
+
             <div class="flex flex-col gap-1">
               <span class="text-xs text-ink-muted">인증된 휴대전화</span>
-              <strong class="text-sm font-semibold text-ink-2">010-8492-3158</strong>
+              <strong id="pf-phone" class="text-sm font-semibold text-ink-2">010-8492-3158</strong>
             </div>
           </article>
         </div>
@@ -672,13 +671,13 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">배송지 주소</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="address">
                 추가하기
               </button>
             </div>
             <div class="flex flex-col gap-1">
               <span class="text-xs text-ink-muted">기본 배송지</span>
-              <strong class="text-sm font-semibold text-ink-2">서울특별시 강남구 테헤란로 123 (역삼동)</strong>
+              <strong id="pf-address" class="text-sm font-semibold text-ink-2">서울특별시 강남구 테헤란로 123 (역삼동)</strong>
             </div>
           </article>
 
@@ -692,13 +691,13 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">결제 수단</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="payment">
                 변경하기
               </button>
             </div>
             <div class="flex flex-col gap-1">
               <span class="text-xs text-ink-muted">기본 결제 카드</span>
-              <strong class="text-sm font-semibold text-ink-2">신한카드 (****-****-****-9876)</strong>
+              <strong id="pf-payment" class="text-sm font-semibold text-ink-2">신한카드 (****-****-****-9876)</strong>
             </div>
           </article>
         </div>
@@ -716,13 +715,13 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">비밀번호 관리</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="password">
                 변경하기
               </button>
             </div>
             <div class="flex flex-col gap-1">
               <span class="text-xs text-ink-muted">마지막 변경일</span>
-              <strong class="text-sm font-semibold text-ink-2">2026년 5월 10일 (약 3개월 전)</strong>
+              <strong id="pf-password-date" class="text-sm font-semibold text-ink-2">2026년 5월 10일 (약 3개월 전)</strong>
             </div>
           </article>
 
@@ -737,13 +736,13 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">2단계 인증</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" id="btn-2fa-toggle" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-active="false">
                 활성화
               </button>
             </div>
             <div class="flex flex-col gap-1">
               <span class="text-xs text-ink-muted">보안 상태</span>
-              <strong class="text-sm font-semibold text-ink-2 text-sale">현재 비활성화 상태입니다. 보안 강화를 위해 권장합니다.</strong>
+              <strong id="pf-2fa-status" class="text-sm font-semibold text-ink-2 text-sale">현재 비활성화 상태입니다. 보안 강화를 위해 권장합니다.</strong>
             </div>
           </article>
         </div>
@@ -760,18 +759,18 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">알림 및 마케팅 설정</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="notify">
                 변경하기
               </button>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="flex flex-col gap-1">
                 <span class="text-xs text-ink-muted">이메일 알림</span>
-                <strong class="text-sm font-semibold text-ink-2">수신 동의 (2026년 2월 2일 동의)</strong>
+                <strong id="pf-notify-email" class="text-sm font-semibold text-ink-2">수신 동의</strong>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-xs text-ink-muted">SMS 및 모바일 푸시</span>
-                <strong class="text-sm font-semibold text-ink-2 text-ink-muted">미수신</strong>
+                <strong id="pf-notify-sms" class="text-sm font-semibold text-ink-2 text-ink-muted">미수신</strong>
               </div>
             </div>
           </article>
@@ -786,18 +785,18 @@
                 </div>
                 <h2 class="text-base font-bold text-ink">지역 및 언어</h2>
               </div>
-              <button type="button" class="px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer">
+              <button type="button" class="account-edit-btn px-5 py-2 rounded-btn border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold text-xs transition-all duration-200 cursor-pointer" data-edit-key="region">
                 변경하기
               </button>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="flex flex-col gap-1">
                 <span class="text-xs text-ink-muted">선호 언어</span>
-                <strong class="text-sm font-semibold text-ink-2">한국어 (Korean)</strong>
+                <strong id="pf-lang" class="text-sm font-semibold text-ink-2">한국어 (Korean)</strong>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-xs text-ink-muted">쇼핑 국가 및 통화</span>
-                <strong class="text-sm font-semibold text-ink-2">대한민국 (KRW / ₩)</strong>
+                <strong id="pf-currency" class="text-sm font-semibold text-ink-2">대한민국 (KRW / ₩)</strong>
               </div>
             </div>
           </article>
@@ -946,6 +945,216 @@
   </div>
 </div>
 
+<!-- SEGMENT: AccountEditModal -->
+<div id="account-edit-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="account-edit-title">
+  <div id="account-edit-card" class="relative w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300 ease-out">
+    <div class="flex items-center justify-between border-b border-line-light px-6 py-4 bg-bg-light">
+      <h2 id="account-edit-title" class="text-base font-extrabold text-ink">정보 수정</h2>
+      <button type="button" id="account-edit-close" class="text-ink-muted hover:text-brand focus:outline-none p-1 transition-colors" aria-label="닫기">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="account-edit-form" class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+      <div id="account-edit-fields" class="flex flex-col gap-4"></div>
+      <p id="account-edit-error" class="hidden text-xs font-semibold text-sale">입력값을 다시 확인해 주세요.</p>
+      <div class="flex gap-3 pt-2">
+        <button type="button" id="account-edit-cancel" class="flex-1 h-10 rounded-lg border border-line-2 text-ink hover:bg-bg-light transition-colors text-sm font-bold">취소</button>
+        <button type="submit" class="flex-1 h-10 rounded-lg bg-brand text-white hover:bg-brand-dark transition-colors text-sm font-bold shadow-sm">저장</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  var fieldConfigs = {
+    profile: {
+      title: '개인 정보 수정',
+      fields: [
+        { key: 'name', label: '이름', type: 'text', target: 'pf-name' },
+        { key: 'birth', label: '생년월일', type: 'date', target: 'pf-birth', defaultValue: '1992-11-18',
+          format: function (v) {
+            var d = new Date(v);
+            return d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일';
+          } },
+        { key: 'gender', label: '성별', type: 'select', options: ['선택 안함', '남성', '여성', '기타'], target: 'pf-gender' }
+      ]
+    },
+    email: {
+      title: '이메일 주소 변경',
+      fields: [{ key: 'email', label: '이메일 주소', type: 'email', target: 'pf-email' }]
+    },
+    phone: {
+      title: '휴대폰 번호 변경',
+      fields: [{ key: 'phone', label: '휴대폰 번호', type: 'tel', target: 'pf-phone' }]
+    },
+    address: {
+      title: '배송지 주소 변경',
+      fields: [{ key: 'address', label: '기본 배송지', type: 'text', target: 'pf-address' }]
+    },
+    payment: {
+      title: '결제 수단 변경',
+      fields: [{ key: 'payment', label: '결제 카드', type: 'select',
+        options: ['신한카드 (****-****-****-9876)', '국민카드 (****-****-****-1234)', '삼성카드 (****-****-****-5678)'],
+        target: 'pf-payment' }]
+    },
+    notify: {
+      title: '알림 및 마케팅 설정',
+      fields: [
+        { key: 'notifyEmail', label: '이메일 알림', type: 'select', options: ['수신 동의', '수신 거부'], target: 'pf-notify-email' },
+        { key: 'notifySms', label: 'SMS 및 모바일 푸시', type: 'select', options: ['수신', '미수신'], target: 'pf-notify-sms' }
+      ]
+    },
+    region: {
+      title: '지역 및 언어 설정',
+      fields: [
+        { key: 'lang', label: '선호 언어', type: 'select', options: ['한국어 (Korean)', 'English'], target: 'pf-lang' },
+        { key: 'currency', label: '쇼핑 국가 및 통화', type: 'select',
+          options: ['대한민국 (KRW / ₩)', '일본 (JPY / ¥)', '미국 (USD / $)'], target: 'pf-currency' }
+      ]
+    },
+    password: {
+      title: '비밀번호 변경',
+      fields: [
+        { key: 'current', label: '현재 비밀번호', type: 'password' },
+        { key: 'next', label: '새 비밀번호', type: 'password' },
+        { key: 'confirm', label: '새 비밀번호 확인', type: 'password' }
+      ]
+    }
+  };
+
+  var modal = document.getElementById('account-edit-modal');
+  var card = document.getElementById('account-edit-card');
+  var form = document.getElementById('account-edit-form');
+  var fieldsWrap = document.getElementById('account-edit-fields');
+  var errorMsg = document.getElementById('account-edit-error');
+  var titleEl = document.getElementById('account-edit-title');
+  var activeKey = null;
+
+  function fieldInputHtml(field, index) {
+    var id = 'edit-field-' + index;
+    var current = field.target ? document.getElementById(field.target) : null;
+    var currentText = current ? current.textContent.trim() : '';
+    var html = '<div class="flex flex-col gap-1.5">' +
+      '<label for="' + id + '" class="text-xs font-bold text-ink-2">' + field.label + '</label>';
+
+    if (field.type === 'select') {
+      html += '<select id="' + id + '" class="h-10 rounded-lg border border-line-2 bg-white px-3 text-sm text-ink focus:border-brand focus:outline-none">';
+      field.options.forEach(function (opt) {
+        var selected = opt === currentText ? ' selected' : '';
+        html += '<option' + selected + '>' + opt + '</option>';
+      });
+      html += '</select>';
+    } else {
+      var value = field.type === 'date' ? (field.defaultValue || '') : currentText;
+      html += '<input id="' + id + '" type="' + field.type + '" value="' + value.replace(/"/g, '&quot;') + '"' +
+        (field.type === 'password' ? ' autocomplete="new-password"' : '') +
+        ' class="h-10 rounded-lg border border-line-2 bg-white px-3 text-sm text-ink focus:border-brand focus:outline-none">';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function openEditModal(key) {
+    var config = fieldConfigs[key];
+    if (!config) return;
+    activeKey = key;
+    titleEl.textContent = config.title;
+    errorMsg.classList.add('hidden');
+    fieldsWrap.innerHTML = config.fields.map(fieldInputHtml).join('');
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () {
+      card.classList.remove('scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  }
+
+  function closeEditModal() {
+    card.classList.remove('scale-100', 'opacity-100');
+    card.classList.add('scale-95', 'opacity-0');
+    setTimeout(function () {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      activeKey = null;
+    }, 200);
+  }
+
+  function flash(el) {
+    el.classList.add('text-brand');
+    setTimeout(function () { el.classList.remove('text-brand'); }, 800);
+  }
+
+  document.querySelectorAll('.account-edit-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      openEditModal(btn.getAttribute('data-edit-key'));
+    });
+  });
+
+  document.getElementById('account-edit-close').addEventListener('click', closeEditModal);
+  document.getElementById('account-edit-cancel').addEventListener('click', closeEditModal);
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeEditModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeEditModal();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var config = fieldConfigs[activeKey];
+    if (!config) return;
+
+    if (activeKey === 'password') {
+      var current = document.getElementById('edit-field-0').value;
+      var next = document.getElementById('edit-field-1').value;
+      var confirm = document.getElementById('edit-field-2').value;
+      if (!current || next.length < 8 || next !== confirm) {
+        errorMsg.textContent = '현재 비밀번호를 입력하고, 새 비밀번호(8자 이상)를 동일하게 두 번 입력해 주세요.';
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+      var dateEl = document.getElementById('pf-password-date');
+      var today = new Date();
+      dateEl.textContent = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 (방금 변경)';
+      flash(dateEl);
+      closeEditModal();
+      return;
+    }
+
+    config.fields.forEach(function (field, index) {
+      var input = document.getElementById('edit-field-' + index);
+      var value = input.value.trim();
+      if (!value) return;
+      var target = document.getElementById(field.target);
+      if (!target) return;
+      target.textContent = field.format ? field.format(value) : value;
+      flash(target);
+    });
+
+    closeEditModal();
+  });
+
+  var twoFaBtn = document.getElementById('btn-2fa-toggle');
+  var twoFaStatus = document.getElementById('pf-2fa-status');
+  if (twoFaBtn && twoFaStatus) {
+    twoFaBtn.addEventListener('click', function () {
+      var active = twoFaBtn.getAttribute('data-active') === 'true';
+      var next = !active;
+      twoFaBtn.setAttribute('data-active', String(next));
+      twoFaBtn.textContent = next ? '비활성화' : '활성화';
+      twoFaStatus.textContent = next
+        ? '2단계 인증이 활성화되어 있습니다. 로그인 시 추가 인증이 요구됩니다.'
+        : '현재 비활성화 상태입니다. 보안 강화를 위해 권장합니다.';
+      twoFaStatus.classList.toggle('text-sale', !next);
+      flash(twoFaStatus);
+    });
+  }
+})();
+</script>
+<!-- /SEGMENT: AccountEditModal -->
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Mobile Navigation Toggle
@@ -958,6 +1167,34 @@ document.addEventListener('DOMContentLoaded', function() {
       mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
     });
   }
+
+  // 계정 관리 하위 메뉴 탭 전환
+  const tabMenuBtns = document.querySelectorAll('.tab-menu-btn[data-tab-menu]');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+  tabMenuBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = btn.getAttribute('data-tab-menu');
+
+      tabMenuBtns.forEach(function (b) {
+        const isActive = b === btn;
+        b.classList.toggle('text-link', isActive);
+        b.classList.toggle('border-brand', isActive);
+        b.classList.toggle('text-ink-muted', !isActive);
+        b.classList.toggle('border-transparent', !isActive);
+        if (isActive) {
+          b.setAttribute('aria-current', 'page');
+        } else {
+          b.removeAttribute('aria-current');
+        }
+      });
+
+      tabPanes.forEach(function (pane) {
+        pane.classList.toggle('hidden', pane.id !== 'tab-content-' + target);
+        pane.classList.toggle('flex', pane.id === 'tab-content-' + target);
+      });
+    });
+  });
 
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');

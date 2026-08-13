@@ -1098,7 +1098,7 @@ function formatCardExpiry(input) {
 
   let formatted = '';
   if (val.length > 2) {
-    formatted = val.substring(0, 2) + ' / ' + val.substring(2);
+    formatted = val.substring(0, 2) + '/' + val.substring(2);
   } else {
     formatted = val;
   }
@@ -1186,6 +1186,17 @@ function submitCardRegisterForm() {
   const modalBox = document.getElementById('cardSuccessModalBox');
   const formattedCard = `${cardNum.substring(0, 4)}-${cardNum.substring(4, 8)}-****-****`;
   const formattedExpiry = `${expiry.substring(0, 2)} / ${expiry.substring(2, 4)}`;
+  const issuer = document.getElementById('detectedIssuerBadge').textContent.trim() || '일반 카드';
+
+  // 등록한 카드를 로컬 저장소에 보관해 card.html 목록에 반영한다
+  const savedCards = JSON.parse(localStorage.getItem('ikea_digital_cards') || '[]');
+  savedCards.push({
+    issuer: issuer,
+    cardMasked: formattedCard,
+    expiry: expiry,
+    registeredAt: new Date().toISOString()
+  });
+  localStorage.setItem('ikea_digital_cards', JSON.stringify(savedCards));
 
   document.getElementById('modalCardNumber').textContent = formattedCard;
   document.getElementById('modalCardExpiry').textContent = formattedExpiry;

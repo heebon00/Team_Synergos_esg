@@ -537,7 +537,7 @@
       <a href="family.html" class="sidebar-item flex items-center justify-between px-4 py-3 text-ink hover:bg-bg-light hover:text-brand rounded-md font-medium transition-all duration-200">
         <span>이케아 패밀리</span>
       </a>
-      <a href="order.html" class="sidebar-item flex items-center justify-between px-4 py-3 bg-link text-white rounded-md font-semibold transition-all duration-200" aria-current="page">
+      <a href="orders.html" class="sidebar-item flex items-center justify-between px-4 py-3 bg-link text-white rounded-md font-semibold transition-all duration-200" aria-current="page">
         <span>구매내역 및 주문현황</span>
       </a>
       <a href="wishlist.html" class="sidebar-item flex items-center justify-between px-4 py-3 text-ink hover:bg-bg-light hover:text-brand rounded-md font-medium transition-all duration-200">
@@ -550,23 +550,22 @@
 
     <!-- MainWorkspace (메인 작업 영역) -->
     <section class="flex-1 flex flex-col gap-8">
-      <h1 class="text-title font-extrabold text-ink tracking-tight">구매내역 및 주문현황</h1>
 
       <!-- FilterTabs (필터 탭 3개) -->
       <nav aria-label="주문 상태 필터" class="border-b border-line-light">
         <ul class="flex gap-6 text-sm font-semibold">
           <li class="relative">
-            <a href="#" class="block pb-3 text-link border-b-tab border-brand" aria-current="page">
+            <a href="#" data-order-filter="all" class="order-filter-btn block pb-3 text-link border-b-tab border-brand" aria-current="page">
               전체 주문내역
             </a>
           </li>
           <li>
-            <a href="#" class="block pb-3 text-ink-muted hover:text-brand border-b-tab border-transparent transition-all">
+            <a href="#" data-order-filter="in-progress" class="order-filter-btn block pb-3 text-ink-muted hover:text-brand border-b-tab border-transparent transition-all">
               진행중인 주문
             </a>
           </li>
           <li>
-            <a href="#" class="block pb-3 text-ink-muted hover:text-brand border-b-tab border-transparent transition-all">
+            <a href="#" data-order-filter="completed" class="order-filter-btn block pb-3 text-ink-muted hover:text-brand border-b-tab border-transparent transition-all">
               완료된 주문
             </a>
           </li>
@@ -624,7 +623,7 @@
       <div class="flex flex-col gap-8">
         
         <!-- OrderGroup 1 (배송중 주문) -->
-        <div class="flex flex-col gap-3">
+        <div class="order-group flex flex-col gap-3" data-order-status="in-progress">
           
           <!-- Order Information Header -->
           <div class="flex justify-between items-center text-xs text-ink-muted">
@@ -671,7 +670,7 @@
         </div>
 
         <!-- OrderGroup 2 (배송완료 주문) -->
-        <div class="flex flex-col gap-3">
+        <div class="order-group flex flex-col gap-3" data-order-status="completed">
           
           <!-- Order Information Header -->
           <div class="flex justify-between items-center text-xs text-ink-muted">
@@ -832,6 +831,33 @@ document.addEventListener('DOMContentLoaded', function() {
       mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
     });
   }
+
+  // 주문 상태 필터 탭
+  const orderFilterBtns = document.querySelectorAll('.order-filter-btn[data-order-filter]');
+  const orderGroups = document.querySelectorAll('.order-group');
+  orderFilterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const filter = btn.getAttribute('data-order-filter');
+
+      orderFilterBtns.forEach(function (b) {
+        const isActive = b === btn;
+        b.classList.toggle('text-link', isActive);
+        b.classList.toggle('border-brand', isActive);
+        b.classList.toggle('text-ink-muted', !isActive);
+        b.classList.toggle('border-transparent', !isActive);
+        if (isActive) {
+          b.setAttribute('aria-current', 'page');
+        } else {
+          b.removeAttribute('aria-current');
+        }
+      });
+
+      orderGroups.forEach(function (group) {
+        group.hidden = filter !== 'all' && group.getAttribute('data-order-status') !== filter;
+      });
+    });
+  });
 
   const navLinks = document.querySelectorAll('.nav-link[data-tab]');
   const megaPanel = document.getElementById('mega-menu-panel');
