@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="IKEA 공식 메인 페이지 – 가구, 인테리어 아이디어, 신제품 및 베스트셀러를 온라인에서 만나보세요." />
+    <title>IKEA 공식 메인 페이지 | IKEA</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+
+    <script>
+      const rootEl = document.documentElement;
+      rootEl.classList.add("js");
+      try {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          rootEl.classList.add("no-motion");
+        }
+      } catch {
+      }
+      window.addEventListener(
+        "error",
+        function (e) {
+          if (e.target && e.target.tagName === "IMG") {
+            const img = e.target;
+            const src = img.getAttribute("src");
+            if (!src) return;
+            const step = parseInt(img.dataset.fallbackStep || "0", 10);
+            const filename = src.split("/").pop().split("?")[0];
+
+            const pFilename = filename.startsWith("p-") ? filename : "p-" + filename;
+
+            const candidates = ["../assets/" + filename, "../assets/" + pFilename, "../assets/images/products/" + filename, "../assets/images/products/" + pFilename, "assets/" + filename, "assets/" + pFilename, "assets/images/products/" + filename, "assets/images/products/" + pFilename, "./assets/" + filename, "./assets/" + pFilename];
+
+            if (step < candidates.length) {
+              img.dataset.fallbackStep = (step + 1).toString();
+              img.src = candidates[step];
+            }
+          }
+        },
+        true,
+      );
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script src="../assets/js/cart-wishlist.js?v=1.0.1"></script>
+    <script src="../assets/js/account-confirm.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --font-size-xs: 1rem;
+      --font-size-xs--line-height: 1.25rem;
+      --font-size-sm: 1rem;
+      --font-size-sm--line-height: 1.25rem;
+      --font-size-base: 1.125rem;
+      --font-size-base--line-height: 1.5rem;
+      --color-brand: #0051ba;
+      --color-brand-dark: #003d8f;
+      --color-accent: #ffc900;
+
+      --color-ink: #111418;
+      --color-ink-sub: #3d4450;
+      --color-ink-muted: #6b7280;
+      --color-muted: #666666;
+      --color-price: #1a1a1a;
+      --color-slate-ink: #111827;
+
+      --color-line: #c5ccd6;
+      --color-line-light: #e6e6e6;
+      --color-hairline: #f0f0f0;
+      --color-bg-light: #f8f9fa;
+      --color-crust: #f5f5f5;
+
+      --radius-pill: 20px;
+      --radius-card: 12px;
+
+      --spacing-container: 1280px;
+
+      --color-nav-bg: rgba(255, 255, 255, 0.5);
+      --color-nav-bg-hover: rgba(255, 255, 255, 0.78);
+      --color-nav-border: rgba(0, 0, 0, 0.05);
+      --shadow-nav: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+    @layer base {
+      body {
+        font-family:
+          Pretendard,
+          "Pretendard Variable",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Apple SD Gothic Neo",
+          "Malgun Gothic",
+          "Noto Sans KR",
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-size-adjust: 100%;
+        color: var(--color-ink);
+        background-color: #ffffff;
+      }
+      :focus-visible {
+        outline: 3px solid var(--color-brand);
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+      .sr-only-hide {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: 16px;
+        top: -80px;
+        z-index: 100;
+        background-color: #ffffff;
+        color: var(--color-brand);
+        border: 2px solid var(--color-brand);
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-weight: 700;
+        transition: top 0.15s ease-out;
+      }
+      .skip-link:focus {
+        top: 16px;
+      }
+
+      .swiper-slide { height: auto; }
+      .cat-sw {
+        position: relative;
+        overflow-x: hidden !important;
+        overflow-y: visible;
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
+      }
+      .cat-sw .swiper-wrapper {
+        padding-top: 4px !important;
+      }
+      .cat-sw .swiper-slide { width: 80px; }
+      .cat {
+        transition:
+          transform 0.2s ease,
+          color 0.2s ease;
+      }
+      .cat:hover {
+        transform: translateY(-3px);
+      }
+      .cat,
+      .cat:focus,
+      .cat:focus-visible,
+      .cat:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+      }
+      .cat-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 5;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-pill);
+        background: var(--color-nav-bg);
+        border: 1px solid var(--color-nav-border);
+        box-shadow: var(--shadow-nav);
+        color: var(--color-brand);
+        cursor: pointer;
+        transition: opacity 0.2s ease, background-color 0.2s ease;
+      }
+      .cat-nav:hover { background: var(--color-nav-bg-hover); }
+      .cat-nav-prev { left: 6px; }
+      .cat-nav-next { right: 6px; }
+      .cat-nav.is-off,
+      .cat-nav.is-locked {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .prod-swiper {
+        overflow: visible !important;
+        padding-top: 8px;
+        padding-bottom: 16px;
+      }
+      .prod-swiper .swiper-wrapper {
+        overflow: visible !important;
+      }
+      .prod-swiper .swiper-slide {
+        height: auto;
+      }
+      .prod-swiper .swiper-slide article {
+        position: relative;
+      }
+      .prod-swiper .swiper-slide article:hover {
+        z-index: 10;
+      }
+      .swiper-button-prev-custom,
+      .swiper-button-next-custom {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: #111418;
+      }
+      .swiper-button-prev-custom:hover,
+      .swiper-button-next-custom:hover {
+        background: var(--color-brand);
+        color: #ffffff;
+      }
+      .swiper-button-disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+      [aria-labelledby="cat-h"] .text-xs {
+        white-space: nowrap;
+      }
+
+      .info-card {
+        @apply rounded-xl border border-line-light bg-white shadow-sm transition;
+      }
+      .info-card:hover {
+        @apply shadow-md;
+      }
+    </style>
+    <style>
+      .text-xs { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-sm { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-base { font-size: 1.125rem !important; line-height: 1.5rem !important; }
+      .text-\[10px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[11px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[12px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[13px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[14px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+      .text-\[15px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen bg-white">
+
+<!-- HEADER -->
+<header id="main-header" class="w-full bg-white border-b border-line-light sticky top-0 z-40">
+
+  <!-- 1. Utility Navigation -->
+  <nav aria-label="유틸리티 메뉴" class="hidden border-b border-line-light lg:block bg-bg-light/60">
+    <div class="mx-auto flex max-w-[1280px] items-center justify-between px-10 py-2.5 text-xs text-ink-sub">
+      <ul class="flex items-center gap-6">
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">KR | 한국어</a></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">매장 찾기</a></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="#">고객지원</a></li>
+      </ul>
+      <ul class="flex items-center gap-6">
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors font-medium" href="#">IKEA Family 멤버십</a></li>
+        <li class="whitespace-nowrap shrink-0"><a class="hover:text-brand hover:underline transition-colors" href="orders.html">주문 배송 조회</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 2. Main Navigation Bar -->
+  <div class="mx-auto flex max-w-[1280px] items-center gap-4 px-5 py-4 lg:gap-8 lg:px-10">
+
+    <!-- Logo -->
+    <a href="../index.html" class="block h-10 w-[98px] shrink-0" aria-label="IKEA 홈으로 이동">
+      <img src="../assets/logos/ikea_logo.svg" alt="IKEA 로고" width="98" height="40" class="h-10 w-[98px] object-contain" />
+    </a>
+
+    <!-- Desktop Navigation Menu -->
+    <nav aria-label="주 메뉴" class="hidden lg:block shrink-0">
+      <ul class="flex items-center gap-6 text-sm font-bold text-ink whitespace-nowrap shrink-0" id="desktop-nav-menu">
+        <li class="relative whitespace-nowrap shrink-0">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group focus:outline-none focus-visible:outline-none whitespace-nowrap" data-tab="all" href="products.html">
+            <span>모든 제품</span>
+          </a>
+        </li>
+        <li class="relative whitespace-nowrap shrink-0">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" data-tab="room" href="category.html">
+            <span>공간별 쇼핑하기</span>
+          </a>
+        </li>
+        <li class="relative whitespace-nowrap shrink-0">
+          <a class="nav-link py-2 px-1 hover:text-brand transition-colors flex items-center gap-1 group whitespace-nowrap" data-tab="styling" href="planning.html">
+            <span>플래닝 &amp; 아이디어</span>
+          </a>
+        </li>
+        <li class="relative whitespace-nowrap shrink-0">
+          <a class="nav-link py-2 px-1 text-brand font-extrabold border-b-2 border-brand transition-colors flex items-center gap-1 group whitespace-nowrap" aria-current="page" data-tab="service" href="service.html">
+            <span>서비스</span>
+          </a>
+        </li>
+        <li class="relative whitespace-nowrap shrink-0">
+          <a class="nav-link py-2 px-1 !text-sale font-bold hover:!text-sale-dark transition-colors flex items-center gap-1 group whitespace-nowrap focus:outline-none focus-visible:outline-none" style="color: #e00751 !important" data-tab="sale" href="sale.html">
+            <span>세일</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Search Bar -->
+    <form class="ml-auto hidden max-w-search flex-1 lg:block" role="search" action="#">
+      <label for="search-input" class="sr-only-hide">제품 검색</label>
+      <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4 focus-within:border-brand focus-within:bg-white focus-within:ring-2 focus-within:ring-brand/20 transition-all">
+        <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="search-input" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+               class="min-w-0 flex-1 bg-transparent text-xs text-ink placeholder:text-ink-muted focus:outline-none">
+        <button type="button" class="shrink-0 p-1 hover:text-brand" aria-label="이미지로 검색">
+          <svg class="h-5 w-5 text-ink-muted hover:text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+            <circle cx="12" cy="13" r="3" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- User Action Icons -->
+    <ul class="ml-auto hidden items-center gap-4 lg:flex lg:ml-0 shrink-0 whitespace-nowrap">
+      <li class="shrink-0 whitespace-nowrap">
+        <a href="account.html" class="flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="마이페이지">
+          <svg class="h-6 w-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <span class="whitespace-nowrap shrink-0">사용자</span>
+        </a>
+      </li>
+      <li class="shrink-0 whitespace-nowrap">
+        <a href="wishlist.html" id="header-wishlist-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="위시리스트">
+          <div class="relative shrink-0">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+            <span id="wishlist-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full leading-none shadow-sm"></span>
+          </div>
+          <span class="whitespace-nowrap shrink-0">위시리스트</span>
+        </a>
+      </li>
+      <li class="shrink-0 whitespace-nowrap">
+        <a href="cart.html" id="header-cart-btn" class="relative flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs text-ink hover:text-brand font-medium p-1.5 rounded-lg hover:bg-bg-light transition-all" aria-label="장바구니">
+          <div class="relative shrink-0">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <span id="cart-badge" style="display: none;" class="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 items-center justify-center text-[9px] font-bold text-white bg-brand rounded-full leading-none shadow-sm"></span>
+          </div>
+          <span class="whitespace-nowrap shrink-0">장바구니</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile Menu Controls -->
+    <div class="ml-auto flex items-center gap-2 lg:hidden">
+      <a href="cart.html" class="p-2 text-ink hover:text-brand" aria-label="장바구니">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+      </a>
+      <button id="mobile-menu-btn" type="button" class="p-2 text-ink hover:text-brand" aria-expanded="false" aria-controls="mobile-nav" aria-label="모바일 메뉴 열기">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Navigation -->
+  <nav id="mobile-nav" aria-label="모바일 메뉴" hidden class="border-t border-line-light bg-white lg:hidden px-5 py-4 shadow-lg">
+    <form role="search" action="#" class="mb-4">
+      <label for="mobile-search" class="sr-only-hide">제품 검색</label>
+      <div class="flex h-10 items-center gap-3 rounded-full border border-line bg-bg-light px-4">
+        <svg class="h-4 w-4 text-ink-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="mobile-search" name="q" type="search" placeholder="어떤 제품을 찾으시나요?"
+               class="min-w-0 flex-1 bg-transparent text-sm placeholder:text-ink-muted focus:outline-none">
+      </div>
+    </form>
+    <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
+      <li><a class="block py-3 text-ink hover:text-brand" href="products.html">모든 제품</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="category.html">공간별 쇼핑하기</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
+      <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
+      <li><a class="block py-3 text-red-600" href="sale.html">세일</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="flex-1">
+  <div class="mx-auto max-w-[1280px] px-5 lg:px-10 py-16 lg:py-24">
+
+    <!-- 로그인 섹션 -->
+    <div class="mt-20">
+      <div class="max-w-lg mx-auto bg-white rounded-lg border border-line-light p-8 shadow-sm">
+        <h2 class="text-2xl lg:text-3xl font-black text-ink mb-2 text-center">로그인</h2>
+        <p class="text-center text-ink-sub mb-8 text-sm">IKEA Family 계정으로 로그인하세요</p>
+
+        <form class="space-y-6">
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-2">이메일</label>
+            <input type="email" placeholder="example@email.com" class="w-full px-4 py-3 border border-line-light rounded-lg focus:border-brand focus:outline-none transition" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-2">비밀번호</label>
+            <input type="password" placeholder="••••••••" class="w-full px-4 py-3 border border-line-light rounded-lg focus:border-brand focus:outline-none transition" />
+          </div>
+
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-line-light">
+              <span class="text-sm text-ink-sub">자동 로그인</span>
+            </label>
+            <a href="#" class="text-sm text-brand font-semibold hover:text-brand-dark transition">비밀번호 찾기</a>
+          </div>
+
+          <button type="submit" class="w-full bg-brand text-white font-bold py-3 rounded-lg hover:bg-brand-dark transition">
+            로그인
+          </button>
+        </form>
+
+        <div class="my-6 text-center">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="flex-1 h-px bg-line-light"></div>
+            <span class="text-xs text-ink-muted">또는</span>
+            <div class="flex-1 h-px bg-line-light"></div>
+          </div>
+        </div>
+
+        <div class="space-y-3 mb-8">
+          <button class="w-full flex items-center justify-center gap-2 border-2 border-line-light py-3 rounded-lg font-bold hover:bg-bg-light transition">
+            <span>🇰🇷</span>
+            <span>카카오로 로그인</span>
+          </button>
+          <button class="w-full flex items-center justify-center gap-2 border-2 border-line-light py-3 rounded-lg font-bold hover:bg-bg-light transition">
+            <span>🍎</span>
+            <span>Apple로 로그인</span>
+          </button>
+        </div>
+
+        <div class="text-center pt-6 border-t border-line-light">
+          <p class="text-sm text-ink-sub mb-3">아직 회원이 아니신가요?</p>
+          <a href="#" class="inline-flex items-center gap-1 text-brand font-bold hover:text-brand-dark transition text-sm">
+            IKEA Family 회원가입 →
+          </a>
+        </div>
+      </div>
+    </div>
+
+      <!-- 주문번호 모르시나요? -->
+      <div class="max-w-2xl mx-auto mb-12 relative mt-20">
+        <div class="bg-white border border-line-light rounded-lg p-6 shadow-sm">
+          <div class="flex gap-4">
+            <div class="text-2xl shrink-0">💡</div>
+            <div class="flex-1">
+              <p class="font-bold text-ink mb-2">주문번호를 모르시나요?</p>
+              <p class="text-sm text-ink-sub mb-4">구매 내역에서 주문번호를 확인할 수 있습니다.</p>
+              <a href="#" class="inline-flex items-center gap-2 text-sm font-bold text-brand hover:text-brand-dark transition">
+                구매내역 조회하기 →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 자주 묻는 질문 -->
+      <div class="mt-16 pt-16 border-t border-line-light">
+        <h3 class="text-2xl lg:text-3xl font-bold text-ink mb-10">자주 묻는 질문</h3>
+
+        <div class="space-y-4">
+          <details class="group bg-white rounded-lg border border-line-light p-6 cursor-pointer hover:border-brand transition">
+            <summary class="flex items-center justify-between font-semibold text-ink hover:text-brand transition">
+              배송 조회는 언제부터 가능한가요?
+              <svg class="w-5 h-5 text-brand group-open:rotate-180 transition ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </summary>
+            <p class="text-ink-sub mt-4 leading-relaxed text-sm">배송이 시작되면 즉시 배송 추적이 가능합니다. 일반적으로 주문 후 1-2일 이내에 배송이 시작됩니다. 배송 기사님이 출발하면 실시간으로 위치를 확인할 수 있습니다.</p>
+          </details>
+
+          <details class="group bg-white rounded-lg border border-line-light p-6 cursor-pointer hover:border-brand transition">
+            <summary class="flex items-center justify-between font-semibold text-ink hover:text-brand transition">
+              배송 일정을 변경하고 싶어요
+              <svg class="w-5 h-5 text-brand group-open:rotate-180 transition ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </summary>
+            <p class="text-ink-sub mt-4 leading-relaxed text-sm">회원은 배송 조회 페이지에서 날짜와 시간을 변경할 수 있습니다. 배송 당일은 변경이 불가능하며, 한 달에 3회까지 변경 가능합니다. 비회원은 배송 조회만 가능합니다.</p>
+          </details>
+
+          <details class="group bg-white rounded-lg border border-line-light p-6 cursor-pointer hover:border-brand transition">
+            <summary class="flex items-center justify-between font-semibold text-ink hover:text-brand transition">
+              실시간 배송 추적은 어떻게 되나요?
+              <svg class="w-5 h-5 text-brand group-open:rotate-180 transition ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </summary>
+            <p class="text-ink-sub mt-4 leading-relaxed text-sm">배송이 시작된 당일부터 실시간 지도를 통해 배송 위치를 추적할 수 있습니다. 배송 기사님의 정보, 예상 도착 시간, 남은 거리 등을 확인할 수 있으며, 기사님과 직접 연락할 수도 있습니다.</p>
+          </details>
+
+          <details class="group bg-white rounded-lg border border-line-light p-6 cursor-pointer hover:border-brand transition">
+            <summary class="flex items-center justify-between font-semibold text-ink hover:text-brand transition">
+              비대면 배송을 신청할 수 있나요?
+              <svg class="w-5 h-5 text-brand group-open:rotate-180 transition ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </summary>
+            <p class="text-ink-sub mt-4 leading-relaxed text-sm">네, 회원은 배송 추적 페이지에서 비대면 배송을 신청할 수 있습니다. 배송 위치(문 앞, 경비실, 택배함 등)를 지정하면 배송 기사님이 안전하게 배치해드립니다. 배송 완료 후 고화질 사진도 받을 수 있습니다.</p>
+          </details>
+
+          <details class="group bg-white rounded-lg border border-line-light p-6 cursor-pointer hover:border-brand transition">
+            <summary class="flex items-center justify-between font-semibold text-ink hover:text-brand transition">
+              배송이 지연되면 어떻게 되나요?
+              <svg class="w-5 h-5 text-brand group-open:rotate-180 transition ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </summary>
+            <p class="text-ink-sub mt-4 leading-relaxed text-sm">예상 도착 시간이 변경되면 문자로 즉시 알려드립니다. 배송 추적 페이지에서도 실시간으로 확인할 수 있습니다. 문제가 있다면 배송 기사님과 직접 연락하거나 고객센터에 문의해주세요.</p>
+          </details>
+
+          <details class="group bg-white rounded-lg border border-line-light p-6 cursor-pointer hover:border-brand transition">
+            <summary class="flex items-center justify-between font-semibold text-ink hover:text-brand transition">
+              배송받은 제품이 손상되었어요
+              <svg class="w-5 h-5 text-brand group-open:rotate-180 transition ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </summary>
+            <p class="text-ink-sub mt-4 leading-relaxed text-sm">배송 사진과 제품 상태를 확인하신 후 즉시 고객센터로 연락해주세요. IKEA는 1년간 무상 재배송을 보증합니다. 비대면 배송의 경우 배송 사진이 증거 자료가 되어 빠른 처리가 가능합니다.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="w-full bg-bg-light border-t border-line-light mt-16 text-ink-sub">
+  <div class="mx-auto max-w-[1280px] px-5 py-12 lg:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Col 1 -->
+      <div>
+        <img src="../assets/logos/ikea_logo.svg" alt="IKEA" width="80" height="32" class="h-8 w-auto mb-4" />
+        <p class="text-xs leading-relaxed text-ink-muted">
+          IKEA 코리아는 더 많은 사람들을 위해 더 나은 일상을 만듭니다. 고품질의 지속 가능한 가구와 홈퍼니싱 솔루션을 합리적인 가격에 만나보세요.
+        </p>
+      </div>
+
+      <!-- Col 2 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객 지원</h3>
+        <ul class="space-y-2 text-xs">
+          <li><button type="button" data-open-chatbot="true" class="hover:text-brand hover:underline text-left cursor-pointer flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>AI 챗봇 상담 (24시간)</button></li>
+          <li><a href="#" class="hover:text-brand hover:underline">고객지원센터</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">자주 묻는 질문(FAQ)</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">배송 및 조립 서비스</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">반품 및 환불 규정</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">제품 회수 및 리콜 정보</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">쇼핑 및 서비스</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Family 멤버십</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">IKEA Business 솔루션</a></li>
+          <li><a href="styling.html" class="hover:text-brand hover:underline">맞춤 플래닝 &amp; 스타일링</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">이케아 기프트 카드</a></li>
+          <li><a href="#" class="hover:text-brand hover:underline">매장 찾기 및 영업시간</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4 -->
+      <div>
+        <h3 class="text-sm font-bold text-ink mb-3">고객센터 문의</h3>
+        <p class="text-lg font-extrabold text-brand">1588-0000</p>
+        <p class="mt-1 text-xs text-ink-muted">운영시간: 09:00 - 21:00 (연중무휴)</p>
+        <div class="mt-3">
+          <button type="button" data-open-chatbot="true" class="w-full flex items-center justify-center gap-2 rounded-full bg-accent hover:bg-yellow-400 text-ink font-bold text-xs py-2.5 px-4 shadow-xs transition-all duration-200 cursor-pointer">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.03 2 11c0 2.274 0.942 4.354 2.518 5.892L3.5 21.5l5.084-1.695C9.722 20.082 10.838 20.2 12 20.2c5.523 0 10-4.03 10-9.2S17.523 2 12 2zm-3.5 8.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3.5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3.5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+            </svg>
+            <span>24시간 AI 챗봇 상담</span>
+          </button>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="인스타그램">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="rounded-full bg-white p-2 text-ink hover:text-brand shadow-sm" aria-label="유튜브">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-8 border-t border-line-light pt-6 flex flex-col gap-4 text-2xs sm:text-xs text-ink-muted">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 border-b border-line-light pb-4">
+        <div>
+          <span class="font-bold text-ink">대표자:</span> 팀 시너지
+        </div>
+        <div>
+          <span class="font-bold text-ink">사업자등록번호:</span> 222-22-2222222222
+        </div>
+        <div>
+          <span class="font-bold text-ink">통신판매업 신고:</span> 2026-서울가상-0000호
+        </div>
+        <div>
+          <span class="font-bold text-ink">고객지원센터:</span> 1588-0000
+        </div>
+        <div class="md:col-span-2 lg:col-span-4">
+          <span class="font-bold text-ink">주소:</span> 서울특별시 마포구 가상로 123 (우편번호 00000)
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <p>© Inter IKEA Systems B.V. 2026. 모든 권리 보유.</p>
+        <div class="flex gap-4">
+          <a href="#" class="hover:underline">개인정보처리방침</a>
+          <a href="#" class="hover:underline">이용약관</a>
+          <a href="#" class="hover:underline">웹 접근성 고지</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- /FOOTER -->
+
+</body>
+</html>
