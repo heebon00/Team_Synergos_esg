@@ -1065,5 +1065,200 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     </script>
     <!-- /SEGMENT: ScrollToTop -->
+
+<!-- SEGMENT: BookingModal -->
+<div id="booking-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <!-- Modal Card -->
+  <div class="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] scale-95 opacity-0 transition-all duration-300 ease-out" id="modal-card">
+    
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between border-b border-line-light px-6 py-4 bg-bg-light">
+      <h2 id="modal-title" class="text-base font-extrabold text-ink">베이직 플래닝 서비스 신청</h2>
+      <button type="button" onclick="closeBookingModal()" class="text-ink-muted hover:text-brand focus:outline-none p-1 transition-colors" aria-label="닫기">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Modal Form Content (Scrollable) -->
+    <form id="booking-form" onsubmit="submitBookingForm(event)" class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+      
+      <!-- 1. Customer Info -->
+      <div class="flex flex-col gap-3">
+        <h3 class="text-xs font-bold text-ink border-l-4 border-brand pl-2">신청자 정보</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1">
+            <label for="book-name" class="text-[11px] font-bold text-ink-sub">이름 <span class="text-red-500">*</span></label>
+            <input type="text" id="book-name" name="name" required class="h-9 px-3 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white" placeholder="홍길동">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label for="book-phone" class="text-[11px] font-bold text-ink-sub">연락처 <span class="text-red-500">*</span></label>
+            <input type="tel" id="book-phone" name="phone" required class="h-9 px-3 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white" placeholder="010-0000-0000">
+          </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="book-email" class="text-[11px] font-bold text-ink-sub">이메일 <span class="text-red-500">*</span></label>
+          <input type="email" id="book-email" name="email" required class="h-9 px-3 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white" placeholder="example@ikea.com">
+        </div>
+      </div>
+
+      <!-- 2. Space Info -->
+      <div class="flex flex-col gap-3 mt-1">
+        <h3 class="text-xs font-bold text-ink border-l-4 border-brand pl-2">공간 정보</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1">
+            <label for="book-space" class="text-[11px] font-bold text-ink-sub">대상 공간 <span class="text-red-500">*</span></label>
+            <select id="book-space" name="space" required class="h-9 px-2 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white">
+              <option value="">공간 선택</option>
+              <option value="living">거실</option>
+              <option value="bedroom">침실</option>
+              <option value="office">홈오피스/서재</option>
+              <option value="kids">아이방</option>
+              <option value="dining">다이닝룸</option>
+              <option value="studio">원룸/오피스텔</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-1">
+            <label for="book-size" class="text-[11px] font-bold text-ink-sub">공간 크기(평수) <span class="text-red-500">*</span></label>
+            <select id="book-size" name="size" required class="h-9 px-2 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white">
+              <option value="">평수 선택</option>
+              <option value="10">10평 미만 (33㎡ 미만)</option>
+              <option value="20">10평대 (33㎡ ~ 66㎡)</option>
+              <option value="30">20평대 (66㎡ ~ 99㎡)</option>
+              <option value="40">30평대 (99㎡ ~ 132㎡)</option>
+              <option value="50">40평 이상 (132㎡ 이상)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Styling Preferences & Budget -->
+      <div class="flex flex-col gap-3 mt-1">
+        <h3 class="text-xs font-bold text-ink border-l-4 border-brand pl-2">선호 스타일 및 요청 사항</h3>
+        
+        <div class="flex flex-col gap-1">
+          <span class="text-[11px] font-bold text-ink-sub">선호하는 스타일</span>
+          <div class="grid grid-cols-3 gap-2 mt-1">
+            <label class="flex items-center gap-1.5 text-xs text-ink-sub cursor-pointer">
+              <input type="checkbox" name="style-pref" value="modern" class="w-4 h-4 border border-line-2 rounded accent-brand">
+              <span>모던/시크</span>
+            </label>
+            <label class="flex items-center gap-1.5 text-xs text-ink-sub cursor-pointer">
+              <input type="checkbox" name="style-pref" value="natural" class="w-4 h-4 border border-line-2 rounded accent-brand">
+              <span>내추럴/웜</span>
+            </label>
+            <label class="flex items-center gap-1.5 text-xs text-ink-sub cursor-pointer">
+              <input type="checkbox" name="style-pref" value="nordic" class="w-4 h-4 border border-line-2 rounded accent-brand">
+              <span>북유럽/스칸디</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="book-budget" class="text-[11px] font-bold text-ink-sub">예상 가구 구매 예산</label>
+          <select id="book-budget" name="budget" class="h-9 px-2 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white">
+            <option value="under-100">100만원 미만</option>
+            <option value="100-300">100만원 ~ 300만원</option>
+            <option value="300-500">300만원 ~ 500만원</option>
+            <option value="above-500">500만원 이상</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="book-note" class="text-[11px] font-bold text-ink-sub">스타일링 요청 사항 (선택)</label>
+          <textarea id="book-note" name="note" rows="3" class="p-3 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white resize-none" placeholder="공간 배치에 대한 고민이나 특별히 원하는 가구가 있다면 적어주세요."></textarea>
+        </div>
+      </div>
+
+      <!-- 4. Schedule -->
+      <div class="flex flex-col gap-3 mt-1">
+        <h3 class="text-xs font-bold text-ink border-l-4 border-brand pl-2">희망 상담 일정</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1">
+            <label for="book-date" class="text-[11px] font-bold text-ink-sub">희망 날짜 <span class="text-red-500">*</span></label>
+            <input type="date" id="book-date" name="date" required class="h-9 px-3 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label for="book-time" class="text-[11px] font-bold text-ink-sub">희망 시간 <span class="text-red-500">*</span></label>
+            <select id="book-time" name="time" required class="h-9 px-2 border border-line-2 rounded-lg text-xs focus:border-brand focus:outline-none bg-white">
+              <option value="">시간대 선택</option>
+              <option value="10:00">오전 10:00</option>
+              <option value="13:00">오후 01:00</option>
+              <option value="15:00">오후 03:00</option>
+              <option value="17:00">오후 05:00</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer Action Buttons -->
+      <div class="flex gap-3 mt-4 pt-4 border-t border-line-light">
+        <button type="button" onclick="closeBookingModal()" class="flex-1 h-10 rounded-lg border border-line-2 text-ink hover:bg-bg-light transition-colors text-xs font-bold">취소</button>
+        <button type="submit" class="flex-1 h-10 rounded-lg bg-brand text-white hover:bg-brand-dark transition-colors text-xs font-bold shadow-sm">신청하기</button>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+<script>
+  function openBookingModal() {
+    const modal = document.getElementById('booking-modal');
+    const card = document.getElementById('modal-card');
+    
+    // 모달 활성화 및 바디 스크롤 방지
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // 부드러운 트랜지션 적용
+    setTimeout(() => {
+      card.classList.remove('scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+    }, 10);
+
+    // 날짜 입력 제한 (오늘 이후 선택하도록 설정)
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('book-date').setAttribute('min', today);
+  }
+
+  function closeBookingModal() {
+    const modal = document.getElementById('booking-modal');
+    const card = document.getElementById('modal-card');
+    
+    // 부드러운 트랜지션 해제 후 감춤
+    card.classList.remove('scale-100', 'opacity-100');
+    card.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      document.getElementById('booking-form').reset();
+    }, 200);
+  }
+
+  function submitBookingForm(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('book-name').value;
+    const phone = document.getElementById('book-phone').value;
+    const spaceSelect = document.getElementById('book-space');
+    const space = spaceSelect.options[spaceSelect.selectedIndex].text;
+    const date = document.getElementById('book-date').value;
+    const timeSelect = document.getElementById('book-time');
+    const time = timeSelect.options[timeSelect.selectedIndex].text;
+
+    // 접수 완료 얼럿 노출
+    alert(`[베이직 플래닝 신청 완료]\n\n신청인: ${name}님\n연락처: ${phone}\n대상 공간: ${space}\n상담 희망일시: ${date} ${time}\n\n신청이 정상적으로 접수되었습니다. 24시간 이내에 안내 메일 및 상담 확정 연락을 드리겠습니다.`);
+    
+    closeBookingModal();
+  }
+
+  // 모달 영역 외부 클릭 시 닫기
+  document.getElementById('booking-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeBookingModal();
+    }
+  });
+</script>
+<!-- /SEGMENT: BookingModal -->
 </body>
 </html>
