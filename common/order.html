@@ -106,6 +106,8 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
     }
   </style>
     <!-- Font Size Override Rule -->
@@ -520,41 +522,8 @@
       </div>
 
       <!-- 3-Column Info Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <!-- Card 1: 주문 내역 카드 (배송중 주문 샘플) -->
-        <div class="rounded-card border border-divider p-6 bg-white flex flex-col justify-between shadow-card hover:shadow-card-hover transition">
-          <div>
-            <div class="flex items-center justify-between gap-3 text-xs text-ink-3">
-              <span class="truncate min-w-0">2026.06.18 | 주문번호: IKEA-000001</span>
-              <a href="#" class="shrink-0 whitespace-nowrap text-brand font-medium hover:underline">주문상세 보기 &gt;</a>
-            </div>
-
-            <div class="mt-3">
-              <span class="inline-block px-3 py-1.5 rounded bg-brand-light text-brand text-xs font-semibold">배송중</span>
-            </div>
-
-            <div class="flex items-center gap-4 my-4">
-              <div class="w-20 h-20 rounded-lg bg-bg-light border border-line flex items-center justify-center p-1 shrink-0 overflow-hidden">
-                <img src="../assets/p-billy.png" alt="주문 상품 썸네일" class="h-full w-full object-contain">
-              </div>
-              <div class="space-y-1 text-sm">
-                <h3 class="font-semibold text-ink">온라인 주문 방법</h3>
-                <p class="text-xs text-ink-3">색상/사이즈 정보</p>
-                <p class="font-bold text-ink text-sm">₩ 59,900 · 1개</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-3">
-            <a href="return.html" class="flex-1 py-2 rounded border border-divider bg-white text-ink text-xs font-medium hover:border-ink transition cursor-pointer text-center inline-flex items-center justify-center">
-              교환/반품 신청
-            </a>
-            <button type="button" class="flex-1 py-2 rounded border border-divider bg-white text-ink text-xs font-medium hover:border-ink transition cursor-pointer">
-              일대일 문의
-            </button>
-          </div>
-        </div>
 
         <!-- Card 2: 결제 수단 안내 -->
         <div class="rounded-card border border-line p-8 bg-white flex flex-col justify-between shadow-card hover:shadow-card-hover transition">
@@ -586,29 +555,14 @@
             </p>
           </div>
           <div class="pt-4">
-            <button type="button" class="w-full py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand-light text-base font-bold transition cursor-pointer">
+            <a href="orders.html" class="w-full py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand-light text-base font-bold transition cursor-pointer text-center inline-block">
               주문 조회하기
-            </button>
+            </a>
           </div>
         </div>
 
       </div>
 
-      <!-- Bottom Order Inquiry Box (주문 조회) -->
-      <div class="mt-8 rounded-card bg-hairline p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-center gap-8">
-        <div class="flex-1">
-          <h3 class="text-xl font-bold text-ink">주문 조회</h3>
-          <p class="text-base text-ink-3 mt-1">회원 또는 비회원으로 주문 내역을 확인하세요.</p>
-        </div>
-        <div class="flex items-center gap-4 shrink-0">
-          <button type="button" class="w-44 py-6 rounded bg-brand-dark hover:bg-brand text-white text-base font-bold text-center transition cursor-pointer">
-            회원 조회
-          </button>
-          <button type="button" class="w-44 py-6 rounded bg-white border border-line text-ink hover:border-ink text-base font-bold text-center transition cursor-pointer">
-            비회원 조회
-          </button>
-        </div>
-      </div>
     </section>
 
     <!-- 2. 교환 및 반품 -->
@@ -652,7 +606,7 @@
         <!-- Right: 반품 진행 절차 (01, 02, 03) -->
         <div class="lg:col-span-6 flex flex-col justify-between">
           <h3 class="text-xl font-bold text-ink mb-4">반품 진행 절차</h3>
-          <div class="grid grid-cols-3 gap-3 flex-1">
+          <div class="grid grid-cols-1 gap-3 flex-1">
             <div class="rounded-card border border-line p-4 bg-white flex flex-col items-center text-center">
               <span class="text-2xl sm:text-3xl font-extrabold text-ink-3">01</span>
               <h4 class="text-base font-bold text-ink mt-2 break-keep">온라인/매장 접수</h4>
@@ -699,7 +653,7 @@
       </div>
 
       <div class="mt-4 text-right">
-        <a href="#" class="text-base text-ink font-medium hover:text-brand hover:underline">교환/반품 서비스 더 알아보기 &gt;</a>
+        <a href="#" data-info-modal="exchange" class="info-modal-link text-base text-ink font-medium hover:text-brand hover:underline">교환/반품 서비스 더 알아보기 &gt;</a>
       </div>
 
       <!-- Exchange Extra Inquiry Banner -->
@@ -708,9 +662,9 @@
           <h3 class="text-lg font-bold text-ink">교환/반품 관련 추가 문의</h3>
           <p class="text-base text-ink-3 mt-1">추가 도움이 필요하시면 고객센터로 문의해주세요.</p>
         </div>
-        <button type="button" class="px-8 py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand hover:text-white text-base font-bold transition cursor-pointer whitespace-nowrap">
+        <a href="#section-support" class="px-8 py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand hover:text-white text-base font-bold transition cursor-pointer whitespace-nowrap inline-block text-center">
           고객센터 연결하기
-        </button>
+        </a>
       </div>
     </section>
 
@@ -780,7 +734,7 @@
       </div>
 
       <div class="mt-4 text-right">
-        <a href="#" class="text-base text-ink font-medium hover:text-brand hover:underline">바이백 서비스 더 알아보기 &gt;</a>
+        <a href="#" data-info-modal="buyback" class="info-modal-link text-base text-ink font-medium hover:text-brand hover:underline">바이백 서비스 더 알아보기 &gt;</a>
       </div>
     </section>
 
@@ -852,7 +806,7 @@
       </div>
 
       <div class="mt-6 text-right">
-        <a href="#" class="text-base text-ink font-medium hover:text-brand hover:underline">조립 부품/예비 부품 더 알아보기 &gt;</a>
+        <a href="#" data-info-modal="parts" class="info-modal-link text-base text-ink font-medium hover:text-brand hover:underline">조립 부품/예비 부품 더 알아보기 &gt;</a>
       </div>
     </section>
 
@@ -978,7 +932,7 @@
               매장 마감 시 발견되는 모든 습득물이 당일 저녁 일괄 리스트에 전산 자동 등록됩니다. 매장과 날짜를<br>지정해 문의할 수 있습니다.
             </p>
           </div>
-          <button type="button" class="w-full py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand-light text-base font-bold transition cursor-pointer">
+          <button type="button" id="lost-store-btn" class="w-full py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand-light text-base font-bold transition cursor-pointer">
             분실물 확인 문의
           </button>
         </div>
@@ -986,7 +940,7 @@
       </div>
 
       <div class="mt-4 text-right">
-        <a href="#" class="text-base text-ink font-medium hover:text-brand hover:underline">분실물 찾기 서비스 더 알아보기 &gt;</a>
+        <a href="#" data-info-modal="lost" class="info-modal-link text-base text-ink font-medium hover:text-brand hover:underline">분실물 찾기 서비스 더 알아보기 &gt;</a>
       </div>
     </section>
 
@@ -1196,6 +1150,211 @@
     </div>
   </footer>
   <!-- /SEGMENT: Footer -->
+
+  <!-- SEGMENT: InfoModal -->
+  <div id="info-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="info-modal-title">
+    <div id="info-modal-card" class="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300 ease-out">
+      <div class="flex items-center justify-between border-b border-line-light px-6 py-4 bg-bg-light">
+        <h2 id="info-modal-title" class="text-base font-extrabold text-ink">서비스 안내</h2>
+        <button type="button" id="info-modal-close" class="text-ink-muted hover:text-brand focus:outline-none p-1 transition-colors" aria-label="닫기">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="info-modal-body" class="flex-1 overflow-y-auto p-6 flex flex-col gap-5"></div>
+      <div class="border-t border-line-light px-6 py-4">
+        <button type="button" id="info-modal-done" class="w-full h-10 rounded-lg bg-brand text-white hover:bg-brand-dark transition-colors text-sm font-bold">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var infoModalConfigs = {
+      exchange: {
+        title: '교환/반품 서비스 자세히 보기',
+        sections: [
+          { heading: '반품이 어려운 품목', items: ['식품류, 식물 등 신선 제품', '침구류·매트리스 등 위생 용품(개봉 시)', '고객 맞춤 재단·각인 제품'] },
+          { heading: '환불 수단별 소요 기간', items: ['카드 결제 취소: 카드사 영업일 기준 3~5일', '무통장 입금 환불: 계좌 이체 1~2일', '기프트카드 발급: 매장 방문 시 즉시'] },
+          { heading: '배송비 안내', items: ['단순 변심 반품: 왕복 배송비 고객 부담', '제품 하자·오배송: 배송비 전액 이케아 부담'] }
+        ]
+      },
+      buyback: {
+        title: '바이백 서비스 자세히 보기',
+        sections: [
+          { heading: '매입 신청 방법', items: ['온라인에서 제품 사진과 구매 정보 등록', '매장 방문 예약 후 현장 실물 진단', '진단 등급에 따라 즉시 매입가 확정'] },
+          { heading: '매입 불가 품목', items: ['조립되지 않은 미개봉 신품', '곰팡이·악취·구조 손상이 있는 제품', '커튼, 러그, 침구 등 섬유류'] },
+          { heading: '지급 방식', items: ['이케아 환불 카드로 즉시 지급', '유효기간 없이 매장·온라인몰에서 자유롭게 사용 가능'] }
+        ]
+      },
+      parts: {
+        title: '조립 부품/예비 부품 자세히 보기',
+        sections: [
+          { heading: '부품 코드 찾는 법', items: ['제품 조립설명서 뒷면의 부품 목록 참고', '이케아 앱에서 제품명 검색 후 "예비 부품" 메뉴 이용'] },
+          { heading: '배송 및 비용', items: ['나사·핀 등 소형 부품: 무료 배송', '패널·경첩 등 대형 부품: 유상 배송(택배비 별도)', '평균 배송 소요 3~5 영업일'] },
+          { heading: '대량 분실 시', items: ['부품 5종 이상 분실 시 고객센터로 별도 문의', '매장 방문 시 현장에서 즉시 수령 가능'] }
+        ]
+      },
+      lost: {
+        title: '분실물 찾기 서비스 자세히 보기',
+        sections: [
+          { heading: '보관 기간', items: ['습득일로부터 30일간 매장 보관', '귀중품(현금·카드 등)은 7일 이내 관할 경찰서 인계'] },
+          { heading: '문의 및 수령 절차', items: ['분실 매장, 날짜, 분실물 특징을 고객센터에 접수', '본인 확인(신분증) 후 매장 고객지원 데스크에서 수령', '대리 수령 시 위임장 + 대리인 신분증 필요'] }
+        ]
+      }
+    };
+
+    var modal = document.getElementById('info-modal');
+    var card = document.getElementById('info-modal-card');
+    var titleEl = document.getElementById('info-modal-title');
+    var bodyEl = document.getElementById('info-modal-body');
+
+    function openInfoModal(key) {
+      var config = infoModalConfigs[key];
+      if (!config) return;
+
+      titleEl.textContent = config.title;
+      bodyEl.innerHTML = '';
+      config.sections.forEach(function (section) {
+        var wrap = document.createElement('div');
+        wrap.className = 'flex flex-col gap-2';
+
+        var heading = document.createElement('h3');
+        heading.className = 'text-sm font-bold text-ink border-l-4 border-brand pl-3';
+        heading.textContent = section.heading;
+        wrap.appendChild(heading);
+
+        var list = document.createElement('ul');
+        list.className = 'flex flex-col gap-1.5 pl-3';
+        section.items.forEach(function (text) {
+          var li = document.createElement('li');
+          li.className = 'text-xs text-ink-2 leading-relaxed';
+          li.textContent = '· ' + text;
+          list.appendChild(li);
+        });
+        wrap.appendChild(list);
+
+        bodyEl.appendChild(wrap);
+      });
+
+      modal.classList.remove('hidden');
+      document.documentElement.style.overflow = 'hidden';
+      setTimeout(function () {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeInfoModal() {
+      card.classList.remove('scale-100', 'opacity-100');
+      card.classList.add('scale-95', 'opacity-0');
+      setTimeout(function () {
+        modal.classList.add('hidden');
+        document.documentElement.style.overflow = '';
+      }, 200);
+    }
+
+    document.querySelectorAll('.info-modal-link[data-info-modal]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        openInfoModal(link.getAttribute('data-info-modal'));
+      });
+    });
+
+    document.getElementById('info-modal-close').addEventListener('click', closeInfoModal);
+    document.getElementById('info-modal-done').addEventListener('click', closeInfoModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeInfoModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeInfoModal();
+    });
+  })();
+  </script>
+  <!-- /SEGMENT: InfoModal -->
+
+  <!-- SEGMENT: LostStoreModal -->
+  <div id="lost-store-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="lost-store-modal-title">
+    <div id="lost-store-modal-card" class="relative w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300 ease-out">
+      <div class="flex items-center justify-between border-b border-line-light px-6 py-4 bg-bg-light">
+        <h2 id="lost-store-modal-title" class="text-base font-extrabold text-ink">매장별 분실물 센터 연락처</h2>
+        <button type="button" id="lost-store-modal-close" class="text-ink-muted hover:text-brand focus:outline-none p-1 transition-colors" aria-label="닫기">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 flex flex-col gap-3">
+        <p class="text-sm text-ink-muted">분실 매장을 방문 또는 전화로 직접 문의하시면 가장 빠르게 확인하실 수 있습니다.</p>
+
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center justify-between gap-3 rounded-lg border border-line-light bg-shell px-4 py-3">
+            <span class="text-sm font-bold text-ink">강동점</span>
+            <span class="text-sm font-mono text-ink-2">02-0000-2801</span>
+          </li>
+          <li class="flex items-center justify-between gap-3 rounded-lg border border-line-light bg-shell px-4 py-3">
+            <span class="text-sm font-bold text-ink">광명점</span>
+            <span class="text-sm font-mono text-ink-2">031-0000-3002</span>
+          </li>
+          <li class="flex items-center justify-between gap-3 rounded-lg border border-line-light bg-shell px-4 py-3">
+            <span class="text-sm font-bold text-ink">고양점</span>
+            <span class="text-sm font-mono text-ink-2">031-0000-3103</span>
+          </li>
+          <li class="flex items-center justify-between gap-3 rounded-lg border border-line-light bg-shell px-4 py-3">
+            <span class="text-sm font-bold text-ink">기흥점</span>
+            <span class="text-sm font-mono text-ink-2">031-0000-3204</span>
+          </li>
+          <li class="flex items-center justify-between gap-3 rounded-lg border border-line-light bg-shell px-4 py-3">
+            <span class="text-sm font-bold text-ink">동부산점</span>
+            <span class="text-sm font-mono text-ink-2">051-0000-3405</span>
+          </li>
+        </ul>
+
+        <p class="text-xs text-ink-muted border-t border-line-light pt-3">분실물센터 운영시간: 매장 영업시간과 동일 (10:00 - 21:00)</p>
+      </div>
+
+      <div class="border-t border-line-light px-6 py-4">
+        <button type="button" id="lost-store-modal-done" class="w-full h-10 rounded-lg bg-brand text-white hover:bg-brand-dark transition-colors text-sm font-bold">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var btn = document.getElementById('lost-store-btn');
+    var modal = document.getElementById('lost-store-modal');
+    if (!btn || !modal) return;
+
+    var card = document.getElementById('lost-store-modal-card');
+
+    function openModal() {
+      modal.classList.remove('hidden');
+      document.documentElement.style.overflow = 'hidden';
+      setTimeout(function () {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeModal() {
+      card.classList.remove('scale-100', 'opacity-100');
+      card.classList.add('scale-95', 'opacity-0');
+      setTimeout(function () {
+        modal.classList.add('hidden');
+        document.documentElement.style.overflow = '';
+      }, 200);
+    }
+
+    btn.addEventListener('click', openModal);
+    document.getElementById('lost-store-modal-close').addEventListener('click', closeModal);
+    document.getElementById('lost-store-modal-done').addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    });
+  })();
+  </script>
+  <!-- /SEGMENT: LostStoreModal -->
 
   <!-- Interactive Scripts -->
   <script>
