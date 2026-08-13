@@ -582,15 +582,103 @@
   </div>
 
   <!-- Mobile Dropdown Navigation -->
-  <nav id="mobile-nav" aria-label="모바일 메뉴" hidden class="border-t border-line-light bg-white lg:hidden px-5 py-4 shadow-lg">
-    <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
-      <li><a class="block py-3 text-ink hover:text-brand" href="products.html">모든 제품</a></li>
-      <li><a class="block py-3 text-ink hover:text-brand" href="category.html">공간별 쇼핑하기</a></li>
-      <li><a class="block py-3 text-ink hover:text-brand" href="styling.html">플래닝 &amp; 아이디어</a></li>
-      <li><a class="block py-3 text-ink hover:text-brand" href="service.html">서비스</a></li>
-      <li><a class="block py-3 text-sale font-bold" href="sale.html">세일</a></li>
-    </ul>
-  </nav>
+          <!-- Mobile Dropdown Navigation (아코디언 세부 페이지 링크 수록) -->
+                <!-- Mobile Dropdown Navigation (데스크탑 메가메뉴 데이터 100% 동기화) -->
+                <!-- Mobile Dropdown Navigation (데스크탑 메가메뉴 데이터 100% 동기화) -->
+        <nav id="mobile-nav" aria-label="모바일 메뉴" hidden class="border-t border-line-light bg-white lg:hidden px-5 py-4 shadow-lg">
+          <ul class="flex flex-col text-base font-bold divide-y divide-line-light">
+            <!-- 1. 모든 제품 -->
+            <li class="py-1.5">
+              <div class="flex items-center justify-between py-2 cursor-pointer mobile-sub-toggle" data-target="m-sub-products">
+                <a class="text-ink hover:text-brand transition-colors" href="products.html">모든 제품</a>
+                <button type="button" class="p-1 text-ink-muted hover:text-brand" aria-label="세부 메뉴 토글">
+                  <svg class="h-5 w-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+              <ul id="m-sub-products" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=storage">수납가구</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=bedding">침구/러그</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=sofa">소파/의자</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=kitchen">주방가구</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=bath">욕실가구</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=laundry">세탁/청소가구</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=appliances">가전제품</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=tiles">타일/벽지</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=food">식품</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=kids">키즈</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=outdoor">아웃도어</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=gardening">가드닝/조경</a></li>
+                <li><a class="block py-1 hover:text-brand" href="products.html?cat=etc">기타</a></li>
+              </ul>
+            </li>
+
+            <!-- 2. 공간별 쇼핑하기 -->
+            <li class="py-1.5">
+              <div class="flex items-center justify-between py-2 cursor-pointer mobile-sub-toggle" data-target="m-sub-category">
+                <a class="text-ink hover:text-brand transition-colors" href="category.html">공간별 쇼핑하기</a>
+                <button type="button" class="p-1 text-ink-muted hover:text-brand" aria-label="세부 메뉴 토글">
+                  <svg class="h-5 w-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+              <ul id="m-sub-category" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-living">거실</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-dining">다이닝</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-kitchen">주방</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-bedroom">침실</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-bath">욕실</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-kids">아이방</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-office">홈오피스</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-entry">현관</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-balcony">베란다</a></li>
+                <li><a class="block py-1 hover:text-brand" href="category.html#s-laundry">세탁실</a></li>
+              </ul>
+            </li>
+
+            <!-- 3. 플래닝 & 아이디어 -->
+            <li class="py-1.5">
+              <div class="flex items-center justify-between py-2 cursor-pointer mobile-sub-toggle" data-target="m-sub-planning">
+                <a class="text-ink hover:text-brand transition-colors" href="planning.html">플래닝 &amp; 아이디어</a>
+                <button type="button" class="p-1 text-ink-muted hover:text-brand" aria-label="세부 메뉴 토글">
+                  <svg class="h-5 w-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+              <ul id="m-sub-planning" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
+                <li><a class="block py-1 hover:text-brand" href="styling.html">이케아 스타일링 서비스</a></li>
+                <li><a class="block py-1 hover:text-brand" href="self-styling.html">셀프 스타일링</a></li>
+                <li><a class="block py-1 hover:text-brand" href="planning.html">추천 스타일링</a></li>
+                <li><a class="block py-1 hover:text-brand" href="styling.html">구매상담</a></li>
+              </ul>
+            </li>
+
+            <!-- 4. 서비스 -->
+            <li class="py-1.5">
+              <div class="flex items-center justify-between py-2 cursor-pointer mobile-sub-toggle" data-target="m-sub-service">
+                <a class="text-ink hover:text-brand transition-colors" href="service.html">서비스</a>
+                <button type="button" class="p-1 text-ink-muted hover:text-brand" aria-label="세부 메뉴 토글">
+                  <svg class="h-5 w-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+              <ul id="m-sub-service" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
+                <li><a class="block py-1 hover:text-brand" href="delivery.html">배송 서비스</a></li>
+                <li><a class="block py-1 hover:text-brand" href="installation.html">조립/설치 서비스</a></li>
+                <li><a class="block py-1 hover:text-brand" href="order.html">주문 결제 서비스</a></li>
+              </ul>
+            </li>
+
+            <!-- 5. 세일 -->
+            <li class="py-1.5">
+              <div class="flex items-center justify-between py-2 cursor-pointer mobile-sub-toggle" data-target="m-sub-sale">
+                <a class="!text-sale font-bold hover:!text-sale-dark transition-colors" style="color: #E00751 !important;" href="sale.html">세일</a>
+                <button type="button" class="p-1 text-red-500 hover:text-red-700" aria-label="세부 메뉴 토글">
+                  <svg class="h-5 w-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+              </div>
+              <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
 </header>
 <!-- /SEGMENT: Header -->
 
@@ -1113,5 +1201,28 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     </script>
     <!-- /SEGMENT: ScrollToTop -->
+
+<script>
+// 모바일 햄버거 서브 메뉴 아코디언 토글 이벤트
+document.addEventListener('click', function(e) {
+  var toggle = e.target.closest('.mobile-sub-toggle');
+  if (toggle) {
+    var targetId = toggle.getAttribute('data-target');
+    var subMenu = document.getElementById(targetId);
+    var icon = toggle.querySelector('svg');
+    if (subMenu) {
+      var isHidden = subMenu.classList.contains('hidden');
+      if (isHidden) {
+        subMenu.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      } else {
+        subMenu.classList.add('hidden');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      }
+    }
+  }
+});
+</script>
+
 </body>
 </html>

@@ -888,5 +888,28 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     </script>
     <!-- /SEGMENT: ScrollToTop -->
+
+<script>
+// 모바일 햄버거 서브 메뉴 아코디언 토글 이벤트
+document.addEventListener('click', function(e) {
+  var toggle = e.target.closest('.mobile-sub-toggle');
+  if (toggle) {
+    var targetId = toggle.getAttribute('data-target');
+    var subMenu = document.getElementById(targetId);
+    var icon = toggle.querySelector('svg');
+    if (subMenu) {
+      var isHidden = subMenu.classList.contains('hidden');
+      if (isHidden) {
+        subMenu.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      } else {
+        subMenu.classList.add('hidden');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      }
+    }
+  }
+});
+</script>
+
 </body>
 </html>
