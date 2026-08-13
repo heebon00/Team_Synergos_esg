@@ -2079,15 +2079,20 @@
 
     <!-- SEGMENT: FloatingIntroVideo -->
     <!-- 우측 여백에 떠 있는 소개 영상 위젯: 클릭하면 기존 인트로 영상 크기로 재생되고, 삭제 버튼으로 완전히 없앨 수 있다 -->
-    <div id="floating-video-widget" class="fixed right-5 top-1/2 z-40 -translate-y-1/2 group">
-      <button type="button" id="floating-video-delete-btn" class="absolute -top-2 -right-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-ink text-white shadow-md transition-colors hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-white" aria-label="소개 영상 위젯 닫기">
-        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+    <div id="floating-video-widget" class="fixed right-5 top-1/2 z-40 -translate-y-1/2 group flex flex-col items-center gap-2">
+      <button type="button" id="floating-video-hide-today-btn" class="rounded-pill bg-ink/85 px-3 py-1.5 text-xs font-medium text-white shadow-md transition-colors hover:bg-ink cursor-pointer focus:outline-none focus:ring-2 focus:ring-white">
+        오늘 하루 더 안보기
       </button>
-      <button type="button" id="floating-video-play-btn" class="relative block w-40 cursor-pointer overflow-hidden rounded-2xl border-2 border-white bg-ink shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-brand sm:w-48" style="aspect-ratio: 540 / 720;" aria-label="IKEA 소개 영상 재생">
-        <video id="floating-video-preview" class="h-full w-full object-cover" src="assets/video/ikea.mp4" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
-      </button>
+      <div class="relative">
+        <button type="button" id="floating-video-delete-btn" class="absolute -top-2 -right-2 z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-ink text-white shadow-md transition-colors hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-white" aria-label="소개 영상 위젯 닫기">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        <button type="button" id="floating-video-play-btn" class="relative block w-40 cursor-pointer overflow-hidden rounded-2xl border-2 border-white bg-ink shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-brand sm:w-48" style="aspect-ratio: 540 / 720;" aria-label="IKEA 소개 영상 재생">
+          <video id="floating-video-preview" class="h-full w-full object-cover" src="assets/video/ikea.mp4" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+        </button>
+      </div>
     </div>
 
     <div id="floating-video-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90" role="dialog" aria-modal="true" aria-label="IKEA 소개 영상">
@@ -2098,12 +2103,24 @@
       (function () {
         const widget = document.getElementById("floating-video-widget");
         const deleteBtn = document.getElementById("floating-video-delete-btn");
+        const hideTodayBtn = document.getElementById("floating-video-hide-today-btn");
         const playBtn = document.getElementById("floating-video-play-btn");
         const preview = document.getElementById("floating-video-preview");
         const overlay = document.getElementById("floating-video-overlay");
         const fullVideo = document.getElementById("floating-video-full");
         const closeBtn = document.getElementById("floating-video-close-btn");
         if (!widget || !overlay) return;
+
+        const HIDE_TODAY_KEY = "ikea_hide_intro_video_date";
+        function todayString() {
+          const d = new Date();
+          return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        }
+        if (localStorage.getItem(HIDE_TODAY_KEY) === todayString()) {
+          widget.remove();
+          overlay.remove();
+          return;
+        }
 
         function openVideo() {
           overlay.classList.remove("hidden");
@@ -2136,6 +2153,13 @@
         });
         deleteBtn.addEventListener("click", function (e) {
           e.stopPropagation();
+          closeVideo();
+          widget.remove();
+          overlay.remove();
+        });
+        hideTodayBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          localStorage.setItem(HIDE_TODAY_KEY, todayString());
           closeVideo();
           widget.remove();
           overlay.remove();
