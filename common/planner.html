@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="IKEA 셀프 스타일링 – 무료 온라인 3D 플래닝 툴로 나만의 공간을 직접 설계해보세요.">
-<title>셀프 스타일링 | IKEA</title>
+<meta name="description" content="IKEA 3D 플래너 – 방 크기를 고르고 가구를 직접 배치하며 실시간 견적까지 확인하는 무료 온라인 설계 도구.">
+<title>3D 플래너 | IKEA</title>
 
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
@@ -182,6 +182,128 @@
       .text-\[13px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
       .text-\[14px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
       .text-\[15px\] { font-size: 1rem !important; line-height: 1.25rem !important; }
+    </style>
+    <!-- 3D 플래너 전용 스타일 -->
+    <style>
+      /* 아이소메트릭 무대 */
+      .pl-stage {
+        position: relative;
+        display: grid;
+        place-items: center;
+        min-height: 380px;
+        overflow: hidden;
+        border: 1px solid var(--color-line-light);
+        border-radius: var(--radius-card);
+        background:
+          radial-gradient(circle at 50% 30%,
+            color-mix(in srgb, var(--color-brand) 6%, transparent),
+            transparent 70%),
+          var(--color-bg-light);
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      @media (min-width: 1024px) { .pl-stage { min-height: 520px; } }
+
+      .pl-scene { transform-style: preserve-3d; }
+
+      /* 바닥면: rotateX(55) rotateZ(-45) */
+      .pl-floor {
+        position: relative;
+        transform: rotateX(55deg) rotateZ(-45deg);
+        transform-style: preserve-3d;
+        border: 2px solid var(--color-line);
+        border-radius: 2px;
+        background-color: #fff;
+        background-image:
+          repeating-linear-gradient(0deg,
+            color-mix(in srgb, var(--color-ink) 10%, transparent) 0 1px,
+            transparent 1px var(--pl-cell)),
+          repeating-linear-gradient(90deg,
+            color-mix(in srgb, var(--color-ink) 10%, transparent) 0 1px,
+            transparent 1px var(--pl-cell));
+        box-shadow: 0 30px 50px color-mix(in srgb, var(--color-ink) 18%, transparent);
+      }
+
+      /* 배치된 가구 */
+      .pl-item {
+        position: absolute;
+        transform-style: preserve-3d;
+        cursor: grab;
+      }
+      .pl-item.is-drag { cursor: grabbing; }
+
+      .pl-foot {
+        position: absolute;
+        inset: 0;
+        border: 2px solid var(--color-brand);
+        border-radius: 3px;
+        background: color-mix(in srgb, var(--color-brand) 14%, transparent);
+      }
+      .pl-item.is-sel .pl-foot {
+        border-color: var(--color-brand-dark);
+        background: color-mix(in srgb, var(--color-accent) 40%, transparent);
+      }
+
+      /* 바닥 회전을 되돌려 세우는 빌보드 */
+      .pl-bill {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform-origin: bottom center;
+        transform: rotateZ(45deg) rotateX(-55deg);
+        pointer-events: none;
+      }
+      .pl-bill img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center bottom;
+        /* 제품 사진의 흰 배경을 바닥과 자연스럽게 합성 */
+        mix-blend-mode: multiply;
+      }
+
+      /* 팔레트 */
+      .pl-chip {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid var(--color-line-light);
+        border-radius: 10px;
+        background: #fff;
+        text-align: left;
+        transition: border-color .15s, box-shadow .15s;
+        cursor: pointer;
+      }
+      .pl-chip:hover {
+        border-color: var(--color-brand);
+        box-shadow: 0 2px 8px color-mix(in srgb, var(--color-ink) 12%, transparent);
+      }
+      .pl-chip img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+        flex: none;
+        background: var(--color-shell);
+        border-radius: 6px;
+      }
+
+      .pl-empty {
+        position: absolute;
+        inset: auto 0 auto 0;
+        text-align: center;
+        pointer-events: none;
+      }
+
+      /* 가구 팔레트 스크롤 높이 */
+      .pl-palette-scroll { max-height: 420px; }
+
+      /* 모션 최소화 설정 존중 */
+      .no-motion .pl-chip { transition: none; }
     </style>
 </head>
 
@@ -653,120 +775,626 @@
       <li aria-hidden="true">&gt;</li>
       <li><a class="hover:text-brand hover:underline" href="planning.html">플래닝 &amp; 아이디어</a></li>
       <li aria-hidden="true">&gt;</li>
-      <li><span aria-current="page" class="text-ink">셀프 스타일링</span></li>
+      <li><a class="hover:text-brand hover:underline" href="self-styling.html">셀프 스타일링</a></li>
+      <li aria-hidden="true">&gt;</li>
+      <li><span aria-current="page" class="text-ink">3D 플래너</span></li>
     </ol>
   </nav>
 
-  <!-- 어떻게 진행되나요 -->
-  <section aria-labelledby="h-steps" class="mx-auto max-w-container px-5 py-10 lg:px-20">
-    <h2 id="h-steps" class="text-center text-2xl font-extrabold text-ink lg:text-3xl">어떻게 진행되나요?</h2>
+  <!-- 히어로 -->
+  <section class="mx-auto max-w-container px-5 pb-6 lg:px-20">
+    <h1 class="text-3xl font-extrabold leading-tight text-ink lg:text-4xl">3D 플래너</h1>
+    <p class="mt-3 max-w-prose text-base leading-relaxed text-ink-2">
+      방 크기를 고르고 왼쪽 가구를 클릭해 배치해보세요. 배치한 가구는 드래그로 옮기고 회전할 수 있으며,
+      예상 견적이 실시간으로 계산됩니다. 설계는 브라우저에 저장되고 그대로 장바구니에 담을 수 있습니다.
+    </p>
+  </section>
 
-    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+  <!-- 플래너 -->
+  <section aria-labelledby="h-planner" class="mx-auto max-w-container px-5 pb-12 lg:px-20">
+    <h2 id="h-planner" class="hide">플래너 작업 영역</h2>
+
+    <!-- 도구 모음 -->
+    <div class="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-line-light bg-bg-light p-4">
+      <label class="flex items-center gap-2 text-sm font-semibold text-ink" for="pl-room">방 크기</label>
+      <select id="pl-room" class="rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink"></select>
+
+      <div class="ml-auto flex flex-wrap items-center gap-2">
+        <button type="button" id="pl-save" class="rounded-lg border border-line bg-white px-4 py-2 text-sm font-bold text-ink hover:border-brand hover:text-brand transition-colors">설계 저장</button>
+        <button type="button" id="pl-load" class="rounded-lg border border-line bg-white px-4 py-2 text-sm font-bold text-ink hover:border-brand hover:text-brand transition-colors">불러오기</button>
+        <button type="button" id="pl-reset" class="rounded-lg border border-line bg-white px-4 py-2 text-sm font-bold text-ink hover:border-brand hover:text-brand transition-colors">초기화</button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
+
+      <!-- 가구 팔레트 -->
+      <div class="lg:col-span-3">
+        <div class="rounded-lg border border-line-light bg-white p-4">
+          <h3 class="mb-3 text-base font-bold text-ink">가구 선택</h3>
+          <p class="mb-3 text-xs leading-relaxed text-muted">항목을 클릭하면 방 가운데에 배치됩니다.</p>
+          <div id="pl-palette" class="pl-palette-scroll flex flex-col gap-4 overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+
+      <!-- 무대 -->
+      <div class="lg:col-span-6">
+        <div id="pl-stage" class="pl-stage">
+          <div class="pl-scene">
+            <div id="pl-floor" class="pl-floor"></div>
+          </div>
+          <p id="pl-empty" class="pl-empty px-6 text-sm font-semibold text-muted">
+            왼쪽에서 가구를 선택해 배치해보세요.
+          </p>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <button type="button" id="pl-rotate" class="rounded-lg border border-line bg-white px-4 py-2 text-sm font-bold text-ink hover:border-brand hover:text-brand transition-colors">선택 가구 회전</button>
+          <button type="button" id="pl-delete" class="rounded-lg border border-line bg-white px-4 py-2 text-sm font-bold text-ink hover:border-brand hover:text-brand transition-colors">선택 가구 삭제</button>
+          <p class="text-xs text-muted">가구를 클릭해 선택한 뒤 드래그로 이동, 방향키로 미세 조정, R 키로 회전할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <!-- 견적 -->
+      <div class="lg:col-span-3">
+        <div class="rounded-lg border border-line-light bg-white p-4">
+          <h3 class="mb-3 text-base font-bold text-ink">배치 목록 &amp; 견적</h3>
+          <ul id="pl-list" class="flex flex-col gap-2"></ul>
+
+          <div class="mt-4 border-t border-line-light pt-4">
+            <div class="flex items-baseline justify-between">
+              <span class="text-sm text-ink-2">배치 <span id="pl-count">0</span>개</span>
+              <strong id="pl-total" class="text-lg font-black text-price">₩0</strong>
+            </div>
+            <button type="button" id="pl-cart" class="mt-4 w-full rounded-lg bg-brand px-4 py-3 text-base font-bold text-white hover:bg-brand-dark transition-colors">장바구니에 모두 담기</button>
+            <p class="mt-2 text-xs leading-relaxed text-muted">설계 수수료는 무료이며, 배치한 제품만 장바구니에 담깁니다.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 안내 -->
+  <section aria-labelledby="h-how" class="mx-auto max-w-container px-5 pb-16 lg:px-20">
+    <h2 id="h-how" class="text-center text-2xl font-extrabold text-ink lg:text-3xl">이렇게 사용하세요</h2>
+    <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
       <div class="flex flex-col gap-3 rounded-xl border border-line-light p-8">
         <div class="grid size-10 place-items-center rounded-full bg-brand text-base font-bold text-white">1</div>
-        <div class="flex flex-col gap-1">
-          <h3 class="text-base font-semibold text-ink">공간 선택 &amp; 측정</h3>
-          <p class="text-sm leading-relaxed text-muted">주방, 옷장 등 플래닝하려는 공간을 지정하고 크기를 입력합니다.</p>
-        </div>
+        <h3 class="text-base font-semibold text-ink">방 크기 선택</h3>
+        <p class="text-sm leading-relaxed text-muted">원룸부터 넓은 거실까지, 실제 치수에 가까운 방을 고릅니다.</p>
       </div>
       <div class="flex flex-col gap-3 rounded-xl border border-line-light p-8">
         <div class="grid size-10 place-items-center rounded-full bg-brand text-base font-bold text-white">2</div>
-        <div class="flex flex-col gap-1">
-          <h3 class="text-base font-semibold text-ink">가구 배치</h3>
-          <p class="text-sm leading-relaxed text-muted">IKEA 카탈로그의 수많은 가구와 소품을 마우스 드래그로 원하는 위치에 놓습니다.</p>
-        </div>
+        <h3 class="text-base font-semibold text-ink">가구 배치</h3>
+        <p class="text-sm leading-relaxed text-muted">가구를 놓고 드래그로 옮기며 동선을 확인합니다. 크기는 실제 제품 치수 기준입니다.</p>
       </div>
       <div class="flex flex-col gap-3 rounded-xl border border-line-light p-8">
         <div class="grid size-10 place-items-center rounded-full bg-brand text-base font-bold text-white">3</div>
-        <div class="flex flex-col gap-1">
-          <h3 class="text-base font-bold text-ink">견적 확인 &amp; 저장</h3>
-          <p class="text-sm leading-relaxed text-ink-2">완성된 설계 디자인의 상세 제품 목록과 가격표를 한눈에 검토합니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 셀프 스타일링 히어로 -->
-  <section aria-labelledby="h-hero" class="mx-auto max-w-container px-5 py-10 lg:px-20">
-    <div class="flex flex-col items-center gap-8 rounded-xl border border-line bg-shell p-8 lg:flex-row lg:gap-12 lg:p-16">
-      <div class="flex flex-1 flex-col items-start gap-5">
-        <p class="text-sm font-bold uppercase tracking-wide text-link">Online 3D Planning Tool</p>
-        <h1 id="h-hero" class="text-3xl font-extrabold leading-tight text-ink lg:text-4xl">나만의 공간, 직접 설계하세요</h1>
-        <p class="text-base leading-relaxed text-ink-2">컴퓨터나 태블릿으로 간편하게 IKEA 가구를 가상 배치해보세요. 실시간으로 공간 치수를 맞추고 어울리는 조합의 예상 견적까지 바로 확인할 수 있습니다.</p>
-      </div>
-      <div class="w-full flex-1 shrink-0 overflow-hidden rounded-lg">
-        <img src="../assets/images/self-styling/hero.webp" alt="태블릿으로 3D 공간을 설계하는 모습이 담긴 밝은 톤의 거실" width="560" height="320" loading="lazy" class="h-hero-img w-full object-cover">
-      </div>
-    </div>
-  </section>
-
-  <!-- 카테고리별 플래너 도구 -->
-  <section aria-labelledby="h-tools" class="mx-auto max-w-container px-5 py-10 lg:px-20">
-    <h2 id="h-tools" class="text-center text-2xl font-extrabold text-ink lg:text-3xl">카테고리별 플래너 도구</h2>
-
-    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-      <a href="planner.html" class="group block overflow-hidden rounded-lg border border-line bg-white hover:border-brand hover:shadow-lg transition-all">
-        <div class="h-card-img w-full overflow-hidden bg-shell">
-          <img src="../assets/images/self-styling/tool.webp" alt="주방 플래너 미리보기" width="357" height="200" loading="lazy" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300">
-        </div>
-        <div class="flex flex-col gap-3 p-6">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold text-ink group-hover:text-brand transition-colors">주방 플래너</h3>
-            <span class="text-xs font-semibold text-brand flex items-center gap-0.5 group-hover:translate-x-1 transition-transform">시작하기 &rarr;</span>
-          </div>
-          <p class="text-sm leading-relaxed text-ink-2">꿈꾸던 싱크대 레이아웃부터 빌트인 오븐, 아일랜드 수납장까지 공간 맞춤 주방 동선 설계.</p>
-        </div>
-      </a>
-      <a href="planner.html" class="group block overflow-hidden rounded-lg border border-line bg-white hover:border-brand hover:shadow-lg transition-all">
-        <div class="h-card-img w-full overflow-hidden bg-shell">
-          <img src="../assets/images/self-styling/tool.webp" alt="홈오피스 플래너 미리보기" width="357" height="200" loading="lazy" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300">
-        </div>
-        <div class="flex flex-col gap-3 p-6">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold text-ink group-hover:text-brand transition-colors">홈오피스 플래너</h3>
-            <span class="text-xs font-semibold text-brand flex items-center gap-0.5 group-hover:translate-x-1 transition-transform">시작하기 &rarr;</span>
-          </div>
-          <p class="text-sm leading-relaxed text-ink-2">스탠딩 워크스페이스, 모듈형 서랍장, 조명 장치를 결합하여 몰입감을 높여주는 서재 스타일 가이드.</p>
-        </div>
-      </a>
-      <a href="planner.html" class="group block overflow-hidden rounded-lg border border-line bg-white hover:border-brand hover:shadow-lg transition-all">
-        <div class="h-card-img w-full overflow-hidden bg-shell">
-          <img src="../assets/images/self-styling/tool.webp" alt="옷장 및 옷방 플래너 미리보기" width="357" height="200" loading="lazy" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300">
-        </div>
-        <div class="flex flex-col gap-3 p-6">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold text-ink group-hover:text-brand transition-colors">옷장 &amp; 옷방 플래너</h3>
-            <span class="text-xs font-semibold text-brand flex items-center gap-0.5 group-hover:translate-x-1 transition-transform">시작하기 &rarr;</span>
-          </div>
-          <p class="text-sm leading-relaxed text-ink-2">팍스(PAX) 등 옷장 모듈의 너비, 높이, 도어 디자인 및 내부 선반 액세서리 자유 배치 시뮬레이션.</p>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- 다크 CTA 배너 -->
-  <section class="mx-auto max-w-container px-5 py-6 lg:px-20">
-    <div class="flex flex-col items-center gap-4 rounded-lg bg-brand px-6 py-12 text-center">
-      <h2 class="text-xl font-bold text-white">지금 온라인 플래너를 통해 홈 퍼니싱을 직접 설계해보세요.</h2>
-      <p class="max-w-prose text-sm text-white/70">로그인 시 설계 도면을 계정에 저장하여 매장 및 예약상담 중 손쉽게 불러올 수 있습니다.</p>
-      <a href="planner.html" class="inline-flex items-center justify-center rounded-lg bg-brand-dark px-8 py-3.5 text-base font-bold text-white hover:bg-navy transition-colors">3D 플래너 시작하기</a>
-    </div>
-  </section>
-
-  <!-- 셀프 3D 플래닝 무료 혜택 -->
-  <section aria-labelledby="h-free" class="mx-auto max-w-container px-5 py-10 pb-16 lg:px-20">
-    <div class="flex flex-col items-center gap-12 lg:flex-row">
-      <div class="w-full flex-1 shrink-0 overflow-hidden rounded-lg">
-        <img src="../assets/images/self-styling/info.webp" alt="손으로 평면도를 그리며 공간을 계획하는 모습" width="440" height="260" loading="lazy" class="h-hero-img w-full object-cover">
-      </div>
-      <div class="flex flex-1 flex-col gap-4">
-        <h2 id="h-free" class="text-2xl font-extrabold text-ink">셀프 3D 플래닝 수수료 무료 혜택</h2>
-        <p class="text-base leading-relaxed text-ink-2">설계 단계에서 부과되는 플래너 도구 및 디자인북 사용 수수료는 365일 언제나 완전히 무료입니다. IKEA 가상 배치 시스템을 활용해 전문가 매칭 없이도 부담없이 셀프 견적과 인테리어 설계를 완성해보세요.</p>
+        <h3 class="text-base font-semibold text-ink">견적 확인 &amp; 담기</h3>
+        <p class="text-sm leading-relaxed text-muted">합계를 확인하고 그대로 장바구니에 담아 주문으로 이어갑니다.</p>
       </div>
     </div>
   </section>
 
 </main>
+
+<!-- SEGMENT: Planner -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── 데이터 ─────────────────────────────────────────── */
+  const ROOMS = [
+    { id: 's',  label: '원룸 3 × 3 m',      w: 3,   d: 3   },
+    { id: 'm',  label: '침실 3.5 × 4.5 m',  w: 3.5, d: 4.5 },
+    { id: 'l',  label: '거실 4 × 5 m',      w: 4,   d: 5   },
+    { id: 'xl', label: '넓은 거실 5 × 6 m', w: 5,   d: 6   }
+  ];
+
+  const CATALOG = [
+    { id: 'kivik',    name: 'KIVIK 시비크 3인용 소파',      cat: '소파·의자',   price: 649000, w: 2.28, d: 0.95, h: 0.83, img: '../assets/images/products/kivik.webp' },
+    { id: 'strandmon',name: 'STRANDMON 스트란드몬 암체어',  cat: '소파·의자',   price: 329000, w: 0.82, d: 0.96, h: 1.01, img: '../assets/images/products/strandmon.webp' },
+    { id: 'markus',   name: 'MARKUS 마르쿠스 사무용 의자',  cat: '소파·의자',   price: 259000, w: 0.62, d: 0.60, h: 1.29, img: '../assets/images/products/markus.webp' },
+    { id: 'malm',     name: 'MALM 말름 침대프레임',         cat: '침대',        price: 399000, w: 2.09, d: 1.76, h: 1.00, img: '../assets/images/products/malm.webp' },
+    { id: 'brimnes',  name: 'BRIMNES 브림네스 침대프레임',  cat: '침대',        price: 349000, w: 2.06, d: 1.66, h: 1.11, img: '../assets/images/products/brimnes.webp' },
+    { id: 'nordli',   name: 'NORDLI 노르들리 침대프레임',   cat: '침대',        price: 459000, w: 2.05, d: 1.60, h: 0.90, img: '../assets/images/products/nordli.webp' },
+    { id: 'pax',      name: 'PAX 팍스 옷장',                cat: '수납',        price: 459000, w: 1.50, d: 0.60, h: 2.01, img: '../assets/images/products/pax.webp' },
+    { id: 'hemnes',   name: 'HEMNES 헴네스 서랍장',         cat: '수납',        price: 399000, w: 1.08, d: 0.50, h: 0.96, img: '../assets/images/products/hemnes.webp' },
+    { id: 'kallax',   name: 'KALLAX 칼락스 선반유닛',       cat: '수납',        price: 129000, w: 1.47, d: 0.39, h: 1.47, img: '../assets/p-kallax.webp' },
+    { id: 'billy',    name: 'BILLY 빌리 책장',              cat: '수납',        price:  89000, w: 0.80, d: 0.28, h: 2.02, img: '../assets/p-billy.webp' },
+    { id: 'trofast',  name: 'TROFAST 트로파스트 수납장',    cat: '수납',        price: 119000, w: 0.99, d: 0.44, h: 0.94, img: '../assets/images/products/trofast.webp' },
+    { id: 'eket',     name: 'EKET 에케트 캐비닛',           cat: '수납',        price:  79000, w: 0.70, d: 0.35, h: 0.70, img: '../assets/images/products/eket.webp' },
+    { id: 'bekant',   name: 'BEKANT 베칸트 책상',           cat: '책상·테이블', price: 299000, w: 1.60, d: 0.80, h: 0.73, img: '../assets/images/products/bekant.webp' },
+    { id: 'lisabo',   name: 'LISABO 리사보 책상',           cat: '책상·테이블', price: 199000, w: 1.18, d: 0.59, h: 0.74, img: '../assets/images/products/lisabo.webp' },
+    { id: 'ekedalen', name: 'EKEDALEN 에케달렌 식탁',       cat: '책상·테이블', price: 299000, w: 1.20, d: 0.80, h: 0.75, img: '../assets/images/products/ekedalen.webp' },
+    { id: 'vittsjo',  name: 'VITTSJÖ 비트셰 사이드테이블',  cat: '책상·테이블', price:  59000, w: 0.50, d: 0.50, h: 0.50, img: '../assets/images/products/vittsjo.webp' }
+  ];
+
+  const STORE_KEY = 'ikea_planner_layout';
+
+  /* 아이소메트릭 상수: rotateX(55deg) rotateZ(-45deg) */
+  const COS_X = Math.cos(55 * Math.PI / 180);
+  const SIN45 = Math.SQRT1_2;
+
+  /* ── 상태 ───────────────────────────────────────────── */
+  let room = ROOMS[2];
+  let items = [];
+  let selectedUid = null;
+  let cell = 56;
+  let uidSeq = 1;
+
+  /* ── DOM ────────────────────────────────────────────── */
+  const stageEl   = document.getElementById('pl-stage');
+  const floorEl   = document.getElementById('pl-floor');
+  const paletteEl = document.getElementById('pl-palette');
+  const listEl    = document.getElementById('pl-list');
+  const totalEl   = document.getElementById('pl-total');
+  const countEl   = document.getElementById('pl-count');
+  const emptyEl   = document.getElementById('pl-empty');
+  const roomSel   = document.getElementById('pl-room');
+
+  if (!stageEl || !floorEl) return;
+
+  /* ── 유틸 ───────────────────────────────────────────── */
+  function won(n) { return '₩' + n.toLocaleString('ko-KR'); }
+
+  function catalogOf(id) {
+    return CATALOG.filter(function (c) { return c.id === id; })[0] || null;
+  }
+
+  /* 회전 반영 실제 점유 크기(m) */
+  function footprint(it) {
+    const c = catalogOf(it.key);
+    if (!c) return { w: 0.5, d: 0.5 };
+    return (it.rot % 180 === 0) ? { w: c.w, d: c.d } : { w: c.d, d: c.w };
+  }
+
+  function clampItem(it) {
+    const fp = footprint(it);
+    it.x = Math.max(0, Math.min(room.w - fp.w, it.x));
+    it.y = Math.max(0, Math.min(room.d - fp.d, it.y));
+  }
+
+  /* 무대 폭에 맞춰 1m당 픽셀 계산 (투영 폭 = (w+d)·sin45·cell) */
+  function computeCell() {
+    const avail = Math.max(240, stageEl.clientWidth - 32);
+    const raw = avail / ((room.w + room.d) * SIN45);
+    cell = Math.max(26, Math.min(72, Math.floor(raw)));
+  }
+
+  /* ── 렌더 ───────────────────────────────────────────── */
+  function renderFloor() {
+    computeCell();
+    floorEl.style.setProperty('--pl-cell', cell + 'px');
+    floorEl.style.width = (room.w * cell) + 'px';
+    floorEl.style.height = (room.d * cell) + 'px';
+  }
+
+  function renderItems(keepFocus) {
+    floorEl.textContent = '';
+
+    /* 화면 앞쪽(y-x 큰 값)이 나중에 그려지도록 정렬 */
+    const ordered = items.slice().sort(function (a, b) {
+      return (a.y - a.x) - (b.y - b.x);
+    });
+
+    ordered.forEach(function (it) {
+      const c = catalogOf(it.key);
+      if (!c) return;
+      const fp = footprint(it);
+
+      const el = document.createElement('div');
+      el.className = 'pl-item' + (it.uid === selectedUid ? ' is-sel' : '');
+      el.dataset.uid = it.uid;
+      el.style.left = (it.x * cell) + 'px';
+      el.style.top = (it.y * cell) + 'px';
+      el.style.width = (fp.w * cell) + 'px';
+      el.style.height = (fp.d * cell) + 'px';
+      el.tabIndex = 0;
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label',
+        c.name + ' — 가로 ' + fp.w.toFixed(2) + 'm, 세로 ' + fp.d.toFixed(2) + 'm. ' +
+        '방향키로 이동, R 키로 회전, Delete 키로 삭제');
+
+      const foot = document.createElement('div');
+      foot.className = 'pl-foot';
+      el.appendChild(foot);
+
+      const bill = document.createElement('div');
+      bill.className = 'pl-bill';
+      /* 실제 제품 높이(m)를 그대로 반영해 세운다 */
+      bill.style.height = ((c.h || 1) * cell) + 'px';
+      const img = document.createElement('img');
+      img.src = c.img;
+      img.alt = '';
+      img.setAttribute('aria-hidden', 'true');
+      img.draggable = false;
+      bill.appendChild(img);
+      el.appendChild(bill);
+
+      floorEl.appendChild(el);
+    });
+
+    emptyEl.style.display = items.length ? 'none' : 'block';
+
+    if (keepFocus && selectedUid) {
+      const targetEl = floorEl.querySelector('.pl-item[data-uid="' + selectedUid + '"]');
+      if (targetEl) {
+        try { targetEl.focus(); } catch (err) {}
+      }
+    }
+  }
+
+  function renderSummary() {
+    listEl.textContent = '';
+
+    if (!items.length) {
+      const li = document.createElement('li');
+      li.className = 'text-sm text-muted';
+      li.textContent = '아직 배치한 가구가 없습니다.';
+      listEl.appendChild(li);
+    }
+
+    items.forEach(function (it) {
+      const c = catalogOf(it.key);
+      if (!c) return;
+
+      const li = document.createElement('li');
+      li.className = 'flex items-center gap-2 rounded-lg border border-line-light p-2' +
+        (it.uid === selectedUid ? ' border-brand' : '');
+
+      const info = document.createElement('button');
+      info.type = 'button';
+      info.className = 'min-w-0 flex-1 text-left';
+      info.innerHTML =
+        '<span class="block truncate text-xs font-semibold text-ink"></span>' +
+        '<span class="block text-xs text-ink-muted"></span>';
+      info.children[0].textContent = c.name;
+      info.children[1].textContent = won(c.price);
+      info.addEventListener('click', function () {
+        selectedUid = it.uid;
+        renderItems(true);
+        renderSummary();
+      });
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'shrink-0 rounded-md border border-line-light px-2 py-1 text-xs text-ink-muted hover:border-brand hover:text-brand transition-colors';
+      del.textContent = '삭제';
+      del.setAttribute('aria-label', c.name + ' 배치 삭제');
+      del.addEventListener('click', function () { removeItem(it.uid); });
+
+      li.appendChild(info);
+      li.appendChild(del);
+      listEl.appendChild(li);
+    });
+
+    const total = items.reduce(function (sum, it) {
+      const c = catalogOf(it.key);
+      return sum + (c ? c.price : 0);
+    }, 0);
+
+    countEl.textContent = String(items.length);
+    totalEl.textContent = won(total);
+  }
+
+  function renderAll(keepFocus) {
+    renderFloor();
+    renderItems(keepFocus);
+    renderSummary();
+  }
+
+  /* ── 조작 ───────────────────────────────────────────── */
+  function addFurniture(key) {
+    const c = catalogOf(key);
+    if (!c) return;
+
+    const it = {
+      uid: 'u' + (uidSeq++),
+      key: key,
+      x: (room.w - c.w) / 2,
+      y: (room.d - c.d) / 2,
+      rot: 0
+    };
+    /* 이미 중앙에 있으면 조금씩 어긋나게 놓는다 */
+    const offset = (items.length % 5) * 0.25;
+    it.x += offset;
+    it.y += offset;
+    clampItem(it);
+
+    items.push(it);
+    selectedUid = it.uid;
+    renderItems(true);
+    renderSummary();
+    toast(c.name + ' 배치됨');
+  }
+
+  function removeItem(uid) {
+    items = items.filter(function (it) { return it.uid !== uid; });
+    if (selectedUid === uid) {
+      selectedUid = items.length ? items[items.length - 1].uid : null;
+    }
+    renderItems(!!selectedUid);
+    renderSummary();
+  }
+
+  function rotateItem(uid) {
+    const it = items.filter(function (i) { return i.uid === uid; })[0];
+    if (!it) return;
+    it.rot = (it.rot + 90) % 360;
+    clampItem(it);
+    renderItems(true);
+    renderSummary();
+  }
+
+  function toast(msg) {
+    if (window.WishlistCart && typeof window.WishlistCart.showToast === 'function') {
+      window.WishlistCart.showToast(msg);
+    }
+  }
+
+  /* ── 드래그 (화면 좌표 → 바닥 좌표 역변환) ──────────── */
+  let drag = null;
+
+  floorEl.addEventListener('pointerdown', function (e) {
+    const el = e.target.closest ? e.target.closest('.pl-item') : null;
+    if (!el) return;
+
+    const uid = el.dataset.uid;
+    const it = items.filter(function (i) { return i.uid === uid; })[0];
+    if (!it) return;
+
+    selectedUid = uid;
+    el.classList.add('is-drag');
+    el.setPointerCapture(e.pointerId);
+
+    drag = { uid: uid, el: el, px: e.clientX, py: e.clientY, ox: it.x, oy: it.y };
+
+    renderSummary();
+    document.querySelectorAll('.pl-item').forEach(function (n) {
+      n.classList.toggle('is-sel', n.dataset.uid === uid);
+    });
+    e.preventDefault();
+  });
+
+  floorEl.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    const it = items.filter(function (i) { return i.uid === drag.uid; })[0];
+    if (!it) return;
+
+    const sdx = e.clientX - drag.px;
+    const sdy = e.clientY - drag.py;
+
+    /* screenX = (dx+dy)·sin45·cell , screenY = (dy-dx)·sin45·cosX·cell */
+    const A = sdx / (SIN45 * cell);
+    const B = sdy / (SIN45 * COS_X * cell);
+
+    it.x = drag.ox + (A - B) / 2;
+    it.y = drag.oy + (A + B) / 2;
+    clampItem(it);
+
+    drag.el.style.left = (it.x * cell) + 'px';
+    drag.el.style.top = (it.y * cell) + 'px';
+  });
+
+  function endDrag() {
+    if (!drag) return;
+    drag.el.classList.remove('is-drag');
+    drag = null;
+    renderItems(true);
+  }
+  floorEl.addEventListener('pointerup', endDrag);
+  floorEl.addEventListener('pointercancel', endDrag);
+
+  /* ── 키보드 ─────────────────────────────────────────── */
+  floorEl.addEventListener('keydown', function (e) {
+    const el = e.target.closest ? e.target.closest('.pl-item') : null;
+    if (!el) return;
+    const it = items.filter(function (i) { return i.uid === el.dataset.uid; })[0];
+    if (!it) return;
+
+    const step = e.shiftKey ? 0.5 : 0.1;
+    let handled = true;
+
+    if (e.key === 'ArrowLeft')       it.x -= step;
+    else if (e.key === 'ArrowRight') it.x += step;
+    else if (e.key === 'ArrowUp')    it.y -= step;
+    else if (e.key === 'ArrowDown')  it.y += step;
+    else if (e.key === 'r' || e.key === 'R') { rotateItem(it.uid); return; }
+    else if (e.key === 'Delete' || e.key === 'Backspace') { removeItem(it.uid); return; }
+    else handled = false;
+
+    if (!handled) return;
+    e.preventDefault();
+    clampItem(it);
+    selectedUid = it.uid;
+    el.style.left = (it.x * cell) + 'px';
+    el.style.top = (it.y * cell) + 'px';
+  });
+
+  /* ── 팔레트 ─────────────────────────────────────────── */
+  function renderPalette() {
+    paletteEl.textContent = '';
+    const cats = [];
+    CATALOG.forEach(function (c) { if (cats.indexOf(c.cat) === -1) cats.push(c.cat); });
+
+    cats.forEach(function (cat) {
+      const group = document.createElement('div');
+
+      const h = document.createElement('h4');
+      h.className = 'mb-2 text-xs font-bold text-ink-2';
+      h.textContent = cat;
+      group.appendChild(h);
+
+      const box = document.createElement('div');
+      box.className = 'flex flex-col gap-2';
+
+      CATALOG.filter(function (c) { return c.cat === cat; }).forEach(function (c) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pl-chip';
+        btn.setAttribute('aria-label', c.name + ' 방에 배치');
+
+        const img = document.createElement('img');
+        img.src = c.img;
+        img.alt = '';
+        img.setAttribute('aria-hidden', 'true');
+        img.loading = 'lazy';
+
+        const txt = document.createElement('span');
+        txt.className = 'min-w-0 flex-1';
+        txt.innerHTML =
+          '<span class="block truncate text-xs font-semibold text-ink"></span>' +
+          '<span class="block text-xs text-ink-muted"></span>';
+        txt.children[0].textContent = c.name;
+        txt.children[1].textContent = won(c.price) + ' · ' + c.w + '×' + c.d + 'm';
+
+        btn.appendChild(img);
+        btn.appendChild(txt);
+        btn.addEventListener('click', function () { addFurniture(c.id); });
+
+        box.appendChild(btn);
+      });
+
+      group.appendChild(box);
+      paletteEl.appendChild(group);
+    });
+  }
+
+  /* ── 방 크기 ────────────────────────────────────────── */
+  function renderRoomOptions() {
+    ROOMS.forEach(function (r) {
+      const op = document.createElement('option');
+      op.value = r.id;
+      op.textContent = r.label;
+      roomSel.appendChild(op);
+    });
+    roomSel.value = room.id;
+  }
+
+  roomSel.addEventListener('change', function () {
+    room = ROOMS.filter(function (r) { return r.id === roomSel.value; })[0] || ROOMS[2];
+    items.forEach(clampItem);
+    renderAll();
+  });
+
+  /* ── 저장 / 불러오기 / 초기화 ───────────────────────── */
+  document.getElementById('pl-save').addEventListener('click', function () {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({ room: room.id, items: items }));
+      toast('설계를 저장했습니다.');
+    } catch (err) {
+      toast('저장하지 못했습니다.');
+    }
+  });
+
+  document.getElementById('pl-load').addEventListener('click', function () {
+    let saved = null;
+    try {
+      saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+    } catch (err) {
+      saved = null;
+    }
+    if (!saved || !Array.isArray(saved.items)) {
+      toast('저장된 설계가 없습니다.');
+      return;
+    }
+    room = ROOMS.filter(function (r) { return r.id === saved.room; })[0] || room;
+    items = saved.items.filter(function (it) { return catalogOf(it.key); });
+    items.forEach(function (it) {
+      it.uid = 'u' + (uidSeq++);
+      it.rot = Number(it.rot) || 0;
+      clampItem(it);
+    });
+    selectedUid = null;
+    roomSel.value = room.id;
+    renderAll();
+    toast('저장된 설계를 불러왔습니다.');
+  });
+
+  document.getElementById('pl-reset').addEventListener('click', function () {
+    items = [];
+    selectedUid = null;
+    renderItems();
+    renderSummary();
+    toast('설계를 초기화했습니다.');
+  });
+
+  document.getElementById('pl-rotate').addEventListener('click', function () {
+    if (!selectedUid) { toast('먼저 가구를 선택해주세요.'); return; }
+    rotateItem(selectedUid);
+  });
+
+  document.getElementById('pl-delete').addEventListener('click', function () {
+    if (!selectedUid) { toast('먼저 가구를 선택해주세요.'); return; }
+    removeItem(selectedUid);
+  });
+
+  /* ── 장바구니 담기 ──────────────────────────────────── */
+  document.getElementById('pl-cart').addEventListener('click', function () {
+    if (!items.length) { toast('배치된 가구가 없습니다.'); return; }
+
+    const counts = {};
+    items.forEach(function (it) { counts[it.key] = (counts[it.key] || 0) + 1; });
+
+    const cartKey = (window.WishlistCart && window.WishlistCart.CART_KEY) || 'ikea_cart_items';
+    let cartItems = [];
+    try {
+      const raw = localStorage.getItem(cartKey);
+      cartItems = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(cartItems)) cartItems = [];
+    } catch (e) {
+      cartItems = [];
+    }
+
+    Object.keys(counts).forEach(function (key) {
+      const c = catalogOf(key);
+      if (!c) return;
+      const pId = c.name;
+      const existingIdx = cartItems.findIndex(function (item) {
+        return (item.id === pId) || (item.name === pId) || (item.title === pId);
+      });
+
+      if (existingIdx !== -1) {
+        cartItems[existingIdx].qty = (parseInt(cartItems[existingIdx].qty, 10) || 0) + counts[key];
+      } else {
+        cartItems.push({
+          id: c.name,
+          name: c.name,
+          title: c.name,
+          desc: c.cat,
+          price: '₩' + c.price.toLocaleString('ko-KR'),
+          image: c.img,
+          qty: counts[key],
+          href: 'product-detail.html?name=' + encodeURIComponent(c.name)
+        });
+      }
+    });
+
+    try {
+      localStorage.setItem(cartKey, JSON.stringify(cartItems));
+    } catch (e) {}
+
+    if (window.WishlistCart && typeof window.WishlistCart.refreshBadges === 'function') {
+      window.WishlistCart.refreshBadges();
+    }
+    toast('배치한 제품을 장바구니에 담았습니다.');
+  });
+
+  /* ── 리사이즈 ───────────────────────────────────────── */
+  let rzTimer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(rzTimer);
+    rzTimer = setTimeout(renderAll, 150);
+  });
+
+  /* ── 시작 ───────────────────────────────────────────── */
+  renderRoomOptions();
+  renderPalette();
+  renderAll();
+})();
+</script>
 
 <!-- ================= 푸터 ================= -->
 <!-- SEGMENT: Footer -->
