@@ -777,7 +777,15 @@ document.addEventListener('DOMContentLoaded', function () {
       return (
         '<article class="flex gap-4 rounded-lg border border-line-light bg-white p-3">' +
           '<div class="h-16 w-16 shrink-0 overflow-hidden rounded-md border border-line-light bg-shell flex items-center justify-center p-1.5">' +
-            '<img src="' + (item.image || '../assets/images/products/kivik.webp') + '" alt="' + (item.name || '') + '" class="max-h-full w-auto object-contain">' +
+            (function() {
+              var imgPath = item.image || 'assets/images/products/kivik.webp';
+              if (imgPath.startsWith('assets/')) {
+                imgPath = '../' + imgPath;
+              } else if (!imgPath.startsWith('../') && !imgPath.startsWith('http') && !imgPath.startsWith('/')) {
+                imgPath = '../assets/' + imgPath;
+              }
+              return '<img src="' + imgPath + '" alt="' + (item.name || '') + '" class="max-h-full w-auto object-contain">';
+            })() +
           '</div>' +
           '<div class="flex flex-1 items-center justify-between gap-3 min-w-0">' +
             '<div class="min-w-0">' +
