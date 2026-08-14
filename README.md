@@ -1,10 +1,44 @@
 # Team_Synergos_esg
 
-1번: 이희본
-2번: 고윤재
-3번: 이승운
-4번: 이은솔
-5번: 심다은
+## 프로젝트 소개
+ESG(환경·사회·지배구조) 경영으로 잘 알려진 기업인 이케아(IKEA)의 온라인 쇼핑몰을 리디자인하는 팀 프로젝트입니다.
+팀 이름은 시너지오스(Synergos)이고, 저장소 이름도 여기서 따왔습니다.
+피그마(Figma)로 만든 디자인 시안을 바탕으로 실제로 동작하는 웹사이트를 만들었습니다.
 
-https://www.figma.com/design/MRXglfrNf0JxhfhqBmAIdF/%EB%94%94%EC%9E%90%EC%9D%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=1221-14113&t=IehnKxEfXFFJyPVH-4
-https://www.figma.com/design/MRXglfrNf0JxhfhqBmAIdF/%EB%94%94%EC%9E%90%EC%9D%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=1247-15478&t=Esu603bf1NFIJjnB-4
+## 페이지 구성
+- 홈(index.html) — 히어로 배너, 공간별 쇼핑 카테고리, 추천·신제품 슬라이더를 보여주는 메인 화면입니다
+- 상품 — 전체 상품(products.html), 카테고리별 목록(category.html), 상품 상세(product-detail.html), 세일(sale.html), 알뜰코너(low-price.html)
+- 구매·주문 — 장바구니(cart.html), 결제(checkout.html), 주문 내역(orders.html), 주문 상세(order.html), 배송 조회(delivery.html), 후기 작성(review.html), 교환·반품(return.html)
+- 마이페이지 — 계정(account.html), 회원가입(signup.html), 위시리스트(wishlist.html), 카드 등록·관리(card.html, card-register.html)
+- 서비스·상담 — 설치 시공(installation.html), 구매 상담(consulting.html), 홈스타일링(styling.html, self-styling.html), 플래닝(planning.html), 패밀리 혜택(family.html)
+
+## 기술 스택
+- HTML5 정적 페이지로 구성했습니다. 메인 화면은 index.html이고, 나머지 페이지는 common 폴더에 모아뒀습니다
+- Tailwind CSS 4버전을 CDN(외부 서버에 있는 코드를 그대로 불러와 쓰는 방식) 방식으로 불러와 화면 스타일을 입혔습니다
+- Swiper 12버전으로 상품과 배너의 슬라이더를 구현했습니다
+- GSAP으로 카테고리 아이콘 등장 애니메이션과 스크롤 연동 효과를 구현했습니다
+- 별도 프레임워크 없이 순수 자바스크립트로 장바구니, 위시리스트, 모달(화면 위에 뜨는 작은 창) 같은 상호작용을 구현했습니다
+
+## 개발 방식
+바이브 코딩(사람이 인공지능에게 프롬프트로 요청해 코드를 생성하고, 그 결과를 직접 확인하고 고치는 개발 방식)으로 만들었습니다.
+저장소 안에 남아 있는 프롬프트 기록 파일은 없어서, 커밋 메시지를 근거로 작업 흐름을 정리하면 다음과 같습니다.
+- 8월 7일 — 이케아 랜딩 페이지 파일을 받아 프로젝트를 시작하고, 피그마 시안에 맞춰 메인 화면과 디자인 토큰(반복해서 쓰는 색상·간격 값)을 프롬프트로 생성했습니다 (89ec1b8, f8570f1)
+- 8월 10일 — 하드코딩된 값을 디자인 토큰으로 바꾸며 스타일을 정리했습니다 (702bdb4)
+- 8월 11일 — 위시리스트·장바구니 화면을 정비하고 인트로 영상 오버레이를 추가했습니다 (d4eca63, 4d31fbd)
+- 8월 12일 — 헤더 스크롤 고정, 카테고리 등장 애니메이션, 검색창 자동완성 등 상호작용 기능을 넓혔습니다 (a0f28a1, 31c37e5)
+- 8월 13일 — 회원가입, 배송 조회, 주문 상세 등 남은 서브페이지를 채우고 모바일 헤더를 피그마 규격에 맞췄습니다 (4b53e0e, f57c413, c065ad9)
+- 8월 14일 — 사이트 전체의 HTML·자바스크립트 오류를 점검하고 고쳐서 마무리했습니다 (0e95b8b, fad2247)
+
+## 실행·확인 방법
+- 배포 사이트: https://heebon00.github.io/Team_Synergos_esg/
+- 로컬에서 보려면 저장소를 내려받은 뒤 index.html 파일을 브라우저로 바로 열거나, 명령어 `npx serve .`를 실행해 서버로 띄워서 확인합니다
+
+## 팀원
+- 이희본
+- 고윤재
+- 이승운
+- 이은솔
+- 심다은
+
+## 비고
+교육 목적으로 진행한 포트폴리오 프로젝트이며, 실제 이케아 서비스와는 관련이 없습니다.
