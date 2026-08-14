@@ -1737,14 +1737,12 @@ document.addEventListener('click', function(e) {
       bodyEl.innerHTML = data.body;
       overlay.classList.remove('hidden');
       overlay.classList.add('flex');
-      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
       if (!overlay) return;
       overlay.classList.add('hidden');
       overlay.classList.remove('flex');
-      document.body.style.overflow = '';
     }
 
     document.querySelectorAll('.info-modal-link').forEach(function (link) {
