@@ -152,7 +152,7 @@
         <button
           type="button"
           id="ikea-chat-toggle-btn"
-          aria-label="IKEA AI 챗봇 상담 열기"
+          aria-label="AI 상담 챗봇 열기"
           aria-expanded="false"
           class="group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-accent text-ink shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand cursor-pointer"
           style="background-color: var(--color-accent, #FFC900); color: var(--color-ink, #111418); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);"

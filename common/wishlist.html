@@ -107,9 +107,9 @@
     --color-black: #000000;
     --color-ink: #111418;
     --color-ink-2: #3D4450;
-    --color-ink-3: #6B7280;
+    --color-ink-3: #4B5563;
     --color-ink-sub: #3D4450;
-    --color-ink-muted: #6B7280;
+    --color-ink-muted: #4B5563;
     --color-muted: #666666;
     --color-gray-dark: #212121;
     --color-price: #1A1A1A;
@@ -567,7 +567,7 @@
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="low%20price.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="low-price.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/></svg>
             </div>
@@ -966,7 +966,7 @@ document.addEventListener('DOMContentLoaded', function() {
       title: 'POÄNG 포엥 암체어',
       desc: '군세레드 베이지 / 자작나무 베니어',
       price: '129,000',
-      image: '../assets/p-poang.png'
+      image: '../assets/p-poang.webp'
     },
     {
       id: 'STRANDMON 스트란드몬 윙체어',
@@ -974,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function() {
       title: 'STRANDMON 스트란드몬 윙체어',
       desc: '노르드발라 다크그레이',
       price: '299,000',
-      image: '../assets/images/products/strandmon.png'
+      image: '../assets/images/products/strandmon.webp'
     }
   ];
 
@@ -1124,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     grid.innerHTML = items.map((item, index) => {
       const itemId = item.id || item.name || item.title || ('item-' + index);
       const itemTitle = item.title || item.name || 'IKEA 상품';
-      let itemImage = item.image || '../assets/images/products/kivik.png';
+      let itemImage = item.image || '../assets/images/products/kivik.webp';
       
       // common/ 폴더 기준 이미지 상대경로 보정
       if (itemImage.startsWith('assets/')) {

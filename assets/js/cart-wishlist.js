@@ -277,7 +277,7 @@
       title: name || id,
       price: price || '119,000',
       desc: desc || '',
-      image: image || '../assets/images/products/kivik.png',
+      image: image || '../assets/images/products/kivik.webp',
       href: href
     };
   }
@@ -427,7 +427,7 @@
           const dName = detailTitle.textContent.trim();
           const dPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
           const dDesc = detailDesc ? detailDesc.textContent.trim() : '';
-          const dImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
+          const dImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.webp';
           wishProduct = {
             id: dName,
             name: dName,
@@ -488,7 +488,7 @@
           const cdName = detailTitle.textContent.trim();
           const cdPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
           const cdDesc = detailDesc ? detailDesc.textContent.trim() : '';
-          const cdImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.png';
+          const cdImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.webp';
           cartProduct = {
             id: cdName,
             name: cdName,
@@ -533,7 +533,7 @@
           const bdName = buyDetailTitle.textContent.trim();
           const bdPrice = buyDetailPrice ? buyDetailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
           const bdDesc = buyDetailDesc ? buyDetailDesc.textContent.trim() : '';
-          const bdImg = buyDetailImg ? (buyDetailImg.getAttribute('src') || buyDetailImg.src) : '../assets/p-sagmastare-1.png';
+          const bdImg = buyDetailImg ? (buyDetailImg.getAttribute('src') || buyDetailImg.src) : '../assets/p-sagmastare-1.webp';
           buyProduct = {
             id: bdName,
             name: bdName,

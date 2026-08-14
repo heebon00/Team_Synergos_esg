@@ -107,9 +107,9 @@
     --color-black: #000000;
     --color-ink: #111418;
     --color-ink-2: #3D4450;
-    --color-ink-3: #6B7280;
+    --color-ink-3: #4B5563;
     --color-ink-sub: #3D4450;
-    --color-ink-muted: #6B7280;
+    --color-ink-muted: #4B5563;
     --color-muted: #666666;
     --color-gray-dark: #212121;
     --color-price: #1A1A1A;
@@ -735,7 +735,7 @@
               <label class="flex items-center gap-4 cursor-pointer">
                 <input type="checkbox" name="selected_items" value="poang" class="w-5 h-5 text-brand rounded border-line focus:ring-brand accent-brand cursor-pointer item-checkbox" onchange="calculateSummary()">
                 <span class="w-20 h-20 bg-white rounded overflow-hidden shrink-0 border border-line-light p-1 block">
-                  <img src="../assets/p-poang.png" alt="POÄNG 포엥 암체어" class="w-full h-full object-cover">
+                  <img src="../assets/p-poang.webp" alt="POÄNG 포엥 암체어" class="w-full h-full object-cover">
                 </span>
                 <span class="block">
                   <strong class="text-sm font-bold text-ink block">POÄNG 포엥 암체어</strong>
@@ -745,7 +745,7 @@
               </label>
               <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-line-light pt-3 sm:pt-0" onclick="event.stopPropagation()">
                 <span class="text-xs text-ink-2">신청 수량:</span>
-                <select id="poangQty" class="border border-line rounded px-3 py-1.5 text-xs bg-white focus:outline-none focus:border-brand" onchange="calculateSummary()">
+                <select id="poangQty" aria-label="신청 수량" class="border border-line rounded px-3 py-1.5 text-xs bg-white focus:outline-none focus:border-brand" onchange="calculateSummary()">
                   <option value="1">1개</option>
                   <option value="2" selected>2개 (전체)</option>
                 </select>

@@ -107,9 +107,9 @@
     --color-black: #000000;
     --color-ink: #111418;
     --color-ink-2: #3D4450;
-    --color-ink-3: #6B7280;
+    --color-ink-3: #4B5563;
     --color-ink-sub: #3D4450;
-    --color-ink-muted: #6B7280;
+    --color-ink-muted: #4B5563;
     --color-muted: #666666;
     --color-gray-dark: #212121;
     --color-price: #1A1A1A;
@@ -570,7 +570,7 @@
       <div class="flex items-stretch gap-6">
         <!-- Column 1 -->
         <div class="flex-1 flex flex-col gap-1">
-          <a href="low%20price.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
+          <a href="low-price.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors hover:bg-crust text-ink-sub hover:text-brand group">
             <div class="w-8 h-8 rounded-lg bg-crust group-hover:bg-brand/10 flex items-center justify-center shrink-0 transition-colors">
               <svg class="w-4 h-4 text-ink-sub group-hover:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/></svg>
             </div>
@@ -864,7 +864,7 @@
       <!-- Category 1: 주방 공간 -->
       <article class="flex items-center gap-6 bg-white border border-line rounded-lg p-6 shadow-xs hover:shadow-card transition-all">
         <div class="w-[140px] h-[100px] rounded-sm overflow-hidden shrink-0 bg-crust">
-          <img src="../assets/cat-kitchen.png" alt="주방 공간" class="w-full h-full object-cover" loading="lazy">
+          <img src="../assets/cat-kitchen.webp" alt="주방 공간" class="w-full h-full object-cover" loading="lazy">
         </div>
         <div class="flex-1 flex flex-col gap-2 min-w-0">
           <h3 class="text-lg font-bold text-ink">주방 공간</h3>
@@ -875,7 +875,7 @@
       <!-- Category 2: 욕실 공간 -->
       <article class="flex items-center gap-6 bg-white border border-line rounded-lg p-6 shadow-xs hover:shadow-card transition-all">
         <div class="w-[140px] h-[100px] rounded-sm overflow-hidden shrink-0 bg-crust">
-          <img src="../assets/cat-bath.png" alt="욕실 공간" class="w-full h-full object-cover" loading="lazy">
+          <img src="../assets/cat-bath.webp" alt="욕실 공간" class="w-full h-full object-cover" loading="lazy">
         </div>
         <div class="flex-1 flex flex-col gap-2 min-w-0">
           <h3 class="text-lg font-bold text-ink">욕실 공간</h3>
@@ -886,7 +886,7 @@
       <!-- Category 3: 사무실 & 홈오피스 -->
       <article class="flex items-center gap-6 bg-white border border-line rounded-lg p-6 shadow-xs hover:shadow-card transition-all">
         <div class="w-[140px] h-[100px] rounded-sm overflow-hidden shrink-0 bg-crust">
-          <img src="../assets/cat-office.png" alt="사무실 & 홈오피스" class="w-full h-full object-cover" loading="lazy">
+          <img src="../assets/cat-office.webp" alt="사무실 & 홈오피스" class="w-full h-full object-cover" loading="lazy">
         </div>
         <div class="flex-1 flex flex-col gap-2 min-w-0">
           <h3 class="text-lg font-bold text-ink">사무실 &amp; 홈오피스</h3>
@@ -1015,7 +1015,7 @@
   <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl transform scale-95 transition-transform duration-300" id="bookingModalBox">
     <div class="flex items-center justify-between border-b border-line pb-4">
       <h3 class="text-lg font-bold text-ink" id="modalTitle">이케아 구매 상담 예약 신청</h3>
-      <button type="button" onclick="closeBookingModal()" class="text-muted hover:text-ink p-1">
+      <button type="button" onclick="closeBookingModal()" aria-label="닫기" class="text-muted hover:text-ink p-1">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     </div>
@@ -1030,8 +1030,8 @@
         <input type="tel" required placeholder="010-0000-0000" class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none">
       </div>
       <div>
-        <label class="block text-xs font-bold text-ink mb-1">희망 상담 매장 / 플랫폼</label>
-        <select class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none bg-white">
+        <label for="bookingVenue" class="block text-xs font-bold text-ink mb-1">희망 상담 매장 / 플랫폼</label>
+        <select id="bookingVenue" class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none bg-white">
           <option>온라인 화상회의 (비대면)</option>
           <option>IKEA 강동점</option>
           <option>IKEA 광명점</option>
