@@ -9,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 </script>
 
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
@@ -685,7 +685,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -1319,7 +1319,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Order Data
-  var orderData = {
+  const orderData = {
     'order1': {
       orderNo: 'IKEA-9403841',
       orderDate: '2026.06.18 14:32',
@@ -1352,8 +1352,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Modal Functions
   window.openOrderDetailModal = function(orderId) {
-    var data = orderData[orderId || 'order1'];
-    var totalPrice = (data.unitPrice * data.quantity) + data.shippingFee;
+    const data = orderData[orderId || 'order1'];
+    const totalPrice = (data.unitPrice * data.quantity) + data.shippingFee;
 
     // Update modal content
     document.querySelector('#order-detail-modal .bg-bg-light img').src = data.productImage;
@@ -1363,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', function() {
       '<div><p class="text-xs text-ink-muted mb-1">배송상태</p><p class="text-sm font-bold ' + data.statusColor + '">' + data.status + '</p></div>' +
       '<div><p class="text-xs text-ink-muted mb-1">배송예정일</p><p class="text-sm font-bold text-ink">' + data.deliveryDate + '</p></div>';
 
-    var productHTML = '<div class="flex gap-4"><div class="w-24 h-24 bg-bg-light rounded overflow-hidden shrink-0 border border-line-light">' +
+    const productHTML = '<div class="flex gap-4"><div class="w-24 h-24 bg-bg-light rounded overflow-hidden shrink-0 border border-line-light">' +
       '<img src="' + data.productImage + '" alt="' + data.productName + '" class="w-full h-full object-cover"></div>' +
       '<div class="flex flex-col flex-1 justify-center"><h4 class="text-sm font-bold text-ink">' + data.productName + '</h4>' +
       '<p class="text-xs text-ink-muted mt-1">' + data.productSpec + '</p>' +
@@ -1372,7 +1372,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll('#order-detail-modal .border.border-line-light.rounded-lg.p-4')[0].innerHTML = productHTML;
 
-    var paymentHTML = '<div class="flex justify-between text-sm"><span class="text-ink-muted">상품금액</span>' +
+    const paymentHTML = '<div class="flex justify-between text-sm"><span class="text-ink-muted">상품금액</span>' +
       '<span class="font-bold text-ink">₩ ' + (data.unitPrice * data.quantity).toLocaleString() + '</span></div>' +
       '<div class="flex justify-between text-sm"><span class="text-ink-muted">배송비</span>' +
       '<span class="font-bold text-ink">₩ ' + data.shippingFee.toLocaleString() + '</span></div>' +
@@ -1381,14 +1381,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll('#order-detail-modal .bg-bg-light.p-4.rounded-lg')[0].innerHTML = paymentHTML;
 
-    var addressHTML = '<p class="text-xs text-ink-muted mb-1">받는 사람: 홍길동</p>' +
+    const addressHTML = '<p class="text-xs text-ink-muted mb-1">받는 사람: 홍길동</p>' +
       '<p class="text-sm text-ink">' + data.address + '</p>' +
       '<p class="text-xs text-ink-muted mt-2">연락처: 010-1234-5678</p>';
 
     document.querySelectorAll('#order-detail-modal .bg-bg-light.p-4.rounded-lg')[1].innerHTML = addressHTML;
 
-    var modal = document.getElementById('order-detail-modal');
-    var card = document.getElementById('order-detail-card');
+    const modal = document.getElementById('order-detail-modal');
+    const card = document.getElementById('order-detail-card');
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     setTimeout(function() {
@@ -1398,8 +1398,8 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   window.closeOrderDetailModal = function() {
-    var modal = document.getElementById('order-detail-modal');
-    var card = document.getElementById('order-detail-card');
+    const modal = document.getElementById('order-detail-modal');
+    const card = document.getElementById('order-detail-card');
     card.classList.remove('scale-100', 'opacity-100');
     card.classList.add('scale-95', 'opacity-0');
     setTimeout(function() {
@@ -1409,8 +1409,8 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   window.openShippingTrackingModal = function() {
-    var modal = document.getElementById('shipping-tracking-modal');
-    var card = document.getElementById('shipping-tracking-card');
+    const modal = document.getElementById('shipping-tracking-modal');
+    const card = document.getElementById('shipping-tracking-card');
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     setTimeout(function() {
@@ -1420,8 +1420,8 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   window.closeShippingTrackingModal = function() {
-    var modal = document.getElementById('shipping-tracking-modal');
-    var card = document.getElementById('shipping-tracking-card');
+    const modal = document.getElementById('shipping-tracking-modal');
+    const card = document.getElementById('shipping-tracking-card');
     card.classList.remove('scale-100', 'opacity-100');
     card.classList.add('scale-95', 'opacity-0');
     setTimeout(function() {
@@ -1484,13 +1484,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

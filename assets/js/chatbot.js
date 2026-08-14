@@ -8,12 +8,11 @@
   window.__IKEA_CHATBOT_INITIALIZED__ = true;
 
   // 현재 위치가 /common/ 하위인지 확인
-  var isCommon = window.location.pathname.indexOf('/common/') !== -1;
-  var rootPath = isCommon ? '../' : './';
-  var commonPath = isCommon ? '' : 'common/';
+  const isCommon = window.location.pathname.indexOf('/common/') !== -1;
+  const commonPath = isCommon ? '' : 'common/';
 
   // 챗봇 응답 지식 베이스 (IKEA 서비스 & 쇼핑 가이드)
-  var KNOWLEDGE_BASE = [
+  const KNOWLEDGE_BASE = [
     {
       keywords: ['배송', '택배', '배송비', '배송조회', '운임', '도착', '배송료'],
       title: '📦 배송 서비스 안내',
@@ -114,7 +113,7 @@
   ];
 
   // 빠른 질문 칩
-  var QUICK_CHIPS = [
+  const QUICK_CHIPS = [
     { label: '📦 배송비 조회', query: '배송비와 배송 규정 알려줘' },
     { label: '🔧 조립비 안내', query: '조립 및 설치 서비스 비용이 얼마인가요?' },
     { label: '🛋️ 가구 맞춤 플래닝', query: '인테리어 맞춤 스타일링 플래닝' },
@@ -129,12 +128,12 @@
     // 이미 존재하는지 재확인
     if (document.getElementById('ikea-chatbot-container')) return;
 
-    var container = document.createElement('div');
+    const container = document.createElement('div');
     container.id = 'ikea-chatbot-container';
     container.className = 'ikea-chatbot-root';
 
-    var isTooltipDismissed = sessionStorage.getItem('ikea_chatbot_tooltip_dismissed') === 'true';
-    var tooltipHtml = isTooltipDismissed ? '' : `
+    const isTooltipDismissed = sessionStorage.getItem('ikea_chatbot_tooltip_dismissed') === 'true';
+    const tooltipHtml = isTooltipDismissed ? '' : `
         <!-- 말풍선 안내 툴팁 (첫 방문 시 주목도 UP) -->
         <div id="ikea-chat-tooltip" class="hidden sm:flex items-center gap-2 bg-ink text-white text-xs font-semibold px-3.5 py-2 rounded-full shadow-lg border border-white/20 animate-bounce cursor-pointer hover:bg-brand transition-colors duration-200">
           <span class="inline-block w-2 h-2 rounded-full bg-accent animate-ping"></span>
@@ -310,16 +309,16 @@
 
   // 이벤트 핸들링
   function setupChatbotEvents() {
-    var toggleBtn = document.getElementById('ikea-chat-toggle-btn');
-    var closeBtn = document.getElementById('ikea-chat-close-btn');
-    var resetBtn = document.getElementById('ikea-chat-reset-btn');
-    var chatWindow = document.getElementById('ikea-chat-window');
-    var openIcon = document.getElementById('ikea-chat-icon-open');
-    var closeIcon = document.getElementById('ikea-chat-icon-close');
-    var form = document.getElementById('ikea-chat-form');
-    var input = document.getElementById('ikea-chat-input');
-    var tooltip = document.getElementById('ikea-chat-tooltip');
-    var tooltipClose = document.getElementById('ikea-tooltip-close');
+    const toggleBtn = document.getElementById('ikea-chat-toggle-btn');
+    const closeBtn = document.getElementById('ikea-chat-close-btn');
+    const resetBtn = document.getElementById('ikea-chat-reset-btn');
+    const chatWindow = document.getElementById('ikea-chat-window');
+    const openIcon = document.getElementById('ikea-chat-icon-open');
+    const closeIcon = document.getElementById('ikea-chat-icon-close');
+    const form = document.getElementById('ikea-chat-form');
+    const input = document.getElementById('ikea-chat-input');
+    const tooltip = document.getElementById('ikea-chat-tooltip');
+    const tooltipClose = document.getElementById('ikea-tooltip-close');
 
     // 툴팁 닫기
     if (tooltipClose && tooltip) {
@@ -338,7 +337,7 @@
     }
 
     function toggleChat() {
-      var isHidden = chatWindow.classList.contains('hidden');
+      const isHidden = chatWindow.classList.contains('hidden');
       if (isHidden) {
         openChat();
       } else {
@@ -382,7 +381,7 @@
     // 대화 초기화
     if (resetBtn) {
       resetBtn.addEventListener('click', function () {
-        var messagesDiv = document.getElementById('ikea-chat-messages');
+        const messagesDiv = document.getElementById('ikea-chat-messages');
         if (!messagesDiv) return;
         messagesDiv.innerHTML = `
           <div class="flex items-start gap-2.5 max-w-[92%]">
@@ -411,7 +410,7 @@
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var text = input.value.trim();
+        const text = input.value.trim();
         if (!text) return;
         input.value = '';
         sendMessage(text);
@@ -420,10 +419,10 @@
 
     // 추천 질문 칩 클릭 이벤트 바인딩
     function bindQuickChips() {
-      var chips = document.querySelectorAll('.ikea-quick-btn');
+      const chips = document.querySelectorAll('.ikea-quick-btn');
       chips.forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var q = btn.getAttribute('data-query');
+          const q = btn.getAttribute('data-query');
           if (q) sendMessage(q);
         });
       });
@@ -440,12 +439,12 @@
 
     // 페이지 내 챗봇 상담 열기 버튼 자동 연동 (data-open-chatbot 또는 챗봇 문구가 들어간 버튼)
     document.addEventListener('click', function (e) {
-      var target = e.target.closest('button, a');
+      const target = e.target.closest('button, a');
       if (!target) return;
 
-      var hasAttr = target.hasAttribute('data-open-chatbot');
-      var btnText = (target.textContent || '').trim();
-      var isChatbotBtn = btnText.indexOf('챗봇') !== -1 || btnText.indexOf('실시간 상담') !== -1 || btnText.indexOf('온라인 채팅') !== -1;
+      const hasAttr = target.hasAttribute('data-open-chatbot');
+      const btnText = (target.textContent || '').trim();
+      const isChatbotBtn = btnText.indexOf('챗봇') !== -1 || btnText.indexOf('실시간 상담') !== -1 || btnText.indexOf('온라인 채팅') !== -1;
 
       // 자체 토글 버튼이 아닌 경우에만 챗봇 창 열기
       if ((hasAttr || isChatbotBtn) && target.id !== 'ikea-chat-toggle-btn' && target.id !== 'ikea-chat-close-btn') {
@@ -457,12 +456,12 @@
 
   // 메시지 전송 및 AI 응답 생성
   function sendMessage(userText) {
-    var messagesDiv = document.getElementById('ikea-chat-messages');
-    var typingDiv = document.getElementById('ikea-chat-typing');
+    const messagesDiv = document.getElementById('ikea-chat-messages');
+    const typingDiv = document.getElementById('ikea-chat-typing');
     if (!messagesDiv) return;
 
     // 1. 사용자 메시지 말풍선 추가
-    var userBubble = document.createElement('div');
+    const userBubble = document.createElement('div');
     userBubble.className = 'flex justify-end';
     userBubble.innerHTML = `
       <div class="bg-brand text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] text-sm leading-relaxed shadow-sm break-words" style="background-color: var(--color-brand, #0051BA);">
@@ -478,9 +477,9 @@
     // 3. AI 응답 생성 (자연스러운 딜레이 후 노출)
     setTimeout(function () {
       if (typingDiv) typingDiv.classList.add('hidden');
-      var botResponse = generateBotResponse(userText);
+      const botResponse = generateBotResponse(userText);
 
-      var botBubble = document.createElement('div');
+      const botBubble = document.createElement('div');
       botBubble.className = 'flex items-start gap-2.5 max-w-[92%]';
       botBubble.innerHTML = `
         <div class="w-8 h-8 rounded-full bg-accent text-ink flex-shrink-0 flex items-center justify-center font-bold text-xs shadow-xs" style="background-color: var(--color-accent, #FFC900);">
@@ -505,12 +504,12 @@
 
   // 지식 베이스 검색 및 똑똑한 응답 반환
   function generateBotResponse(query) {
-    var lower = query.toLowerCase();
+    const lower = query.toLowerCase();
 
     // 1. 키워드 매칭
-    for (var i = 0; i < KNOWLEDGE_BASE.length; i++) {
-      var item = KNOWLEDGE_BASE[i];
-      for (var k = 0; k < item.keywords.length; k++) {
+    for (let i = 0; i < KNOWLEDGE_BASE.length; i++) {
+      const item = KNOWLEDGE_BASE[i];
+      for (let k = 0; k < item.keywords.length; k++) {
         if (lower.indexOf(item.keywords[k]) !== -1) {
           return {
             title: item.title,
@@ -524,11 +523,11 @@
 
     // 2. 장바구니/위시리스트 동적 연동 (로컬 스토리지 데이터 확인)
     if (lower.indexOf('장바구니') !== -1 || lower.indexOf('카트') !== -1) {
-      var cartItems = [];
+      let cartItems = [];
       try {
         cartItems = JSON.parse(localStorage.getItem('ikea_cart_items') || '[]');
-      } catch (e) {}
-      var count = cartItems.length;
+      } catch { /* localStorage 접근 실패 시 빈 배열 유지 */ }
+      const count = cartItems.length;
       return {
         title: '🛒 장바구니 현황',
         html: '현재 장바구니에 <strong>' + count + '개</strong>의 상품이 담겨 있습니다.<br>언제든 결제 페이지로 이동해 주문을 완료하실 수 있습니다.',

@@ -9,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 </script>
 
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
@@ -685,7 +685,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -1148,14 +1148,14 @@
 
 <script>
 (function () {
-  var fieldConfigs = {
+  const fieldConfigs = {
     profile: {
       title: '개인 정보 수정',
       fields: [
         { key: 'name', label: '이름', type: 'text', target: 'pf-name' },
         { key: 'birth', label: '생년월일', type: 'date', target: 'pf-birth', defaultValue: '1992-11-18',
           format: function (v) {
-            var d = new Date(v);
+            const d = new Date(v);
             return d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일';
           } },
         { key: 'gender', label: '성별', type: 'select', options: ['선택 안함', '남성', '여성', '기타'], target: 'pf-gender' }
@@ -1204,30 +1204,30 @@
     }
   };
 
-  var modal = document.getElementById('account-edit-modal');
-  var card = document.getElementById('account-edit-card');
-  var form = document.getElementById('account-edit-form');
-  var fieldsWrap = document.getElementById('account-edit-fields');
-  var errorMsg = document.getElementById('account-edit-error');
-  var titleEl = document.getElementById('account-edit-title');
-  var activeKey = null;
+  const modal = document.getElementById('account-edit-modal');
+  const card = document.getElementById('account-edit-card');
+  const form = document.getElementById('account-edit-form');
+  const fieldsWrap = document.getElementById('account-edit-fields');
+  const errorMsg = document.getElementById('account-edit-error');
+  const titleEl = document.getElementById('account-edit-title');
+  let activeKey = null;
 
   function fieldInputHtml(field, index) {
-    var id = 'edit-field-' + index;
-    var current = field.target ? document.getElementById(field.target) : null;
-    var currentText = current ? current.textContent.trim() : '';
-    var html = '<div class="flex flex-col gap-1.5">' +
+    const id = 'edit-field-' + index;
+    const current = field.target ? document.getElementById(field.target) : null;
+    const currentText = current ? current.textContent.trim() : '';
+    let html = '<div class="flex flex-col gap-1.5">' +
       '<label for="' + id + '" class="text-xs font-bold text-ink-2">' + field.label + '</label>';
 
     if (field.type === 'select') {
       html += '<select id="' + id + '" class="h-10 rounded-lg border border-line-2 bg-white px-3 text-sm text-ink focus:border-brand focus:outline-none">';
       field.options.forEach(function (opt) {
-        var selected = opt === currentText ? ' selected' : '';
+        const selected = opt === currentText ? ' selected' : '';
         html += '<option' + selected + '>' + opt + '</option>';
       });
       html += '</select>';
     } else {
-      var value = field.type === 'date' ? (field.defaultValue || '') : currentText;
+      const value = field.type === 'date' ? (field.defaultValue || '') : currentText;
       html += '<input id="' + id + '" type="' + field.type + '" value="' + value.replace(/"/g, '&quot;') + '"' +
         (field.type === 'password' ? ' autocomplete="new-password"' : '') +
         ' class="h-10 rounded-lg border border-line-2 bg-white px-3 text-sm text-ink focus:border-brand focus:outline-none">';
@@ -1237,7 +1237,7 @@
   }
 
   function openEditModal(key) {
-    var config = fieldConfigs[key];
+    const config = fieldConfigs[key];
     if (!config) return;
     activeKey = key;
     titleEl.textContent = config.title;
@@ -1284,20 +1284,20 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var config = fieldConfigs[activeKey];
+    const config = fieldConfigs[activeKey];
     if (!config) return;
 
     if (activeKey === 'password') {
-      var current = document.getElementById('edit-field-0').value;
-      var next = document.getElementById('edit-field-1').value;
-      var confirm = document.getElementById('edit-field-2').value;
+      const current = document.getElementById('edit-field-0').value;
+      const next = document.getElementById('edit-field-1').value;
+      const confirm = document.getElementById('edit-field-2').value;
       if (!current || next.length < 8 || next !== confirm) {
         errorMsg.textContent = '현재 비밀번호를 입력하고, 새 비밀번호(8자 이상)를 동일하게 두 번 입력해 주세요.';
         errorMsg.classList.remove('hidden');
         return;
       }
-      var dateEl = document.getElementById('pf-password-date');
-      var today = new Date();
+      const dateEl = document.getElementById('pf-password-date');
+      const today = new Date();
       dateEl.textContent = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 (방금 변경)';
       flash(dateEl);
       closeEditModal();
@@ -1305,10 +1305,10 @@
     }
 
     config.fields.forEach(function (field, index) {
-      var input = document.getElementById('edit-field-' + index);
-      var value = input.value.trim();
+      const input = document.getElementById('edit-field-' + index);
+      const value = input.value.trim();
       if (!value) return;
-      var target = document.getElementById(field.target);
+      const target = document.getElementById(field.target);
       if (!target) return;
       target.textContent = field.format ? field.format(value) : value;
       flash(target);
@@ -1317,12 +1317,12 @@
     closeEditModal();
   });
 
-  var twoFaBtn = document.getElementById('btn-2fa-toggle');
-  var twoFaStatus = document.getElementById('pf-2fa-status');
+  const twoFaBtn = document.getElementById('btn-2fa-toggle');
+  const twoFaStatus = document.getElementById('pf-2fa-status');
   if (twoFaBtn && twoFaStatus) {
     twoFaBtn.addEventListener('click', function () {
-      var active = twoFaBtn.getAttribute('data-active') === 'true';
-      var next = !active;
+      const active = twoFaBtn.getAttribute('data-active') === 'true';
+      const next = !active;
       twoFaBtn.setAttribute('data-active', String(next));
       twoFaBtn.textContent = next ? '비활성화' : '활성화';
       twoFaStatus.textContent = next
@@ -1496,13 +1496,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

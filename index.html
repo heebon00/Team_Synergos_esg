@@ -916,7 +916,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="common/low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="common/low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -1980,20 +1980,20 @@
         // 좌우 반투명 화살표가 스크롤 가능 여부에 따라 나타난다.
         // 각 줄(.cat-rail)은 서로 독립적으로 스크롤된다.
         document.querySelectorAll(".cat-rail").forEach(function (railEl) {
-          var scrollEl = railEl.querySelector(".cat-scroll");
+          const scrollEl = railEl.querySelector(".cat-scroll");
           if (!scrollEl) return;
 
           // ── 카테고리 간격(column-gap)을 화면 폭에 맞춰 가변 계산 ──
           // products.html 의 syncCatGridGap() 과 완전히 같은 공식(컨테이너 실제 폭 기반, 14~36px).
           // .cat-scroll 의 좌우 padding(40px)이 첫/마지막 아이콘 위치를 고정하므로
           // 여기서는 아이템 사이 간격만 바꾸고 위치 앵커는 건드리지 않는다.
-          var gridEl = railEl.querySelector(".cat-grid-1row");
+          const gridEl = railEl.querySelector(".cat-grid-1row");
           if (gridEl) {
-            var GAP_MIN = 14;
-            var GAP_MAX = 36;
-            var syncCatGridGap = function () {
-              var usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
-              var gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
+            const GAP_MIN = 14;
+            const GAP_MAX = 36;
+            const syncCatGridGap = function () {
+              const usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
+              const gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
               gridEl.style.columnGap = gap + "px";
             };
             syncCatGridGap();
@@ -2001,27 +2001,27 @@
           }
 
           // ── 좌우 반투명 화살표: 스크롤 가능 여부에 따라 표시/숨김 ──
-          var prevBtn = railEl.querySelector(".cat-nav-prev");
-          var nextBtn = railEl.querySelector(".cat-nav-next");
-          var EDGE = 2; // 경계 판정 여유(px)
+          const prevBtn = railEl.querySelector(".cat-nav-prev");
+          const nextBtn = railEl.querySelector(".cat-nav-next");
+          const EDGE = 2; // 경계 판정 여유(px)
           // 몇 px 차이로 간신히 넘칠 때는 눌러도 움직일 게 없으므로 화살표를 띄우지 않는다.
-          var MIN_OVERFLOW = 12;
+          const MIN_OVERFLOW = 12;
 
           function updateNav() {
             if (!prevBtn || !nextBtn) return;
-            var scrollW = scrollEl.scrollWidth;
-            var clientW = scrollEl.clientWidth;
+            const scrollW = scrollEl.scrollWidth;
+            const clientW = scrollEl.clientWidth;
             if (scrollW - clientW <= MIN_OVERFLOW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
             prevBtn.hidden = false;
             nextBtn.hidden = false;
-            var maxScroll = scrollW - clientW;
+            const maxScroll = scrollW - clientW;
             prevBtn.classList.toggle("is-off", scrollEl.scrollLeft <= EDGE);
             nextBtn.classList.toggle("is-off", scrollEl.scrollLeft >= maxScroll - EDGE);
           }
 
           function scrollByPage(dir) {
-            var step = Math.round(scrollEl.clientWidth * 0.9) * dir;
-            var calm = document.documentElement.classList.contains("no-motion");
+            const step = Math.round(scrollEl.clientWidth * 0.9) * dir;
+            const calm = document.documentElement.classList.contains("no-motion");
             scrollEl.scrollBy({ left: step, behavior: calm ? "auto" : "smooth" });
           }
 
@@ -2033,8 +2033,8 @@
           updateNav();
 
           // ── 마우스 드래그 스크롤 (products.html 과 동일한 감속) ──
-          var isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
-          var velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
+          let isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
+          let velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
           scrollEl.style.cursor = "grab";
 
           scrollEl.addEventListener("mousedown", function (e) {
@@ -2055,11 +2055,11 @@
 
           document.addEventListener("mousemove", function (e) {
             if (!isMouseDown) return;
-            var dx = e.pageX - startMouseX;
+            const dx = e.pageX - startMouseX;
             if (Math.abs(dx) > 4) mouseDragged = true;
             // 속도 추적 (px/ms → px/frame 환산, 60fps 기준)
-            var now = Date.now();
-            var dt = now - lastMoveTime;
+            const now = Date.now();
+            const dt = now - lastMoveTime;
             if (dt > 0) velocity = ((lastMoveX - e.pageX) / dt) * 16;
             lastMoveX = e.pageX;
             lastMoveTime = now;
@@ -2079,9 +2079,9 @@
             if (document.documentElement.classList.contains("no-motion")) { velocity = 0; updateNav(); return; }
 
             // ease-out 감속 (마찰 0.92/frame, 최대 420ms)
-            var friction = 0.92;
-            var maxFrames = Math.round(420 / 16); // ~26프레임
-            var frame = 0;
+            const friction = 0.92;
+            const maxFrames = Math.round(420 / 16); // ~26프레임
+            let frame = 0;
 
             function decelerate() {
               if (frame >= maxFrames || Math.abs(velocity) < 0.3) {
@@ -2090,7 +2090,7 @@
                 return;
               }
               velocity *= friction;
-              var next = scrollEl.scrollLeft + velocity;
+              let next = scrollEl.scrollLeft + velocity;
               // 경계 클램프
               next = Math.max(0, Math.min(next, scrollEl.scrollWidth - scrollEl.clientWidth));
               scrollEl.scrollLeft = next;
@@ -2111,7 +2111,7 @@
           }, true);
 
           // ── 터치 tap vs drag 구분 ──
-          var startTX = 0, startTY = 0, touchDragged = false;
+          let startTX = 0, startTY = 0, touchDragged = false;
           scrollEl.addEventListener("touchstart", function (e) {
             startTX = e.touches[0].clientX;
             startTY = e.touches[0].clientY;
@@ -2137,8 +2137,8 @@
         (function () {
           // .cat-preanim 은 첫 페인트부터 아이콘을 숨겨두는 임계 CSS 클래스다.
           // 어느 경로로 빠지든 반드시 떼서 아이콘이 계속 숨은 채 남지 않게 한다.
-          var unhide = function () { rootEl.classList.remove("cat-preanim"); };
-          var cats = document.querySelectorAll(".cat-rail .cat");
+          const unhide = function () { rootEl.classList.remove("cat-preanim"); };
+          const cats = document.querySelectorAll(".cat-rail .cat");
           if (!cats.length) { unhide(); return; }
           if (typeof gsap === "undefined" || rootEl.classList.contains("no-motion")) { unhide(); return; }
           document.querySelectorAll(".cat-rail").forEach(function (railEl) {
@@ -2568,13 +2568,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

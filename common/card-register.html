@@ -9,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 </script>
 
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
@@ -635,7 +635,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -771,9 +771,9 @@
               <div class="border-b border-line-light pb-3">
                 <label class="flex items-center gap-3 cursor-pointer">
                   <input type="checkbox" id="agreeTerms" class="w-4 h-4 text-brand rounded border-line focus:ring-brand accent-brand cursor-pointer" onchange="toggleAllTerms(this.checked)">
-                  <div>
+                  <span class="block">
                     <strong class="font-bold text-sm text-ink block">현물 결제 카드 등록 및 이용약관 전체 동의 <span class="text-sale">*</span></strong>
-                  </div>
+                  </span>
                 </label>
               </div>
 
@@ -1272,7 +1272,7 @@ function formatCardExpiry(input) {
 
   // 월(MM) 유효성 검사 (01~12)
   if (val.length >= 2) {
-    let month = parseInt(val.substring(0, 2), 10);
+    const month = parseInt(val.substring(0, 2), 10);
     if (month > 12) val = '12' + val.substring(2);
     if (month === 0) val = '01' + val.substring(2);
   }
@@ -1396,13 +1396,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

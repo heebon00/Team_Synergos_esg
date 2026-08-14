@@ -9,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 </script>
 
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
@@ -688,7 +688,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -971,7 +971,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- Dynamic Cart Render Logic ---
   // 상품 카드의 "장바구니 담기" 버튼과 동일한 저장소(ikea_cart_items)를 공유한다 (assets/js/cart-wishlist.js 참고)
-  var CART_KEY = (window.WishlistCart && window.WishlistCart.CART_KEY) || 'ikea_cart_items';
+  const CART_KEY = (window.WishlistCart && window.WishlistCart.CART_KEY) || 'ikea_cart_items';
 
   function getShippingFee(item) {
     if (window.WishlistCart && window.WishlistCart.getShippingFee) {
@@ -981,11 +981,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function getCartItems() {
-    var items = [];
+    let items = [];
     try {
-      var raw = localStorage.getItem(CART_KEY);
+      const raw = localStorage.getItem(CART_KEY);
       items = raw ? JSON.parse(raw) : [];
-    } catch (e) {
+    } catch {
       items = [];
     }
     if (!Array.isArray(items)) items = [];
@@ -997,14 +997,14 @@ document.addEventListener('DOMContentLoaded', function() {
   function saveCartItems(items) {
     try {
       localStorage.setItem(CART_KEY, JSON.stringify(items));
-    } catch (e) {}
+    } catch { /* localStorage 저장 실패(용량 초과/프라이빗 모드 등) 무시 */ }
     if (window.WishlistCart && window.WishlistCart.refreshBadges) {
       window.WishlistCart.refreshBadges();
     }
   }
 
   function parsePrice(priceText) {
-    var digits = String(priceText || '0').replace(/[^0-9]/g, '');
+    const digits = String(priceText || '0').replace(/[^0-9]/g, '');
     return digits ? parseInt(digits, 10) : 0;
   }
 
@@ -1013,16 +1013,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderCart() {
-    var listEl = document.getElementById('cart-list');
-    var emptyEl = document.getElementById('cart-empty');
-    var summaryEl = document.getElementById('cart-summary');
-    var checkoutBtn = document.getElementById('checkout-btn');
-    var clearBtn = document.getElementById('cart-clear-btn');
-    var countLabel = document.getElementById('cart-count-label');
+    const listEl = document.getElementById('cart-list');
+    const emptyEl = document.getElementById('cart-empty');
+    const summaryEl = document.getElementById('cart-summary');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const clearBtn = document.getElementById('cart-clear-btn');
+    const countLabel = document.getElementById('cart-count-label');
     if (!listEl || !emptyEl || !summaryEl) return;
 
-    var items = getCartItems();
-    var isEmpty = items.length === 0;
+    const items = getCartItems();
+    const isEmpty = items.length === 0;
 
     if (countLabel) countLabel.textContent = items.length > 0 ? '(' + items.length + ')' : '';
     if (clearBtn) clearBtn.classList.toggle('hidden', isEmpty);
@@ -1042,9 +1042,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     listEl.innerHTML = items.map(function (item, index) {
-      var unitPrice = parsePrice(item.price);
-      var lineTotal = unitPrice * item.qty;
-      var itemShipping = getShippingFee(item);
+      const unitPrice = parsePrice(item.price);
+      const lineTotal = unitPrice * item.qty;
+      const itemShipping = getShippingFee(item);
       return (
         '<article class="cart-row flex gap-4 rounded-card border border-line-light bg-white p-4 sm:p-5 shadow-sm">' +
           '<div class="h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-md border border-line-light bg-shell flex items-center justify-center p-2">' +
@@ -1074,18 +1074,18 @@ document.addEventListener('DOMContentLoaded', function() {
       );
     }).join('');
 
-    var subtotal = items.reduce(function (sum, item) {
+    const subtotal = items.reduce(function (sum, item) {
       return sum + parsePrice(item.price) * item.qty;
     }, 0);
-    var shipping = items.reduce(function (sum, item) {
+    const shipping = items.reduce(function (sum, item) {
       return sum + getShippingFee(item);
     }, 0);
-    var total = subtotal + shipping;
+    const total = subtotal + shipping;
 
-    var subtotalEl = document.getElementById('summary-subtotal');
-    var shippingEl = document.getElementById('summary-shipping');
-    var noteEl = document.getElementById('summary-shipping-note');
-    var totalEl = document.getElementById('summary-total');
+    const subtotalEl = document.getElementById('summary-subtotal');
+    const shippingEl = document.getElementById('summary-shipping');
+    const noteEl = document.getElementById('summary-shipping-note');
+    const totalEl = document.getElementById('summary-total');
     if (subtotalEl) subtotalEl.textContent = formatWon(subtotal);
     if (shippingEl) shippingEl.textContent = shipping === 0 ? '무료' : formatWon(shipping);
     if (totalEl) totalEl.textContent = formatWon(total);
@@ -1095,8 +1095,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     listEl.querySelectorAll('.cart-remove-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var idx = parseInt(this.getAttribute('data-index'), 10);
-        var list = getCartItems();
+        const idx = parseInt(this.getAttribute('data-index'), 10);
+        const list = getCartItems();
         list.splice(idx, 1);
         saveCartItems(list);
         renderCart();
@@ -1105,11 +1105,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     listEl.querySelectorAll('.qty-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var idx = parseInt(this.getAttribute('data-index'), 10);
-        var delta = parseInt(this.getAttribute('data-delta'), 10);
-        var list = getCartItems();
+        const idx = parseInt(this.getAttribute('data-index'), 10);
+        const delta = parseInt(this.getAttribute('data-delta'), 10);
+        const list = getCartItems();
         if (!list[idx]) return;
-        var nextQty = list[idx].qty + delta;
+        const nextQty = list[idx].qty + delta;
         if (nextQty < 1) return;
         list[idx].qty = nextQty;
         saveCartItems(list);
@@ -1118,7 +1118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  var clearBtn = document.getElementById('cart-clear-btn');
+  const clearBtn = document.getElementById('cart-clear-btn');
   if (clearBtn) {
     clearBtn.addEventListener('click', function () {
       saveCartItems([]);
@@ -1126,7 +1126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  var checkoutBtnEl = document.getElementById('checkout-btn');
+  const checkoutBtnEl = document.getElementById('checkout-btn');
   if (checkoutBtnEl) {
     checkoutBtnEl.addEventListener('click', function () {
       // 이전에 개별 상품 "구매하기"(바로구매)로 남아있을 수 있는 단일 상품 세션을 지워
@@ -1139,7 +1139,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   renderCart();
 
-  var resizeTimer = null;
+  let resizeTimer = null;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(renderCart, 150);
@@ -1183,13 +1183,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

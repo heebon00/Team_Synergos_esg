@@ -9,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 </script>
 
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
@@ -635,7 +635,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -731,18 +731,18 @@
             </h2>
 
             <!-- Item 1 (POÄNG 포엥 암체어) -->
-            <label class="item-select-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-lg border-2 border-line hover:border-ink-muted bg-white cursor-pointer">
-              <div class="flex items-center gap-4">
+            <div class="item-select-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-lg border-2 border-line hover:border-ink-muted bg-white">
+              <label class="flex items-center gap-4 cursor-pointer">
                 <input type="checkbox" name="selected_items" value="poang" class="w-5 h-5 text-brand rounded border-line focus:ring-brand accent-brand cursor-pointer item-checkbox" onchange="calculateSummary()">
-                <div class="w-20 h-20 bg-white rounded overflow-hidden shrink-0 border border-line-light p-1">
+                <span class="w-20 h-20 bg-white rounded overflow-hidden shrink-0 border border-line-light p-1 block">
                   <img src="../assets/p-poang.png" alt="POÄNG 포엥 암체어" class="w-full h-full object-cover">
-                </div>
-                <div>
+                </span>
+                <span class="block">
                   <strong class="text-sm font-bold text-ink block">POÄNG 포엥 암체어</strong>
                   <span class="text-xs text-ink-muted block mt-0.5">색상: 군세레드 베이지, 프레임: 자작나무 베니어</span>
                   <span class="text-xs font-extrabold text-ink block mt-1">₩ 129,000</span>
-                </div>
-              </div>
+                </span>
+              </label>
               <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-line-light pt-3 sm:pt-0" onclick="event.stopPropagation()">
                 <span class="text-xs text-ink-2">신청 수량:</span>
                 <select id="poangQty" class="border border-line rounded px-3 py-1.5 text-xs bg-white focus:outline-none focus:border-brand" onchange="calculateSummary()">
@@ -750,7 +750,7 @@
                   <option value="2" selected>2개 (전체)</option>
                 </select>
               </div>
-            </label>
+            </div>
           </div>
         </div>
 
@@ -765,17 +765,17 @@
           <div class="flex flex-col sm:flex-row gap-4">
             <label class="flex-1 flex items-center gap-3 p-4 rounded-lg border-2 border-brand bg-brand/5 cursor-pointer request-type-label" id="typeLabelReturn">
               <input type="radio" name="requestType" value="return" checked class="w-4 h-4 accent-brand text-brand" onchange="updateRequestType(this.value)">
-              <div>
+              <span class="block">
                 <strong class="text-sm font-bold text-ink block">반품 및 환불 신청</strong>
                 <span class="text-xs text-ink-muted">상품 회수 후 결제 수단으로 환불됩니다.</span>
-              </div>
+              </span>
             </label>
             <label class="flex-1 flex items-center gap-3 p-4 rounded-lg border-2 border-line hover:border-ink-muted bg-white cursor-pointer request-type-label" id="typeLabelExchange">
               <input type="radio" name="requestType" value="exchange" class="w-4 h-4 accent-brand text-brand" onchange="updateRequestType(this.value)">
-              <div>
+              <span class="block">
                 <strong class="text-sm font-bold text-ink block">동일 상품 교환 신청</strong>
                 <span class="text-xs text-ink-muted">새 상품으로 맞교환 배송이 진행됩니다.</span>
-              </div>
+              </span>
             </label>
           </div>
 
@@ -784,6 +784,7 @@
             <div>
               <label for="returnReasonCategory" class="block text-xs font-bold text-ink mb-1.5">신청 사유 분류 <span class="text-sale">*</span></label>
               <select id="returnReasonCategory" class="w-full border border-line rounded-lg px-4 py-2.5 text-xs bg-white focus:outline-none focus:border-brand" onchange="calculateSummary()" required>
+                <option value="" disabled selected>사유를 선택하세요</option>
                 <option value="change_mind">단순 변심 (색상/디자인 불만족 등 - 왕복 배송비 부담)</option>
                 <option value="defective">상품 불량 및 파손 (무료 교환/반품)</option>
                 <option value="wrong_item">오배송 / 다른 상품 배송 (무료 교환/반품)</option>
@@ -836,17 +837,17 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <label class="flex items-start gap-3 p-4 rounded-lg border-2 border-brand bg-brand/5 cursor-pointer pickup-method-label" id="pickupCourier">
               <input type="radio" name="pickupMethod" value="courier" checked class="w-4 h-4 accent-brand text-brand mt-0.5" onchange="updatePickupMethod(this.value)">
-              <div>
+              <span class="block">
                 <strong class="text-sm font-bold text-ink block">이케아 전담 기사 방문 수거</strong>
-                <p class="text-xs text-ink-muted mt-0.5">이케아 헬퍼가 고객님의 배송지로 직접 방문하여 제품을 안전하게 회수합니다.</p>
-              </div>
+                <span class="text-xs text-ink-muted mt-0.5 block">이케아 헬퍼가 고객님의 배송지로 직접 방문하여 제품을 안전하게 회수합니다.</span>
+              </span>
             </label>
             <label class="flex items-start gap-3 p-4 rounded-lg border-2 border-line hover:border-ink-muted bg-white cursor-pointer pickup-method-label" id="pickupStore">
               <input type="radio" name="pickupMethod" value="store" class="w-4 h-4 accent-brand text-brand mt-0.5" onchange="updatePickupMethod(this.value)">
-              <div>
+              <span class="block">
                 <strong class="text-sm font-bold text-ink block">매장 직접 방문 반품</strong>
-                <p class="text-xs text-ink-muted mt-0.5">가까운 이케아 매장(광명/고양/기흥/동부산/강동점) 교환·환불 데스크로 직접 방문합니다.</p>
-              </div>
+                <span class="text-xs text-ink-muted mt-0.5 block">가까운 이케아 매장(광명/고양/기흥/동부산/강동점) 교환·환불 데스크로 직접 방문합니다.</span>
+              </span>
             </label>
           </div>
 
@@ -1334,13 +1335,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

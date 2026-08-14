@@ -12,7 +12,7 @@
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   if (window.location.hash && window.location.hash.startsWith('#s-') && window.location.hash !== '#s-living') {
     d.classList.add('hash-loading');
@@ -22,7 +22,7 @@
   }
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 
   // 카테고리 아이콘 줄: 스크립트가 붙기 전에 한 번 전부 보였다가 GSAP 이 다시
   // opacity:0 으로 되돌려 페이드인하면 "떴다가 다시 나오는" 깜빡임이 생긴다.
@@ -616,10 +616,10 @@
     <script>
       (function(){
         try {
-          var w = JSON.parse(localStorage.getItem('ikea_wishlist_items') || localStorage.getItem('ikea_wishlist') || localStorage.getItem('wishlist') || '[]');
-          var c = JSON.parse(localStorage.getItem('ikea_cart_items') || '[]');
-          var wb = document.getElementById('wishlist-badge');
-          var cb = document.getElementById('cart-badge');
+          const w = JSON.parse(localStorage.getItem('ikea_wishlist_items') || localStorage.getItem('ikea_wishlist') || localStorage.getItem('wishlist') || '[]');
+          const c = JSON.parse(localStorage.getItem('ikea_cart_items') || '[]');
+          const wb = document.getElementById('wishlist-badge');
+          const cb = document.getElementById('cart-badge');
           if (wb) {
             if (Array.isArray(w) && w.length > 0) { wb.textContent = String(w.length); wb.style.display = 'inline-flex'; }
             else { wb.textContent = ''; wb.style.display = 'none'; }
@@ -628,7 +628,7 @@
             if (Array.isArray(c) && c.length > 0) { cb.textContent = String(c.length); cb.style.display = 'inline-flex'; }
             else { cb.textContent = ''; cb.style.display = 'none'; }
           }
-        } catch(e){}
+        } catch { /* localStorage 접근 실패 시 배지 갱신은 건너뜀 */ }
       })();
     </script>
 
@@ -1012,7 +1012,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -2309,17 +2309,17 @@
 document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
-  var root  = document.documentElement;
-  var calm  = root.classList.contains('no-motion');
-  var $     = function (s, c) { return (c || document).querySelector(s); };
-  var $$    = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  const root  = document.documentElement;
+  const calm  = root.classList.contains('no-motion');
+  const $     = function (s, c) { return (c || document).querySelector(s); };
+  const $$    = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
   /* ---------- 스크롤 타깃 이동 유틸리티 ---------- */
   function scrollToTarget(target, isSmooth) {
     if (!target) return;
-    var headerOffset = 90;
-    var rect = target.getBoundingClientRect();
-    var targetTop = rect.top + window.pageYOffset - headerOffset;
+    const headerOffset = 90;
+    const rect = target.getBoundingClientRect();
+    let targetTop = rect.top + window.pageYOffset - headerOffset;
     targetTop = Math.max(0, targetTop);
 
     if (isSmooth && typeof gsap !== 'undefined' && window.ScrollToPlugin && !calm) {
@@ -2331,9 +2331,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 외부 링크(#s-...)를 통해 들어왔을 때 최상단(거실) 깜빡임 없이 해당 위치로 즉각 안착
   function handleInitialHash() {
-    var hash = window.location.hash;
+    const hash = window.location.hash;
     if (hash && hash.startsWith('#s-')) {
-      var target = document.querySelector(hash);
+      const target = document.querySelector(hash);
       if (target) {
         scrollToTarget(target, false);
         requestAnimationFrame(function () {
@@ -2353,7 +2353,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- 1. 캐로셀 (Swiper) ---------- */
 
-  var a11y = {
+  const a11y = {
     enabled: true,
     prevSlideMessage: '이전 슬라이드',
     nextSlideMessage: '다음 슬라이드',
@@ -2363,26 +2363,26 @@ document.addEventListener('DOMContentLoaded', function () {
     slideRole: 'group'
   };
 
-  var swipers = [];
+  const swipers = [];
 
   // 카테고리 아이콘 줄: products.html 의 .cat-scroll 과 완전히 같은 동작.
   // Swiper 를 쓰지 않고 네이티브 가로 스크롤 + 마우스 드래그 + 관성 감속으로 움직이며,
   // 좌우 반투명 화살표가 스크롤 가능 여부에 따라 나타난다.
   $$('.cat-rail').forEach(function (railEl) {
-    var scrollEl = railEl.querySelector('.cat-scroll');
+    const scrollEl = railEl.querySelector('.cat-scroll');
     if (!scrollEl) return;
 
     // ── 카테고리 간격(column-gap)을 화면 폭에 맞춰 가변 계산 ──
     // products.html 의 syncCatGridGap() 과 완전히 같은 공식(컨테이너 실제 폭 기반, 14~36px).
     // .cat-scroll 의 좌우 padding(40px)이 첫/마지막 아이콘 위치를 고정하므로
     // 여기서는 아이템 사이 간격만 바꾸고 위치 앵커는 건드리지 않는다.
-    var gridEl = railEl.querySelector('.cat-grid-1row');
+    const gridEl = railEl.querySelector('.cat-grid-1row');
     if (gridEl) {
-      var GAP_MIN = 14;
-      var GAP_MAX = 36;
-      var syncCatGridGap = function () {
-        var usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
-        var gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
+      const GAP_MIN = 14;
+      const GAP_MAX = 36;
+      const syncCatGridGap = function () {
+        const usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
+        const gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
         gridEl.style.columnGap = gap + 'px';
       };
       syncCatGridGap();
@@ -2390,26 +2390,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ── 좌우 반투명 화살표: 스크롤 가능 여부에 따라 표시/숨김 ──
-    var prevBtn = railEl.querySelector('.cat-nav-prev');
-    var nextBtn = railEl.querySelector('.cat-nav-next');
-    var EDGE = 2; // 경계 판정 여유(px)
+    const prevBtn = railEl.querySelector('.cat-nav-prev');
+    const nextBtn = railEl.querySelector('.cat-nav-next');
+    const EDGE = 2; // 경계 판정 여유(px)
     // 몇 px 차이로 간신히 넘칠 때는 눌러도 움직일 게 없으므로 화살표를 띄우지 않는다.
-    var MIN_OVERFLOW = 12;
+    const MIN_OVERFLOW = 12;
 
     function updateNav() {
       if (!prevBtn || !nextBtn) return;
-      var scrollW = scrollEl.scrollWidth;
-      var clientW = scrollEl.clientWidth;
+      const scrollW = scrollEl.scrollWidth;
+      const clientW = scrollEl.clientWidth;
       if (scrollW - clientW <= MIN_OVERFLOW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
       prevBtn.hidden = false;
       nextBtn.hidden = false;
-      var maxScroll = scrollW - clientW;
+      const maxScroll = scrollW - clientW;
       prevBtn.classList.toggle('is-off', scrollEl.scrollLeft <= EDGE);
       nextBtn.classList.toggle('is-off', scrollEl.scrollLeft >= maxScroll - EDGE);
     }
 
     function scrollByPage(dir) {
-      var step = Math.round(scrollEl.clientWidth * 0.9) * dir;
+      const step = Math.round(scrollEl.clientWidth * 0.9) * dir;
       scrollEl.scrollBy({ left: step, behavior: calm ? 'auto' : 'smooth' });
     }
 
@@ -2421,8 +2421,8 @@ document.addEventListener('DOMContentLoaded', function () {
     updateNav();
 
     // ── 마우스 드래그 스크롤 (products.html 과 동일한 감속) ──
-    var isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
-    var velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
+    let isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
+    let velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
     scrollEl.style.cursor = 'grab';
 
     scrollEl.addEventListener('mousedown', function (e) {
@@ -2443,11 +2443,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('mousemove', function (e) {
       if (!isMouseDown) return;
-      var dx = e.pageX - startMouseX;
+      const dx = e.pageX - startMouseX;
       if (Math.abs(dx) > 4) mouseDragged = true;
       // 속도 추적 (px/ms → px/frame 환산, 60fps 기준)
-      var now = Date.now();
-      var dt = now - lastMoveTime;
+      const now = Date.now();
+      const dt = now - lastMoveTime;
       if (dt > 0) velocity = ((lastMoveX - e.pageX) / dt) * 16;
       lastMoveX = e.pageX;
       lastMoveTime = now;
@@ -2467,9 +2467,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (calm) { velocity = 0; updateNav(); return; }
 
       // ease-out 감속 (마찰 0.92/frame, 최대 420ms)
-      var friction = 0.92;
-      var maxFrames = Math.round(420 / 16); // ~26프레임
-      var frame = 0;
+      const friction = 0.92;
+      const maxFrames = Math.round(420 / 16); // ~26프레임
+      let frame = 0;
 
       function decelerate() {
         if (frame >= maxFrames || Math.abs(velocity) < 0.3) {
@@ -2478,7 +2478,7 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
         velocity *= friction;
-        var next = scrollEl.scrollLeft + velocity;
+        let next = scrollEl.scrollLeft + velocity;
         // 경계 클램프
         next = Math.max(0, Math.min(next, scrollEl.scrollWidth - scrollEl.clientWidth));
         scrollEl.scrollLeft = next;
@@ -2499,7 +2499,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, true);
 
     // ── 터치 tap vs drag 구분 ──
-    var startTX = 0, startTY = 0, touchDragged = false;
+    let startTX = 0, startTY = 0, touchDragged = false;
     scrollEl.addEventListener('touchstart', function (e) {
       startTX = e.touches[0].clientX;
       startTY = e.touches[0].clientY;
@@ -2524,9 +2524,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // .cat:hover { transform: translateY(-3px) } 를 이겨서 hover 상승이 죽는다.
   if (!calm && typeof gsap !== 'undefined') {
     $$('.cat-rail').forEach(function (railEl) {
-      var cats = railEl.querySelectorAll('.cat');
+      const cats = railEl.querySelectorAll('.cat');
       if (!cats.length) return;
-      var to = {
+      const to = {
         opacity: 1, y: 0, duration: .45, ease: 'power2.out', stagger: .05,
         clearProps: 'transform,willChange',
         immediateRender: true
@@ -2543,7 +2543,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.documentElement.classList.remove('cat-preanim');
 
   $$('.prod-sw').forEach(function (el) {
-    var box = el.closest('.rv') || el.parentNode;
+    const box = el.closest('.rv') || el.parentNode;
     swipers.push(new Swiper(el, {
       a11y: a11y,
       speed: calm ? 0 : 420,
@@ -2572,8 +2572,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }));
 
     function mark(sw) {
-      var p = $('.prev', box), n = $('.next', box);
-      var one = sw.isBeginning && sw.isEnd;
+      const p = $('.prev', box), n = $('.next', box);
+      const one = sw.isBeginning && sw.isEnd;
       [p, n].forEach(function (b) { if (b) b.hidden = one; });
       if (p) p.setAttribute('aria-disabled', String(sw.isBeginning));
       if (n) n.setAttribute('aria-disabled', String(sw.isEnd));
@@ -2591,7 +2591,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- 2. 모바일 메뉴 & 메가 메뉴 ---------- */
 
-  var mbtn = $('#mobile-menu-btn'), mnav = $('#mobile-nav'), open = false;
+  let mbtn = $('#mobile-menu-btn'), mnav = $('#mobile-nav'), open = false;
 
   function menu(next) {
     open = next;
@@ -2600,7 +2600,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (open) {
       mnav.hidden = false;
       if (!calm) gsap.fromTo(mnav, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: .3, ease: 'power2.out' });
-      var first = mnav.querySelector('a, input');
+      const first = mnav.querySelector('a, input');
       if (first) first.focus();
     } else if (calm) {
       mnav.hidden = true;
@@ -2616,13 +2616,13 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   /* ---------- Mega Menu Navigation Hover Logic ---------- */
-  var navLinks = $$('.nav-link[data-tab]');
-  var megaPanel = $('#mega-menu-panel');
-  var megaTabs = $$('.mega-tab-content[data-mega-tab]');
-  var megaTimer = null;
+  const navLinks = $$('.nav-link[data-tab]');
+  const megaPanel = $('#mega-menu-panel');
+  const megaTabs = $$('.mega-tab-content[data-mega-tab]');
+  let megaTimer = null;
 
   function openMegaTab(tabName) {
-    var hasActiveContent = false;
+    let hasActiveContent = false;
     megaTabs.forEach(function (tab) {
       if (tab.getAttribute('data-mega-tab') === tabName) {
         tab.classList.remove('hidden');
@@ -2690,36 +2690,20 @@ document.addEventListener('DOMContentLoaded', function () {
   if (window.ScrollToPlugin)  gsap.registerPlugin(ScrollToPlugin);
   if (window.ScrollSmoother)  gsap.registerPlugin(ScrollSmoother);
 
-  var smoother = null;
-
-  function headerOffset() {
-    var header = document.getElementById('main-header');
-    return (header ? header.offsetHeight : 80) + 8;
-  }
-
-  function goto(target) {
-    var offset = headerOffset();
-    if (typeof gsap !== 'undefined' && window.ScrollToPlugin) {
-      gsap.to(window, { duration: .5, ease: 'power2.out', scrollTo: { y: target, offsetY: offset, autoKill: false } });
-    } else {
-      var rect = target.getBoundingClientRect();
-      var top = window.pageYOffset + rect.top - offset;
-      window.scrollTo({ top: top, behavior: 'smooth' });
-    }
-  }
+  const smoother = null;
 
   $$('a[href*="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      var href = a.getAttribute('href');
-      var hashPos = href.indexOf('#');
-      var hash = href.slice(hashPos);
+      const href = a.getAttribute('href');
+      const hashPos = href.indexOf('#');
+      const hash = href.slice(hashPos);
       if (hash === '#') return;
-      var path = href.slice(0, hashPos);
+      const path = href.slice(0, hashPos);
       /* "category.html#s-xxx"는 메가 메뉴처럼 다른 페이지에도 재사용되는 링크다.
          현재 문서가 category.html일 때만 같은 페이지 스크롤로 가로채고, 아니면 기본 페이지 이동에 맡긴다. */
-      var currentFile = location.pathname.split('/').pop() || 'category.html';
+      const currentFile = location.pathname.split('/').pop() || 'category.html';
       if (path && path !== currentFile && !location.pathname.endsWith(path)) return;
-      var t = document.querySelector(hash);
+      const t = document.querySelector(hash);
       if (!t) return;
       e.preventDefault();
       if (history.pushState) {
@@ -2735,14 +2719,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  var smoother = null;
   if (smoother) {
     document.addEventListener('focusin', function (e) {
-      var el = e.target;
+      const el = e.target;
       /* tabindex="-1" 요소(카테고리 스크롤 이동 타깃 등)는 키보드 탭 이동 대상이 아니므로 재센터링 대상에서 제외한다. */
       if (el.getAttribute('tabindex') === '-1') return;
       if (!el.closest || !el.closest('#cont')) return;
-      var r = el.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
       if (r.top < 80 || r.bottom > window.innerHeight - 20) smoother.scrollTo(el, false, 'center center');
     });
   }
@@ -2752,7 +2735,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   $$('.rv').forEach(function (el) {
-    var r = el.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
     if (r.top < window.innerHeight) {
       gsap.set(el, { opacity: 1, y: 0 });
     } else {
@@ -2770,9 +2753,9 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------- 4. GSAP 호버 / 포커스 마이크로 인터랙션 ---------- */
 
   function lift(host, build) {
-    var tl = build().pause();
-    var on  = function () { tl.play(); };
-    var off = function () { tl.reverse(); };
+    const tl = build().pause();
+    const on  = function () { tl.play(); };
+    const off = function () { tl.reverse(); };
     host.addEventListener('mouseenter', on);
     host.addEventListener('mouseleave', off);
     host.addEventListener('focusin', on);
@@ -2781,7 +2764,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $$('.card').forEach(function (card) {
     lift(card, function () {
-      var tl = gsap.timeline({ defaults: { duration: .3, ease: 'power2.out' } });
+      const tl = gsap.timeline({ defaults: { duration: .3, ease: 'power2.out' } });
       tl.to(card, { y: -6, boxShadow: '0 14px 30px rgba(0,0,0,0.14)' }, 0)
         .to($('.pic', card), { scale: 1.06 }, 0);
       return tl;
@@ -2887,13 +2870,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

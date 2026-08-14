@@ -9,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 </script>
 
 <link rel="stylesheet" href="../assets/fonts/pretendard.css">
@@ -743,7 +743,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -928,7 +928,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=HEMNES 헴네스&amp;price=₩299,000&amp;desc=러그, 160×96 cm, 화이트스테인 고품질원목&amp;img=../assets/images/yunjae/product-stockholm.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=HEMNES%20%ED%97%B4%EB%84%A4%EC%8A%A4&amp;price=₩299,000&amp;desc=%EB%9F%AC%EA%B7%B8%2C%20160%C3%9796%20cm%2C%20%ED%99%94%EC%9D%B4%ED%8A%B8%EC%8A%A4%ED%85%8C%EC%9D%B8%20%EA%B3%A0%ED%92%88%EC%A7%88%EC%9B%90%EB%AA%A9&amp;img=../assets/images/yunjae/product-stockholm.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/images/yunjae/product-stockholm.png" alt="HEMNES 헴네스 러그" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -943,7 +943,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩299,000</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=HEMNES 헴네스&amp;price=₩299,000&amp;desc=러그, 160×96 cm, 화이트스테인 고품질원목&amp;img=../assets/images/yunjae/product-stockholm.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=HEMNES%20%ED%97%B4%EB%84%A4%EC%8A%A4&amp;price=₩299,000&amp;desc=%EB%9F%AC%EA%B7%B8%2C%20160%C3%9796%20cm%2C%20%ED%99%94%EC%9D%B4%ED%8A%B8%EC%8A%A4%ED%85%8C%EC%9D%B8%20%EA%B3%A0%ED%92%88%EC%A7%88%EC%9B%90%EB%AA%A9&amp;img=../assets/images/yunjae/product-stockholm.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -963,7 +963,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=SÖDERHAMN 쇠데르함&amp;price=₩649,000&amp;desc=3인용소파, 피아스트라 다크그레이 모던 린넨&amp;img=../assets/images/yunjae/product-kivik.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=S%C3%96DERHAMN%20%EC%87%A0%EB%8D%B0%EB%A5%B4%ED%95%A8&amp;price=₩649,000&amp;desc=3%EC%9D%B8%EC%9A%A9%EC%86%8C%ED%8C%8C%2C%20%ED%94%BC%EC%95%84%EC%8A%A4%ED%8A%B8%EB%9D%BC%20%EB%8B%A4%ED%81%AC%EA%B7%B8%EB%A0%88%EC%9D%B4%20%EB%AA%A8%EB%8D%98%20%EB%A6%B0%EB%84%A8&amp;img=../assets/images/yunjae/product-kivik.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/images/yunjae/product-kivik.png" alt="SÖDERHAMN 쇠데르함 3인용소파" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -978,7 +978,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩649,000</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=SÖDERHAMN 쇠데르함&amp;price=₩649,000&amp;desc=3인용소파, 피아스트라 다크그레이 모던 린넨&amp;img=../assets/images/yunjae/product-kivik.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=S%C3%96DERHAMN%20%EC%87%A0%EB%8D%B0%EB%A5%B4%ED%95%A8&amp;price=₩649,000&amp;desc=3%EC%9D%B8%EC%9A%A9%EC%86%8C%ED%8C%8C%2C%20%ED%94%BC%EC%95%84%EC%8A%A4%ED%8A%B8%EB%9D%BC%20%EB%8B%A4%ED%81%AC%EA%B7%B8%EB%A0%88%EC%9D%B4%20%EB%AA%A8%EB%8D%98%20%EB%A6%B0%EB%84%A8&amp;img=../assets/images/yunjae/product-kivik.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -998,7 +998,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=LACK 라크&amp;price=₩15,000&amp;desc=사이드테이블, 55×55 cm, 하이글로스 화이트&amp;img=../assets/p-lack.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=LACK%20%EB%9D%BC%ED%81%AC&amp;price=₩15,000&amp;desc=%EC%82%AC%EC%9D%B4%EB%93%9C%ED%85%8C%EC%9D%B4%EB%B8%94%2C%2055%C3%9755%20cm%2C%20%ED%95%98%EC%9D%B4%EA%B8%80%EB%A1%9C%EC%8A%A4%20%ED%99%94%EC%9D%B4%ED%8A%B8&amp;img=../assets/p-lack.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/p-lack.png" alt="LACK 라크 사이드테이블" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -1013,7 +1013,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩15,000</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=LACK 라크&amp;price=₩15,000&amp;desc=사이드테이블, 55×55 cm, 하이글로스 화이트&amp;img=../assets/p-lack.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=LACK%20%EB%9D%BC%ED%81%AC&amp;price=₩15,000&amp;desc=%EC%82%AC%EC%9D%B4%EB%93%9C%ED%85%8C%EC%9D%B4%EB%B8%94%2C%2055%C3%9755%20cm%2C%20%ED%95%98%EC%9D%B4%EA%B8%80%EB%A1%9C%EC%8A%A4%20%ED%99%94%EC%9D%B4%ED%8A%B8&amp;img=../assets/p-lack.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1033,7 +1033,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=EKET 에케트&amp;price=₩45,000&amp;desc=수납장, 35×35×35 cm, 라이트그레이 모듈형&amp;img=../assets/images/yunjae/product-eket.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=EKET%20%EC%97%90%EC%BC%80%ED%8A%B8&amp;price=₩45,000&amp;desc=%EC%88%98%EB%82%A9%EC%9E%A5%2C%2035%C3%9735%C3%9735%20cm%2C%20%EB%9D%BC%EC%9D%B4%ED%8A%B8%EA%B7%B8%EB%A0%88%EC%9D%B4%20%EB%AA%A8%EB%93%88%ED%98%95&amp;img=../assets/images/yunjae/product-eket.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/images/yunjae/product-eket.png" alt="EKET 에케트 수납장" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -1048,7 +1048,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩45,000</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=EKET 에케트&amp;price=₩45,000&amp;desc=수납장, 35×35×35 cm, 라이트그레이 모듈형&amp;img=../assets/images/yunjae/product-eket.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=EKET%20%EC%97%90%EC%BC%80%ED%8A%B8&amp;price=₩45,000&amp;desc=%EC%88%98%EB%82%A9%EC%9E%A5%2C%2035%C3%9735%C3%9735%20cm%2C%20%EB%9D%BC%EC%9D%B4%ED%8A%B8%EA%B7%B8%EB%A0%88%EC%9D%B4%20%EB%AA%A8%EB%93%88%ED%98%95&amp;img=../assets/images/yunjae/product-eket.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1068,7 +1068,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=FADO 파도&amp;price=₩19,900&amp;desc=탁상스탠드, 25 cm, 구형 화이트 글라스&amp;img=../assets/images/yunjae/product-besta.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=FADO%20%ED%8C%8C%EB%8F%84&amp;price=₩19,900&amp;desc=%ED%83%81%EC%83%81%EC%8A%A4%ED%83%A0%EB%93%9C%2C%2025%20cm%2C%20%EA%B5%AC%ED%98%95%20%ED%99%94%EC%9D%B4%ED%8A%B8%20%EA%B8%80%EB%9D%BC%EC%8A%A4&amp;img=../assets/images/yunjae/product-besta.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/images/yunjae/product-besta.png" alt="FADO 파도 탁상스탠드" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -1083,7 +1083,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩19,900</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=FADO 파도&amp;price=₩19,900&amp;desc=탁상스탠드, 25 cm, 구형 화이트 글라스&amp;img=../assets/images/yunjae/product-besta.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=FADO%20%ED%8C%8C%EB%8F%84&amp;price=₩19,900&amp;desc=%ED%83%81%EC%83%81%EC%8A%A4%ED%83%A0%EB%93%9C%2C%2025%20cm%2C%20%EA%B5%AC%ED%98%95%20%ED%99%94%EC%9D%B4%ED%8A%B8%20%EA%B8%80%EB%9D%BC%EC%8A%A4&amp;img=../assets/images/yunjae/product-besta.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1103,7 +1103,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=RÅSKOG 로스코그&amp;price=₩34,900&amp;desc=5단 카트 서랍장, 35×45×78 cm, 3단 메탈 다크그레이&amp;img=../assets/images/yunjae/product-alex.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=R%C3%85SKOG%20%EB%A1%9C%EC%8A%A4%EC%BD%94%EA%B7%B8&amp;price=₩34,900&amp;desc=5%EB%8B%A8%20%EC%B9%B4%ED%8A%B8%20%EC%84%9C%EB%9E%8D%EC%9E%A5%2C%2035%C3%9745%C3%9778%20cm%2C%203%EB%8B%A8%20%EB%A9%94%ED%83%88%20%EB%8B%A4%ED%81%AC%EA%B7%B8%EB%A0%88%EC%9D%B4&amp;img=../assets/images/yunjae/product-alex.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/images/yunjae/product-alex.png" alt="RÅSKOG 로스코그 5단 카트 서랍장" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -1118,7 +1118,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩34,900</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=RÅSKOG 로스코그&amp;price=₩34,900&amp;desc=5단 카트 서랍장, 35×45×78 cm, 3단 메탈 다크그레이&amp;img=../assets/images/yunjae/product-alex.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=R%C3%85SKOG%20%EB%A1%9C%EC%8A%A4%EC%BD%94%EA%B7%B8&amp;price=₩34,900&amp;desc=5%EB%8B%A8%20%EC%B9%B4%ED%8A%B8%20%EC%84%9C%EB%9E%8D%EC%9E%A5%2C%2035%C3%9745%C3%9778%20cm%2C%203%EB%8B%A8%20%EB%A9%94%ED%83%88%20%EB%8B%A4%ED%81%AC%EA%B7%B8%EB%A0%88%EC%9D%B4&amp;img=../assets/images/yunjae/product-alex.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1138,7 +1138,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=GLADOM 글라돔&amp;price=₩24,900&amp;desc=침대, 45×53 cm, 스틸 더스티그린&amp;img=../assets/images/yunjae/product-brimnes.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=GLADOM%20%EA%B8%80%EB%9D%BC%EB%8F%94&amp;price=₩24,900&amp;desc=%EC%B9%A8%EB%8C%80%2C%2045%C3%9753%20cm%2C%20%EC%8A%A4%ED%8B%B8%20%EB%8D%94%EC%8A%A4%ED%8B%B0%EA%B7%B8%EB%A6%B0&amp;img=../assets/images/yunjae/product-brimnes.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/images/yunjae/product-brimnes.png" alt="GLADOM 글라돔 침대" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -1153,7 +1153,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩24,900</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=GLADOM 글라돔&amp;price=₩24,900&amp;desc=침대, 45×53 cm, 스틸 더스티그린&amp;img=../assets/images/yunjae/product-brimnes.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=GLADOM%20%EA%B8%80%EB%9D%BC%EB%8F%94&amp;price=₩24,900&amp;desc=%EC%B9%A8%EB%8C%80%2C%2045%C3%9753%20cm%2C%20%EC%8A%A4%ED%8B%B8%20%EB%8D%94%EC%8A%A4%ED%8B%B0%EA%B7%B8%EB%A6%B0&amp;img=../assets/images/yunjae/product-brimnes.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1173,7 +1173,7 @@
               <button type="button" class="wish-btn absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-line-light heart-btn-shadow flex items-center justify-center text-ink hover:text-red-500 hover:scale-110 transition-all cursor-pointer" aria-label="위시리스트 추가">
                 <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
-              <a href="product-detail.html?name=NESNA 네스나&amp;price=₩19,900&amp;desc=서랍장, 36×35 cm, 대나무 및 강화유리&amp;img=../assets/images/yunjae/product-nordli.png" class="block w-full h-full cursor-pointer">
+              <a href="product-detail.html?name=NESNA%20%EB%84%A4%EC%8A%A4%EB%82%98&amp;price=₩19,900&amp;desc=%EC%84%9C%EB%9E%8D%EC%9E%A5%2C%2036%C3%9735%20cm%2C%20%EB%8C%80%EB%82%98%EB%AC%B4%20%EB%B0%8F%20%EA%B0%95%ED%99%94%EC%9C%A0%EB%A6%AC&amp;img=../assets/images/yunjae/product-nordli.png" class="block w-full h-full cursor-pointer">
                 <img src="../assets/images/yunjae/product-nordli.png" alt="NESNA 네스나 서랍장" class="w-full h-full object-contain p-4 md:object-cover md:p-0 group-hover:scale-105 transition-transform duration-300">
               </a>
             </div>
@@ -1188,7 +1188,7 @@
               <span class="text-xs sm:text-sm font-black text-discount">₩19,900</span>
             </div>
             <div class="flex items-center justify-between gap-1 mt-2.5">
-              <a href="product-detail.html?name=NESNA 네스나&amp;price=₩19,900&amp;desc=서랍장, 36×35 cm, 대나무 및 강화유리&amp;img=../assets/images/yunjae/product-nordli.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
+              <a href="product-detail.html?name=NESNA%20%EB%84%A4%EC%8A%A4%EB%82%98&amp;price=₩19,900&amp;desc=%EC%84%9C%EB%9E%8D%EC%9E%A5%2C%2036%C3%9735%20cm%2C%20%EB%8C%80%EB%82%98%EB%AC%B4%20%EB%B0%8F%20%EA%B0%95%ED%99%94%EC%9C%A0%EB%A6%AC&amp;img=../assets/images/yunjae/product-nordli.png" class="text-base text-ink-muted underline font-medium hover:text-brand transition-colors shrink-0">상세페이지</a>
               <div class="flex items-center gap-3 shrink-0">
                 <button type="button" class="add-cart-btn w-8 h-8 rounded-full border border-line-light flex items-center justify-center text-ink hover:border-brand hover:text-brand transition-colors cursor-pointer" aria-label="장바구니">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1434,13 +1434,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';

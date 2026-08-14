@@ -1,11 +1,11 @@
 (function () {
-  var accountHref = '';
-  var signupHref = '';
+  let accountHref = '';
+  let signupHref = '';
 
   function buildModal() {
     if (document.getElementById('account-confirm-modal')) return;
 
-    var wrap = document.createElement('div');
+    const wrap = document.createElement('div');
     wrap.id = 'account-confirm-modal';
     wrap.className = 'fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 transition-opacity duration-300';
     wrap.setAttribute('role', 'dialog');
@@ -43,8 +43,8 @@
   }
 
   function openModal() {
-    var wrap = document.getElementById('account-confirm-modal');
-    var card = document.getElementById('account-confirm-card');
+    const wrap = document.getElementById('account-confirm-modal');
+    const card = document.getElementById('account-confirm-card');
     if (!wrap || !card) return;
     wrap.classList.remove('hidden');
     setTimeout(function () {
@@ -54,8 +54,8 @@
   }
 
   function closeModal() {
-    var wrap = document.getElementById('account-confirm-modal');
-    var card = document.getElementById('account-confirm-card');
+    const wrap = document.getElementById('account-confirm-modal');
+    const card = document.getElementById('account-confirm-card');
     if (!wrap || !card) return;
     card.classList.remove('scale-100', 'opacity-100');
     card.classList.add('scale-95', 'opacity-0');
@@ -65,10 +65,10 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    var links = document.querySelectorAll('a[aria-label="마이페이지"]');
+    const links = document.querySelectorAll('a[aria-label="마이페이지"]');
     if (!links.length) return;
 
-    var firstLink = links[0];
+    const firstLink = links[0];
     accountHref = firstLink.getAttribute('href');
     signupHref = accountHref.replace('account.html', 'signup.html');
 

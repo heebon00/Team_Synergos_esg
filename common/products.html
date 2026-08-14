@@ -9,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 
 <script>
-  var d = document.documentElement;
+  const d = document.documentElement;
   d.classList.add('js');
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('no-motion');
-  } catch (e) {}
+  } catch { /* matchMedia 미지원 브라우저는 무시 */ }
 
   // 카테고리 아이콘 줄: 스크립트가 붙기 전에 한 번 전부 보였다가 GSAP 이 다시
   // opacity:0 으로 되돌려 페이드인하면 "떴다가 다시 나오는" 깜빡임이 생긴다.
@@ -27,12 +27,12 @@
   // 글로벌 이미지 안전 fallback 핸들러 (어떤 서버/로컬 환경에서도 100% 이미지 노출 보장)
   window.addEventListener('error', function(e) {
     if (e.target && e.target.tagName === 'IMG') {
-      var img = e.target;
-      var src = img.getAttribute('src');
+      const img = e.target;
+      const src = img.getAttribute('src');
       if (!src) return;
-      var step = parseInt(img.dataset.fallbackStep || '0', 10);
-      var filename = src.split('/').pop().split('?')[0];
-      var candidates = ['../assets/' + filename, 'assets/' + filename, '/assets/' + filename, './assets/' + filename];
+      const step = parseInt(img.dataset.fallbackStep || '0', 10);
+      const filename = src.split('/').pop().split('?')[0];
+      const candidates = ['../assets/' + filename, 'assets/' + filename, '/assets/' + filename, './assets/' + filename];
       if (step < candidates.length) {
         img.dataset.fallbackStep = (step + 1).toString();
         img.src = candidates[step];
@@ -836,7 +836,7 @@
                 </button>
               </div>
               <ul id="m-sub-sale" class="hidden pl-4 py-2 text-sm font-normal space-y-2 text-ink-2 bg-bg-light/60 rounded-lg my-1">
-                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low price.html">가장 낮은 가격</a></li>
+                <li><a class="block py-1 hover:text-sale font-medium text-sale" href="low-price.html">가장 낮은 가격</a></li>
               </ul>
             </li>
           </ul>
@@ -1145,34 +1145,34 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var sortBtn = document.getElementById('sort-toggle-btn');
-    var sortIcon = document.getElementById('sort-toggle-icon');
-    var grid1 = document.getElementById('product-grid-1');
-    var grid2 = document.getElementById('product-grid-2');
+    const sortBtn = document.getElementById('sort-toggle-btn');
+    const sortIcon = document.getElementById('sort-toggle-icon');
+    const grid1 = document.getElementById('product-grid-1');
+    const grid2 = document.getElementById('product-grid-2');
     if (!sortBtn || !grid1 || !grid2) return;
 
     function getPrice(card) {
-      var priceEl = Array.prototype.find.call(card.querySelectorAll('p'), function (p) {
+      const priceEl = Array.prototype.find.call(card.querySelectorAll('p'), function (p) {
         return p.textContent.trim().indexOf('₩') === 0;
       });
       if (!priceEl) return 0;
-      var num = priceEl.textContent.replace(/[^\d]/g, '');
+      const num = priceEl.textContent.replace(/[^\d]/g, '');
       return num ? parseInt(num, 10) : 0;
     }
 
     // 신상품순 정렬: 최초 문서 순서를 "추가된 순서"로 간주해 랭크를 매긴다 (마지막 카드가 최신)
-    var allCards = Array.prototype.slice.call(grid1.children).concat(Array.prototype.slice.call(grid2.children));
-    var rankMap = new WeakMap();
+    const allCards = Array.prototype.slice.call(grid1.children).concat(Array.prototype.slice.call(grid2.children));
+    const rankMap = new WeakMap();
     allCards.forEach(function (card, index) { rankMap.set(card, index); });
 
     sortBtn.addEventListener('click', function () {
-      var next = sortBtn.getAttribute('data-order') === 'new' ? 'old' : 'new';
+      const next = sortBtn.getAttribute('data-order') === 'new' ? 'old' : 'new';
 
-      var grid1Count = grid1.children.length;
-      var cards = Array.prototype.slice.call(grid1.children).concat(Array.prototype.slice.call(grid2.children));
+      const grid1Count = grid1.children.length;
+      const cards = Array.prototype.slice.call(grid1.children).concat(Array.prototype.slice.call(grid2.children));
 
       cards.sort(function (a, b) {
-        var diff = rankMap.get(a) - rankMap.get(b);
+        const diff = rankMap.get(a) - rankMap.get(b);
         return next === 'new' ? -diff : diff;
       });
 
@@ -1189,20 +1189,20 @@
     });
 
     // 가격 / 색상 / 크기 / 재질 필터
-    var priceBtn = document.getElementById('price-filter-btn');
-    var pricePanel = document.getElementById('price-filter-panel');
-    var colorBtn = document.getElementById('color-filter-btn');
-    var colorPanel = document.getElementById('color-filter-panel');
-    var sizeBtn = document.getElementById('size-filter-btn');
-    var sizePanel = document.getElementById('size-filter-panel');
-    var materialBtn = document.getElementById('material-filter-btn');
-    var materialPanel = document.getElementById('material-filter-panel');
-    var priceOptions = document.querySelectorAll('.price-filter-option');
-    var colorOptions = document.querySelectorAll('.color-filter-option');
-    var sizeOptions = document.querySelectorAll('.size-filter-option');
-    var materialOptions = document.querySelectorAll('.material-filter-option');
+    const priceBtn = document.getElementById('price-filter-btn');
+    const pricePanel = document.getElementById('price-filter-panel');
+    const colorBtn = document.getElementById('color-filter-btn');
+    const colorPanel = document.getElementById('color-filter-panel');
+    const sizeBtn = document.getElementById('size-filter-btn');
+    const sizePanel = document.getElementById('size-filter-panel');
+    const materialBtn = document.getElementById('material-filter-btn');
+    const materialPanel = document.getElementById('material-filter-panel');
+    const priceOptions = document.querySelectorAll('.price-filter-option');
+    const colorOptions = document.querySelectorAll('.color-filter-option');
+    const sizeOptions = document.querySelectorAll('.size-filter-option');
+    const materialOptions = document.querySelectorAll('.material-filter-option');
 
-    var priceRanges = {
+    const priceRanges = {
       under5: [0, 50000],
       '5to10': [50000, 100000],
       '10to20': [100000, 200000],
@@ -1210,7 +1210,7 @@
       over30: [300000, Infinity]
     };
 
-    var panelPairs = [
+    const panelPairs = [
       [pricePanel, priceBtn],
       [colorPanel, colorBtn],
       [sizePanel, sizeBtn],
@@ -1228,19 +1228,19 @@
     }
 
     panelPairs.forEach(function (pair) {
-      var panel = pair[0];
-      var btn = pair[1];
+      const panel = pair[0];
+      const btn = pair[1];
       if (!panel || !btn) return;
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        var willShow = panel.classList.contains('hidden');
+        const willShow = panel.classList.contains('hidden');
         closeAllPanels();
         togglePanel(panel, btn, willShow);
       });
     });
 
     document.addEventListener('click', function (e) {
-      var insideAnyPanel = panelPairs.some(function (pair) { return pair[0] && pair[0].contains(e.target); });
+      const insideAnyPanel = panelPairs.some(function (pair) { return pair[0] && pair[0].contains(e.target); });
       if (!insideAnyPanel) closeAllPanels();
     });
     document.addEventListener('keydown', function (e) {
@@ -1248,13 +1248,13 @@
     });
 
     function applyFilters() {
-      var selectedRanges = Array.prototype.filter.call(priceOptions, function (o) { return o.checked; })
+      const selectedRanges = Array.prototype.filter.call(priceOptions, function (o) { return o.checked; })
         .map(function (o) { return priceRanges[o.value]; });
-      var selectedColors = Array.prototype.filter.call(colorOptions, function (o) { return o.getAttribute('aria-pressed') === 'true'; })
+      const selectedColors = Array.prototype.filter.call(colorOptions, function (o) { return o.getAttribute('aria-pressed') === 'true'; })
         .map(function (o) { return o.getAttribute('data-color-option'); });
-      var selectedSizes = Array.prototype.filter.call(sizeOptions, function (o) { return o.checked; })
+      const selectedSizes = Array.prototype.filter.call(sizeOptions, function (o) { return o.checked; })
         .map(function (o) { return o.value; });
-      var selectedMaterials = Array.prototype.filter.call(materialOptions, function (o) { return o.checked; })
+      const selectedMaterials = Array.prototype.filter.call(materialOptions, function (o) { return o.checked; })
         .map(function (o) { return o.value; });
 
       priceBtn.classList.toggle('border-brand', selectedRanges.length > 0);
@@ -1267,17 +1267,17 @@
       materialBtn.classList.toggle('text-brand', selectedMaterials.length > 0);
 
       allCards.forEach(function (card) {
-        var price = getPrice(card);
-        var color = card.getAttribute('data-color');
-        var size = card.getAttribute('data-size');
-        var material = card.getAttribute('data-material');
+        const price = getPrice(card);
+        const color = card.getAttribute('data-color');
+        const size = card.getAttribute('data-size');
+        const material = card.getAttribute('data-material');
 
-        var matchesPrice = selectedRanges.length === 0 || selectedRanges.some(function (range) {
+        const matchesPrice = selectedRanges.length === 0 || selectedRanges.some(function (range) {
           return price >= range[0] && price < range[1];
         });
-        var matchesColor = selectedColors.length === 0 || selectedColors.indexOf(color) !== -1;
-        var matchesSize = selectedSizes.length === 0 || selectedSizes.indexOf(size) !== -1;
-        var matchesMaterial = selectedMaterials.length === 0 || selectedMaterials.indexOf(material) !== -1;
+        const matchesColor = selectedColors.length === 0 || selectedColors.indexOf(color) !== -1;
+        const matchesSize = selectedSizes.length === 0 || selectedSizes.indexOf(size) !== -1;
+        const matchesMaterial = selectedMaterials.length === 0 || selectedMaterials.indexOf(material) !== -1;
 
         card.hidden = !(matchesPrice && matchesColor && matchesSize && matchesMaterial);
       });
@@ -1294,7 +1294,7 @@
     });
     colorOptions.forEach(function (option) {
       option.addEventListener('click', function () {
-        var pressed = option.getAttribute('aria-pressed') === 'true';
+        const pressed = option.getAttribute('aria-pressed') === 'true';
         option.setAttribute('aria-pressed', String(!pressed));
         option.classList.toggle('border-brand', !pressed);
         option.classList.toggle('bg-brand/10', !pressed);
@@ -1303,13 +1303,13 @@
     });
 
     // "필터 및 정렬" 버튼: 정렬 + 4개 필터를 한 모달에 모아서 중첩 적용할 수 있게 한다
-    var allFilterBtn = document.getElementById('all-filter-btn');
-    var allFilterModal = document.getElementById('all-filter-modal');
-    var allFilterCard = document.getElementById('all-filter-modal-card');
-    var allFilterBody = document.getElementById('all-filter-modal-body');
-    var allFilterClose = document.getElementById('all-filter-modal-close');
-    var allFilterDone = document.getElementById('all-filter-modal-done');
-    var filterPanelsSlot = document.getElementById('filter-panels-slot');
+    const allFilterBtn = document.getElementById('all-filter-btn');
+    const allFilterModal = document.getElementById('all-filter-modal');
+    const allFilterCard = document.getElementById('all-filter-modal-card');
+    const allFilterBody = document.getElementById('all-filter-modal-body');
+    const allFilterClose = document.getElementById('all-filter-modal-close');
+    const allFilterDone = document.getElementById('all-filter-modal-done');
+    const filterPanelsSlot = document.getElementById('filter-panels-slot');
 
     if (allFilterBtn && allFilterModal && filterPanelsSlot) {
       function openAllFilterModal(e) {
@@ -1317,7 +1317,7 @@
         closeAllPanels();
 
         panelPairs.forEach(function (pair) {
-          var panel = pair[0];
+          const panel = pair[0];
           allFilterBody.appendChild(panel);
           panel.classList.remove('hidden');
           panel.classList.add('flex');
@@ -1339,7 +1339,7 @@
           document.documentElement.style.overflow = '';
 
           panelPairs.forEach(function (pair) {
-            var panel = pair[0];
+            const panel = pair[0];
             panel.classList.add('hidden');
             panel.classList.remove('flex');
             filterPanelsSlot.appendChild(panel);
@@ -2081,9 +2081,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // 0. 이미지 로드 확인 및 자동 복구
   document.querySelectorAll('img').forEach(function(img) {
     if (img.complete && img.naturalWidth === 0) {
-      var src = img.getAttribute('src');
+      const src = img.getAttribute('src');
       if (src) {
-        var filename = src.split('/').pop().split('?')[0];
+        const filename = src.split('/').pop().split('?')[0];
         img.src = '../assets/' + filename;
       }
     }
@@ -2126,7 +2126,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.classList.remove('cat-preanim');
 
     // 각 상품 카드가 부드럽게 등장하도록 개별 트리거 적용 (초기 가시성 100% 보장)
-    document.querySelectorAll('.prod-card').forEach((card, idx) => {
+    document.querySelectorAll('.prod-card').forEach((card) => {
       if (typeof ScrollTrigger !== 'undefined') {
         gsap.fromTo(card,
           { opacity: 0.2, y: 15 },
@@ -2187,7 +2187,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       // 4. 이미지 경로 추출
-      let img = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
+      const img = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
 
       const params = new URLSearchParams();
       if (name) params.set('name', name);
@@ -2206,7 +2206,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // cat-scroll: 마우스 드래그 가로 스크롤 + tap vs drag 구분 (Swiper처럼 클릭드래그로 이동 가능)
   (function () {
-    var scrollEl = document.querySelector('.cat-scroll');
+    const scrollEl = document.querySelector('.cat-scroll');
     if (!scrollEl) return;
 
     // ── 카테고리 간격(gap-x)을 화면 폭에 맞춰 가변 계산 ──
@@ -2215,13 +2215,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // 여기서는 아이템 사이 간격(column-gap)만 바꾸고 위치 앵커는 건드리지 않는다.
     // 2줄 그리드(grid-template-rows: repeat(2, auto))도 그대로 유지된다.
     (function () {
-      var gridEl = document.querySelector('.cat-grid-2row');
+      const gridEl = document.querySelector('.cat-grid-2row');
       if (!gridEl) return;
-      var GAP_MIN = 14;
-      var GAP_MAX = 36;
+      const GAP_MIN = 14;
+      const GAP_MAX = 36;
       function syncCatGridGap() {
-        var usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
-        var gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
+        const usable = scrollEl.clientWidth - 80; // .cat-scroll 좌우 padding(40px씩) 제외
+        const gap = Math.max(GAP_MIN, Math.min(GAP_MAX, usable * 0.045));
         gridEl.style.columnGap = gap + 'px';
       }
       syncCatGridGap();
@@ -2229,27 +2229,27 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
     // ── 좌우 반투명 화살표: 스크롤 가능 여부에 따라 표시/숨김 ──
-    var prevBtn = document.querySelector('.cat-nav-prev');
-    var nextBtn = document.querySelector('.cat-nav-next');
-    var EDGE = 2; // 경계 판정 여유(px)
+    const prevBtn = document.querySelector('.cat-nav-prev');
+    const nextBtn = document.querySelector('.cat-nav-next');
+    const EDGE = 2; // 경계 판정 여유(px)
     // 몇 px 차이로 간신히 넘칠 때는 눌러도 움직일 게 없으므로 화살표를 띄우지 않는다.
-    var MIN_OVERFLOW = 12;
+    const MIN_OVERFLOW = 12;
 
     function updateNav() {
       if (!prevBtn || !nextBtn) return;
-      var scrollW = scrollEl.scrollWidth;
-      var clientW = scrollEl.clientWidth;
+      const scrollW = scrollEl.scrollWidth;
+      const clientW = scrollEl.clientWidth;
       if (scrollW - clientW <= MIN_OVERFLOW) { prevBtn.hidden = true; nextBtn.hidden = true; return; }
       prevBtn.hidden = false;
       nextBtn.hidden = false;
-      var maxScroll = scrollW - clientW;
+      const maxScroll = scrollW - clientW;
       prevBtn.classList.toggle('is-off', scrollEl.scrollLeft <= EDGE);
       nextBtn.classList.toggle('is-off', scrollEl.scrollLeft >= maxScroll - EDGE);
     }
 
     function scrollByPage(dir) {
-      var step = Math.round(scrollEl.clientWidth * 0.9) * dir;
-      var calm = document.documentElement.classList.contains('no-motion');
+      const step = Math.round(scrollEl.clientWidth * 0.9) * dir;
+      const calm = document.documentElement.classList.contains('no-motion');
       scrollEl.scrollBy({ left: step, behavior: calm ? 'auto' : 'smooth' });
     }
 
@@ -2261,8 +2261,8 @@ document.addEventListener('DOMContentLoaded', function () {
     updateNav();
 
     // ── 마우스 드래그 스크롤 (Swiper speed:420 동일 감속) ──
-    var isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
-    var velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
+    let isMouseDown = false, startMouseX = 0, startScrollLeft = 0, mouseDragged = false;
+    let velocity = 0, lastMoveX = 0, lastMoveTime = 0, rafId = null;
     scrollEl.style.cursor = 'grab';
 
     scrollEl.addEventListener('mousedown', function (e) {
@@ -2283,11 +2283,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('mousemove', function (e) {
       if (!isMouseDown) return;
-      var dx = e.pageX - startMouseX;
+      const dx = e.pageX - startMouseX;
       if (Math.abs(dx) > 4) mouseDragged = true;
       // 속도 추적 (px/ms → px/frame 환산, 60fps 기준)
-      var now = Date.now();
-      var dt = now - lastMoveTime;
+      const now = Date.now();
+      const dt = now - lastMoveTime;
       if (dt > 0) velocity = ((lastMoveX - e.pageX) / dt) * 16;
       lastMoveX = e.pageX;
       lastMoveTime = now;
@@ -2307,9 +2307,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (document.documentElement.classList.contains('no-motion')) { velocity = 0; updateNav(); return; }
 
       // Swiper speed:420 과 유사한 ease-out 감속 (마찰 0.92/frame, 최대 420ms)
-      var friction = 0.92;
-      var maxFrames = Math.round(420 / 16); // ~26프레임
-      var frame = 0;
+      const friction = 0.92;
+      const maxFrames = Math.round(420 / 16); // ~26프레임
+      let frame = 0;
 
       function decelerate() {
         if (frame >= maxFrames || Math.abs(velocity) < 0.3) {
@@ -2318,7 +2318,7 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
         velocity *= friction;
-        var next = scrollEl.scrollLeft + velocity;
+        let next = scrollEl.scrollLeft + velocity;
         // 경계 클램프
         next = Math.max(0, Math.min(next, scrollEl.scrollWidth - scrollEl.clientWidth));
         scrollEl.scrollLeft = next;
@@ -2339,7 +2339,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, true);
 
     // ── 터치 tap vs drag 구분 ──
-    var startTX = 0, startTY = 0, touchDragged = false;
+    let startTX = 0, startTY = 0, touchDragged = false;
     scrollEl.addEventListener('touchstart', function (e) {
       startTX = e.touches[0].clientX;
       startTY = e.touches[0].clientY;
@@ -2397,13 +2397,13 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('a')) {
     return;
   }
-  var toggle = e.target.closest('.mobile-sub-toggle');
+  const toggle = e.target.closest('.mobile-sub-toggle');
   if (toggle) {
-    var targetId = toggle.getAttribute('data-target');
-    var subMenu = document.getElementById(targetId);
-    var icon = toggle.querySelector('svg');
+    const targetId = toggle.getAttribute('data-target');
+    const subMenu = document.getElementById(targetId);
+    const icon = toggle.querySelector('svg');
     if (subMenu) {
-      var isHidden = subMenu.classList.contains('hidden');
+      const isHidden = subMenu.classList.contains('hidden');
       if (isHidden) {
         subMenu.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';
