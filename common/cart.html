@@ -1048,7 +1048,15 @@ document.addEventListener('DOMContentLoaded', function() {
       return (
         '<article class="cart-row flex gap-4 rounded-card border border-line-light bg-white p-4 sm:p-5 shadow-sm">' +
           '<div class="h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-md border border-line-light bg-shell flex items-center justify-center p-2">' +
-            '<img src="' + (item.image || '../assets/images/products/kivik.webp') + '" alt="' + (item.name || '') + '" class="max-h-full w-auto object-contain">' +
+            (function() {
+              var imgPath = item.image || 'assets/images/products/kivik.webp';
+              if (imgPath.startsWith('assets/')) {
+                imgPath = '../' + imgPath;
+              } else if (!imgPath.startsWith('../') && !imgPath.startsWith('http') && !imgPath.startsWith('/')) {
+                imgPath = '../assets/' + imgPath;
+              }
+              return '<img src="' + imgPath + '" alt="' + (item.name || '') + '" class="max-h-full w-auto object-contain">';
+            })() +
           '</div>' +
           '<div class="flex flex-1 flex-col justify-between min-w-0">' +
             '<div class="flex items-start justify-between gap-3">' +

@@ -9,6 +9,37 @@
   /* "구매하기"(바로구매) 단일 상품은 장바구니와 분리해 세션에만 담아 결제 페이지에 전달한다 */
   const BUYNOW_KEY = 'ikea_buynow_item';
 
+  // 이미지 경로를 언제나 루트 기준 상대 경로 (assets/...)로 표준화한다.
+  function normalizeImagePath(path) {
+    if (!path) return 'assets/images/products/kivik.webp';
+    
+    // 절대경로(http, file 등)이 포함된 경우 'assets/'를 찾아 그 이후 경로만 추출
+    const assetsIndex = path.indexOf('assets/');
+    if (assetsIndex !== -1) {
+      return path.substring(assetsIndex);
+    }
+    
+    // '../'나 '/'로 시작하는 상대경로인 경우 접두사 제거 후 assets/로 시작하도록 보정
+    let cleaned = path;
+    while (cleaned.startsWith('../') || cleaned.startsWith('./') || cleaned.startsWith('/')) {
+      if (cleaned.startsWith('../')) cleaned = cleaned.substring(3);
+      else if (cleaned.startsWith('./')) cleaned = cleaned.substring(2);
+      else if (cleaned.startsWith('/')) cleaned = cleaned.substring(1);
+    }
+    
+    if (cleaned.startsWith('assets/')) {
+      return cleaned;
+    }
+    
+    // 파일명만 있는 등의 경우 기본 에셋 폴더로 매핑
+    const fileName = cleaned.split('/').pop().split('\\').pop();
+    if (fileName && (fileName.startsWith('p-') || fileName.startsWith('cat-') || fileName.startsWith('hero-'))) {
+      return 'assets/' + fileName;
+    }
+    
+    return 'assets/images/products/kivik.webp'; // 기본 대체 이미지
+  }
+
   const WISH_SELECTOR = 'button[aria-label*="위시리스트"], .wish-btn, button[aria-label*="찜"], button[aria-label*="관심상품"], #wishlist-toggle-btn';
   const CART_SELECTOR = 'button[aria-label*="장바구니"], .add-cart-btn, .cart-toggle-btn';
   /* "구매하기" 버튼: 장바구니 담기와 달리 토글이 아니라 항상 담고 바로 결제 페이지로 이동한다 */
@@ -248,14 +279,7 @@
 
     // 4. 이미지 경로 추출 및 정규화
     const rawImg = imgEl ? (imgEl.getAttribute('src') || imgEl.src) : '';
-    let image = rawImg;
-    if (image && !image.startsWith('../') && !image.startsWith('http') && !image.startsWith('/')) {
-      if (image.startsWith('assets/')) {
-        image = '../' + image;
-      } else {
-        image = '../assets/' + image;
-      }
-    }
+    const image = normalizeImagePath(rawImg);
 
     // 5. 상세페이지 링크 URL 빌드
     const formattedPrice = price ? (price.startsWith('₩') ? price : '₩' + price) : '₩119,000';
@@ -277,7 +301,7 @@
       title: name || id,
       price: price || '119,000',
       desc: desc || '',
-      image: image || '../assets/images/products/kivik.webp',
+      image: image || 'assets/images/products/kivik.webp',
       href: href
     };
   }
@@ -427,14 +451,14 @@
           const dName = detailTitle.textContent.trim();
           const dPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
           const dDesc = detailDesc ? detailDesc.textContent.trim() : '';
-          const dImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.webp';
+          const dImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : 'assets/p-sagmastare-1.webp';
           wishProduct = {
             id: dName,
             name: dName,
             title: dName,
             price: dPrice,
             desc: dDesc,
-            image: dImg,
+            image: normalizeImagePath(dImg),
             href: window.location.href
           };
         }
@@ -488,14 +512,14 @@
           const cdName = detailTitle.textContent.trim();
           const cdPrice = detailPrice ? detailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
           const cdDesc = detailDesc ? detailDesc.textContent.trim() : '';
-          const cdImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : '../assets/p-sagmastare-1.webp';
+          const cdImg = detailImg ? (detailImg.getAttribute('src') || detailImg.src) : 'assets/p-sagmastare-1.webp';
           cartProduct = {
             id: cdName,
             name: cdName,
             title: cdName,
             price: cdPrice,
             desc: cdDesc,
-            image: cdImg,
+            image: normalizeImagePath(cdImg),
             href: window.location.href
           };
         }
@@ -533,14 +557,14 @@
           const bdName = buyDetailTitle.textContent.trim();
           const bdPrice = buyDetailPrice ? buyDetailPrice.textContent.trim().replace(/[^0-9,]/g, '') : '116,000';
           const bdDesc = buyDetailDesc ? buyDetailDesc.textContent.trim() : '';
-          const bdImg = buyDetailImg ? (buyDetailImg.getAttribute('src') || buyDetailImg.src) : '../assets/p-sagmastare-1.webp';
+          const bdImg = buyDetailImg ? (buyDetailImg.getAttribute('src') || buyDetailImg.src) : 'assets/p-sagmastare-1.webp';
           buyProduct = {
             id: bdName,
             name: bdName,
             title: bdName,
             price: bdPrice,
             desc: bdDesc,
-            image: bdImg,
+            image: normalizeImagePath(bdImg),
             href: window.location.href
           };
         }
