@@ -79,7 +79,7 @@
     width: calc(50% - 10px) !important;
     flex-shrink: 0 !important;
   }
-  @media (max-width: 767px) {
+  @media (min-width: 480px) and (max-width: 639px) {
     .prod-sw:not(.swiper-initialized) .swiper-slide {
       width: calc(62.5% - 10px) !important;
     }
@@ -346,11 +346,14 @@
 
   
   
-  /* Fix matching product card hover shadow overflow & pre-init layout shift */
+  /* Fix matching product card hover shadow overflow & pre-init layout shift
+     overflow:visible 는 슬라이드가 컨테이너 밖(화면 오른쪽)으로 삐져나오게 만든다.
+     clip + overflow-clip-margin 으로 카드 그림자 여유는 남기고 슬라이드는 컨테이너에서 잘라낸다. */
   .prod-sw {
-    overflow: visible !important;
-    padding: 12px !important;
-    margin: -12px !important;
+    overflow: clip !important;
+    overflow-clip-margin: 16px !important;
+    padding: 0 0 12px !important;
+    margin: 0 !important;
   }
   .prod-sw .swiper-wrapper {
     overflow: visible !important;
@@ -364,7 +367,7 @@
     width: calc(50% - 10px) !important;
     flex-shrink: 0 !important;
   }
-  @media (max-width: 767px) {
+  @media (min-width: 480px) and (max-width: 639px) {
     .prod-sw:not(.swiper-initialized) .swiper-slide {
       width: calc(62.5% - 10px) !important;
     }
@@ -2559,6 +2562,7 @@ document.addEventListener('DOMContentLoaded', function () {
       breakpoints: {
         0:    { slidesPerView: 1.15 },
         480:  { slidesPerView: 1.6 },
+        640:  { slidesPerView: 2 },
         768:  { slidesPerView: 2 },
         1024: { slidesPerView: 2 }
       },
