@@ -1148,11 +1148,44 @@
               매장 마감 시 발견되는 모든 습득물이 당일 저녁 일괄 리스트에 전산 자동 등록됩니다. 매장과 날짜를<br>지정해 문의할 수 있습니다.
             </p>
           </div>
-          <button type="button" id="lost-store-btn" class="w-full py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand-light text-base font-bold transition cursor-pointer">
+          <button type="button" id="lost-store-btn" class="w-full py-3.5 rounded border-2 border-brand text-link bg-white hover:bg-brand-light text-base font-bold transition cursor-pointer" aria-haspopup="dialog" aria-controls="lost-store-modal">
             분실물 확인 문의
           </button>
         </div>
 
+      </div>
+
+      <!-- 매장별 분실물 센터 문의 팝업 -->
+      <div id="lost-store-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-labelledby="lost-store-modal-title">
+        <div class="w-full max-w-md rounded-card bg-white p-6 sm:p-8 shadow-xl relative overflow-y-auto">
+          <button type="button" id="lost-store-modal-close" class="absolute top-4 right-4 p-1 text-ink-3 hover:text-brand transition" aria-label="닫기">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+          <h3 id="lost-store-modal-title" class="text-xl font-bold text-ink mb-1.5">매장별 분실물센터 안내</h3>
+          <p class="text-sm text-ink-2 mb-6">방문하신 매장의 분실물센터로 직접 문의해 주세요.</p>
+          <ul class="space-y-3">
+            <li class="flex items-center justify-between rounded border border-line px-4 py-3">
+              <span class="font-bold text-ink text-base">이케아 광명점</span>
+              <a href="tel:02-1234-5601" class="text-link font-medium hover:underline">02-1234-5601</a>
+            </li>
+            <li class="flex items-center justify-between rounded border border-line px-4 py-3">
+              <span class="font-bold text-ink text-base">이케아 고양점</span>
+              <a href="tel:031-234-5602" class="text-link font-medium hover:underline">031-234-5602</a>
+            </li>
+            <li class="flex items-center justify-between rounded border border-line px-4 py-3">
+              <span class="font-bold text-ink text-base">이케아 기흥점</span>
+              <a href="tel:031-234-5603" class="text-link font-medium hover:underline">031-234-5603</a>
+            </li>
+            <li class="flex items-center justify-between rounded border border-line px-4 py-3">
+              <span class="font-bold text-ink text-base">이케아 동부산점</span>
+              <a href="tel:051-234-5604" class="text-link font-medium hover:underline">051-234-5604</a>
+            </li>
+            <li class="flex items-center justify-between rounded border border-line px-4 py-3">
+              <span class="font-bold text-ink text-base">이케아 안성점</span>
+              <a href="tel:031-234-5605" class="text-link font-medium hover:underline">031-234-5605</a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="mt-4 text-right">
@@ -1475,7 +1508,41 @@
       });
     </script>
     <!-- /SEGMENT: ScrollToTop -->
-  
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const lostStoreBtn = document.getElementById("lost-store-btn");
+        const lostStoreModal = document.getElementById("lost-store-modal");
+        const lostStoreModalClose = document.getElementById("lost-store-modal-close");
+
+        function openLostStoreModal() {
+          if (!lostStoreModal) return;
+          lostStoreModal.classList.remove("hidden");
+          lostStoreModal.classList.add("flex");
+        }
+
+        function closeLostStoreModal() {
+          if (!lostStoreModal) return;
+          lostStoreModal.classList.add("hidden");
+          lostStoreModal.classList.remove("flex");
+        }
+
+        if (lostStoreBtn) {
+          lostStoreBtn.addEventListener("click", openLostStoreModal);
+        }
+        if (lostStoreModalClose) {
+          lostStoreModalClose.addEventListener("click", closeLostStoreModal);
+        }
+        if (lostStoreModal) {
+          lostStoreModal.addEventListener("click", function (e) {
+            if (e.target === lostStoreModal) closeLostStoreModal();
+          });
+        }
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeLostStoreModal();
+        });
+      });
+    </script>
+
 <script>
 // 모바일 햄버거 서브 메뉴 아코디언 토글 이벤트 (주메뉴 a 링크 클릭 시 서브메뉴 토글 미발동)
 document.addEventListener('click', function(e) {
