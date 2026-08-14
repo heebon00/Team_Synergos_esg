@@ -1501,5 +1501,87 @@ document.addEventListener('click', function(e) {
 });
 </script>
 
+<!-- SEGMENT: InfoModal -->
+<div id="info-modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300 p-5" role="dialog" aria-modal="true" aria-labelledby="info-modal-title">
+  <div class="relative w-full max-w-lg max-h-screen overflow-y-auto rounded-card border border-line bg-white p-8 shadow-2xl transition-all duration-300" id="info-modal-card">
+    <button type="button" id="info-modal-close-btn" class="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full text-ink-3 hover:bg-bg-light hover:text-ink transition cursor-pointer" aria-label="닫기">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <h2 id="info-modal-title" class="text-xl font-bold text-ink pr-8"></h2>
+    <div id="info-modal-body" class="mt-4 space-y-4 text-base text-ink-2 leading-relaxed"></div>
+  </div>
+</div>
+<script>
+  (function () {
+    const overlay = document.getElementById('info-modal-overlay');
+    const titleEl = document.getElementById('info-modal-title');
+    const bodyEl = document.getElementById('info-modal-body');
+    const closeBtn = document.getElementById('info-modal-close-btn');
+
+    const content = {
+      exchange: {
+        title: '교환/반품 서비스 안내',
+        body: '<p><strong class="text-ink">365일 안심 환불</strong> — 이케아 제품이 마음에 들지 않을 시 365일 이내 전액 환불 가능합니다.</p>' +
+          '<p><strong class="text-ink">미개봉 제품 기준</strong> — 구매 당시 오리지널 순정 패키지 상태 그대로 보존된 미개봉 완전품 대상입니다.</p>' +
+          '<p><strong class="text-ink">영수증 및 지참서 필수</strong> — 구매 이력 확인을 위한 영수증 실물 혹은 모바일 이력 검증이 필요합니다.</p>' +
+          '<p><strong class="text-ink">진행 절차</strong> — 온라인/매장 접수 → 제품 수거 진행 → 최종 검수 및 환불(승인 후 3일 내 대금 반환) 순으로 진행됩니다.</p>'
+      },
+      buyback: {
+        title: '바이백 서비스 안내',
+        body: '<p>더 이상 사용하지 않는 이케아 가구를 이케아에 다시 판매하고 순환 경제에 참여해 보세요. 상태 진단 후 가구의 가치를 책정하여 즉시 사용 가능한 환불 카드로 돌려드립니다.</p>' +
+          '<p><strong class="text-ink">가구 상태 조건</strong> — 외관 변형이나 수리 흔적이 적고 조립 구조가 안전하게 고정되어 있을 것.</p>' +
+          '<p><strong class="text-ink">이케아 브랜드 전용</strong> — 오직 정품 이케아 생산 수납장, 책장, 책상, 의자 제품만 매입 대상입니다.</p>' +
+          '<p><strong class="text-ink">환급률</strong> — 거의 새 제품 최대 50%, 좋은 상태 최대 40%, 보통 상태 최대 30% 보상.</p>'
+      },
+      parts: {
+        title: '조립 부품/예비 부품 안내',
+        body: '<p>분실한 연결용 나사나 다월 핀, 부속 철물이 있으시다면 걱정하지 마세요. 상품 패키지 번호 혹은 도면상 부품 코드를 기입해 신청하시면 집까지 무료로 안전 발송해 드립니다.</p>' +
+          '<p><strong class="text-ink">자주 찾는 부품</strong> — 나사(Screws), 캠록(Cam Lock), 받침대(Pin Dowels), LED 램프(LED Lights)</p>'
+      },
+      lost: {
+        title: '분실물 찾기 서비스 안내',
+        body: '<p><strong class="text-ink">법적 보관 기간</strong> — 습득된 분실물은 30일간 임시 보관 후, 관련 법령에 의거해 폐기되거나 사회복지단체에 기부됩니다.</p>' +
+          '<p><strong class="text-ink">대리인 수령</strong> — 위임장과 본인 및 대리인의 신분증 사본을 지참하면 매장 고객지원 데스크에서 본인 확인 후 수령 가능합니다.</p>' +
+          '<p><strong class="text-ink">귀중품 관리</strong> — 현금, 귀금속, 신용카드 등은 매장 보안팀 금고에 별도 보관되며, 7일 이내 미수령 시 관할 경찰서로 인계됩니다.</p>'
+      }
+    };
+
+    function openModal(key) {
+      const data = content[key];
+      if (!overlay || !data) return;
+      titleEl.textContent = data.title;
+      bodyEl.innerHTML = data.body;
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      if (!overlay) return;
+      overlay.classList.remove('opacity-100');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.info-modal-link').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal(link.getAttribute('data-info-modal'));
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) {
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeModal();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  })();
+</script>
+<!-- /SEGMENT: InfoModal -->
+
 </body>
 </html>
